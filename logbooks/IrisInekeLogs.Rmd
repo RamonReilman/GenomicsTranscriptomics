@@ -28,3 +28,32 @@ plot(pressure)
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+## inleiding
+! inleiding schrijven
+
+
+## Maandag 9 september
+Artikelen gelezen en twee uitgepikt (tweede artikel op aanraden van Janine).
+
+Invloed RAG in DNA van B-cellen:
+https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE130224
+
+Leukemie:
+https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE103811
+
+Het artikel over leukemie heeft niet genoeg sampels om goed mee te kunnen werken deze periode.
+
+Trello aangemaakt.
+
+
+## Dinsdag 10 september
+We hebben besloten dat we het artikel 'RNAseq and TCRseq analysis of entinostat treated bladder tumors' (PMID: 34396985) gaan gebruiken deze periode. Dit artikel ziet er interessant uit en is goedgekeurd door Marcel.
+
+De git repo staat nu ook op mijn laptop met eigen branch (en Ramon heeft de logboeken aangemaakt).
+
+Het artikel gaat (van wat ik begrijp) over blaaskanker. 
+ICI's (immune-checkpoint inhibitors) is een manier om de blaaskanker te bestrijden (De ICI's krijgt de patiënt via een infuus en zorgen ervoor dat het immuunsysteem beter de tumoren kan bestrijden). Deze vorm van therapie werkt nog maar bij 20% van de patiënten. Er is dus verbetering nodig op dit gebied. In dit onderzoek hebben ze met behulp van testen op muizen laten zien dat entinostat samen met anti–PD-1 helpt tegen blaaskanker. Entinostat lijkt een vorm van chemotherapie die samen met een andere stof effectief werkt tegen kanker (door de expressie van tumor-antigenen te activeren). Anti-PD-1 is in dit geval de andere stof. PD-1 zorgt er voor dat de t-cel geen andere cel dood (waaronder kankercel). Anti-PD-1 zal er dus voor zorgen dat je lichaam wel de cel zal doden.
+
+We hebben een taakverdeling gemaakt voor het plan van aanpak. Ik ga de planning maken in de vorm van een gantt chart. Eerst moet ik nog even uitzoeken wat dit precies is !
