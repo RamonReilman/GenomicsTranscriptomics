@@ -14,3 +14,37 @@ knitr::opts_chunk$set(echo = TRUE)
 ## 10-9-2024
 Bezig geweest met verschillende literatuur onderzoeken lezen.
 Met de groep 1 van de door ons ingestuurde literatuur onderzoeken gekozen.
+
+## 12-09-2024
+Voor het plan van aanpak moet er bekend zijn welke tools gebruikt zijn door het artikel.
+Deze informatie moet bekend zijn omdat wij mogelijk deze tools moeten gaan gebruiken als wij het onderzoek na gaan doen.
+Ik heb het artikel hiervoor meerdere keren door gelezen, en dan vooral de materiaal en methode. In het artikel worden meerdere dingen onderzocht, waardoor het lastig was om te bepalen welk stuk wij na gaan doen. Uiteindelijk heb ik voor vandaag de tools uitgekozen voor het Whole Exome Sequencing en RNA sequencing. Ik weet niet zeker of wij ook het Neoantigen analysis na moeten doen, dit zal ik morgen aan Marcel vragen.
+
+De gevonden tools en hun functie staat in het planVanAanpak folder, maar zal ik hier ook nog even benoemen.
+
+### DNA sequencing  
+
+Voor het DNA is Whole Exome Sequencing (WES) uitgevoerd, dit is gedaan met de Illumina HiSeq 2500.
+
+#### Tools  
+
+De gebruikte tools voor WES:
+
+- Burrows-Wheeler Aligner, voor de aligning van het DNA tegen het referentie genoom.
+- Picard, Het verwijderen van duplicaten en sorteren
+- Strelka, voor het vinden van mutaties
+- snpEff, informatie/impact van de mutaties op eiwitten
+
+### RNA sequencing  
+
+Voor het RNA is RNA-seq uitgevoerd, dit is gedaan met de Illumina NextSeq 500.
+
+#### Tools  
+
+De gebruikte tools voor transcriptomics:
+
+- STAR, aligning van het RNA tegen het referentie genoom
+- SALMON, het quantificeren van transcriptie
+- DESeq2, differentiele expressie analyse van de data
+
+De meeste tools staan al op de assemblix server, er zijn een paar tools die ik niet heb kunnen vinden op de server. Deze zullen mogelijk geinstalleerd moeten worden of er zal een vervanger voor zijn.
