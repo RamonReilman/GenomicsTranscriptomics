@@ -57,3 +57,58 @@ Het artikel gaat (van wat ik begrijp) over blaaskanker.
 ICI's (immune-checkpoint inhibitors) is een manier om de blaaskanker te bestrijden (De ICI's krijgt de patiënt via een infuus en zorgen ervoor dat het immuunsysteem beter de tumoren kan bestrijden). Deze vorm van therapie werkt nog maar bij 20% van de patiënten. Er is dus verbetering nodig op dit gebied. In dit onderzoek hebben ze met behulp van testen op muizen laten zien dat entinostat samen met anti–PD-1 helpt tegen blaaskanker. Entinostat lijkt een vorm van chemotherapie die samen met een andere stof effectief werkt tegen kanker (door de expressie van tumor-antigenen te activeren). Anti-PD-1 is in dit geval de andere stof. PD-1 zorgt er voor dat de t-cel geen andere cel dood (waaronder kankercel). Anti-PD-1 zal er dus voor zorgen dat je lichaam wel de cel zal doden.
 
 We hebben een taakverdeling gemaakt voor het plan van aanpak. Ik ga de planning maken in de vorm van een gantt chart. Eerst moet ik nog even uitzoeken wat dit precies is !
+
+
+## Woensdag 11 september
+De verdeling een klein beetje aangepast. 
+Vrijdag na de les over de data downloaden advies vragen over de sample keuzes (hoe besluiten we welke samples we willen gebruiken en welke niet ?).
+
+
+## Donderdag 12 september
+Vandaag uitzoeken hoe je een gantt chart moet maken.
+Een gantt chart is blijkbaar een soort algemeen beeld van de planning. Je kan in word of excel een gantt chart maken (Excel is mooier). Of in Microsoft Projects. Microsoft Projects is helaas niet beschikbaar voor ons. Dan is Excel de beste optie. Vandaag eerst uitzoeken hoe Excel werkt.
+
+Planning uitschrijven van wat we nu weten:
+Week 1:
+Maandag 9 september: artikel vinden
+rest van de week: plan van aanpak schrijven
+
+Week 2:
+Maandag 16 september: presentatie plan van aanpak, feedback verwerken.
+Dinsdag 17 september - einde week: NGS Quality Control
+
+Week 3:
+Maandag 23 september - donderdag 26 september: read mapping and QC
+Vrijdag 27 september: varient calling
+
+Week 4:
+Maandag 30 september - einde week: annotation
+
+Week 5:
+Maandag 7 oktober - einde week: visualisation, plan van aanpak maken
+
+week 6:
+Maandag 14 oktober: presentatie plan van aanpak
+Dinsdag 15 oktober - vrijdag: read mapping and quantification
+Vrijdag 18 oktober: Statistics (distributions, normalization, PCA)
+
+
+Week 7:
+Maandag 21 oktober - dinsdag?: exploratory data analysis (chapter 3)
+Dinsdag 22 oktober: Statistics (batch effects, regression, linear models)
+Woensdag 23 oktober: Finding Differentially Expressed Genes (chapter 4)
+Vrijdag 25 oktober: Statistics (Enrichment analysis)
+
+Week 8:
+Maandag 28 oktober - einde week: Data Analysis and Visualization (chapter 5)
+Einde week: Hand in Lab Journal
+
+Het lukte even niet in Excel met de data, maar ben er nu achter dankzij Janine dat Excel met het Amerikaanse data systeem werkt. Dus de maand en dag moeten andersom.
+Ik heb nu in Excel een simpele gantt chart gemaakt. Morgen vragen aan Ronals of Marcel of dit de goede richting is (Misschien nog periodes (weken) toevoegen als het lukt).
+
+! Vrijdag vragen hoe ik moet weten wat er in de planning moet.
+! en moet het transcriptomics deel er ook al bij of moet die in de volgende plan van aanpak ?
+
+
+
+
