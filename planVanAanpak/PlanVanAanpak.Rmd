@@ -2,9 +2,45 @@
 title: "Plan Van Aanpak"
 author: "Ramon Reilman, Jasper Jonker, Iris Ineke, Janine Postmus"
 date: "2024-09-10"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+Bronnen: 
+[1] https://www.jci.org/articles/view/138560#SEC2 -- artikel
+[2] https://www.cancer.gov/about-cancer/treatment/types/immunotherapy/checkpoint-inhibitors#:~:text=Checkpoint%20proteins%2C%20such%20as%20PD,the%20body%20(left%20panel). -- checkpoint inhibitors
+[3] https://www.apotheek.nl/medicijnen/cisplatine -- cisplatine
+[4] https://jhoonline.biomedcentral.com/articles/10.1186/s13045-024-01551-8 -- werking HDAC's
+
+### Het onderzoek
+
+Het onderzoek richt zich op de behandeling van blaaskanker met immuuncheckpointeiwitten (hierna genoemd als ICI's). ICI's zijn een goede stap in de richting van de behandeling tegen blaaskanker, echter reageert maar een klein deel van de patiënten goed op dit type behandeling. Daarom wordt er in deze studie gekeken hoe het gebruik van epigenetische middelen de werking van ICI's kunnen versterken, en dan specifiek naar entinostat. Entinostat is een selectieve remmer van HDAC1/3 en reageert als een krachtig middel in de muismodellen voor de typen blaaskanker BBN963 en BBN966. Er wordt aangetoond dat entinostat specifiek de immuunreactie op tumor-neoantigenen versterkt wat leidt tot een verandering in de samenstelling van de tumoromgeving. Ook geeft het een sterke antitumorreactie waarbij de tumor zelf wordt beïnvloed. Het proces is afhankelijk van antigeenpresentatie en gaat gepaard met een toename van het aantal T-cellen die gericht zijn op deze neoantigenen. De combinatietherapie van anti-PD-1 en entinostat heeft tot volledige tumorremissie geleidt en zorgde ook voor ene langdurig immuungeheugen. De bevindingen bieden een duidelijk mechanisme over hoe entinostat werkt en ondersteunen het gebruik van deze combinatie bij blaaskanker. [1, Abstract]
+
+
+### Waarom en hoe is het onderzoek uitgevoerd?
+
+Het onderzoek is gepubliceerd in augustus 2021.
+In de Verenigde Staten worden jaarlijks rond de 83 duizend nieuwe gevallen van blaaskanker gediagnosticeerd waarvan ruim 17 duizend mensen naar schatting komen te overlijden. Voor patiënten met een vergevorderd of uitegezaaide blaaskanker is de overlevingskans, 5 jaar na de diagnose, slechts 15%. Na jarenlang geen nieuwe behandelingen voor gevorderde blaaskanker, zijn er de afgelopen jaren verschillende anitlichamen goedgekeurd die zich richten op de PD-1/PD-L1-route. Blaaskanker heeft een hoge mutatiefrequentie en een deel van deze mutaties kan worden gepresenteerd als neo-antigenen op het oppervlakte van tumorcellen. De neo-antigenen kunnen door T-cellen worden herkend waardoor het immuunsysteem de tumorcellen kan opruimen. De hoeveelheid tumor-mutaties (TMB) wordt gezien als één van de bepalende factoren die bepaalt of ICI's werken. [1]
+
+PD-1 checkpointeiwitten zitten op tumorcellen, PD-L1 checkpointeiwitten zitten op T-cellen.De binding van PD-L1 met PD-1, weerhoudt T-cellen van het kapotmaken van tumorcellen in het lichaam. Wanneer de binding geblokkeerd wordt met een immuuncheckpointremmer, kunnen de T-cellen de tumorcellen dus wel kapotmaken. [2]
+
+De ICI's zijn bedoeld voor patiënten die niet reageren, of niet in aanmerking komen voor cisplatinebehandelingen. Dit is een cytostaticum middel en wordt voorgeschreven als chemotherapie. [1, 3]
+
+
+#### Entinostat  
+Entinostat is een zeer selectieve remmer van histondeacetylase HDAC 1 en 3. Het kenmerk van HDAC's is dat ze acetylgroepen verwijderen van histonstaarten, hierdoor kan DNA sterker aan histonen binden en worden de genen minder toegankelijk voor transcriptieregelaars. Wanneer de acetylgroepen worden geremd, kunnen onderdrukte genen weer actief worden. Wat interessant is, is dat veel van de vaak gemuteerde genen in blaaskanker betrokken zijn bij histonmodificaties zoals acetylatie. Dit wijst op een mogelijke rol van epigenetische veranderingen in blaaskanker. Daarom lijken middelen die zich richten op deze epigenetische processen zoals HDAC-remmers, veelbelovend voor de behandeling van blaaskanker. 
+
+**Werking Entinostat**
+
+Entinostat is een histondeacetylase-remmer, dit betekent dat het specifiek de activiteit van HDAC's remt. De HDAC's verwijderen de acetylgroepen van histonen, hierdoor condenseert het chromatine en wordt de genexpressie onderdrukt wat leidt tot transcriptionele repressie. Door HDAC's te remmen, zorgt de entinostat ervoor dat het chromatine meer ontspannen blijft. Dit betekent dat de genen in het DNA-segment toegankelijk blijven voor transcriptie, dit bevordert de genexpressie. Wanneer HDAC's geremd worden, worden tegelijkertijd honderden tot duizenden genen geactiveerd. Veel van dezen zijn betrokken bij immuunprocessen. Dit zorgt ervoor dat de tumor micro-omgeving gaat reageren, ontsteken, wat het immuunsysteem weer helpt om de tumor aan te vallen. 
+
+Dus door HDAC's te remmen, zorgt entinostat voor een meer ontspannen chromatinestructuur die de genexpressie bevordert, waaronder die van de genen die betrokken zijn bij immuunresponsen. Hierbij gaat de tumoromgeving ontsteken en dit versterkt de antitumorwerking van het immuunsysteem.
+
+
+
+
