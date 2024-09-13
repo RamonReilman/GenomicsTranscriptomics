@@ -9,8 +9,8 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-### Inleiding  
-In dit logboek zal ik bijhouden wat ik voor het project Genomics & Transcriptomics, leerjaar 2 kwartaal 1, allemaal uitvoer. Hierbij onderbouw ik mijn keuzes met waarom ik iets doe en als het nodig is hoe ik dat heb gedaan. 
+### Inleiding genomics 
+In dit logboek zal ik bijhouden wat ik voor het project Genomics & Transcriptomics, leerjaar 2 kwartaal 1, allemaal uitvoer. Hierbij onderbouw ik mijn keuzes met waarom ik iets doe en als het nodig is hoe ik dat heb gedaan. Ik begin met het loggen over Genomics en er zal op het moment dat er overgegaan wordt op het transcriptomics gedeelte een nieuwe inleiding geplaatst worden.
 
 **09-09-2024**  
 Nadat we de uitleg hebben gekregen hebben we groepen gevormd. Mijn groep is samen met Ramon, Jasper en Iris. We hebben vervolgens een begin gemaakt met het zoeken naar een wetenschappelijk artikel. 
@@ -22,6 +22,9 @@ We hebben een definitieve keuze gemaakt voor ons onderzoek. We hebben gekozen vo
 We hebben een taakverdeling gemaakt voor het plan van aanpak. Ik ga het onderzoekoverzicht, de achtergrond ervan en een globale theoretische achtergrond presenteren tijdens de presentatie. 
 
 **12-09-2024**
-Ik heb het artikel doorgelezen en de kernwoorden eruit gehaald zodat ik hierop verder kon bouwen aan de theoretische achtergrond. Ik heb vanuit het artikel de kopjes Abstract en Introduction hiervoor gebruikt. Hier staat dusdanig veel informatie in over het onderzoek dat hier voor het plan van aanpak voldoende uit te halen valt. Ik heb gebruik gemaakt van online resourches en voor het vertalen van het artikel heb ik gebruik gemaakt van chat gtp.  
+Ik heb het artikel doorgelezen en de kernwoorden eruit gehaald zodat ik hierop verder kon bouwen aan de theoretische achtergrond. Ik heb vanuit het artikel de kopjes Abstract en Introduction hiervoor gebruikt. Hier staat dusdanig veel informatie in over het onderzoek dat hier voor het plan van aanpak voldoende uit te halen valt. Ik heb gebruik gemaakt van online resourches en voor het vertalen van het artikel heb ik gebruik gemaakt van chat gtp. 
+
+**13-09-2024**
+
 
 

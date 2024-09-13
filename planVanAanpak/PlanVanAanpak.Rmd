@@ -33,13 +33,22 @@ De ICI's zijn bedoeld voor patiënten die niet reageren, of niet in aanmerking k
 
 
 #### Entinostat  
-Entinostat is een zeer selectieve remmer van histondeacetylase HDAC 1 en 3. Het kenmerk van HDAC's is dat ze acetylgroepen verwijderen van histonstaarten, hierdoor kan DNA sterker aan histonen binden en worden de genen minder toegankelijk voor transcriptieregelaars. Wanneer de acetylgroepen worden geremd, kunnen onderdrukte genen weer actief worden. Wat interessant is, is dat veel van de vaak gemuteerde genen in blaaskanker betrokken zijn bij histonmodificaties zoals acetylatie. Dit wijst op een mogelijke rol van epigenetische veranderingen in blaaskanker. Daarom lijken middelen die zich richten op deze epigenetische processen zoals HDAC-remmers, veelbelovend voor de behandeling van blaaskanker. 
+Entinostat is een zeer selectieve remmer van histondeacetylase HDAC 1 en 3. Het kenmerk van HDAC's is dat ze acetylgroepen verwijderen van histonstaarten, hierdoor kan DNA sterker aan histonen binden en worden de genen minder toegankelijk voor transcriptieregelaars. Wanneer de acetylgroepen worden geremd, kunnen onderdrukte genen weer actief worden. Wat interessant is, is dat veel van de vaak gemuteerde genen in blaaskanker betrokken zijn bij histonmodificaties zoals acetylatie. Dit wijst op een mogelijke rol van epigenetische veranderingen in blaaskanker. Daarom lijken middelen die zich richten op deze epigenetische processen zoals HDAC-remmers, veelbelovend voor de behandeling van blaaskanker. [1,4]
 
-**Werking Entinostat**
-
-Entinostat is een histondeacetylase-remmer, dit betekent dat het specifiek de activiteit van HDAC's remt. De HDAC's verwijderen de acetylgroepen van histonen, hierdoor condenseert het chromatine en wordt de genexpressie onderdrukt wat leidt tot transcriptionele repressie. Door HDAC's te remmen, zorgt de entinostat ervoor dat het chromatine meer ontspannen blijft. Dit betekent dat de genen in het DNA-segment toegankelijk blijven voor transcriptie, dit bevordert de genexpressie. Wanneer HDAC's geremd worden, worden tegelijkertijd honderden tot duizenden genen geactiveerd. Veel van dezen zijn betrokken bij immuunprocessen. Dit zorgt ervoor dat de tumor micro-omgeving gaat reageren, ontsteken, wat het immuunsysteem weer helpt om de tumor aan te vallen. 
+**Werking Entinostat**  
+Entinostat is een histondeacetylase-remmer, dit betekent dat het specifiek de activiteit van HDAC's remt. De HDAC's verwijderen de acetylgroepen van histonen, hierdoor condenseert het chromatine en wordt de genexpressie onderdrukt wat leidt tot transcriptionele repressie. Door HDAC's te remmen, zorgt de entinostat ervoor dat het chromatine meer ontspannen blijft. Dit betekent dat de genen in het DNA-segment toegankelijk blijven voor transcriptie, dit bevordert de genexpressie. Wanneer HDAC's geremd worden, worden tegelijkertijd honderden tot duizenden genen geactiveerd. Veel van dezen zijn betrokken bij immuunprocessen. Dit zorgt ervoor dat de tumor micro-omgeving gaat reageren, ontsteken, wat het immuunsysteem weer helpt om de tumor aan te vallen. [4]
 
 Dus door HDAC's te remmen, zorgt entinostat voor een meer ontspannen chromatinestructuur die de genexpressie bevordert, waaronder die van de genen die betrokken zijn bij immuunresponsen. Hierbij gaat de tumoromgeving ontsteken en dit versterkt de antitumorwerking van het immuunsysteem.
+
+### De opzet van het onderzoek
+
+Voor het genomics onderzoek is er gebruik gemaakt van 2 muissoorten, een muis met een slecht immuunsysteem (NSG) en een muis met een normaal immuunsysteem (C57BL/6). Voor het transcriptomics onderzoek is er gebruik gemaakt van cellijnen. Dit is een stukje cel dat opgekweekt wordt tot tumorcel. De cellijnen van de muizen zijn gevoerd met drinkwater met daarin de stof 0.05% N-Butyl-N-(4-hydroxybutyl) nitrosamine (BBN), hierdoor is blaaskanker ontstaan. Van de blaastumor is een kweek genomen en vervolgens geïsoleerd tot een cellijn. 
+
+**Sample groepen**
+Genomics:  
+- Treated > 3 samples
+- Non treated > 3 samples
+
 
 
 
