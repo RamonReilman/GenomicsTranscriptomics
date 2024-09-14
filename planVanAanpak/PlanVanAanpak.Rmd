@@ -2,9 +2,35 @@
 title: "Plan Van Aanpak"
 author: "Ramon Reilman, Jasper Jonker, Iris Ineke, Janine Postmus"
 date: "2024-09-10"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+
+## Technische achtergrond
+
+### Referentie genoom  
+
+Er is onderzoek gedaan op de C57BL/6 muis en NSG muis.
+Het gebruikte referentie genoom is: mouse reference genome mm9
+https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001635.18/
+
+### DNA sequencing  
+
+Voor het DNA is Whole Exome Sequencing (WES) uitgevoerd, dit is gedaan met de Illumina HiSeq 2500.
+
+#### Tools  
+
+De gebruikte tools voor WES:
+
+- Burrows-Wheeler Aligner, voor de aligning van het DNA tegen het referentie genoom.
+- Picard, Het verwijderen van duplicaten en sorteren
+- Strelka, voor het vinden van mutaties
+- snpEff, informatie/impact van de mutaties op eiwitten
+
+
