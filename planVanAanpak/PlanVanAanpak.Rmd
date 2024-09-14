@@ -16,7 +16,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### Referentie genoom  
 
-Er is onderzoek gedaan op de C57BL/6 muis.
+Er is onderzoek gedaan op de C57BL/6 muis en NSG muis.
 Het gebruikte referentie genoom is: mouse reference genome mm9
 https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001635.18/
 
