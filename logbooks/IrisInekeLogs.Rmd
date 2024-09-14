@@ -104,11 +104,19 @@ Maandag 28 oktober - einde week: Data Analysis and Visualization (chapter 5)
 Einde week: Hand in Lab Journal
 
 Het lukte even niet in Excel met de data, maar ben er nu achter dankzij Janine dat Excel met het Amerikaanse data systeem werkt. Dus de maand en dag moeten andersom.
-Ik heb nu in Excel een simpele gantt chart gemaakt. Morgen vragen aan Ronals of Marcel of dit de goede richting is (Misschien nog periodes (weken) toevoegen als het lukt).
-
-! Vrijdag vragen hoe ik moet weten wat er in de planning moet.
-! en moet het transcriptomics deel er ook al bij of moet die in de volgende plan van aanpak ?
+Ik heb nu in Excel een simpele gantt chart gemaakt. Morgen vragen aan Ronald of Marcel of dit de goede richting is (Misschien nog periodes (weken) toevoegen als het lukt).
 
 
+## Vrijdag 13 september
+Vandaag heb ik aan Marcel gevraagd of de gantt chart in de goede richting is. De x-as waar de data staat moet veranderd worden naar de weeknummers. Vandaag even kijken hoe dat moet. (De duration staat nu in getallen van 0-1, hoeveel tijd van een week het duurt, waarin 1 een hele week is).
+Dat is nu gedaan en het Excel bestand staat in Teams.
 
+
+## Zaterdag 14 september
+Ramon gaf aan dat er nog een taak in moest: Functionele analyse. Die staat er nu ook in.
+
+
+
+! Data checken, klopt ?
+! lezen workflow deel van Jasper.
 
