@@ -26,10 +26,15 @@ In de Verenigde Staten worden jaarlijks rond de 83 duizend nieuwe gevallen van b
 PD-1 checkpointeiwitten zitten op tumorcellen, PD-L1 checkpointeiwitten zitten op T-cellen.De binding van PD-L1 met PD-1, weerhoudt T-cellen van het kapotmaken van tumorcellen in het lichaam. Wanneer de binding geblokkeerd wordt met een immuuncheckpointremmer, kunnen de T-cellen de tumorcellen dus wel kapotmaken. [2]
 
 De ICI's zijn bedoeld voor patiënten die niet reageren, of niet in aanmerking komen voor cisplatinebehandelingen. Dit is een cytostaticum middel en wordt voorgeschreven als chemotherapie. [1, 3]
+\
+\
+\
+\
+\
+\
 
-
-#### Entinostat en zijn werking
-
+#### Entinostat en zijn werking\
+\
 Entinostat is een zeer selectieve remmer van histondeacetylase (HDAC) 1 en 3. HDAC's verwijderen acetylgroepen van histonen, wat ervoor zorgt dat DNA strakker om de histonen wordt gewikkeld, waardoor genen minder toegankelijk worden voor transcriptieregelaars. Dit onderdrukt de genexpressie, een proces dat transcriptionele repressie wordt genoemd.
 Door HDAC's te remmen, zorgt entinostat ervoor dat het chromatine meer ontspannen blijft, waardoor genen in het DNA-segment toegankelijk blijven voor transcriptie. Hierdoor kunnen onderdrukte genen weer actief worden en worden tegelijkertijd honderden tot duizenden genen geactiveerd, waaronder veel die betrokken zijn bij immuunprocessen. Dit leidt ertoe dat de tumoromgeving gaat ontsteken, wat het immuunsysteem helpt om de tumor aan te vallen.
 Wat interessant is, is dat veel van de vaak gemuteerde genen in blaaskanker betrokken zijn bij histonmodificaties zoals acetylatie. Dit wijst op een mogelijke rol van epigenetische veranderingen in blaaskanker. Daarom lijken HDAC-remmers, zoals entinostat, veelbelovend voor de behandeling van blaaskanker.
@@ -82,7 +87,8 @@ De stappen zijn weergegeven met de gebruikte tool daaronder.
 
 
 ### Planning
-Voor onze planning is een gantt chart gemaakt, die is hier weergegeven. De cijfers boven de gantt chart staan voor de weken waarin de taken gedaan zullen worden.
+Voor onze planning is een gantt chart gemaakt, die is hier weergegeven. \
+De cijfers boven de gantt chart staan voor de weken waarin de taken gedaan zullen worden.
 ![Planning verwerkt in een gantt chart](gantt_chart.png)  
 
 
