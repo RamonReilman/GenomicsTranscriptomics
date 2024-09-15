@@ -26,10 +26,10 @@ In de Verenigde Staten worden jaarlijks rond de 83 duizend nieuwe gevallen van b
 PD-1 checkpointremmers zitten op tumorcellen, PD-L1 checkpointremmers zitten op T-cellen.De binding van PD-L1 met PD-1, weerhoudt T-cellen van het kapotmaken van tumorcellen in het lichaam. Wanneer de binding geblokkeerd wordt met een ICI, kunnen de T-cellen de tumorcellen dus wel kapotmaken. [2]
 
 De ICI's zijn bedoeld voor patiënten die niet reageren, of niet in aanmerking komen voor cisplatinebehandelingen. Dit is een cytostaticum middel en wordt voorgeschreven als chemotherapie. [1, 3]
-\
-\
-\
-#### Wat is een immuuncheckpointremmer\
+
+
+
+#### Wat is een immuuncheckpointremmer
 Immuuncheckpoints komen in werking wanneer T-cellen, de partner-eiwitten op andere cellen herkennen en zich daaraan binden, bijvoorbeeld tumorcellen. Deze eiwitten worden immuuncheckpointeiwitten genoemd. Op het moment dat het checkpoint en de partner-eiwitten zich aan elkaar binden wordt er een 'off-signal' gestuurd naar de T-cellen, dit kan voorkomend dat het immuuncheckpoint de kanker vernietigt. 
 
 Bij immunotherapie, welke wordt uitgevoerd met de immuuncheckpointremmers (ICI's), blokkeren de checkpointeiwitten zodat ze niet kunnen binden met hun partner-eiwitten. Dit voorkomt dat het 'off-signal' wordt verstuurd waardoor de T-cellen wel in staat zijn om kankercellen te doden. [5]
@@ -37,7 +37,7 @@ Bij immunotherapie, welke wordt uitgevoerd met de immuuncheckpointremmers (ICI's
 \
 \
 
-#### Entinostat en zijn werking\
+#### Entinostat en zijn werking
 \
 Entinostat is een zeer selectieve remmer van histondeacetylase (HDAC) 1 en 3. HDAC's zijn een klasse van enzymen die acetylgroepen verwijderen op zowel histon- als niet-histon-eiwtten, HDAC's zorgen ervoor dat DNA strakker om de histonen wordt gewikkeld. Dit is belangrijk omdat DNA rond histonen gewikkeld is en de expressie van DNA wordt gereguleerd door acetylatie en de-acetylatie. DOor de HDAC's worden genen minder toegankelijk worden voor transcriptieregelaars. Dit onderdrukt de genexpressie, een proces dat transcriptionele repressie wordt genoemd. [6]
 Door HDAC's te remmen, zorgt entinostat ervoor dat het chromatine meer ontspannen blijft, waardoor genen in het DNA-segment toegankelijk blijven voor transcriptie. Hierdoor kunnen onderdrukte genen weer actief worden en worden tegelijkertijd honderden tot duizenden genen geactiveerd, waaronder veel die betrokken zijn bij immuunprocessen. Dit leidt ertoe dat de tumoromgeving gaat ontsteken, wat het immuunsysteem helpt om de tumor aan te vallen.
