@@ -15,7 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Het onderzoek
 
-Het onderzoek richt zich op de behandeling van blaaskanker met immuuncheckpointeiwitten (hierna genoemd als ICI's). ICI's zijn een goede stap in de richting van de behandeling tegen blaaskanker, echter reageert maar een klein deel van de patiënten goed op dit type behandeling. Daarom wordt er in deze studie gekeken hoe het gebruik van epigenetische middelen de werking van ICI's kunnen versterken, en dan specifiek naar entinostat. Entinostat is een selectieve remmer van HDAC1/3 en reageert als een krachtig middel in de muismodellen voor de typen blaaskanker BBN963 en BBN966. Er wordt aangetoond dat entinostat specifiek de immuunreactie op tumor-neoantigenen versterkt wat leidt tot een verandering in de samenstelling van de tumoromgeving. Ook geeft het een sterke antitumorreactie waarbij de tumor zelf wordt beïnvloed. Het proces is afhankelijk van antigeenpresentatie en gaat gepaard met een toename van het aantal T-cellen die gericht zijn op deze neoantigenen. De combinatietherapie van anti-PD-1 en entinostat heeft tot volledige tumorremissie geleidt en zorgde ook voor ene langdurig immuungeheugen. De bevindingen bieden een duidelijk mechanisme over hoe entinostat werkt en ondersteunen het gebruik van deze combinatie bij blaaskanker. [1, Abstract]
+Het onderzoek richt zich op de behandeling van blaaskanker met immuuncheckpointremmers (hierna genoemd als ICI's). ICI's zijn een goede stap in de richting van de behandeling tegen blaaskanker, echter reageert maar een klein deel van de patiënten goed op dit type behandeling. Daarom wordt er in deze studie gekeken hoe het gebruik van epigenetische middelen de werking van ICI's kunnen versterken, en dan specifiek naar entinostat. Entinostat is een selectieve remmer van HDAC1/3 en reageert als een krachtig middel in de muismodellen voor de typen blaaskanker BBN963 en BBN966. Er wordt aangetoond dat entinostat specifiek de immuunreactie op tumor-neoantigenen versterkt wat leidt tot een verandering in de samenstelling van de tumoromgeving. Ook geeft het een sterke antitumorreactie waarbij de tumor zelf wordt beïnvloed. Het proces is afhankelijk van antigeenpresentatie en gaat gepaard met een toename van het aantal T-cellen die gericht zijn op deze neoantigenen. De combinatietherapie van anti-PD-1 en entinostat heeft tot volledige tumorremissie geleidt en zorgde ook voor ene langdurig immuungeheugen. De bevindingen bieden een duidelijk mechanisme over hoe entinostat werkt en ondersteunen het gebruik van deze combinatie bij blaaskanker. [1, Abstract]
 
 
 ### Waarom en hoe is het onderzoek uitgevoerd?
@@ -23,26 +23,30 @@ Het onderzoek richt zich op de behandeling van blaaskanker met immuuncheckpointe
 Het onderzoek is gepubliceerd in augustus 2021.
 In de Verenigde Staten worden jaarlijks rond de 83 duizend nieuwe gevallen van blaaskanker gediagnosticeerd waarvan ruim 17 duizend mensen naar schatting komen te overlijden. Voor patiënten met een vergevorderd of uitegezaaide blaaskanker is de overlevingskans, 5 jaar na de diagnose, slechts 15%. Na jarenlang geen nieuwe behandelingen voor gevorderde blaaskanker, zijn er de afgelopen jaren verschillende anitlichamen goedgekeurd die zich richten op de PD-1/PD-L1-route. Blaaskanker heeft een hoge mutatiefrequentie en een deel van deze mutaties kan worden gepresenteerd als neo-antigenen op het oppervlakte van tumorcellen. De neo-antigenen kunnen door T-cellen worden herkend waardoor het immuunsysteem de tumorcellen kan opruimen. De hoeveelheid gemuteerde tumor cellen (TMB) wordt gezien als één van de bepalende factoren die bepaalt of ICI's werken. [1]
 
-PD-1 checkpointeiwitten zitten op tumorcellen, PD-L1 checkpointeiwitten zitten op T-cellen.De binding van PD-L1 met PD-1, weerhoudt T-cellen van het kapotmaken van tumorcellen in het lichaam. Wanneer de binding geblokkeerd wordt met een immuuncheckpointremmer, kunnen de T-cellen de tumorcellen dus wel kapotmaken. [2]
+PD-1 checkpointremmers zitten op tumorcellen, PD-L1 checkpointremmers zitten op T-cellen.De binding van PD-L1 met PD-1, weerhoudt T-cellen van het kapotmaken van tumorcellen in het lichaam. Wanneer de binding geblokkeerd wordt met een ICI, kunnen de T-cellen de tumorcellen dus wel kapotmaken. [2]
 
 De ICI's zijn bedoeld voor patiënten die niet reageren, of niet in aanmerking komen voor cisplatinebehandelingen. Dit is een cytostaticum middel en wordt voorgeschreven als chemotherapie. [1, 3]
 \
 \
 \
+#### Wat is een immuuncheckpointremmer\
+Immuuncheckpoints komen in werking wanneer T-cellen, de partner-eiwitten op andere cellen herkennen en zich daaraan binden, bijvoorbeeld tumorcellen. Deze eiwitten worden immuuncheckpointeiwitten genoemd. Op het moment dat het checkpoint en de partner-eiwitten zich aan elkaar binden wordt er een 'off-signal' gestuurd naar de T-cellen, dit kan voorkomend dat het immuuncheckpoint de kanker vernietigt. 
+
+Bij immunotherapie, welke wordt uitgevoerd met de immuuncheckpointremmers (ICI's), blokkeren de checkpointeiwitten zodat ze niet kunnen binden met hun partner-eiwitten. Dit voorkomt dat het 'off-signal' wordt verstuurd waardoor de T-cellen wel in staat zijn om kankercellen te doden. [5]
 \
 \
 \
 
 #### Entinostat en zijn werking\
 \
-Entinostat is een zeer selectieve remmer van histondeacetylase (HDAC) 1 en 3. HDAC's verwijderen acetylgroepen van histonen, wat ervoor zorgt dat DNA strakker om de histonen wordt gewikkeld, waardoor genen minder toegankelijk worden voor transcriptieregelaars. Dit onderdrukt de genexpressie, een proces dat transcriptionele repressie wordt genoemd.
+Entinostat is een zeer selectieve remmer van histondeacetylase (HDAC) 1 en 3. HDAC's zijn een klasse van enzymen die acetylgroepen verwijderen op zowel histon- als niet-histon-eiwtten, HDAC's zorgen ervoor dat DNA strakker om de histonen wordt gewikkeld. Dit is belangrijk omdat DNA rond histonen gewikkeld is en de expressie van DNA wordt gereguleerd door acetylatie en de-acetylatie. DOor de HDAC's worden genen minder toegankelijk worden voor transcriptieregelaars. Dit onderdrukt de genexpressie, een proces dat transcriptionele repressie wordt genoemd. [6]
 Door HDAC's te remmen, zorgt entinostat ervoor dat het chromatine meer ontspannen blijft, waardoor genen in het DNA-segment toegankelijk blijven voor transcriptie. Hierdoor kunnen onderdrukte genen weer actief worden en worden tegelijkertijd honderden tot duizenden genen geactiveerd, waaronder veel die betrokken zijn bij immuunprocessen. Dit leidt ertoe dat de tumoromgeving gaat ontsteken, wat het immuunsysteem helpt om de tumor aan te vallen.
-Wat interessant is, is dat veel van de vaak gemuteerde genen in blaaskanker betrokken zijn bij histonmodificaties zoals acetylatie. Dit wijst op een mogelijke rol van epigenetische veranderingen in blaaskanker. Daarom lijken HDAC-remmers, zoals entinostat, veelbelovend voor de behandeling van blaaskanker.
+Wat interessant is, is dat veel van de vaak gemuteerde genen in blaaskanker betrokken zijn bij histonmodificaties zoals acetylatie. Dit wijst op een mogelijke rol van epigenetische veranderingen in blaaskanker. Daarom lijken HDAC-remmers, zoals entinostat, veelbelovend voor de behandeling van blaaskanker. [1,4]
 
 
 ### De opzet van het onderzoek
 
-Voor het genomics onderzoek is er gebruik gemaakt van 2 muissoorten, een muis met een slecht immuunsysteem (NSG) en een muis met een normaal immuunsysteem (C57BL/6). Voor het transcriptomics onderzoek is er gebruik gemaakt van cellijnen. Dit is een stukje cel dat opgekweekt wordt tot tumorcel. De cellijnen van de muizen zijn gevoerd met drinkwater met daarin de stof 0.05% N-Butyl-N-(4-hydroxybutyl) nitrosamine (BBN), hierdoor is blaaskanker ontstaan. Van de blaastumor is een kweek genomen en vervolgens geïsoleerd tot een cellijn. 
+Voor het genomics onderzoek is er gebruik gemaakt van 2 muissoorten, een muis met een slecht immuunsysteem (NSG) en een muis met een normaal immuunsysteem (C57BL/6). Voor het transcriptomics onderzoek is er gebruik gemaakt van cellijnen. Dit is een stukje cel dat opgekweekt wordt tot tumorcel. De cellijnen van de muizen zijn gevoerd met drinkwater met daarin de stof 0.05% N-Butyl-N-(4-hydroxybutyl) nitrosamine (BBN), hierdoor is blaaskanker ontstaan. Van de blaastumor is een kweek genomen en vervolgens geïsoleerd tot een cellijn. [1]
 
 **Sample groepen**
 Genomics: 
@@ -100,5 +104,9 @@ De cijfers boven de gantt chart staan voor de weken waarin de taken gedaan zulle
 [3] https://www.apotheek.nl/medicijnen/cisplatine -- cisplatine  
 
 [4] https://jhoonline.biomedcentral.com/articles/10.1186/s13045-024-01551-8 -- werking HDAC's  
+
+[5] https://www.cancer.gov/about-cancer/treatment/types/immunotherapy/checkpoint-inhibitors#:~:text=Immunotherapy%20drugs%20called%20immune%20checkpoint,checkpoint%20protein%20called%20CTLA%2D4. -- ICI's
+
+[6] https://en.wikipedia.org/wiki/Histone_deacetylase -- HDAC
 
 
