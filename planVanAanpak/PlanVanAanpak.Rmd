@@ -81,7 +81,7 @@ In welke biologische pathways komen de gemuteerde genen voor en hoe worden deze 
 ### Workflow
 Het figuur hieronder geeft onze workflow neer voor de aankomende 5 weken.  
 
-![Flowchart van onze worlflow en stappen.](./workflowchart.png)    
+![Flowchart van onze worlflow en stappen.](./FlowchartWorkflow.png)    
 In dit figuur is onze workflow zichtbaar,
 De stappen zijn weergegeven met de gebruikte tool daaronder.
 
