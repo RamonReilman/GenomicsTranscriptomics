@@ -6,19 +6,19 @@ math: mathjax
 ---
 
 # Genomics Onderzoek blaaskanker
-<span style="color:grey"> door </span>
+<span style="color:grey">door</span>
 Ramon Reilman, Jasper Jonker, Iris Ineke, Janine Postmus
 
 ---
 # Blaaskanker
-*  83 duizend
+* 83 duizend
 * 17 duizend
 * 15%
 ---
 
 ## Onderzoek
 * Behandeling
-* Immuunchecpoint remmer
+* Immuuncheckpoint remmer
 * Entinostat
 
 ---
@@ -52,7 +52,7 @@ Ramon Reilman, Jasper Jonker, Iris Ineke, Janine Postmus
 | Burrows-Wheeler Aligner | DNA aligning |
 | Picard | Verwijderen van duplicaten |
 | Strelka | Vinden van mutaties |
-| snpEff | impact van mutatie op eiwitten|
+| SnpEff | Impact van mutatie op eiwitten|
 
 ---
 
