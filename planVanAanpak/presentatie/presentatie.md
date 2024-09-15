@@ -18,7 +18,7 @@ Ramon Reilman, Jasper Jonker, Iris Ineke, Janine Postmus
 
 ## Onderzoek
 * Behandeling
-* Immuunchecpointeiwtten
+* Immuunchecpoint remmer
 * Entinostat
 
 ---
@@ -27,7 +27,9 @@ Ramon Reilman, Jasper Jonker, Iris Ineke, Janine Postmus
 * Acetylgroepen
 * transcriptionele repressie
 ---
-## Immuuncheckpointeiwitten
+## Immuuncheckpoints
+* Blokkeren t-cellen 
+* immuuncheckpoint remmers
 
 ---
 ## Opzet
