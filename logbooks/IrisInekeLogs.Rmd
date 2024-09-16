@@ -115,11 +115,14 @@ Dat is nu gedaan en het Excel bestand staat in Teams.
 ## Zaterdag 14 september
 Ramon gaf aan dat er nog een taak in moest: Functionele analyse. Die staat er nu ook in.
 
-Doorgelezen plan van aanpak. Verbeterpunten besproken met groepje.
+Doorgelezen plan van 
 
 Kopjes 'entinostat' en 'werking entinostat' samengevoegd:
 Entinostat is een zeer selectieve remmer van histondeacetylase (HDAC) 1 en 3. HDAC's verwijderen acetylgroepen van histonen, wat ervoor zorgt dat DNA strakker om de histonen wordt gewikkeld, waardoor genen minder toegankelijk worden voor transcriptieregelaars. Dit onderdrukt de genexpressie, een proces dat transcriptionele repressie wordt genoemd.
 Door HDAC's te remmen, zorgt entinostat ervoor dat het chromatine meer ontspannen blijft, waardoor genen in het DNA-segment toegankelijk blijven voor transcriptie. Hierdoor kunnen onderdrukte genen weer actief worden en worden tegelijkertijd honderden tot duizenden genen geactiveerd, waaronder veel die betrokken zijn bij immuunprocessen. Dit leidt ertoe dat de tumoromgeving gaat ontsteken, wat het immuunsysteem helpt om de tumor aan te vallen.
 Wat interessant is, is dat veel van de vaak gemuteerde genen in blaaskanker betrokken zijn bij histonmodificaties zoals acetylatie. Dit wijst op een mogelijke rol van epigenetische veranderingen in blaaskanker. Daarom lijken HDAC-remmers, zoals entinostat, veelbelovend voor de behandeling van blaaskanker.
+
+## Zondag 15 september
+Presentatie doorgelezen en spellingsfoutjes aangepast (marp nodig om html aan te maken van de presentatie).
 
 
