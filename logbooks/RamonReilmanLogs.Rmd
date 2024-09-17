@@ -31,9 +31,68 @@ Vandaag verder gegaan met de gebruikte tools opsporen. Ook heb ik gekeken wat vo
 Nu kunnen we bezig met de tools verder uitzoeken en hun documentatie/installatie lezen.
 
 ## 13-9-2024
-*even snel*
-Merged
-Updated flowchart
-Updated all
+Dataset is gedownload naar de remote server,
+dit is uitgevoerd met het volgende command in bash:
+```{bash, eval=FALSE}
+prefetch $(</students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt) --output-directory \
+ /students/2024-2025/Thema05/BlaasKanker/SRA/ --max-size 200G
+
+```
+
+Nu staat de data gedownload op de school server zodat we bezig kunnen met quality controle.
+
+Verder bezig geweest met presentatie van het plan van aanpak voorbereiden.
+Het lezen van de tools, en gebruik hiervan begrijpen.
+
+## 14-9-2024
+Plan van aanpak deadline dag,
+alle git branches zijn gemerged nadat feedback is gegeven en dit is aangepast.
+Daarna zijn alle kopjes samengevoegd naar 1 bestand en deze is geknit tot pdf.
+
+Janine heeft haar enkel gebroken, zal de presentatie missen en ik moet haar stukje last moment opvangen.
+
+## 15-9-2024
+De presentatie van het plan van aanpak is gemaakt.
+Na nog wat feedback van de groepsgenoten is de achtergrond informatie iets meer uitgebreid. Ook zijn spelfoutjes verwijderd en is de workflow flowchart een beetje aangepast (van nederlands naar engels).
+
+## 16-9-2024
+Presentatie van plan van aanpak gedaan.
+Daarna zijn we bezig geweest met het "uitpakken" van de gedownloade SRR bestanden, dit moet omdat deze gecomprimeerd zijn.
+Dit is gedaan met het volgende bash command.
+
+```{bash , eval=FALSE}
+find /students/2024-2025/Thema05/BlaasKanker/SRA/ -name "*.sra" | \
+  parallel fasterq-dump -O /students/2024-2025/Thema05/BlaasKanker/fastq/ {}
+```
+
+
+Thuis ben ik bezig geweest met het kijken en proberen van testdata maken.
+Testdata moet gemaakt worden om tools/commands te testen zonder dat deze uren, misschien wel dagen moeten draaien voordat ze een foutmelding geven.
+
+De docent heeft ons verteld dat deze testdata gemaakt moet worden met seqkit split2
+ik heb vervolgens een command gemaakt die dit gebruikt:
+
+```{bash, eval=FALSE}
+find /students/2024-2025/Thema05/BlaasKanker/fastq/ -name "*.fastq" -printf "%f\n" | \
+  parallel seqkit split2 -O /students/2024-2025/Thema05/BlaasKanker/testdata/ -s 10000 -f {}
+```
+
+Het enige probleem met deze methode is dat het de fastq bestanden split op de -s N.
+als een fastq file dan een miljoen reads heeft krijg je 1.000.000 / 10.000 bestanden. Niet heel praktisch.
+
+Nadat ik de documentatie van seqkit heb gelezen kwam ik uit bij seqkit sample.
+seqkit sample bij het meegeven van een -n argument laad het hele fastq bestand in het geheugen, dat is onhandig bij hele grote fastq bestanden.
+
+Op de website stond een methode die meer geheugen vriendelijk is, en hiermee heb ik een bash command gemaakt:
+
+```{data, eval=FALSE}
+find /students/2024-2025/Thema05/BlaasKanker/fastq/ -name "*.fastq" | \
+  parallel "seqkit sample -p 0.1 {} | seqkit head -n 10000 > /students/2024-2025/Thema05/BlaasKanker/testdata/{/}"
+```
+
+Deze maakt testdata, van elk bestand 10.000 sequenties.
+
+*later*
+fastqc, multiqc
 
 
