@@ -14,3 +14,26 @@ knitr::opts_chunk$set(echo = TRUE)
 ## 10-9-2024
 Bezig geweest met verschillende literatuur onderzoeken lezen.
 Met de groep 1 van de door ons ingestuurde literatuur onderzoeken gekozen.
+
+## 11-9-2024
+Voor plan van aanpak en het nabootsen van het artikel moet er bekend zijn welke tools gebruikt zijn door het artikel.
+Ik ben begonnen met dit uitzoeken door het artikel en dan vooral materiaal en methode te gaan lezen en verwerken.
+
+## 12-9-2024
+Vandaag verder gegaan met de gebruikte tools opsporen. Ook heb ik gekeken wat voor type sequencing toegepast is (WES) en met welke sequencer (Illumina HiSeq 2500). Alle gebruikte tools zijn gevonden en wat ze doen ook.
+
+
+- Burrows-Wheeler Aligner, voor de aligning van het DNA tegen het referentie genoom.
+- Picard, Het verwijderen van duplicaten en sorteren
+- Strelka, voor het vinden van mutaties
+- snpEff, informatie/impact van de mutaties op eiwitten
+
+Nu kunnen we bezig met de tools verder uitzoeken en hun documentatie/installatie lezen.
+
+## 13-9-2024
+*even snel*
+Merged
+Updated flowchart
+Updated all
+
+

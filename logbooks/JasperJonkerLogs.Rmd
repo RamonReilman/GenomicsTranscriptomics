@@ -12,4 +12,41 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Logboek Jasper Jonker
 Dit is het Logboek van Jasper Jonker voor het vak 2.1.2 Genomics & Transcriptomics. Met dit vak gaan we een paper op nieuw doen of een andere onderzoeksvraag beantwoorden met de data die gegeven is bij de paper.
 # 09-09 
-We starten het onderzoek. We moeten eerst een paper vinden of verslag met genoeg meetwaarde heeft een meerde meetwaarde oder de zelfde omstandigheden. We doen het onderzoek met vier mensen dus hebben besloten om iedereen 1 uit te kiezen.
+We starten het onderzoek. We moeten eerst een paper vinden of verslag met genoeg meetwaarde heeft een meerde meetwaarde onder de zelfde omstandigheden. We doen het onderzoek met vier mensen dus hebben besloten om iedereen 1 uit te kiezen. Om zeker te weten dat er 1 tussen zit dit zo ie zo goed is en samen 1 kunnen uitkiezen waar we allemaal iets mee hebben. 
+#10-09 
+
+
+# 17-09
+Ik ga vandaag testdata maken in een oefen Folder die later weer wordt verwijderd. We maken test data omdat die data kleiner is dan de noramle data en daarom makkelijker te gebruiken is in onze tools zodat het niet te lang duurd.
+```{bash, eval=FALSE}
+find /students/2024-2025/Thema05/BlaasKanker/fastq/ -name "*.fastq" | \
+    parallel "seqkit sample -p 0.1 {} | seqkit head -n 10000 > /students/2024-2025/Thema05/BlaasKanker/oefenengroep/testdataJasper/{/}"
+```
+
+```{bash, eval=FALSE}
+fastqc /students/2024-2025/Thema05/BlaasKanker/oefenengroep/testdataJasper/* \
+    -o /students/2024-2025/Thema05/BlaasKanker/oefenengroep/FastqcJasper/
+```
+
+```{bash, eval=FALSE}
+multiqc /students/2024-2025/Thema05/BlaasKanker/oefenengroep/FastqcJasper/* -o /students/2024-2025/Thema05/BlaasKanker/oefenengroep/multiqcJasper/
+```
+
+# 18 -09 
+``` {bash, eval= FALSE}
+# hier maken er de van de refence genome een index file zodat de tool sneller gaat. 
+bwa index /students/2024-2025/Thema05/BlaasKanker/realreferenceGenome/ncbi_dataset/data/GCF_000001635.27/GCF_000001635.27_GRCm39_genomic.fna
+# hier strten we het mappen en noemen het output.sam op de teastdata 
+bwa mem -t 8 index/GCF_000001635.27_GRCm39_genomic.fna SRR14870694_1.fastq SRR14870694_2.fastq > outputtest.sam
+# hier veranderen we het sam file naar een bam file omdat het minder ruimte in neemt
+samtools view -b outputtest.sam > output.bam 
+# Nu gaan we sorteren op coordinaten s
+samtools sort -o output.sorted.bam output.bam 
+
+samtools index output.sorted.bam
+
+samtools flagstat output.sorted.bam.bai
+https://www.youtube.com/watch?v=1wcFavYt6uU 
+deze turtoril heb ik gebruikt. 
+
+```
