@@ -29,5 +29,12 @@ Ik heb de theorie aangevuld met de laatste dingen. Smiddags is er een les gevolg
 heeft Ramon onze data voor uitgevoerd.
 
 **15-09-2024**
-Naar aanleiding van feedback vanuit de groep heb ik de theorie aangepast en aangevuld. Presentatie is afgemaakt door Ramon. 
+Naar aanleiding van feedback vanuit de groep heb ik de theorie aangepast en aangevuld. Presentatie is afgemaakt door Ramon. Omdat ik met een gebroken enkel in huis vast zit, gaat Ramon mijn deel van de presentatie doen en gaan we maandag afspraken maken over de uitvoering van het project.
+
+**17-09-2024**
+Ik heb de tool snpEff gekregen/gekozen als onderdeel van het project. Omdat ik de komende weken minder op school aanwezig kan zijn hebben we deze tool aan mij toebesteed omdat deze tool pas redelijk aan het einde van het proces nodig is. Hierdoor krijg ik meer tijd om processen en dingen te onderzoeken voordat we de tool daadwerkelijk nodig zijn.
+Om te leren hoe we moeten omgaan met de data en testdata heb ik met behulp van de tool seqkit testdata gemaakt voor ons project. Ik heb dit eerst uitgevoerd op 1 bestand om te leren hoe het werkt. Omdat onze dataset uit heel veel bestanden bestaat, is het noodzakelijk dat ik leer hoe ik het kan uitvoeren op alle bestanden. Ik weet dat ik de find functie moet gebruiken icm de tools fastqc en parallel, hoe ik het moet gebruiken weet ik nog niet.
+
+**18-09-2024**
+Ik heb uitgezocht hoe ik het multiqc rapport moet maken. Via verschillende bronnen en forums op internet heb ik de goede commandline geproduceerd en vervolgens uitgevoerd. Ik heb find gecombineerd met de tools fastqc en parallel om op deze manier alle fastqc rapporten in html en zip formaat in 1 map te krijgen. Omdat dit niet prettig leest en analyseert heb ik met de tool multiqc alle data in 1 rapport laten zetten. Hierdoor is de data overzichtelijk in te zien inclusief grafiekjes en dergelijke. Hiermee kan je dus in één oogopslag zien hoe goed je data is. Voor de rest van de week ga ik bezig met mijn tool "snpEff" ik ga onderzoeken en leren hoe deze tool werkt, wat deze tool doet en waarom we deze tool gaan gebruiken.
 
