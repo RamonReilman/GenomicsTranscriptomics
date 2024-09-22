@@ -13,21 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
-```{r cars}
-summary(cars)
-```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
 
 
 ## inleiding
@@ -163,7 +149,7 @@ Morgen downloaden en installeren. Eerst kijken of de juiste versie van java(1.8.
 We hebben een recent genoege versie van java, dus dat is al goed geregeld.
 
 
-## Woensdag 19 september
+## Woensdag 18 september
 nieuw deel: trimmomatic:
 De code voor de testdata:
 de eerste regel (begint bij cat) zorgt ervoor dat de namen van de files(SRR_Acc_List.txt) worden ingeveuld bij parallel tussen de {} als de input files.
@@ -199,16 +185,109 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
                   'MINLEN:40 ' \
                   'SLIDINGWINDOW:4:20'
 ```
-Deze laten runnen op de school server.
+Deze laten runnen op de school server (die mappen waar ze steeds heen gaan moet je eerst zelf aanmaken).
 
 
 ## Donderdag 19 september:
-De terminal zegt dat hij de trimmomatic succesvol heeft afgerond, maar hij print nog wel (wat lijkt op html) code. Geen idee waarom. Via 'htop' kun je ook zien dat hij nog wel een deel van de server inneemt, dus hij is nog wel ergens mee bezig, maar zou niet weten wat.
-Het duurde zo lang dat ik hem heb gestopt. Ramon heeft het opnieuw geprobeert.
+De terminal zegt dat hij de Trimmomatic succesvol heeft afgerond, maar hij print nog wel (wat lijkt op html) code. Geen idee waarom. Via 'htop' kun je ook zien dat hij nog wel een deel van de server inneemt, dus hij is nog wel ergens mee bezig, maar zou niet weten wat.
+Het duurde zo lang dat ik hem heb gestopt. Ramon heeft het opnieuw geprobeerd.
 Uit de poging van Ramon op de test data blijkt dat de kwaliteit achteruit gaat na het trimmen, wat gek is. Maar dit kan liggen aan dat de sub sets wat klein zijn ? Morgen vragen in de les hoe dit kan.
 
 
 ## Vrijdag 20 september:
-Na echt heel lang bezig te zijn geweest was trimmomatic eindelijk klaar op Ramon zijn laptop en de kwaliteit van de data is inderdaad echt achteruit gegaan. We hebben Ronald gevraagd wat een mogelijke oorzaak is hiervan. Ronald gaf als mogelijkheid dat de reads heel kort zijn en dat er daardoor veel goede reads worden weggegooid omdat ze zo kort zijn. We hebben dus de minlen aangepast naar 20 in plaats van 40. Maar de kwaliteit van de data ging nog steeds achteruit. We moeten nog even uitzoeken hoe dit kan en of we hier iets aan kunnen doen. Als het echt steeds slechter wordt dan kunnen we ervoor kiezen om geen trimmomatic uit te voeren op de data, omdat de data zelf al best goed is. Maar eerst gaan we proberen of we het kunnen verbeteren. Maar het is wel opmerkelijk.
+Na echt heel lang bezig te zijn geweest was Trimmomatic eindelijk klaar op Ramon zijn laptop en de kwaliteit van de data is inderdaad echt achteruit gegaan. We hebben Ronald gevraagd wat een mogelijke oorzaak is hiervan. Ronald gaf als mogelijkheid dat de reads heel kort zijn en dat er daardoor veel goede reads worden weggegooid omdat ze zo kort zijn. We hebben dus de minlen aangepast naar 20 in plaats van 40. Maar de kwaliteit van de data ging nog steeds achteruit. We moeten nog even uitzoeken hoe dit kan en of we hier iets aan kunnen doen. Als het echt steeds slechter wordt dan kunnen we ervoor kiezen om geen trimmomatic uit te voeren op de data, omdat de data zelf al best goed is. Maar eerst gaan we proberen of we het kunnen verbeteren. Maar het is wel opmerkelijk.
 
 
+## Zaterdag 21 september:
+Ik denk dat we in trimmomatic kunnen aangeven dat het einde getrimd moet worden. Dit is handig omdat in de fastqc analyze af te lezen is dat in de 'per base sequence quality plot' het einde de kwaliteit minder werd.
+
+
+## Zondag 22 september
+Onderstaande code zijn de aangepaste instellingen voor Trimmomatic.
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+  parallel 'TrimmomaticPE -threads 4' \
+                  '/students/2024-2025/Thema05/BlaasKanker/testdata/{}_1.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/testdata/{}_2.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/testingtools/trimtest/{}_paired.1.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/testingtools/trimtest/{}_unpaired.1.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/testingtools/trimtest/{}_paired.2.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/testingtools/trimtest/{}_unpaired.2.fastq' \
+                  'ILLUMINACLIP:/students/2024-2025/Thema05/BlaasKanker/tools/trim_adapters/TruSeq3-PE.fa:2:30:10' \
+                  'SLIDINGWINDOW:4:20' \
+                  'MINLEN:40'
+```
+Spaties weggehaald aan de eindes van elke regel tussen de ' '. geen idee of dat invloed heeft verder.
+Illuminaclip hebben we nodig om de adapters van de reads te halen.
+Slidingwindow is handig om de kwaliteit te checken van de reads.
+Minlen is handig om de korte reads eruit te halen.
+
+Ik heb ervoor gekozen om slidingwindow voor minlen uit te laten voeren, omdat als je eerst de minlen uitvoert en daarna de slidingwindow er een kans is dat er alsnog reads zijn die korter zijn dan de minlen (aangezien je de slidingwindow nog basenparen kan weg trimmen).
+
+Nu FastQC  en multiQC op de getrimde documenten uitvoeren:
+Map aanmaken in testingtools: trimtest_fastqc
+```{bash, eval=FALSE}
+fastqc /students/2024-2025/Thema05/BlaasKanker/testingtools/trimtest/*  \
+  -o /students/2024-2025/Thema05/BlaasKanker/testingtools/trimtest_fastqc
+```
+
+Map aanmaken in testingtools: trimtest_multiqc
+```{bash, eval=FALSE}
+multiqc /students/2024-2025/Thema05/BlaasKanker/testingtools/trimtest_fastqc -o /students/2024-2025/Thema05/BlaasKanker/testingtools/trimtest_multiqc
+```
+
+Hoe open ik het report nu zonder de school computer?
+'scp -r pad_vanaf pad_naar'
+Oke uit het raport komt nog steeds dat de data slechter wordt. De Sequence Length Distribution is nu nog oranje, maar de duplication levels zijn wel beter dan voor trimmomatic. 
+
+De 'sequence length distribution' is te hoog, dus minlen verhogen naar 90 (uit grafiek fastqc).
+
+De slidingwindow ook veranderen: '4:30' in plaats van '4:20' (uit grafiek: 'sequence qualty histograms gehaald)
+
+Oke. Uit de plot 'sequence quality histograms' kun je aflezen dat het begin van de reads nog beter kunnen, dus 'leading:32' toevoegen (32 uit de grafiek gehaald: 'sequence quality histogram).
+! Niet vergeten nieuwe mappen te maken voor je trimmomatic opieuw probeert !
+Nieuwe poging:
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+  parallel 'TrimmomaticPE -threads 4' \
+                  '/students/2024-2025/Thema05/BlaasKanker/testdata/{}_1.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/testdata/{}_2.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/testingtools/trimtest2/{}_paired.1.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/testingtools/trimtest2/{}_unpaired.1.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/testingtools/trimtest2/{}_paired.2.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/testingtools/trimtest2/{}_unpaired.2.fastq' \
+                  'ILLUMINACLIP:/students/2024-2025/Thema05/BlaasKanker/tools/trim_adapters/TruSeq3-PE.fa:2:30:10' \
+                  'LEADING:32' \
+                  'SLIDINGWINDOW:4:30' \
+                  'MINLEN:90'
+```
+(hij gaf een foutmelding; er miste een slash achter de leading. hierdoor moet ik de file weer leegmaken met 'rm *')
+
+nu doet hij het wel.
+
+Vervolgens: maak map in testingtools: trimtest_fastqc2
+FastQC op poging drie trim:
+```{bash, eval=FALSE}
+fastqc /students/2024-2025/Thema05/BlaasKanker/testingtools/trimtest2/*  \
+  -o /students/2024-2025/Thema05/BlaasKanker/testingtools/trimtest_fastqc2
+```
+
+Vervolgens: maak map in testingtools: trimtest_multiqc2
+```{bash, eval=FALSE}
+multiqc /students/2024-2025/Thema05/BlaasKanker/testingtools/trimtest_fastqc2 -o /students/2024-2025/Thema05/BlaasKanker/testingtools/trimtest_multiqc2
+```
+
+Vervolgens de report naar eigen laptop zetten om te openen:
+in eigen terminal:
+```{bash, eval=FALSE}
+scp -r ieineke@bioinf.nl:/students/2024-2025/Thema05/BlaasKanker/testingtools/trimtest_multiqc2/ .
+```
+
+Oke de 'Sequence Length Distribution' kan nog steeds beter, maar de 'Sequence Quality Histograms' ziet er al wat beter uit. Ik denk dat de minlen helemaal naar 97 moet. Dus alles weer opnieuw, maar dan met de minlen op 97.
+
+! Per ongeluk de verkeerde terminal gebruikt, nu staat het report in mijn branch op git in plaats van mijn laptop. Later even verwijderen.
+
+Ik heb per ongeluk precies hetzelfde gedaan zonder de nieuwe instellingen. Dus alle mappen weer legen enzovoort. 
+Ik heb per ongeluk de trimmomatic in de map gezet van de vorige poging, dus die map kan ook wel weg nu.
+
+Oke. De sequence length distribution is nog steeds niet goed genoeg. Ik lees de grafiek dan denk k verkeerd af. Ik snap het niet meer. Dinsdag even vragen. (folder waar het report in staat heet: 'trimtest_multiqc3').
