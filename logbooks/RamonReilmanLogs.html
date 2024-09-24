@@ -443,7 +443,419 @@ hiermee heb ik een bash command gemaakt:</p>
 <pre class="data"><code>find /students/2024-2025/Thema05/BlaasKanker/fastq/ -name &quot;*.fastq&quot; | \
   parallel &quot;seqkit sample -p 0.1 {} | seqkit head -n 10000 &gt; /students/2024-2025/Thema05/BlaasKanker/testdata/{/}&quot;</code></pre>
 <p>Deze maakt testdata, van elk bestand 10.000 sequenties.</p>
-<p><em>later</em> fastqc, multiqc</p>
+</div>
+<div id="section-7" class="section level2">
+<h2>17-9-2024</h2>
+<p>Vandaag hebben wij een fastqc en multiqc uitgevoerd op onze test
+data. Dit is gedaan om te bepalen wat de kwaliteit is van onze data. En
+met deze informatie kan er met Trimmomatic de kwaliteit van de data
+verbeterd worden.</p>
+<pre class="bash"><code>fastqc /students/2024-2025/Thema05/BlaasKanker/testdata/* -o /students/2024-2025/Thema05/BlaasKanker/testingtools/fastqc/ -t 10</code></pre>
+<pre class="bash"><code>multiqc /students/2024-2025/Thema05/BlaasKanker/testingtools/fastqc/* -o /students/2024-2025/Thema05/BlaasKanker/testingtools/multiqc</code></pre>
+<p>Uit de plotjes bleek het volgende: De kwaliteit van de sequenties was
+goed, bij het begin en einde een beetje lager dan het midden, zoals
+verwacht. Er zijn wel veel duplicaten, wat mogelijk kan komen doordat
+het een whole exome sequencing is, maar hier ga ik later onderzoek naar
+doen.</p>
+<p>Verder heb ik deze dag en les Jasper en Iris geholpen met het
+uitvoeren van een fastqc en multiqc op onze data.</p>
+</div>
+<div id="section-8" class="section level2">
+<h2>18-9-2024</h2>
+<p>Vandaag is gekeken naar de documentatie van Trimmomatic, ook heeft de
+docent er wat over uitgelegd.</p>
+<p>We hebben een adapterfile gedownload om adapters uit onze sequenties
+te knippen. En we hebben een Trimmomatic uitgevoerd, de settings hadden
+we gekregen van de docent. Deze settings hebben wij niet aangepast, om
+te kijken wat het doet op onze data.</p>
+<pre class="bash"><code>cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+  parallel &#39;TrimmomaticPE -threads 8&#39; \
+                  &#39;/students/2024-2025/Thema05/BlaasKanker/testdata/{}_1.fastq&#39; \
+                  &#39;/students/2024-2025/Thema05/BlaasKanker/testdata/{}_2.fastq&#39; \
+                  &#39;/students/2024-2025/Thema05/BlaasKanker/testingtools/testing_trim/{}_paired.1.fastq&#39; \
+                  &#39;/students/2024-2025/Thema05/BlaasKanker/testingtools/testing_trim/{}_unpaired.1.fastq&#39; \
+                  &#39;/students/2024-2025/Thema05/BlaasKanker/testingtools/testing_trim/{}_paired.2.fastq&#39; \
+                  &#39;/students/2024-2025/Thema05/BlaasKanker/testingtools/testing_trim/{}_unpaired.2.fastq&#39; \
+                  &#39;ILLUMINACLIP:/students/2024-2025/Thema05/BlaasKanker/tools/trim_adapters/TruSeq3-PE.fa:2:30:10&#39; \
+                  &#39;LEADING:3&#39; \
+                  &#39;TRAILING:3&#39; \
+                  &#39;MINLEN:40 &#39; \
+                  &#39;SLIDINGWINDOW:4:20&#39;</code></pre>
+<p>Hierna is een fastqc en multiqc uitgevoerd, en het bleek dat de
+kwaliteit van onze data verslechterd is. Op alle vlakken. Wij begrepen
+niet waarom, dus hebben wat settings weggehaald en het opnieuw
+uitgevoerd met andere settings.</p>
+<pre class="bash"><code>cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+  parallel &#39;TrimmomaticPE -threads 10&#39; \
+                  &#39;/students/2024-2025/Thema05/BlaasKanker/testdata/{}_1.fastq&#39; \
+                  &#39;/students/2024-2025/Thema05/BlaasKanker/testdata/{}_2.fastq&#39; \
+                  &#39;/students/2024-2025/Thema05/BlaasKanker/trimmingtesting/minlen_20/{}_paired.1.fastq&#39; \
+                  &#39;/students/2024-2025/Thema05/BlaasKanker/trimmingtesting/minlen_20/{}_unpaired.1.fastq&#39; \
+                  &#39;/students/2024-2025/Thema05/BlaasKanker/trimmingtesting/minlen_20/{}_paired.2.fastq&#39; \
+                  &#39;/students/2024-2025/Thema05/BlaasKanker/trimmingtesting/minlen_20/{}_unpaired.2.fastq&#39; \
+                  &#39;ILLUMINACLIP:/students/2024-2025/Thema05/BlaasKanker/tools/trim_adapters/TruSeq3-PE.fa:2:30:10&#39; \
+                  &#39;MINLEN:20&#39;</code></pre>
+<p>Het uitvoeren van Trimmomatic, zelfs op data van 10.000 sequenties
+duurde ontzettend lang. Wij begrijpen niet waarom.</p>
+<p>De unpaired bestanden hadden 0 sequenties nadat we het met deze
+settings hebben uitgevoerd. De unpaired bestanden die Trimmomatic maakt
+bevatten de sequenties van of de reverse of forward, waarbij de andere
+de kwaliteits controle niet gered heeft.</p>
+</div>
+<div id="section-9" class="section level2">
+<h2>20-09-2024</h2>
+<p>Vandaag hebben wij aan de docent gevraagd hoe het dan dat de data een
+minder goede kwaliteit geeft. Wij hebben de tip gekregen om goed na te
+denken over de settings, en goed de plotjes lezen van multiqc. Op advies
+van de docent hebben we de testdata verhoogd naar 500.000 sequenties,
+zodat het ook tijdens het mappen duidelijker leesbaar wordt.</p>
+</div>
+<div id="section-10" class="section level2">
+<h2>21-09-2024</h2>
+<p>Ik heb de plotjes gelezen van fastqc en multiqc, en heb op basis van
+dit nieuwe Trimmomatic experimenten uitgevoerd.</p>
+<p>Ik wil trimmomatic uitvoeren die adapters weghaalt, een slidingwindow
+heeft van 4:20, en een minlen van 20. Ik voer deze uit om te kijken hoe
+deze settings samen invloed heeft op de testdata in vergelijking tot de
+ongetrimde data.</p>
+<table>
+<colgroup>
+<col width="9%" />
+<col width="9%" />
+<col width="10%" />
+<col width="17%" />
+<col width="8%" />
+<col width="9%" />
+<col width="10%" />
+<col width="6%" />
+<col width="15%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Run ID</th>
+<th>LEADING</th>
+<th>TRAILING</th>
+<th>SLIDING WINDOW</th>
+<th>MINLEN</th>
+<th>AVGQUAL</th>
+<th>HEADCROP</th>
+<th>CROP</th>
+<th>ILLUMINACLIP</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A4:20ML20</td>
+<td>NONE</td>
+<td>NONE</td>
+<td>4:20</td>
+<td>20</td>
+<td>NONE</td>
+<td>NONE</td>
+<td>TruSeq3-PE.fa</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Na een korte controle bleek onze adapter file niet goed te zijn, dit
+was door onbekende redenen een html file. Dit kan eventueel verklaren
+waarom het zo lang duurde om Trimmomatic uit te voeren.</p>
+<pre class="bash"><code>cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+  parallel &#39;TrimmomaticPE -threads 12&#39; \
+                  &#39;/students/2024-2025/Thema05/BlaasKanker/testdata/{}_1.fastq&#39; \
+                  &#39;/students/2024-2025/Thema05/BlaasKanker/testdata/{}_2.fastq&#39; \
+                  &#39;/students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_20_ML20/trimmed_data/{}_paired.1.fastq &#39; \
+                  &#39;/students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_20_ML20/trimmed_data/{}_unpaired.1.fastq&#39; \
+                  &#39;/students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_20_ML20/trimmed_data/{}_paired.2.fastq&#39; \
+                  &#39;/students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_20_ML20/trimmed_data/{}_unpaired.2.fastq&#39; \
+                  &#39;ILLUMINACLIP:/students/2024-2025/Thema05/BlaasKanker/tools/trim_adapters/TruSeq3-PE.fa:2:30:10&#39; \
+                  &#39;MINLEN:20&#39; \
+                  &#39;SLIDINGWINDOW:4:20&#39;</code></pre>
+<p>Na het trimmen is de data met fastqc en multiqc verwerkt naar een
+webpagina met duidelijk leesbare plotjes.</p>
+<pre class="bash"><code>fastqc /students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_20_ML20/trimmed_data/* -o /students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_20_ML20/fastqc -t 12
+
+multiqc /students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_20_ML20/fastqc* -o \
+  /students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_20_ML20/multiqc</code></pre>
+<p>Als ik kijk naar onze test data ongetrimmed ziet dat er erg goed uit.
+het GC% ligt bij alle bestanden rond de 45% zoals verwacht. De kwaliteit
+is goed, behalve aan het begin en einde, zoals verwacht. Er zijn geen
+waarschuwingen, of adapters gevonden. Dit laat mij denken dat we
+mogelijk de adapter optie weg kunnen laten.</p>
+<p>Als ik vervolgens kijk naar de getrimmde data valt mij een aantal
+dingen op. Er zijn 2 soorten output: paired en unpaired. het aantal
+sequenties van paired is velen malen hoger dan de unpaired files. Na het
+opzoeken wat deze files zijn kwam ik op het volgende: De .paired
+bestanden zijn bestanden waarin zowel de forward als reverse sequentie
+goed gekeurd zijn door Trimmomatics. De .unpaired bestanden hebben de
+sequenties waarvan alleen dat bijpassende bestand goed gekeurd is door
+Trimmomatics.</p>
+<p>Deze .unpaired bestanden hebben best wel een invloed op onze multiqc
+output, dus zal ik een multiqc uitvoeren op alleen de paired data. Voor
+het onderzoek downstream lijkt mij het beste om mogelijk ook de unpaired
+sequenties achter te laten. Dit zijn nu single end sequenties die een
+stuk lastiger zijn om te mappen.</p>
+<p>/ TODO voer multiqc uit op alleen de getrimde paired data ##
+22-09-2024</p>
+<pre class="bash"><code>fastqc /students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_20_ML20/trimmed_data/*_paired.* -o /students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_20_ML20/output/fastqc_no_unpaired -t 12
+
+multiqc /students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_20_ML20/output/fastqc_no_unpaired/* -o \
+  /students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_20_ML20/output/multiqc_no_unpaired</code></pre>
+<p>De kwaliteit is niet veel verbeterd.</p>
+<p>Het is goed om nu een stap terug te nemen en kijken naar de
+ongetrimde data. Welke dingen kunnen verbeterd worden en welke
+trimmomatic settings kunnen hiervoor gebruikt worden?</p>
+<p>Aan het begin en einde van de sequences is een verlaging van
+kwaliteit, deze is verwacht. Dit kan verwijderd worden door leading en
+triailing. Over de sequenties zijn een paar dips in kwaliteit zichtbaar,
+dit kan verwijderd worden door de sliding window. Na het verwijderen is
+kan ik nog een MINLEN van 30, zodat de hele kleine sequenties verwijderd
+worden. Adapter verwijderen is niet nodig, omdat er geen adapters
+gedetecteerd worden.</p>
+<table>
+<colgroup>
+<col width="9%" />
+<col width="9%" />
+<col width="10%" />
+<col width="17%" />
+<col width="8%" />
+<col width="9%" />
+<col width="10%" />
+<col width="6%" />
+<col width="15%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Run ID</th>
+<th>LEADING</th>
+<th>TRAILING</th>
+<th>SLIDING WINDOW</th>
+<th>MINLEN</th>
+<th>AVGQUAL</th>
+<th>HEADCROP</th>
+<th>CROP</th>
+<th>ILLUMINACLIP</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A4:20ML20</td>
+<td>NONE</td>
+<td>NONE</td>
+<td>4:20</td>
+<td>20</td>
+<td>NONE</td>
+<td>NONE</td>
+<td>TruSeq3-PE.fa</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>A4:32ML30L34T35</td>
+<td>34</td>
+<td>35</td>
+<td>4:32</td>
+<td>30</td>
+<td>NONE</td>
+<td>NONE</td>
+<td>NONE</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<pre class="bash"><code>cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+  parallel &#39;TrimmomaticPE -threads 12&#39; \
+                  &#39;/students/2024-2025/Thema05/BlaasKanker/testdata/{}_1.fastq&#39; \
+                  &#39;/students/2024-2025/Thema05/BlaasKanker/testdata/{}_2.fastq&#39; \
+                  &#39;/students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_32_ML30_L34_T35/trimmed_data/{}_paired.1.fastq &#39; \
+                  &#39;/students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_32_ML30_L34_T35/trimmed_data/{}_unpaired.1.fastq&#39; \
+                  &#39;/students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_32_ML30_L34_T35/trimmed_data/{}_paired.2.fastq&#39; \
+                  &#39;/students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_32_ML30_L34_T35/trimmed_data/{}_unpaired.2.fastq&#39; \
+                  &#39;LEADING:34&#39; \
+                  &#39;SLIDINGWINDOW:4:32&#39; \
+                  &#39;TRAILING:35&#39; \
+                  &#39;MINLEN:30&#39;</code></pre>
+</div>
+<div id="section-11" class="section level2">
+<h2>22-09-2024</h2>
+<pre class="bash"><code>fastqc /students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_32_ML30_L34_T35/trimmed_data/*_paired.* -o /students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_32_ML30_L34_T35/output/fastqc -t 12
+
+multiqc /students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_32_ML30_L34_T35/output/fastqc/* -o \
+  /students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_32_ML30_L34_T35/output/multiqc</code></pre>
+<p>De kwaliteit van de sequentie is nu een zo goed als rechte lijn met
+een phred score van rond de 37. De kans dat een nucleotide nu fout is is
+0.000199526% (<a href="https://eafyounian.github.io/phred_score_converter/" class="uri">https://eafyounian.github.io/phred_score_converter/</a>).
+Het enige wat nu niet goed is is de distributie van de lengte.</p>
+</div>
+<div id="section-12" class="section level2">
+<h2>23-09-2024</h2>
+<p>De kwaliteit is nu goed, alleen de verdeling van de lengtes van de
+sequenties is niet goed, al weet ik niet wat de oorzaak is. Om te kijken
+of er verbetering is voer ik hetzelfde command uit met een hogere
+minlen.</p>
+<table>
+<colgroup>
+<col width="9%" />
+<col width="9%" />
+<col width="10%" />
+<col width="17%" />
+<col width="8%" />
+<col width="9%" />
+<col width="10%" />
+<col width="6%" />
+<col width="15%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Run ID</th>
+<th>LEADING</th>
+<th>TRAILING</th>
+<th>SLIDING WINDOW</th>
+<th>MINLEN</th>
+<th>AVGQUAL</th>
+<th>HEADCROP</th>
+<th>CROP</th>
+<th>ILLUMINACLIP</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A4:20ML20</td>
+<td>NONE</td>
+<td>NONE</td>
+<td>4:20</td>
+<td>20</td>
+<td>NONE</td>
+<td>NONE</td>
+<td>TruSeq3-PE.fa</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>A4:32ML30L34T35</td>
+<td>34</td>
+<td>35</td>
+<td>4:32</td>
+<td>30</td>
+<td>NONE</td>
+<td>NONE</td>
+<td>NONE</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>A4:32ML50L34T35</td>
+<td>34</td>
+<td>35</td>
+<td>4:32</td>
+<td>50</td>
+<td>NONE</td>
+<td>NONE</td>
+<td>NONE</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<pre class="bash"><code>cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+  parallel &#39;TrimmomaticPE -threads 12&#39; \
+                  &#39;/students/2024-2025/Thema05/BlaasKanker/testdata/{}_1.fastq&#39; \
+                  &#39;/students/2024-2025/Thema05/BlaasKanker/testdata/{}_2.fastq&#39; \
+                  &#39;/students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_32_ML50_L34_T35/trimmed_data/{}_paired.1.fastq &#39; \
+                  &#39;/students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_32_ML50_L34_T35/trimmed_data/{}_unpaired.1.fastq&#39; \
+                  &#39;/students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_32_ML50_L34_T35/trimmed_data/{}_paired.2.fastq&#39; \
+                  &#39;/students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_32_ML50_L34_T35/trimmed_data/{}_unpaired.2.fastq&#39; \
+                  &#39;LEADING:34&#39; \
+                  &#39;SLIDINGWINDOW:4:32&#39; \
+                  &#39;TRAILING:35&#39; \
+                  &#39;MINLEN:50&#39;</code></pre>
+</div>
+<div id="section-13" class="section level2">
+<h2>22-09-2024</h2>
+<pre class="bash"><code>fastqc /students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_32_ML50_L34_T35/trimmed_data/*_paired.* -o /students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_32_ML50_L34_T35/output/fastqc -t 12
+
+multiqc /students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_32_ML50_L34_T35/output/fastqc/* -o \
+  /students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_32_ML50_L34_T35/output/multiqc</code></pre>
+<p>Hieruit blijkt nogsteeds een incorrecte verdeling te zijn van de
+lengtes van sequenties. Ik zal ergens deze week vragen naar een
+oplossing hiervoor.</p>
+</div>
+<div id="section-14" class="section level2">
+<h2>23-09-2024</h2>
+<p>Vandaag zijn we bezig geweest met het mappen via bwa, zie hiervoor
+Jasper zijn logboek.</p>
+<p>Ik ben daarnaast bezig geweest met het installeren van Strelka.
+Strelka is een software die wij gaan gebruiken om varianten te vinden in
+onze data. Deze staat niet standaard op de server, dus zal ik handmatig
+moeten installeren. ### Strelka installeren Download the strelka
+git:</p>
+<pre class="bash"><code>wget &quot;https://github.com/Illumina/strelka/releases/download/v2.9.10/strelka-2.9.10.centos6_x86_64.tar.bz2&quot;
+tar xvjf strelka-2.9.10.centos6_x86_64.tar.bz2</code></pre>
+<p>Er wordt aangeraden om te testen of de software werkt</p>
+<pre class="bash"><code>bash strelka-2.9.10.centos6_x86_64/bin/runStrelkaSomaticWorkflowDemo.bash</code></pre>
+<p>Hieruit blijkt dat ik python2 nodig heb.</p>
+<p>Na korte research heb ik gevonden dat ik python versies lokaal kan
+installeren met pyenv.</p>
+<pre class="bash"><code>git clone https://github.com/pyenv/pyenv.git</code></pre>
+<p>Nu staat pyenv in onze tools folder, en kan deze gebruikt worden om
+andere python versies te installeren. 1 groot probleem is dat pyenv in
+de gebruikers home dingen installeerd, dat wil ik niet aangezien de home
+folder maar 25 gigabytes mag zijn. Ik moet in mijn ~/.bashrc bestand dus
+een andere locatie aangeven voor pyenv.</p>
+<pre class="bash"><code>export PYENV_ROOT=&quot;/students/2024-2025/Thema05/BlaasKanker/tools/python_versies&quot;
+export PATH=&quot;$PYENV_ROOT/bin:$PATH&quot;
+
+eval &quot;$(/students/2024-2025/Thema05/BlaasKanker/tools/pyenv/bin/pyenv init --path)&quot;
+export PYENV_CACHE_PATH=&quot;/students/2024-2025/Thema05/BlaasKanker/tools/.pyenvcache/&quot;</code></pre>
+<p>Op deze manier kan ik een dir meegeven waar ik de versies wil hebben.
+Nu kan ik een python versie installeren.</p>
+<pre class="bash"><code>/students/2024-2025/Thema05/BlaasKanker/tools/pyenv/bin/pyenv install 2.7
+/students/2024-2025/Thema05/BlaasKanker/tools/pyenv/bin/pyenv global 2.7
+pip2.7 install virtualenv
+python2.7 -m virtualenv strelkaVENV</code></pre>
+<p>Nu hebben we een virtualenv van python 2.7 in onze tools folder. Hier
+kunnen we de benodigde pakketjes installeren, die ook gebruikt kunnen
+worden door mijn groeps genoten.</p>
 </div>
 </div>
 
