@@ -3,38 +3,176 @@ title: "Logbook Janine Postmus"
 author: "Janine Postmus"
 date: "2024-09-10"
 output: html_document
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-### Inleiding genomics 
-In dit logboek zal ik bijhouden wat ik voor het project Genomics & Transcriptomics, leerjaar 2 kwartaal 1, allemaal uitvoer. Hierbij onderbouw ik mijn keuzes met waarom ik iets doe en als het nodig is hoe ik dat heb gedaan. Ik begin met het loggen over Genomics en er zal op het moment dat er overgegaan wordt op het transcriptomics gedeelte een nieuwe inleiding geplaatst worden.
+### Inleiding genomics
 
-**09-09-2024**  
-Nadat we de uitleg hebben gekregen hebben we groepen gevormd. Mijn groep is samen met Ramon, Jasper en Iris. We hebben vervolgens een begin gemaakt met het zoeken naar een wetenschappelijk artikel. 
+In dit logboek zal ik bijhouden wat ik voor het project Genomics &
+Transcriptomics, leerjaar 2 kwartaal 1, allemaal uitvoer. Hierbij
+onderbouw ik mijn keuzes met waarom ik iets doe en als het nodig is hoe
+ik dat heb gedaan. Ik begin met het loggen over Genomics en er zal op
+het moment dat er overgegaan wordt op het transcriptomics gedeelte een
+nieuwe inleiding geplaatst worden.
 
-**10-09-2024**  
-We hebben een definitieve keuze gemaakt voor ons onderzoek. We hebben gekozen voor een onderzoek met de behandeling van Entinostat op blaaskanker. Het onderwerp interesseert mij heel erg omdat ik kanker een interessant onderwerp vind. 
+**09-09-2024**\
+Nadat we de uitleg hebben gekregen hebben we groepen gevormd. Mijn groep
+is samen met Ramon, Jasper en Iris. We hebben vervolgens een begin
+gemaakt met het zoeken naar een wetenschappelijk artikel.
 
-**11-09-2024**  
-We hebben een taakverdeling gemaakt voor het plan van aanpak. Ik ga het onderzoekoverzicht, de achtergrond ervan en een globale theoretische achtergrond presenteren tijdens de presentatie. 
+**10-09-2024**\
+We hebben een definitieve keuze gemaakt voor ons onderzoek. We hebben
+gekozen voor een onderzoek met de behandeling van Entinostat op
+blaaskanker. Het onderwerp interesseert mij heel erg omdat ik kanker een
+interessant onderwerp vind.
 
-**12-09-2024**
-Ik heb het artikel doorgelezen en de kernwoorden eruit gehaald zodat ik hierop verder kon bouwen aan de theoretische achtergrond. Ik heb vanuit het artikel de kopjes Abstract en Introduction hiervoor gebruikt. Hier staat dusdanig veel informatie in over het onderzoek dat hier voor het plan van aanpak voldoende uit te halen valt. Ik heb gebruik gemaakt van online resourches en voor het vertalen van het artikel heb ik gebruik gemaakt van chat gtp. 
+**11-09-2024**\
+We hebben een taakverdeling gemaakt voor het plan van aanpak. Ik ga het
+onderzoekoverzicht, de achtergrond ervan en een globale theoretische
+achtergrond presenteren tijdens de presentatie. Iris gaat de Gantt chart
+maken, Jasper gaat de workflow maken, Ramon zet het plan van aanpak in
+elkaar.
 
-**13-09-2024**
-Ik heb de theorie aangevuld met de laatste dingen. Smiddags is er een les gevolgd over hoe we data kunnen downloaden op de schoolserver. Hier 
-heeft Ramon onze data voor uitgevoerd.
+**12-09-2024** Ik heb het artikel doorgelezen en de kernwoorden eruit
+gehaald zodat ik hierop verder kon bouwen aan de theoretische
+achtergrond. Ik heb vanuit het artikel de kopjes Abstract en
+Introduction hiervoor gebruikt. Hier staat dusdanig veel informatie in
+over het onderzoek dat hier voor het plan van aanpak voldoende uit te
+halen valt. Ik heb gebruik gemaakt van online resourches en voor het
+vertalen van het artikel heb ik gebruik gemaakt van chat gtp.
 
-**15-09-2024**
-Naar aanleiding van feedback vanuit de groep heb ik de theorie aangepast en aangevuld. Presentatie is afgemaakt door Ramon. Omdat ik met een gebroken enkel in huis vast zit, gaat Ramon mijn deel van de presentatie doen en gaan we maandag afspraken maken over de uitvoering van het project.
+**13-09-2024** Ik heb de theorie aangevuld met de laatste dingen.
+Smiddags is er een les gevolgd over hoe we data kunnen downloaden op de
+schoolserver. Hier heeft Ramon onze data voor uitgevoerd.
 
-**17-09-2024**
-Ik heb de tool snpEff gekregen/gekozen als onderdeel van het project. Omdat ik de komende weken minder op school aanwezig kan zijn hebben we deze tool aan mij toebesteed omdat deze tool pas redelijk aan het einde van het proces nodig is. Hierdoor krijg ik meer tijd om processen en dingen te onderzoeken voordat we de tool daadwerkelijk nodig zijn.
-Om te leren hoe we moeten omgaan met de data en testdata heb ik met behulp van de tool seqkit testdata gemaakt voor ons project. Ik heb dit eerst uitgevoerd op 1 bestand om te leren hoe het werkt. Omdat onze dataset uit heel veel bestanden bestaat, is het noodzakelijk dat ik leer hoe ik het kan uitvoeren op alle bestanden. Ik weet dat ik de find functie moet gebruiken icm de tools fastqc en parallel, hoe ik het moet gebruiken weet ik nog niet.
+**15-09-2024** Naar aanleiding van feedback vanuit de groep heb ik de
+theorie aangepast en aangevuld. Presentatie is afgemaakt door Ramon.
+Omdat ik met een gebroken enkel in huis vast zit, gaat Ramon mijn deel
+van de presentatie doen en gaan we maandag afspraken maken over de
+uitvoering van het project.
 
-**18-09-2024**
-Ik heb uitgezocht hoe ik het multiqc rapport moet maken. Via verschillende bronnen en forums op internet heb ik de goede commandline geproduceerd en vervolgens uitgevoerd. Ik heb find gecombineerd met de tools fastqc en parallel om op deze manier alle fastqc rapporten in html en zip formaat in 1 map te krijgen. Omdat dit niet prettig leest en analyseert heb ik met de tool multiqc alle data in 1 rapport laten zetten. Hierdoor is de data overzichtelijk in te zien inclusief grafiekjes en dergelijke. Hiermee kan je dus in één oogopslag zien hoe goed je data is. Voor de rest van de week ga ik bezig met mijn tool "snpEff" ik ga onderzoeken en leren hoe deze tool werkt, wat deze tool doet en waarom we deze tool gaan gebruiken.
+**17-09-2024** Ik heb de tool snpEff gekregen/gekozen als onderdeel van
+het project. Omdat ik de komende weken minder op school aanwezig kan
+zijn hebben we deze tool aan mij toebesteed omdat deze tool pas redelijk
+aan het einde van het proces nodig is. Hierdoor krijg ik meer tijd om
+processen en dingen te onderzoeken voordat we de tool daadwerkelijk
+nodig zijn. Om te leren hoe we moeten omgaan met de data en testdata heb
+ik met behulp van de tool seqkit testdata gemaakt voor ons project. Ik
+heb dit eerst uitgevoerd op 1 bestand om te leren hoe het werkt. Omdat
+onze dataset uit heel veel bestanden bestaat, is het noodzakelijk dat ik
+leer hoe ik het kan uitvoeren op alle bestanden. Ik weet dat ik de find
+functie moet gebruiken icm de tools fastqc en parallel, hoe ik het moet
+gebruiken weet ik nog niet. Verder hebben we afgesproken dat ik alle
+stappen van het preprocessing traject, dus de fastqc, multiqc en
+trimmomatic zelf ga uitvoeren ook met testdata om goed te begrijpen wat
+we doen.
 
+Gebruikte commandline voor seqkit om testdata te maken van 1 fastq file:
+
+```{bash, eval=FALSE}
+Seqkit head -n 10000 /.x.fastq -o /.x.fastq
+```
+
+Hierin is /. x.fastq een inputfile, hierbij moet het absolute pad naar
+de map gebruikt worden. -o /.x.fastq is het outputfile, ook hier moet
+het absolute pad naar de map gebruikt worden.
+
+Vervolgens moet er een fastqc rapport gemaakt worden van alle files in
+de map, het eindrapport is met multiqc, dit bevat alle fastqc files in 1
+rapport.
+
+```{bash, eval=FALSE}
+find /students/2024-2025/Thema05/BlaasKanker/fastq -name "*.fastq" |parallel fastqc -o /students/2024-2025/Thema05/BlaasKanker/oefenengroep/testdataJanine/MultiqcJanine/{}
+
+```
+
+Find wordt gebruikt om de map met files te vinden en hiervan een lijst
+te maken. Path to file staat voor het volledige pad naar het bestand.
+Het invoer bestand was in dit geval onze map met testdata. De output is
+in een persoonlijke map gekomen waarin we alle 4 zelf kunnen testen. De
+{} worden gebruikt om aan te geven dat hier de uitvoerbestanden inkomen.
+
+**18-09-2024** Ik heb uitgezocht hoe ik het multiqc rapport moet maken.
+Via verschillende bronnen en forums op internet heb ik de goede
+commandline geproduceerd en vervolgens uitgevoerd. Ik heb find
+gecombineerd met de tools fastqc en parallel om op deze manier alle
+fastqc rapporten in html en zip formaat in 1 map te krijgen. Omdat dit
+niet prettig leest en analyseert heb ik met de tool multiqc alle data in
+1 rapport laten zetten. Hierdoor is de data overzichtelijk in te zien
+inclusief grafiekjes en dergelijke. Hiermee kan je dus in één oogopslag
+zien hoe goed je data is.
+
+**20-09-2024** Ik heb mij ingelezen op het multiqc rapport, ik heb per
+onderdeel het doel beschreven en hoe onze data het op dat onderdeel
+gedaan heeft. Hier heb ik vervolgens een verslagje van gemaakt met een
+eindconclusie en ik heb deze gedeeld met mijn projectgroep via teams. Ik
+vind het belangrijk om het op deze manier te hebben gedaan omdat ik op
+deze manier sneller inzicht kan creeëren hoe zo'n rapport werkt en welke
+onderdelen het belangrijkste zijn.
+
+**22-09-2024** Omdat het trimmen van de data nog niet goed is gegaan
+hebben wij allemaal dit opnieuw uitgevoerd en uitgezocht wat de goede
+commandline is. Ik heb dit gedaan door eerst te kijken naar wat
+trimmomatic is voor programma en de documentatie goed door te nemen.
+
+**23-09-2024** Verder gegaan met trimmomatic, het zoeken naar de goede
+instellingen zodat het fastq rapport zoveel mogelijk groen kleurt. Dit
+is belangrijk om zo te kunnen kijken of de data nog verder
+geperfectioneerd kan worden. Hoe mooier de dataset is hoe beter deze
+gebruikt kan worden voor de volgende stap in het proces, de mapping.
+
+Ik heb het command voor trimmomatic hier neergezet om het zo makkelijker
+aan te kunnen passen om makkelijker met de settings te kunnen
+experimenteren:
+
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+    parallel 'TrimmomaticPE -threads 10' \
+            '/students/2024-2025/Thema05/BlaasKanker/outputs/fastq/{}_1.fastq' \
+            '/students/2024-2025/Thema05/BlaasKanker/outputs/fastq/{}_2.fastq' \
+            '/students/2024-2025/Thema05/BlaasKanker/oefenengroep/testdataJanine/trimdata/paird/{}paired_1.fastq' \
+            '/students/2024-2025/Thema05/BlaasKanker/oefenengroep/testdataJanine/trimdata/unpaird/{}unpaired_1.fastq' \
+            '/students/2024-2025/Thema05/BlaasKanker/oefenengroep/testdataJanine/trimdata/paird/{}paired_2.fastq' \
+            '/students/2024-2025/Thema05/BlaasKanker/oefenengroep/testdataJanine/trimdata/unpaird/{}unpaired_2.fastq' \
+            'LEADING:3' \
+            'TRAILING:3' \
+            'SLIDINGWINDOW:4:20' \
+            'MINLEN:40'
+```
+
+**24-09-2024** Het trimmen van de data heb ik afgemaakt, het zoeken naar
+de goede settings om hier vervolgens fastqc op los te laten en een
+multiqc rapport maken zodat ik dit kan vergelijken met het multiqc
+rapport voor het trimmen van de data. Wordt de data beter? Wordt het
+slechter? Wat zegt dat over de data? Ik heb eerst de settings gebruikt
+zoals gelogd op 23-09-2024. Vervolgens heb ik op de paired fastq files
+fastqc losgelaten en hier een multiqc van gemaakt.
+
+Eerst fastqc maken van de paired data
+
+```{bash, eval=FALSE}
+fastqc /students/2024-2025/Thema05/BlaasKanker/oefenengroep/testdataJanine/trimdata/paird/* \
+    -o /students/2024-2025/Thema05/BlaasKanker/oefenengroep/testdataJanine/trimdata/trimfastqc -t 12
+```
+
+Daarna multiqc maken van de fastqc's van de paired data
+
+```{bash, eval=FALSE}
+multiqc /students/2024-2025/Thema05/BlaasKanker/oefenengroep/testdataJanine/trimdata/trimfastqc/* \
+-o /students/2024-2025/Thema05/BlaasKanker/oefenengroep/testdataJanine/trimdata/multiqctrim
+```
+
+Door onderstaande settings te gebruiken heb ik een multiqc rapport
+gecreeërd, tot onze grote verbazing blijkt deze leeg te zijn.\
+
+| Run ID | LEADING | TRAILING | SLIDING WINDOW | MINLEN | AVGQUAL | HEADCROP | CROP | ILLUMINACLIP |
+|--------|---------|----------|----------------|--------|---------|----------|------|--------------|
+| X      | NONE    | NONE     | NONE           | NONE   | NONE    | NONE     | NONE | NONE         |
+|        |         |          |                |        |         |          |      |              |
+|        |         |          |                |        |         |          |      |              |
