@@ -345,3 +345,84 @@ python2.7 -m virtualenv strelkaVENV
 
 Nu hebben we een virtualenv van python 2.7 in onze tools folder.
 Hier kunnen we de benodigde pakketjes installeren, die ook gebruikt kunnen worden door mijn groeps genoten.
+
+
+
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+  parallel -j 20 "bwa mem -t 20 -M -R '@RG\\tID:{}\\tSM:{}\\tPL:illumina\\tLB:lib1' \
+    /students/2024-2025/Thema05/BlaasKanker/tools/testGenome/ncbi_dataset/data/GCF_000001635.27/GCF_000001635.27_GRCm39_genomic.fna \
+    /students/2024-2025/Thema05/BlaasKanker/outputs/fastq/{}_1.fastq /students/2024-2025/Thema05/BlaasKanker/outputs/fastq/{}_2.fastq > \
+    /students/2024-2025/Thema05/BlaasKanker/temp/mappingTest/first_output/{}.sam"
+
+```
+
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+  parallel "samtools view -b /students/2024-2025/Thema05/BlaasKanker/temp/mappingTest/first_output/{}.sam | samtools sort -o /students/2024-2025/Thema05/BlaasKanker/temp/mappingTest/sorted_bam/{}_sorted.bam"
+```
+
+
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+  parallel "sort -o /students/2024-2025/Thema05/BlaasKanker/temp/mappingTest/sorted_output/{}.sorted.bam /students/2024-2025/Thema05/BlaasKanker/temp/mappingTest/output_sam1/{}.bam"
+```
+
+```{bsah, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+  parallel -j 6 "samtools index /students/2024-2025/Thema05/BlaasKanker/temp/mappingTest/sorted_output/{}.sorted.bam"
+
+```
+
+
+## Picard
+```{bash, eval=FALSE}
+java -jar picard.jar MarkDuplicates \
+  "I=/students/2024-2025/Thema05/BlaasKanker/temp/mappingTest/sorted_bam/SRR14870694_sorted.bam" \
+  "O=/students/2024-2025/Thema05/BlaasKanker/temp/picard_test/duplicates.bam" \
+  "M=/students/2024-2025/Thema05/BlaasKanker/temp/picard_test/duplicates.txt" \
+  "READ_NAME_REGEX=null"
+```
+
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+  parallel 'TrimmomaticPE -threads 12' \
+                  '/students/2024-2025/Thema05/BlaasKanker/outputs/fastq/{}_1.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/outputs/fastq/{}_2.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/temp/{}_paired.1.fastq ' \
+                  '/students/2024-2025/Thema05/BlaasKanker/temp/{}_unpaired.1.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/temp/{}_paired.2.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/temp/{}_unpaired.2.fastq' \
+                  'LEADING:34' \
+                  'SLIDINGWINDOW:4:32' \
+                  'TRAILING:35' \
+                  'MINLEN:50'
+```
+
+## 25-09-2024
+```{bash, eval=FALSE}
+samtools faidx GCF_000001635.27_GRCm39_genomic.fna
+```
+
+
+```{bash, eval=FALSE}
+python2.7 /students/2024-2025/Thema05/BlaasKanker/tools/strelka-2.9.10.centos6_x86_64/bin/configureStrelkaSomaticWorkflow.py \
+    --tumorBam /students/2024-2025/Thema05/BlaasKanker/temp/mappingTest/sorted_bam/SRR14870694_sorted.bam \
+    --referenceFasta /students/2024-2025/Thema05/BlaasKanker/tools/testGenome/ncbi_dataset/data/GCF_000001635.27/GCF_000001635.27_GRCm39_genomic.fna \
+    --runDir /students/2024-2025/Thema05/BlaasKanker/temp/demo_somatic
+
+```
+
+
+```{bash, eval=FALSE}
+python2.7 /students/2024-2025/Thema05/BlaasKanker/tools/strelka-2.9.10.centos6_x86_64/bin/configureStrelkaGermlineWorkflow.py     --bam /students/2024-2025/Thema05/BlaasKanker/temp/mappingTest/sorted_bam/SRR14870694_sorted.bam     --referenceFasta /students/2024-2025/Thema05/BlaasKanker/tools/testGenome/ncbi_dataset/data/GCF_000001635.27/GCF_000001635.27_GRCm39_genomic.fna     --runDir /students/2024-2025/Thema05/BlaasKanker/temp/demo_somatic
+```
+
+```{bash, eval=FALSE}
+python2.7 /students/2024-2025/Thema05/BlaasKanker/tools/strelka-2.9.10.centos6_x86_64/bin/configureStrelkaSomaticWorkflow.py \
+    --normalBam /dev/null \
+    --tumorBam /students/2024-2025/Thema05/BlaasKanker/temp/mappingTest/sorted_bam/SRR14870694_sorted.bam \
+    --referenceFasta /students/2024-2025/Thema05/BlaasKanker/tools/testGenome/ncbi_dataset/data/GCF_000001635.27/GCF_000001635.27_GRCm39_genomic.fna \
+    --runDir /students/2024-2025/Thema05/BlaasKanker/temp/demo_somatic2
+
+```
