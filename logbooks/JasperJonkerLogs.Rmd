@@ -11,13 +11,30 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Logboek Jasper Jonker
 Dit is het Logboek van Jasper Jonker voor het vak 2.1.2 Genomics & Transcriptomics. Met dit vak gaan we een paper op nieuw doen of een andere onderzoeksvraag beantwoorden met de data die gegeven is bij de paper.
-# 09-09 
+
+## 09-09 
+
 We starten het onderzoek. We moeten eerst een paper vinden of verslag met genoeg meetwaarde heeft een meerde meetwaarde onder de zelfde omstandigheden. We doen het onderzoek met vier mensen dus hebben besloten om iedereen 1 uit te kiezen. Om zeker te weten dat er 1 tussen zit dit zo ie zo goed is en samen 1 kunnen uitkiezen waar we allemaal iets mee hebben. 
-#10-09 
 
+## 10-09 
 
-# 17-09
-Ik ga vandaag testdata maken in een oefen Folder die later weer wordt verwijderd. We maken test data omdat die data kleiner is dan de noramle data en daarom makkelijker te gebruiken is in onze tools zodat het niet te lang duurd.
+Ik heb er gekozen voor het volgende onderzoek https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE153650 . Het is een onderzoek dat gaat over het bestrijden van blaaskanker met behulp van specifiek soort eiwitten. Omdat er hedendaags nog heel veel mensen aan dood gaan en ook de behandeling die ze nu gebruiken, dus chemotherapie niet altijd even goed aan slaat. Dit onderzoek wordt eerst op muizen getest. Nu nog wachten op goedkeuring van de docenten. 
+
+## 11-09
+
+Na goedkeuring is mijn tekst gekozen om mee verder te gaan in dit project. Nu gaan we bezig met het plan van aanpak. IK ga bezig met de workflow.
+
+## 13-09 & 14-09
+
+Bezig met de worklfow en gekeken wat we uiteindelijk gaan doen. We hebben besloten om de het onderzoek na te bootsen maar ook een beetje te verbereden. We gaan ook kijken wat de mutatie van de kanker en wat voor gevolg het heeft op biologische proggesen verder in het lichaam.
+
+## 16-09
+
+Het plan van aanpak gepresenteerd. We hebben ook gelijk gekozen om met het nieuwste muisen gen te gaan vergelijken. We hebben ook een taak verdeling gemaakt. Ikga bezig met bwa omdat het mij iets moeilijks lijkt rn ik mezelf wil uitdagen. 
+
+## 17-09
+
+Ik ga vandaag eerst testdata maken in een oefen Folder die later weer wordt verwijderd. We maken test data omdat die data kleiner is dan de normale data en daarom makkelijker te gebruiken is in onze tools zodat het niet te lang duurt. Dit doen we even allemaal en doen het met 10000 reads omdat het ons groot genoeg lijkt.
 ```{bash, eval=FALSE}
 find /students/2024-2025/Thema05/BlaasKanker/fastq/ -name "*.fastq" | \
     parallel "seqkit sample -p 0.1 {} | seqkit head -n 10000 > /students/2024-2025/Thema05/BlaasKanker/oefenengroep/testdataJasper/{/}"
@@ -32,7 +49,7 @@ fastqc /students/2024-2025/Thema05/BlaasKanker/oefenengroep/testdataJasper/* \
 multiqc /students/2024-2025/Thema05/BlaasKanker/oefenengroep/FastqcJasper/* -o /students/2024-2025/Thema05/BlaasKanker/oefenengroep/multiqcJasper/
 ```
 
-# 18 -09 
+## 18 -09 
 ``` {bash, eval= FALSE}
 # hier maken er de van de refence genome een index file zodat de tool sneller gaat. 
 bwa index /students/2024-2025/Thema05/BlaasKanker/realreferenceGenome/ncbi_dataset/data/GCF_000001635.27/GCF_000001635.27_GRCm39_genomic.fna
@@ -48,5 +65,75 @@ samtools index output.sorted.bam
 samtools flagstat output.sorted.bam.bai
 https://www.youtube.com/watch?v=1wcFavYt6uU 
 deze turtoril heb ik gebruikt. 
+
+```
+
+## 20-09 
+Bezig geweest met trimmiotic, er is na het trimmen kwaliteit om laag gegaan en dat is niet logisch en we kijken naar een verklaring of we verdere moeten met ongegtimde data.
+
+## 22-09
+Ik ga van daag even puzelen met trimomatic de onderste code heb ik van iris
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+  parallel 'TrimmomaticPE -threads 8 ' \
+                  '/students/2024-2025/Thema05/BlaasKanker/fastq/{}_1.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/fastq/{}_2.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/fastq_trimmed/{}_paired.1.fastq ' \
+                  '/students/2024-2025/Thema05/BlaasKanker/fastq_trimmed/{}_unpaired.1.fastq ' \
+                  '/students/2024-2025/Thema05/BlaasKanker/fastq_trimmed/{}_paired.2.fastq ' \
+                  '/students/2024-2025/Thema05/BlaasKanker/fastq_trimmed/{}_unpaired.2.fastq ' \
+                  'ILLUMINACLIP:/students/2024-2025/Thema05/BlaasKanker/tools/trim_adapters/TruSeq3-PE.fa:2:40:10 ' \
+                  'MINLEN:40 ' \
+                  'SLIDINGWINDOW:4:20'
+```
+Mijn teminal doet raar en doet het dus niet en ik kom er niet uit. IK kijk even op school want een extra paar ogen helpt altijd 
+Ik ga even paar dingen opschrijven zodat ik dat dan kan achter elkaar kan gaan proberen 
+
+We kunnen het proberen met traling toe te passen. Dit verwijderd de laaste paar basen verwijderd worden totdat een totdat er een kwaliteit gevonden is 
+
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+  parallel 'TrimmomaticPE -threads 8 ' \
+                  '/students/2024-2025/Thema05/BlaasKanker/fastq/{}_1.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/fastq/{}_2.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/fastq_trimmed/{}_paired.1.fastq ' \
+                  '/students/2024-2025/Thema05/BlaasKanker/fastq_trimmed/{}_unpaired.1.fastq ' \
+                  '/students/2024-2025/Thema05/BlaasKanker/fastq_trimmed/{}_paired.2.fastq ' \
+                  '/students/2024-2025/Thema05/BlaasKanker/fastq_trimmed/{}_unpaired.2.fastq ' \
+                  'ILLUMINACLIP:/students/2024-2025/Thema05/BlaasKanker/tools/trim_adapters/TruSeq3-PE.fa:2:40:10 ' \
+                  'MINLEN:40 ' \
+                  'SLIDINGWINDOW:4:20' \
+                  'TRALLING:20'
+```
+
+Mijn laptop doet vervelend ik probeer dat eerst even op te lossen en ga anders later nog verder om te kijken wat bettere settinngs zijn 
+
+## 23-09
+bwa werkt nu echt op de test data, maar moet even wachten op het trimmen van de data want we zitten te twijfelen wat we moeten gaan trimmen. Dit gaan we even met de docent over hebben.
+In de tussen tijd gaan we verder met Strelka. Dit is een tool die variantie kan vinden in de mapping. Hier mee kunnen we kijken waar de mutaties zitten in het gen en kunnen we later kijken wat voor invloed het heeft op de eiwitten later in het biologisch proces.
+
+Hier gaan we bezig op de echte data die nog niet getrimde is zodat we zeker weten dat het het doet als het op de getrimde data gaan doen. Hier staat als het ware het zelde als op dag 18-09 maar dan met het pad waar alles is en waar alles moet staan  en alles parallel.      
+
+``` {bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+    parallel 'bwa mem -t 8 /students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/index/GCF_000001635.27_GRCm39_genomic.fna /students/2024-2025/Thema05/BlaasKanker/outputs/fastq/{}_1.fastq /students/2024-2025/Thema05/BlaasKanker/outputs/fastq/{}_2.fastq > /students/2024-2025/Thema05/BlaasKanker/testingtools/BWA_test_vol/output/{}_aln.sam' | \
+    'samtools view -b /students/2024-2025/Thema05/BlaasKanker/testingtools/BWA_test_vol/output/{}.sam > {}.bam'
+```
+
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+    parallel 'samtools view -b /students/2024-2025/Thema05/BlaasKanker/testingtools/BWA_test_vol/output/aln_sam/{}_aligned.sam > /students/2024-2025/Thema05/BlaasKanker/testingtools/BWA_test_vol/output/aln_bam/{}.bam'
+```
+
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+    parallel 'samtools sort -o /students/2024-2025/Thema05/BlaasKanker/testingtools/BWA_test_vol/output/aln_sorted/{}_sorted.bam /students/2024-2025/Thema05/BlaasKanker/testingtools/BWA_test_vol/output/aln_bam/{}.bam'
+```
+Door problemen met de laptop ga ik morgen verder met de laatste stap
+
+## 24-09
+``` {bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+    parallel 'samtools index -M /students/2024-2025/Thema05/BlaasKanker/testingtools/BWA_test_vol/output/aln_sorted/{}_sorted.bam'
 
 ```
