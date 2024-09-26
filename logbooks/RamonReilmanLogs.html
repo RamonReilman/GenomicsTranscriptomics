@@ -356,6 +356,36 @@ display: none;
 
 </div>
 
+<div id="TOC">
+<ul>
+<li><a href="#logboek-ramon-reilman" id="toc-logboek-ramon-reilman">Logboek Ramon Reilman</a>
+<ul>
+<li><a href="#section" id="toc-section">10-9-2024</a></li>
+<li><a href="#section-1" id="toc-section-1">11-9-2024</a></li>
+<li><a href="#section-2" id="toc-section-2">12-9-2024</a></li>
+<li><a href="#section-3" id="toc-section-3">13-9-2024</a></li>
+<li><a href="#section-4" id="toc-section-4">14-9-2024</a></li>
+<li><a href="#section-5" id="toc-section-5">15-9-2024</a></li>
+<li><a href="#section-6" id="toc-section-6">16-9-2024</a></li>
+<li><a href="#section-7" id="toc-section-7">17-9-2024</a></li>
+<li><a href="#section-8" id="toc-section-8">18-9-2024</a></li>
+<li><a href="#section-9" id="toc-section-9">20-09-2024</a></li>
+<li><a href="#section-10" id="toc-section-10">21-09-2024</a></li>
+<li><a href="#section-11" id="toc-section-11">22-09-2024</a></li>
+<li><a href="#section-12" id="toc-section-12">22-09-2024</a></li>
+<li><a href="#section-13" id="toc-section-13">23-09-2024</a></li>
+<li><a href="#section-14" id="toc-section-14">22-09-2024</a></li>
+<li><a href="#section-15" id="toc-section-15">23-09-2024</a></li>
+<li><a href="#section-16" id="toc-section-16">24-09-2024</a></li>
+<li><a href="#section-17" id="toc-section-17">25-09-2024</a>
+<ul>
+<li><a href="#official-trim" id="toc-official-trim">Official
+trim</a></li>
+</ul></li>
+<li><a href="#section-18" id="toc-section-18">26-09-2024</a></li>
+</ul></li>
+</ul>
+</div>
 
 <div id="logboek-ramon-reilman" class="section level1">
 <h1>Logboek Ramon Reilman</h1>
@@ -617,8 +647,9 @@ output, dus zal ik een multiqc uitvoeren op alleen de paired data. Voor
 het onderzoek downstream lijkt mij het beste om mogelijk ook de unpaired
 sequenties achter te laten. Dit zijn nu single end sequenties die een
 stuk lastiger zijn om te mappen.</p>
-<p>/ TODO voer multiqc uit op alleen de getrimde paired data ##
-22-09-2024</p>
+</div>
+<div id="section-11" class="section level2">
+<h2>22-09-2024</h2>
 <pre class="bash"><code>fastqc /students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_20_ML20/trimmed_data/*_paired.* -o /students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_20_ML20/output/fastqc_no_unpaired -t 12
 
 multiqc /students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_20_ML20/output/fastqc_no_unpaired/* -o \
@@ -708,7 +739,7 @@ gedetecteerd worden.</p>
                   &#39;TRAILING:35&#39; \
                   &#39;MINLEN:30&#39;</code></pre>
 </div>
-<div id="section-11" class="section level2">
+<div id="section-12" class="section level2">
 <h2>22-09-2024</h2>
 <pre class="bash"><code>fastqc /students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_32_ML30_L34_T35/trimmed_data/*_paired.* -o /students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_32_ML30_L34_T35/output/fastqc -t 12
 
@@ -719,7 +750,7 @@ een phred score van rond de 37. De kans dat een nucleotide nu fout is is
 0.000199526% (<a href="https://eafyounian.github.io/phred_score_converter/" class="uri">https://eafyounian.github.io/phred_score_converter/</a>).
 Het enige wat nu niet goed is is de distributie van de lengte.</p>
 </div>
-<div id="section-12" class="section level2">
+<div id="section-13" class="section level2">
 <h2>23-09-2024</h2>
 <p>De kwaliteit is nu goed, alleen de verdeling van de lengtes van de
 sequenties is niet goed, al weet ik niet wat de oorzaak is. Om te kijken
@@ -810,7 +841,7 @@ minlen.</p>
                   &#39;TRAILING:35&#39; \
                   &#39;MINLEN:50&#39;</code></pre>
 </div>
-<div id="section-13" class="section level2">
+<div id="section-14" class="section level2">
 <h2>22-09-2024</h2>
 <pre class="bash"><code>fastqc /students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_32_ML50_L34_T35/trimmed_data/*_paired.* -o /students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_32_ML50_L34_T35/output/fastqc -t 12
 
@@ -820,7 +851,7 @@ multiqc /students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_32_ML50_L34_T
 lengtes van sequenties. Ik zal ergens deze week vragen naar een
 oplossing hiervoor.</p>
 </div>
-<div id="section-14" class="section level2">
+<div id="section-15" class="section level2">
 <h2>23-09-2024</h2>
 <p>Vandaag zijn we bezig geweest met het mappen via bwa, zie hiervoor
 Jasper zijn logboek.</p>
@@ -856,6 +887,198 @@ python2.7 -m virtualenv strelkaVENV</code></pre>
 <p>Nu hebben we een virtualenv van python 2.7 in onze tools folder. Hier
 kunnen we de benodigde pakketjes installeren, die ook gebruikt kunnen
 worden door mijn groeps genoten.</p>
+</div>
+<div id="section-16" class="section level2">
+<h2>24-09-2024</h2>
+<p>Omdat er een aantal duplicaten zijn, die mogelijk een negatieve
+impact kunnen hebben bij variant calling (kan een bias veroorzaken) Gaan
+wij deze duplicaten verwijderen met picard. Vandaag ga ik de
+documentatie lezen en kijken of ik de tool werkend kan krijgen.
+<!-- TODO ref naar jaspers logboek --> Eerst heb ik Jasper zijn logboek
+gevolgd om een index te maken, en de fastq files te mappen naar het
+referentie genoom. Daarna heb ik picard gerund op 1 van de outputs, als
+test. Deze gaf meerdere foutmeldingen.</p>
+<pre class="bash"><code>java -jar picard.jar MarkDuplicates \
+  &quot;I=/students/2024-2025/Thema05/BlaasKanker/temp/mappingTest/sorted_bam/SRR14870694_sorted.bam&quot; \
+  &quot;O=/students/2024-2025/Thema05/BlaasKanker/temp/picard_test/duplicates.bam&quot; \
+  &quot;M=/students/2024-2025/Thema05/BlaasKanker/temp/picard_test/duplicates.txt&quot; \</code></pre>
+<p>Een van deze foutmeldingen was dat de naam van het input bestand niet
+correct was. Na een google search heb ik een oplossing gevonden
+hiervoor.</p>
+<pre class="bash"><code>java -jar picard.jar MarkDuplicates \
+  &quot;I=/students/2024-2025/Thema05/BlaasKanker/temp/mappingTest/sorted_bam/SRR14870694_sorted.bam&quot; \
+  &quot;O=/students/2024-2025/Thema05/BlaasKanker/temp/picard_test/duplicates.bam&quot; \
+  &quot;M=/students/2024-2025/Thema05/BlaasKanker/temp/picard_test/duplicates.txt&quot; \
+  &quot;READ_NAME_REGEX=null&quot;</code></pre>
+<p>Nu maakt de naam van het input bestand niet uit.</p>
+<p>Een volgende error had een iets andere oplossing. In de bam files
+mist een <span class="citation">@RG</span> header, deze header geeft
+groep, ID, platofrm en library aan van de samples. En deze header heeft
+picard nodig om het input bestand te lezen. Deze kan je meegeven aan bwa
+mem tijdens het mappen, de aangepaste commands staan hier onder.</p>
+<pre class="bash"><code>cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+  parallel -j 20 &quot;bwa mem -t 20 -M -R &#39;@RG\\tID:{}\\tSM:{}\\tPL:illumina\\tLB:lib1&#39; \
+    /students/2024-2025/Thema05/BlaasKanker/tools/testGenome/ncbi_dataset/data/GCF_000001635.27/GCF_000001635.27_GRCm39_genomic.fna \
+    /students/2024-2025/Thema05/BlaasKanker/outputs/fastq/{}_1.fastq /students/2024-2025/Thema05/BlaasKanker/outputs/fastq/{}_2.fastq &gt; \
+    /students/2024-2025/Thema05/BlaasKanker/temp/mappingTest/first_output/{}.sam&quot;
+</code></pre>
+<pre class="bash"><code>cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+  parallel &quot;samtools view -b /students/2024-2025/Thema05/BlaasKanker/temp/mappingTest/first_output/{}.sam | samtools sort -o /students/2024-2025/Thema05/BlaasKanker/temp/mappingTest/sorted_bam/{}_sorted.bam&quot;</code></pre>
+<p>Jasper heeft deze stap in 2 gesplitst, maar voeg ik samen zodat het
+meer hands off is voor mij.</p>
+<pre class="bsah"><code>cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+  parallel -j 6 &quot;samtools index /students/2024-2025/Thema05/BlaasKanker/temp/mappingTest/sorted_output/{}.sorted.bam&quot;</code></pre>
+<p>Ook deze bestanden moeten met samtools index gedaan worden, het
+bestand wat hier uitkomt heeft picard ook nodig.</p>
+<!-- TODO Log deze secties. -->
+<p>Nu kan de test met picard weer uitgevoerd worden.</p>
+<pre class="bash"><code>java -jar picard.jar MarkDuplicates \
+  &quot;I=/students/2024-2025/Thema05/BlaasKanker/temp/mappingTest/sorted_bam/SRR14870694_sorted.bam&quot; \
+  &quot;O=/students/2024-2025/Thema05/BlaasKanker/temp/picard_test/duplicates.bam&quot; \
+  &quot;M=/students/2024-2025/Thema05/BlaasKanker/temp/picard_test/duplicates.txt&quot; \
+  &quot;READ_NAME_REGEX=null&quot;</code></pre>
+<p>Het uitput bestand is gemaakt, en bevat duplicaten die een mark
+hebben. Zo kunnen tools downstream deze vermijden.</p>
+</div>
+<div id="section-17" class="section level2">
+<h2>25-09-2024</h2>
+<p>Vandaag wil ik gaan kijken naar hoe we strelka moeten gebruiken.
+Eerder in het logboek heb ik uitgelegd hoe die geinstalleerd is met
+python2.7 Op de officiele website kon ik zo’n soort gelijk bestand
+vinden. Alleen is er een probleem. Onze tumor is ingebracht, en heft
+niks te maken met de germline. Opzich is dit geen probleem, want strelka
+heeft een somatische workflow. Alleen hebben wij de .bam file nodig van
+een normale muis, zonder de tumor. In het artikel staat wel benoemd dat
+ze die hebben, maar ik kon deze files nergens vinden. Ik heb het contact
+persoon een mail gestuurd, en we hopen en wachten nu op een
+antwoord.</p>
+<p>Deze konden wij dus niet uitvoeren zonder normal file.</p>
+<pre class="bash"><code>python2.7 /students/2024-2025/Thema05/BlaasKanker/tools/strelka-2.9.10.centos6_x86_64/bin/configureStrelkaSomaticWorkflow.py \
+    --tumorBam /students/2024-2025/Thema05/BlaasKanker/temp/mappingTest/sorted_bam/SRR14870694_sorted.bam \
+    --referenceFasta /students/2024-2025/Thema05/BlaasKanker/tools/testGenome/ncbi_dataset/data/GCF_000001635.27/GCF_000001635.27_GRCm39_genomic.fna \
+    --runDir /students/2024-2025/Thema05/BlaasKanker/temp/demo_somatic
+</code></pre>
+<p>Het probleem bij het uitvoeren van dit command is dat alle erfbare
+mutaties ook gemarkeerd worden. Het is vervolgens erg lastig om de
+germline en somatische mutaties uit elkaar te halen.</p>
+<pre class="bash"><code>python2.7 /students/2024-2025/Thema05/BlaasKanker/tools/strelka-2.9.10.centos6_x86_64/bin/configureStrelkaGermlineWorkflow.py     --bam /students/2024-2025/Thema05/BlaasKanker/temp/mappingTest/sorted_bam/SRR14870694_sorted.bam     --referenceFasta /students/2024-2025/Thema05/BlaasKanker/tools/testGenome/ncbi_dataset/data/GCF_000001635.27/GCF_000001635.27_GRCm39_genomic.fna     --runDir /students/2024-2025/Thema05/BlaasKanker/temp/demo_somatic</code></pre>
+<p>Dit command werkte niet, er miste een bestand bij het referentie
+genoom. Deze kan aangemaakt worden met de volgende samtool feature.</p>
+<pre class="bash"><code>samtools faidx GCF_000001635.27_GRCm39_genomic.fna</code></pre>
+<p>Command is weer uitgevoerd, en nu kregen we een output bestand.
+Helaas heb ik nog niks gehoord van het contact persoon, en zal de 27e
+advies vragen aan de docenten.</p>
+<pre class="bash"><code>python2.7 /students/2024-2025/Thema05/BlaasKanker/tools/strelka-2.9.10.centos6_x86_64/bin/configureStrelkaGermlineWorkflow.py     --bam /students/2024-2025/Thema05/BlaasKanker/temp/mappingTest/sorted_bam/SRR14870694_sorted.bam     --referenceFasta /students/2024-2025/Thema05/BlaasKanker/tools/testGenome/ncbi_dataset/data/GCF_000001635.27/GCF_000001635.27_GRCm39_genomic.fna     --runDir /students/2024-2025/Thema05/BlaasKanker/temp/demo_somatic</code></pre>
+<div id="official-trim" class="section level3">
+<h3>Official trim</h3>
+<p>Deze week gaan wij mappen en duplicaten markeren, maar daarvoor
+moeten we eerst zeker zijn of we de ongetrimde data gaan gebruiken of
+wel getrimde data.</p>
+<table>
+<colgroup>
+<col width="9%" />
+<col width="9%" />
+<col width="10%" />
+<col width="17%" />
+<col width="8%" />
+<col width="9%" />
+<col width="10%" />
+<col width="6%" />
+<col width="15%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Run ID</th>
+<th>LEADING</th>
+<th>TRAILING</th>
+<th>SLIDING WINDOW</th>
+<th>MINLEN</th>
+<th>AVGQUAL</th>
+<th>HEADCROP</th>
+<th>CROP</th>
+<th>ILLUMINACLIP</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>FinalRun</td>
+<td>34</td>
+<td>34</td>
+<td>NONE</td>
+<td>40</td>
+<td>NONE</td>
+<td>NONE</td>
+<td>None</td>
+<td>TruSeq3-PE.fa</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Waarom hebben we deze settings gekozen? De kwaliteit in het midden
+van de sequenties is rond de 35, er wijkt zo weinig van af dat een
+sliding window niet nodig is. Aan het begin en eind dipt de kwaliteit
+iets wat naar de 32, deze halen wij voor de zekerheid weg, maar meer
+niet. Zo blijft de lengte van de sequenties lang genoeg om goed te
+kunnen mappen. Ook halen wij de adapters weg voor de zekerheid, als er 1
+of 2 toch zijn worden die dan verwijderd. De sliding window wordt ook
+niet gebruikt omdat deze er voor zorgt dat er veel meer korte sequenties
+zijn, wat onnodig is aangezien de kwaliteit al goed is. MINLEN van 40
+zorgt ervoor dat er niet te korte reads zijn die bij downstream
+workflows mogelijk problemen kunnen veroorzaken, of gewoon lastiger zijn
+om te gebruiken.</p>
+<pre class="bash"><code>cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+  parallel &#39;TrimmomaticPE -threads 20&#39; \
+                  &#39;/students/2024-2025/Thema05/BlaasKanker/outputs/fastq/{}_1.fastq&#39; \
+                  &#39;/students/2024-2025/Thema05/BlaasKanker/outputs/fastq/{}_2.fastq&#39; \
+                  &#39;/students/2024-2025/Thema05/BlaasKanker/outputs/fastq_trimmed/{}_paired.1.fastq&#39; \
+                  &#39;/students/2024-2025/Thema05/BlaasKanker/outputs/fastq_trimmed/{}_unpaired.1.fastq&#39; \
+                  &#39;/students/2024-2025/Thema05/BlaasKanker/outputs/fastq_trimmed/{}_paired.2.fastq&#39; \
+                  &#39;/students/2024-2025/Thema05/BlaasKanker/outputs/fastq_trimmed/{}_unpaired.2.fastq&#39; \
+                  &#39;ILLUMINACLIP:/students/2024-2025/Thema05/BlaasKanker/tools/trim_adapters/TruSeq3-PE.fa:2:20:10&#39; \
+                  &#39;LEADING:34&#39; \
+                  &#39;TRAILING:34&#39; \
+                  &#39;MINLEN:40&#39;
+</code></pre>
+<p>Voor het mappen met BWA, zullen we eerst nog even snel kijken naar de
+kwaliteit.</p>
+<pre class="bash"><code>fastqc /students/2024-2025/Thema05/BlaasKanker/outputs/fastq_trimmed/*_paired* -o /students/2024-2025/Thema05/BlaasKanker/outputs/fastqc_trimmed/ -t 15
+
+multiqc /students/2024-2025/Thema05/BlaasKanker/outputs/fastqc_trimmed/*_paired* -o /students/2024-2025/Thema05/BlaasKanker/outputs/multiqc_trimmed</code></pre>
+<p>De kwaliteit van de sequenties ligt tussen de 35 en 37, wat goed is.
+de kans dat een nucleotide incorrect is ligt tussen de 0.000316228 en
+0.000199526 (<a href="https://eafyounian.github.io/phred_score_converter/" class="uri">https://eafyounian.github.io/phred_score_converter/</a>). Er
+worden ook geen adapters gevonden. Er zijn nu wel een aantal kortere
+sequenties, maar de meeste liggen nog tussen de 90-95, de te korte
+sequenties van 40 en daaronder zijn wel verwijderd. Zo krijgen we
+sequenties van hoge kwaliteit die toch nog goed gemapped kunnen
+worden.</p>
+</div>
+</div>
+<div id="section-18" class="section level2">
+<h2>26-09-2024</h2>
+<p>Vandaag voeren wij de BWA mapping uit
+<!-- TODO Ref naar Jasper --></p>
 </div>
 </div>
 

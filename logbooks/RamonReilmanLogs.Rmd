@@ -2,8 +2,11 @@
 title: "Logbook Ramon Reilman"
 author: "Ramon Reilman"
 date: "2024-09-10"
-output: html_document
+output:
+  html_document:
+    toc: yes
 ---
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -208,7 +211,6 @@ De .unpaired bestanden hebben de sequenties waarvan alleen dat bijpassende besta
 Deze .unpaired bestanden hebben best wel een invloed op onze multiqc output, dus zal ik een multiqc uitvoeren op alleen de paired data.
 Voor het onderzoek downstream lijkt mij het beste om mogelijk ook de unpaired sequenties achter te laten. Dit zijn nu single end sequenties die een stuk lastiger zijn om te mappen.
 
-/ TODO voer multiqc uit op alleen de getrimde paired data
 ## 22-09-2024
 ```{bash, eval=FALSE}
 fastqc /students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_20_ML20/trimmed_data/*_paired.* -o /students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_20_ML20/output/fastqc_no_unpaired -t 12
@@ -346,8 +348,33 @@ python2.7 -m virtualenv strelkaVENV
 Nu hebben we een virtualenv van python 2.7 in onze tools folder.
 Hier kunnen we de benodigde pakketjes installeren, die ook gebruikt kunnen worden door mijn groeps genoten.
 
+## 24-09-2024
+Omdat er een aantal duplicaten zijn, die mogelijk een negatieve impact kunnen hebben bij variant calling (kan een bias veroorzaken)
+Gaan wij deze duplicaten verwijderen met picard. Vandaag ga ik de documentatie lezen en kijken of ik de tool werkend kan krijgen.
+<!-- TODO ref naar jaspers logboek -->
+Eerst heb ik Jasper zijn logboek gevolgd om een index te maken, en de fastq files te mappen naar het referentie genoom.
+Daarna heb ik picard gerund op 1 van de outputs, als test. Deze gaf meerdere foutmeldingen.
 
+```{bash, eval=FALSE}
+java -jar picard.jar MarkDuplicates \
+  "I=/students/2024-2025/Thema05/BlaasKanker/temp/mappingTest/sorted_bam/SRR14870694_sorted.bam" \
+  "O=/students/2024-2025/Thema05/BlaasKanker/temp/picard_test/duplicates.bam" \
+  "M=/students/2024-2025/Thema05/BlaasKanker/temp/picard_test/duplicates.txt" \
+```
 
+Een van deze foutmeldingen was dat de naam van het input bestand niet correct was. Na een google search heb ik een oplossing gevonden hiervoor.
+```{bash, eval=FALSE}
+java -jar picard.jar MarkDuplicates \
+  "I=/students/2024-2025/Thema05/BlaasKanker/temp/mappingTest/sorted_bam/SRR14870694_sorted.bam" \
+  "O=/students/2024-2025/Thema05/BlaasKanker/temp/picard_test/duplicates.bam" \
+  "M=/students/2024-2025/Thema05/BlaasKanker/temp/picard_test/duplicates.txt" \
+  "READ_NAME_REGEX=null"
+```
+Nu maakt de naam van het input bestand niet uit.
+
+Een volgende error had een iets andere oplossing. 
+In de bam files mist een @RG header, deze header geeft groep, ID, platofrm en library aan van de samples. En deze header heeft picard nodig om het input bestand te lezen.
+Deze kan je meegeven aan bwa mem tijdens het mappen, de aangepaste commands staan hier onder.
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
   parallel -j 20 "bwa mem -t 20 -M -R '@RG\\tID:{}\\tSM:{}\\tPL:illumina\\tLB:lib1' \
@@ -361,21 +388,18 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
   parallel "samtools view -b /students/2024-2025/Thema05/BlaasKanker/temp/mappingTest/first_output/{}.sam | samtools sort -o /students/2024-2025/Thema05/BlaasKanker/temp/mappingTest/sorted_bam/{}_sorted.bam"
 ```
-
-
-```{bash, eval=FALSE}
-cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
-  parallel "sort -o /students/2024-2025/Thema05/BlaasKanker/temp/mappingTest/sorted_output/{}.sorted.bam /students/2024-2025/Thema05/BlaasKanker/temp/mappingTest/output_sam1/{}.bam"
-```
+Jasper heeft deze stap in 2 gesplitst, maar voeg ik samen zodat het meer hands off is voor mij.
 
 ```{bsah, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
   parallel -j 6 "samtools index /students/2024-2025/Thema05/BlaasKanker/temp/mappingTest/sorted_output/{}.sorted.bam"
-
 ```
+Ook deze bestanden moeten met samtools index gedaan worden, het bestand wat hier uitkomt heeft picard ook nodig.
 
 
-## Picard
+
+<!-- TODO Log deze secties. -->
+Nu kan de test met picard weer uitgevoerd worden.
 ```{bash, eval=FALSE}
 java -jar picard.jar MarkDuplicates \
   "I=/students/2024-2025/Thema05/BlaasKanker/temp/mappingTest/sorted_bam/SRR14870694_sorted.bam" \
@@ -383,28 +407,14 @@ java -jar picard.jar MarkDuplicates \
   "M=/students/2024-2025/Thema05/BlaasKanker/temp/picard_test/duplicates.txt" \
   "READ_NAME_REGEX=null"
 ```
+Het uitput bestand is gemaakt, en bevat duplicaten die een mark hebben. Zo kunnen tools downstream deze vermijden.
 
-```{bash, eval=FALSE}
-cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
-  parallel 'TrimmomaticPE -threads 12' \
-                  '/students/2024-2025/Thema05/BlaasKanker/outputs/fastq/{}_1.fastq' \
-                  '/students/2024-2025/Thema05/BlaasKanker/outputs/fastq/{}_2.fastq' \
-                  '/students/2024-2025/Thema05/BlaasKanker/temp/{}_paired.1.fastq ' \
-                  '/students/2024-2025/Thema05/BlaasKanker/temp/{}_unpaired.1.fastq' \
-                  '/students/2024-2025/Thema05/BlaasKanker/temp/{}_paired.2.fastq' \
-                  '/students/2024-2025/Thema05/BlaasKanker/temp/{}_unpaired.2.fastq' \
-                  'LEADING:34' \
-                  'SLIDINGWINDOW:4:32' \
-                  'TRAILING:35' \
-                  'MINLEN:50'
-```
 
 ## 25-09-2024
-```{bash, eval=FALSE}
-samtools faidx GCF_000001635.27_GRCm39_genomic.fna
-```
+Vandaag wil ik gaan kijken naar hoe we strelka moeten gebruiken. Eerder in het logboek heb ik uitgelegd hoe die geinstalleerd is met python2.7
+Op de officiele website kon ik zo'n soort gelijk bestand vinden. Alleen is er een probleem. Onze tumor is ingebracht, en heft niks te maken met de germline. Opzich is dit geen probleem, want strelka heeft een somatische workflow. Alleen hebben wij de .bam file nodig van een normale muis, zonder de tumor. In het artikel staat wel benoemd dat ze die hebben, maar ik kon deze files nergens vinden. Ik heb het contact persoon een mail gestuurd, en we hopen en wachten nu op een antwoord.
 
-
+Deze konden wij dus niet uitvoeren zonder normal file.
 ```{bash, eval=FALSE}
 python2.7 /students/2024-2025/Thema05/BlaasKanker/tools/strelka-2.9.10.centos6_x86_64/bin/configureStrelkaSomaticWorkflow.py \
     --tumorBam /students/2024-2025/Thema05/BlaasKanker/temp/mappingTest/sorted_bam/SRR14870694_sorted.bam \
@@ -413,16 +423,61 @@ python2.7 /students/2024-2025/Thema05/BlaasKanker/tools/strelka-2.9.10.centos6_x
 
 ```
 
+Het probleem bij het uitvoeren van dit command is dat alle erfbare mutaties ook gemarkeerd worden. Het is vervolgens erg lastig om de germline en somatische mutaties uit elkaar te halen.
+```{bash, eval=FALSE}
+python2.7 /students/2024-2025/Thema05/BlaasKanker/tools/strelka-2.9.10.centos6_x86_64/bin/configureStrelkaGermlineWorkflow.py     --bam /students/2024-2025/Thema05/BlaasKanker/temp/mappingTest/sorted_bam/SRR14870694_sorted.bam     --referenceFasta /students/2024-2025/Thema05/BlaasKanker/tools/testGenome/ncbi_dataset/data/GCF_000001635.27/GCF_000001635.27_GRCm39_genomic.fna     --runDir /students/2024-2025/Thema05/BlaasKanker/temp/demo_somatic
+```
+Dit command werkte niet, er miste een bestand bij het referentie genoom.
+Deze kan aangemaakt worden met de volgende samtool feature.
+```{bash, eval=FALSE}
+samtools faidx GCF_000001635.27_GRCm39_genomic.fna
+```
 
+Command is weer uitgevoerd, en nu kregen we een output bestand. Helaas heb ik nog niks gehoord van het contact persoon, en zal de 27e advies vragen aan de docenten.
 ```{bash, eval=FALSE}
 python2.7 /students/2024-2025/Thema05/BlaasKanker/tools/strelka-2.9.10.centos6_x86_64/bin/configureStrelkaGermlineWorkflow.py     --bam /students/2024-2025/Thema05/BlaasKanker/temp/mappingTest/sorted_bam/SRR14870694_sorted.bam     --referenceFasta /students/2024-2025/Thema05/BlaasKanker/tools/testGenome/ncbi_dataset/data/GCF_000001635.27/GCF_000001635.27_GRCm39_genomic.fna     --runDir /students/2024-2025/Thema05/BlaasKanker/temp/demo_somatic
 ```
 
+
+### Official trim
+Deze week gaan wij mappen en duplicaten markeren, maar daarvoor moeten we eerst zeker zijn of we de ongetrimde data gaan gebruiken of wel getrimde data. 
+
+| Run ID  | LEADING | TRAILING | SLIDING WINDOW | MINLEN | AVGQUAL | HEADCROP | CROP | ILLUMINACLIP |
+|---------|---------|----------|----------------|--------|---------|----------|------|--------------|
+| FinalRun | 34     | 34       | NONE           | 40      | NONE    | NONE     | None | TruSeq3-PE.fa |
+|         |         |          |                |        |         |          |      |              |
+|         |         |          |                |        |         |          |      |              |
+
+
+Waarom hebben we deze settings gekozen?
+De kwaliteit in het midden van de sequenties is rond de 35, er wijkt zo weinig van af dat een sliding window niet nodig is. Aan het begin en eind dipt de kwaliteit iets wat naar de 32, deze halen wij voor de zekerheid weg, maar meer niet. Zo blijft de lengte van de sequenties lang genoeg om goed te kunnen mappen. Ook halen wij de adapters weg voor de zekerheid, als er 1 of 2 toch zijn worden die dan verwijderd. De sliding window wordt ook niet gebruikt omdat deze er voor zorgt dat er veel meer korte sequenties zijn, wat onnodig is aangezien de kwaliteit al goed is. MINLEN van 40 zorgt ervoor dat er niet te korte reads zijn die bij downstream workflows mogelijk problemen kunnen veroorzaken, of gewoon lastiger zijn om te gebruiken.
+
 ```{bash, eval=FALSE}
-python2.7 /students/2024-2025/Thema05/BlaasKanker/tools/strelka-2.9.10.centos6_x86_64/bin/configureStrelkaSomaticWorkflow.py \
-    --normalBam /dev/null \
-    --tumorBam /students/2024-2025/Thema05/BlaasKanker/temp/mappingTest/sorted_bam/SRR14870694_sorted.bam \
-    --referenceFasta /students/2024-2025/Thema05/BlaasKanker/tools/testGenome/ncbi_dataset/data/GCF_000001635.27/GCF_000001635.27_GRCm39_genomic.fna \
-    --runDir /students/2024-2025/Thema05/BlaasKanker/temp/demo_somatic2
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+  parallel 'TrimmomaticPE -threads 20' \
+                  '/students/2024-2025/Thema05/BlaasKanker/outputs/fastq/{}_1.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/outputs/fastq/{}_2.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/outputs/fastq_trimmed/{}_paired.1.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/outputs/fastq_trimmed/{}_unpaired.1.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/outputs/fastq_trimmed/{}_paired.2.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/outputs/fastq_trimmed/{}_unpaired.2.fastq' \
+                  'ILLUMINACLIP:/students/2024-2025/Thema05/BlaasKanker/tools/trim_adapters/TruSeq3-PE.fa:2:20:10' \
+                  'LEADING:34' \
+                  'TRAILING:34' \
+                  'MINLEN:40'
 
 ```
+
+Voor het mappen met BWA, zullen we eerst nog even snel kijken naar de kwaliteit.
+
+```{bash, eval=FALSE}
+fastqc /students/2024-2025/Thema05/BlaasKanker/outputs/fastq_trimmed/*_paired* -o /students/2024-2025/Thema05/BlaasKanker/outputs/fastqc_trimmed/ -t 15
+
+multiqc /students/2024-2025/Thema05/BlaasKanker/outputs/fastqc_trimmed/*_paired* -o /students/2024-2025/Thema05/BlaasKanker/outputs/multiqc_trimmed
+```
+
+De kwaliteit van de sequenties ligt tussen de 35 en 37, wat goed is. de kans dat een nucleotide incorrect is ligt tussen de  0.000316228 en 0.000199526 (https://eafyounian.github.io/phred_score_converter/). Er worden ook geen adapters gevonden. Er zijn nu wel een aantal kortere sequenties, maar de meeste liggen nog tussen de 90-95, de te korte sequenties van 40 en daaronder zijn wel verwijderd. Zo krijgen we sequenties van hoge kwaliteit die toch nog goed gemapped kunnen worden.
+
+## 26-09-2024
+Vandaag voeren wij de BWA mapping uit
+<!-- TODO Ref naar Jasper -->
