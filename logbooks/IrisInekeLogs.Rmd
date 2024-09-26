@@ -418,8 +418,8 @@ de help van de tool:
 java -jar picard.jar -h
 ```
 
-
-! unpaired eruit halen multi report voor betrouwbaardere output op aanraden van Ramon
+! unpaired eruit halen multi report voor betrouwbaardere output op
+aanraden van Ramon
 
 Omdat na de trimming de duplicatie levels goed zijn. Is Picard niet meer
 nodig. Dus nu gaan Ramon en ik samen inlezen over Trelka. Ramon heeft
@@ -428,7 +428,9 @@ rechten probleem bleek te zijn). Wat ik deze week dus moet doen: Morgen
 gaan we de instellingen bepalen van Trimmomatic. Verder uitzoeken hoe we
 Trelka moeten gebruiken voor varient calling.
 
-Ramon had een tabel gedeeld in teams, deze is handig om een een oog opzicht je instellingen van verschillende pogingen van Trimmomatic te zien:
+Ramon had een tabel gedeeld in teams, deze is handig om een een oog
+opzicht je instellingen van verschillende pogingen van Trimmomatic te
+zien:
 
 | Run ID                             | LEADING | TRAILING | SLIDING WINDOW | MINLEN | AVGQUAL | HEADCROP | CROP | ILLUMINACLIP           |
 |--------|--------|--------|--------|--------|--------|--------|--------|--------|
@@ -436,9 +438,167 @@ Ramon had een tabel gedeeld in teams, deze is handig om een een oog opzicht je i
 | minlen en slidingwindow omgedraait | 32      |          | 4:20           | 40     |         |          |      | TruSeq3-PE.fa:2:30:10' |
 | poging 3                           | 32      |          | 4:30           | 97     |         |          |      | TruSeq3-PE.fa:2:30:10' |
 
-
 ! uitzoeken documentatie, germline of die ander. tumor.bam hebben we ms
 niet
 
-! kijken of Whole exome sequencing invloed kan hebben op duplicaties
+! kijken of Whole exome sequencing invloed kan hebben op duplicaties !
+opzoeken hoe WES wordt uitgevoerd
+
+WES: De exomen komen uit tumor samples in dit onderzoek.
+
+WES heeft invloed op het aantal duplicaten: in de voorbereiding met pcr
+bijvoorbeeld, maar niet alleen in de voorbereiding ook bij de sequencing
+zelf. WES maakt dus gebruik van probes om te binden aan de exonen in het
+dna. Er is een kwaliteits controle voor de probes. Maar deze controle
+minimaliseert de fouten alleen, het is niet perfect na de controle. Dus
+kunnen er in de probes imperfecties zitten, waardoor verschillende
+probes aan dezelfde gebieden kunnen binden(of overlappen). En hierdoor
+kan het stukje dna meer dan een keer gelezen worden. (dit is vaak bij
+korte stukjes dna, omdat de paired-end elkaar overlappen lijkt)
+
+! BRON probes:
+<https://www.idtdna.com/pages/technology/next-generation-sequencing/dna-sequencing/targeted-sequencing/exome-sequencing>
+
+betere induik probes:
+<https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-016-2698-y>
+
+## Woensdag 25 september:
+
+Oke. Ramon kwam net met het nieuws dat de geo dataset incompleet is. wat
+betekend dat we geen somatic kunnen uitvoeren op de data. Maar als we
+germline doen, dan hebben we ook verschillende allelen die als mutatie
+worden herkend. Hoe gaan we dit oplossen in de tijd die we hebben ?
+
+We hebben overlegd welke Trimmomatic settings we willen gebruiken
+(trailing, leading, illuminaclip).
+
+We willen de duplicaten verwijderen. Dus ! doc lezen van tool.
+
+! wat doet het, hoe werkt het, wat hebben wij nodig: duplicaten
+verwijderen hoe moeten wij het gebruiken?
+
+Hoe de tool gerund moet worden:
+
+```{bash, eval=FALSE}
+picard.jar PicardToolName \
+	OPTION1=value1 \
+	OPTION2=value2
+```
+
+## Donderdag 26 september:
+
+Eerst moeten we waarschijnlijk 'MarkDuplicates' gebruiken om de
+duplicaten te herkennen. Misschien 'samtools' gebruiken voor
+daadwerkelijk verwijderen van duplicaten daarna ?
+
+Welke 'PicardToolName' gaan we gebruiken uitzoeken:
+(input is )
+
+##### EstimateLibraryComplexity:
+
+Deze tool kan inschatten hoeveel duplicaten er zijn door te kijken naar
+de eerste paar basen (van forward en reverse) en die met elkaar te
+vergelijken. Hij geeft een schatting van hoe groot je bestand is zonder
+de duplicaten.
+
+(- kwaliteit wordt ook mogelijk gecontroleerd, alles met kwaliteit lager
+dan 20 wordt verwijderd: MIN_MEAN_QUALITY (default: 20), unpaired wordt
+niet meegenomen).
+
+options:\
+- MAX_DIFF_RATE (0.03 by default): kijkt of de basen gelijk zijn aan
+elkaar met een 3% afwijking mogelijk.
+
+Dit lijkt me dus niet geschikt voor wat we willen, aangezien het de duplicaten niet verwijderd of markeert.
+
+##### MarkDuplicates:
+Markeert de duplicaten door de basenparen te vergelijken. Hij leest de forward en reverse (net als bij EstimateLibraryComplexity) en vergelijkt de eerste paar basen met elkaar. 
+Vervolgens vergelijkt hij de kwaliteit met elkaar om de originele read te vinden.
+
+Output: \
+een BAM/SAM file waarin de duplicaten gemarkeerd zijn in het SAM 'flag field' (met 0x0400)(is hexidecimale manier van noteren; staat voor 1024). \
+Geeft ook een bestand met statistieken over aantal duplicaten (van paired en unpaired).
+
+option:\
+BARCODE_TAG (misschien nuttig):\
+helpt om duplicaten beter te herkennen. Dit doet hij door elke read een (unieke) barcode te geven (zo kun je later beter zien welke duplicaten van hetzelfde fragment komen).
+
+TAGGING_POLICY (niet nodig): \
+geeft de mogelijkheid de om te kiezen of je alle duplicaten wil markeren of alleen optische (fouten in sequencen). 
+
+input: coördinaten of query gesorteerd. (!)
+
+READ_NAME_REGEX/OPTICAL_DUPLICATE_PIXEL_DISTANCE (niet nodig): \
+kijkt of de duplicaten door PCR of het sequence apparaat gemaakt zijn met 'DontTag'. 
+
+REMOVE_DUPLICATE of REMOVE_SEQUENCING_DUPLICATES: \
+Verwijdert de duplicaten. 'REMOVE_DUPLICATE' verwijdert alle duplicaten en 'REMOVE_SEQUENCING_DUPLICATES' verwidjert alleen de door duplicaten onstaan door sequencen. Dus die moet waarschijnlijk samen met de tagging policy en read_name_regex of optical_duplicate_pixel_distance. Dus wij gaan eerst remove_duplicate gebruiken.
+(kijken welke van de twee voor ons het beste is). 
+
+Dus: \
+wij gaan voor nu eerst 'MarkDuplicates' gebruiken met 'BARCODE_TAG' voor het identificeren van de duplicates en daarna remove_duplicate.
+
+Voorbeeld van de documentatie:
+```{bash, eval=FALSE}
+java -jar picard.jar MarkDuplicates \
+      I=input.bam \
+      O=marked_duplicates.bam \
+      M=marked_dup_metrics.txt
+```
+De input komt van Jasper van de mapping.
+Voor de 'O' een map maken waar de marked duplicates in kunnen.
+Voor de 'M' ook een map maken waar de statistieken in kunnen.
+
+```{bash, eval=FALSE}
+java -jar picard.jar MarkDuplicates \
+      I=input.bam \
+      O=marked_duplicates.bam \
+      M=marked_dup_metrics.txt \
+      REMOVER_DUPLICATES=true 
+```
+De volgorde van de opties die je mee geeft maakt niet uit volgens de documentatie.
+
+Eerst even zonder 'BARCODE_TAG' proberen, want de barcodetag wordt vooral gebruikt bij single-cell-sequencing en is bij onze data dus niet nodig (de focus ligt bij ons niet op elke unieke cell, maar op de genexpressie van meerder cellen).
+
+oke:\
+Je kan dus alleen gebruik maken van picard als je in de tools folder zit en dan in picard gaat.
+
+! code proberen op testdata output van Jasper.
+Paden invullen:
+```{bash, eval=FALSE}
+java -jar picard.jar MarkDuplicates \
+      I=/students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/output.sorted.bam \
+      O=/students/2024-2025/Thema05/BlaasKanker/testingtools/picard_test/poging_1/marked_duplicates.bam \
+      M=/students/2024-2025/Thema05/BlaasKanker/testingtools/picard_test/poging_1/marked_dup_metrics.txt \
+      REMOVER_DUPLICATES=true 
+```
+
+foutmelding: De command line syntax is veranderd.
+Nieuwe versie, \
+note: misschien moet er ook nog 'java -jar picard.jar' voor de 'MarkDuplicates':
+```{bash, eval=FALSE}
+MarkDuplicates \
+-I /students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/output.sorted.bam \
+-O /students/2024-2025/Thema05/BlaasKanker/testingtools/picard_test/poging_1/marked_duplicates.bam \
+-M /students/2024-2025/Thema05/BlaasKanker/testingtools/picard_test/poging_1/marked_dup_metrics.txt \
+-REMOVER_DUPLICATES true
+```
+
+Ja, dat moest er nog voor en het is remove_duplicates (zonder r):
+```{bash, eval=FALSE}
+java -jar picard.jar MarkDuplicates \
+      -I /students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/output.sorted.bam \
+      -O /students/2024-2025/Thema05/BlaasKanker/testingtools/picard_test/poging_1/marked_duplicates.bam \
+      -M /students/2024-2025/Thema05/BlaasKanker/testingtools/picard_test/poging_1/marked_dup_metrics.txt \
+      -REMOVE_DUPLICATES true
+```
+
+oke, hij deed iets, maar is gestopt. \
+foutmelding: \
+'A field field parsed out of a read name was expected to contain an integer and did not. Read name: SRR14870694.3479784. Cause: String 'SRR14870694.3479784' did not start with a parsable number.' \
+
+We kunnen proberen het getal te scheiden van de 'SRR' door middel van een '_', maar ik ben bang dat picard dat niet goed genoeg vind en een naam wil met enkel cijfers.
+
+Ik heb gevraagd om meningen van de groep en 
+!
 
