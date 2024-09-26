@@ -18,12 +18,12 @@ This is an R Markdown document. Markdown is a simple formatting syntax
 for authoring HTML, PDF, and MS Word documents. For more details on
 using R Markdown see <http://rmarkdown.rstudio.com>.
 
-## inleiding
 
+## inleiding
 ! inleiding schrijven
 
-## Maandag 9 september
 
+## Maandag 9 september
 Artikelen gelezen en twee uitgepikt (tweede artikel op aanraden van
 Janine).
 
@@ -37,8 +37,8 @@ kunnen werken deze periode.
 
 Trello aangemaakt.
 
-## Dinsdag 10 september
 
+## Dinsdag 10 september
 We hebben besloten dat we het artikel 'RNAseq and TCRseq analysis of
 entinostat treated bladder tumors' (PMID: 34396985) gaan gebruiken deze
 periode. Dit artikel ziet er interessant uit en is goedgekeurd door
@@ -63,16 +63,16 @@ zal doden.
 
 We hebben een taakverdeling gemaakt voor het plan van aanpak. Ik ga de
 planning maken in de vorm van een gantt chart. Eerst moet ik nog even
-uitzoeken wat dit precies is !
+uitzoeken wat dit precies is.
+
 
 ## Woensdag 11 september
-
 De verdeling een klein beetje aangepast. Vrijdag na de les over de data
 downloaden advies vragen over de sample keuzes (hoe besluiten we welke
 samples we willen gebruiken en welke niet ?).
 
-## Donderdag 12 september
 
+## Donderdag 12 september
 Vandaag uitzoeken hoe je een gantt chart moet maken. Een gantt chart is
 blijkbaar een soort algemeen beeld van de planning. Je kan in word of
 excel een gantt chart maken (Excel is mooier). Of in Microsoft Projects.
@@ -111,16 +111,16 @@ dag moeten andersom. Ik heb nu in Excel een simpele gantt chart gemaakt.
 Morgen vragen aan Ronald of Marcel of dit de goede richting is
 (Misschien nog periodes (weken) toevoegen als het lukt).
 
-## Vrijdag 13 september
 
+## Vrijdag 13 september
 Vandaag heb ik aan Marcel gevraagd of de gantt chart in de goede
 richting is. De x-as waar de data staat moet veranderd worden naar de
 weeknummers. Vandaag even kijken hoe dat moet. (De duration staat nu in
 getallen van 0-1, hoeveel tijd van een week het duurt, waarin 1 een hele
 week is). Dat is nu gedaan en het Excel bestand staat in Teams.
 
-## Zaterdag 14 september
 
+## Zaterdag 14 september
 Ramon gaf aan dat er nog een taak in moest: Functionele analyse. Die
 staat er nu ook in.
 
@@ -144,20 +144,20 @@ histonmodificaties zoals acetylatie. Dit wijst op een mogelijke rol van
 epigenetische veranderingen in blaaskanker. Daarom lijken HDAC-remmers,
 zoals entinostat, veelbelovend voor de behandeling van blaaskanker.
 
-## Zondag 15 september
 
+## Zondag 15 september
 Presentatie doorgelezen en spellingsfoutjes aangepast (marp nodig om
 html aan te maken van de presentatie).
 
-## Maandag 16 september:
 
+## Maandag 16 september:
 Presentatie gehad plan van aanpak. We hebben besproken hoe we het gaan
 aanpakken dat Janine een tijdje niet op school aanwezig kan zijn. Ook
 hebben we een verdere taakverdeling gemaakt. Ik moet de komende tijd
 inlezen over de tool 'Picard'.
 
-## Dinsdag 17 september:
 
+## Dinsdag 17 september:
 Testdata maken: Met find maak je een list van de bestanden die in de map
 staan met alle data (je geeft het pad daarnaar mee). Vervolgens paralell
 (zorgt voor efficientie): Neemt de eerste 10% van elk bestand en print
@@ -196,8 +196,8 @@ variabele opzetten als shortcut.
 We hebben een recent genoege versie van java, dus dat is al goed
 geregeld.
 
-## Woensdag 18 september
 
+## Woensdag 18 september
 nieuw deel: trimmomatic: De code voor de testdata: de eerste regel
 (begint bij cat) zorgt ervoor dat de namen van de
 files(SRR_Acc_List.txt) worden ingeveuld bij parallel tussen de {} als
@@ -241,8 +241,8 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 Deze laten runnen op de school server (die mappen waar ze steeds heen
 gaan moet je eerst zelf aanmaken).
 
-## Donderdag 19 september:
 
+## Donderdag 19 september:
 De terminal zegt dat hij de Trimmomatic succesvol heeft afgerond, maar
 hij print nog wel (wat lijkt op html) code. Geen idee waarom. Via 'htop'
 kun je ook zien dat hij nog wel een deel van de server inneemt, dus hij
@@ -252,8 +252,8 @@ poging van Ramon op de test data blijkt dat de kwaliteit achteruit gaat
 na het trimmen, wat gek is. Maar dit kan liggen aan dat de sub sets wat
 klein zijn ? Morgen vragen in de les hoe dit kan.
 
-## Vrijdag 20 september:
 
+## Vrijdag 20 september:
 Na echt heel lang bezig te zijn geweest was Trimmomatic eindelijk klaar
 op Ramon zijn laptop en de kwaliteit van de data is inderdaad echt
 achteruit gegaan. We hebben Ronald gevraagd wat een mogelijke oorzaak is
@@ -267,14 +267,14 @@ uit te voeren op de data, omdat de data zelf al best goed is. Maar eerst
 gaan we proberen of we het kunnen verbeteren. Maar het is wel
 opmerkelijk.
 
-## Zaterdag 21 september:
 
+## Zaterdag 21 september:
 Ik denk dat we in trimmomatic kunnen aangeven dat het einde getrimd moet
 worden. Dit is handig omdat in de fastqc analyze af te lezen is dat in
 de 'per base sequence quality plot' het einde de kwaliteit minder werd.
 
-## Zondag 22 september
 
+## Zondag 22 september
 Onderstaande code zijn de aangepaste instellingen voor Trimmomatic.
 
 ```{bash, eval=FALSE}
@@ -328,8 +328,8 @@ grafiek: 'sequence qualty histograms gehaald)
 
 Oke. Uit de plot 'sequence quality histograms' kun je aflezen dat het
 begin van de reads nog beter kunnen, dus 'leading:32' toevoegen (32 uit
-de grafiek gehaald: 'sequence quality histogram). ! Niet vergeten nieuwe
-mappen te maken voor je trimmomatic opieuw probeert ! Nieuwe poging:
+de grafiek gehaald: 'sequence quality histogram). \
+Nieuwe poging:
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
@@ -377,8 +377,8 @@ Oke de 'Sequence Length Distribution' kan nog steeds beter, maar de
 minlen helemaal naar 97 moet. Dus alles weer opnieuw, maar dan met de
 minlen op 97.
 
-! Per ongeluk de verkeerde terminal gebruikt, nu staat het report in
-mijn branch op git in plaats van mijn laptop. Later even verwijderen.
+Per ongeluk de verkeerde terminal gebruikt, nu staat het report in
+mijn branch op git in plaats van mijn laptop. Later verwijderen.
 
 Ik heb per ongeluk precies hetzelfde gedaan zonder de nieuwe
 instellingen. Dus alle mappen weer legen enzovoort. Ik heb per ongeluk
@@ -390,8 +390,8 @@ lees de grafiek dan denk k verkeerd af. Ik snap het niet meer. Dinsdag
 even vragen. (folder waar het report in staat heet:
 'trimtest_multiqc3').
 
-## Dinsdag 24 september:
 
+## Dinsdag 24 september:
 Planning voor komende week gemaakt samen. We moeten even vragen of we de
 duplicaten (die niet goed zijn) moeten verbeteren met picard (tool). Als
 dit zo is ga ik daarmee verder. Zo niet gaan Ramon en ik samen bezig met
@@ -441,7 +441,10 @@ zien:
 ! uitzoeken documentatie, germline of die ander. tumor.bam hebben we ms
 niet
 
-! kijken of Whole exome sequencing invloed kan hebben op duplicaties !
+De testdata goedmaken is niet gelukt, dus ik ga op de echte data verder.
+
+
+kijken of Whole exome sequencing invloed kan hebben op duplicaties.
 opzoeken hoe WES wordt uitgevoerd
 
 WES: De exomen komen uit tumor samples in dit onderzoek.
@@ -462,8 +465,8 @@ korte stukjes dna, omdat de paired-end elkaar overlappen lijkt)
 betere induik probes:
 <https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-016-2698-y>
 
-## Woensdag 25 september:
 
+## Woensdag 25 september:
 Oke. Ramon kwam net met het nieuws dat de geo dataset incompleet is. wat
 betekend dat we geen somatic kunnen uitvoeren op de data. Maar als we
 germline doen, dan hebben we ook verschillende allelen die als mutatie
@@ -472,10 +475,9 @@ worden herkend. Hoe gaan we dit oplossen in de tijd die we hebben ?
 We hebben overlegd welke Trimmomatic settings we willen gebruiken
 (trailing, leading, illuminaclip).
 
-We willen de duplicaten verwijderen. Dus ! doc lezen van tool.
+We willen de duplicaten verwijderen. Dus doc lezen van tool.
 
-! wat doet het, hoe werkt het, wat hebben wij nodig: duplicaten
-verwijderen hoe moeten wij het gebruiken?
+wat moeten we picard laten doen: duplicaten verwijderen
 
 Hoe de tool gerund moet worden:
 
@@ -485,8 +487,8 @@ picard.jar PicardToolName \
 	OPTION2=value2
 ```
 
-## Donderdag 26 september:
 
+## Donderdag 26 september:
 Eerst moeten we waarschijnlijk 'MarkDuplicates' gebruiken om de
 duplicaten te herkennen. Misschien 'samtools' gebruiken voor
 daadwerkelijk verwijderen van duplicaten daarna ?
@@ -495,7 +497,6 @@ Welke 'PicardToolName' gaan we gebruiken uitzoeken:
 (input is )
 
 ##### EstimateLibraryComplexity:
-
 Deze tool kan inschatten hoeveel duplicaten er zijn door te kijken naar
 de eerste paar basen (van forward en reverse) en die met elkaar te
 vergelijken. Hij geeft een schatting van hoe groot je bestand is zonder
@@ -563,7 +564,7 @@ Eerst even zonder 'BARCODE_TAG' proberen, want de barcodetag wordt vooral gebrui
 oke:\
 Je kan dus alleen gebruik maken van picard als je in de tools folder zit en dan in picard gaat.
 
-! code proberen op testdata output van Jasper.
+code proberen op testdata output van Jasper.
 Paden invullen:
 ```{bash, eval=FALSE}
 java -jar picard.jar MarkDuplicates \
@@ -599,6 +600,48 @@ foutmelding: \
 
 We kunnen proberen het getal te scheiden van de 'SRR' door middel van een '_', maar ik ben bang dat picard dat niet goed genoeg vind en een naam wil met enkel cijfers.
 
-Ik heb gevraagd om meningen van de groep en 
-!
+Ik heb gevraagd om meningen van de groep en Ramon is er dus achter gekomen dat je 'READ_NAME_REGEX=null' kunt gebruiken. En dan maakt het niet uit hoe je input bestand heet.
+
+Nieuwe foutmelding: \
+'Cannot invoke "htsjdk.samtools.SAMReadGroupRecord.getReadGroupId()" because the return value of "htsjdk.samtools.SAMRecord.getReadGroup()" is null'
+
+De testdata is niet de juiste vorm, dus ik ga verder met de echte data. \
+
+Ik heb een lijst gemaakt van alle bestanden die ik als input wil:
+```{bash, eval=FALSE}
+find . -name "*sorted.bam" > sorted_bam_files.txt
+```
+
+
+Parralel toegepast:
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/testingtools/picard_test/sorted_bam_files.txt | \
+  parallel java -jar picard.jar MarkDuplicates \
+                -I /students/2024-2025/Thema05/BlaasKanker/outputs/bwa_aln/mapping_output/{} \
+                -O /students/2024-2025/Thema05/BlaasKanker/testingtools/picard_test/poging_1/{}.marked_duplicates.bam \
+                -M /students/2024-2025/Thema05/BlaasKanker/testingtools/picard_test/poging_1/{}.marked_dup_metrics.txt \
+                -REMOVE_DUPLICATES true \
+                -READ_NAME_REGEX null
+```
+
+volgende foutmelding: \
+'This program requires input that are either coordinate or query sorted (according to the header, or at least ASSUME_SORT_ORDER and the content.)'
+
+Het lijkt erop dat de sorted bam bestanden niet de goede indeling hebben om door Picard verwertk te worden.
+
+nieuwe poging met haakjes om de comandos:
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/testingtools/picard_test/sorted_bam_files.txt | \
+  parallel java -jar picard.jar MarkDuplicates \
+                '-I /students/2024-2025/Thema05/BlaasKanker/outputs/bwa_aln/mapping_output/{}' \
+                '-O /students/2024-2025/Thema05/BlaasKanker/testingtools/picard_test/poging_1/{}.marked_duplicates.bam' \
+                '-M /students/2024-2025/Thema05/BlaasKanker/testingtools/picard_test/poging_1/{}.marked_dup_metrics.txt' \
+                '-REMOVE_DUPLICATES true' \
+                '-READ_NAME_REGEX null'
+```
+geeft dezelfde foutmelding.
+
+het txt bestand heb ik zo aangepast dat alleen de naam van het bestand er nu in staat zonder de './' ervoor.
+En nu nog een keer proberen.
+Zelfde foutmelding nog steeds. Morgen naar kijken met Ramon en eventueel docent.
 
