@@ -644,4 +644,70 @@ geeft dezelfde foutmelding.
 het txt bestand heb ik zo aangepast dat alleen de naam van het bestand er nu in staat zonder de './' ervoor.
 En nu nog een keer proberen.
 Zelfde foutmelding nog steeds. Morgen naar kijken met Ramon en eventueel docent.
+Ramon zijn mapping data gekregen om command op te testen.
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+  parallel java -jar picard.jar MarkDuplicates \
+                '-I /students/2024-2025/Thema05/BlaasKanker/temp/mappingTest/sorted_bam/{}_sorted.bam' \
+                '-O /students/2024-2025/Thema05/BlaasKanker/testingtools/picard_test/poging_1/{}.marked_duplicates.bam' \
+                '-M /students/2024-2025/Thema05/BlaasKanker/testingtools/picard_test/poging_1/{}.marked_dup_metrics.txt' \
+                '-REMOVE_DUPLICATES true' \
+                '-READ_NAME_REGEX null'
+```
+
+Hij geeft geen foutmeldingen meer. Om te kijken of er iets is veranderd gaan we fastqc runnen op de bam files.
+
+```{bash, eval=FALSE}
+fastqc /students/2024-2025/Thema05/BlaasKanker/testingtools/picard_test/poging_1/*.bam  \
+  -o /students/2024-2025/Thema05/BlaasKanker/testingtools/picard_test/fastqc_bam -t 12
+```
+
+
+```{bash, eval=FALSE}
+multiqc /students/2024-2025/Thema05/BlaasKanker/testingtools/picard_test/fastqc_bam/* \
+  -o /students/2024-2025/Thema05/BlaasKanker/testingtools/picard_test/multiqc_bam
+```
+
+
+219 664: UNPAIRED_READ_DUPLICATES
+95 019: READ_PAIR_DUPLICATES
+3 776 845: READ_PAIR_OPTICAL_DUPLICATES
+
+UNPAIRED_READ_DUPLICATES en READ_PAIR_DUPLICATES opgeteld: 314 683
+
+Dit betekend dat echt veel duplicaten door het sequencen (optical) komen.
+
+Nu fastqc runnen op de data voordat hij door picard heen ging.
+
+! voor picard ongeveer 20.8% duplixaten en na ongeveer 18.5% (ff gem berekenen), dus picard heeft ongeveer 2% dup verijwijderd
+
+! hoe vind fastqc duplicaten ?
+! vergelijken met hoe picard duplicaten vind
+! multiqc vergelijken voor en na picard
+
+! wat overblijft ws biologische duplicaten
+
+Picard op de echte data:
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+  parallel java -jar picard.jar MarkDuplicates \
+                '-I /students/2024-2025/Thema05/BlaasKanker/outputs/bwa_aln/mapping_output/sorted/{}_sorted.bam' \
+                '-O /students/2024-2025/Thema05/BlaasKanker/outputs/picard_dub/marked_duplicates/{}.marked_duplicates.bam' \
+                '-M /students/2024-2025/Thema05/BlaasKanker/outputs/picard_dub/metrics/{}.marked_dup_metrics.txt' \
+                '-REMOVE_DUPLICATES true' \
+                '-READ_NAME_REGEX null'
+```
+
+
+Testdata maken voor Janine haar tool, zodat je makkelijker kan testen zonder lang te hoeven wachten:
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+  parallel java -jar picard.jar MarkDuplicates \
+                '-I /students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/output_sorted_bam/{}_sorted.bam' \
+                '-O /students/2024-2025/Thema05/BlaasKanker/testingtools/picard_testdata/marked_duplicates/{}.marked_duplicates.bam' \
+                '-M /students/2024-2025/Thema05/BlaasKanker/testingtools/picard_testdata/metrics/{}.marked_dup_metrics.txt' \
+                '-REMOVE_DUPLICATES true' \
+                '-READ_NAME_REGEX null'
+```
+
 
