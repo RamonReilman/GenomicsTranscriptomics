@@ -10,15 +10,15 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Logboek Jasper Jonker
-Dit is het Logboek van Jasper Jonker voor het vak 2.1.2 Genomics & Transcriptomics. Met dit vak gaan we een paper op nieuw doen of een andere onderzoeksvraag beantwoorden met de data die gegeven is bij de paper.
+Dit is het Logboek van Jasper Jonker voor het vak 2.1.2 Genomics & Transcriptomics. Met dit vak gaan we een paper opnieuw na doen of een andere onderzoeksvraag beantwoorden met de data die gegeven is bij de paper.
 
 ## 09-09 
 
-We starten het onderzoek. We moeten eerst een paper vinden of verslag met genoeg meetwaarde heeft een meerde meetwaarde onder de zelfde omstandigheden. We doen het onderzoek met vier mensen dus hebben besloten om iedereen 1 uit te kiezen. Om zeker te weten dat er 1 tussen zit dit zo ie zo goed is en samen 1 kunnen uitkiezen waar we allemaal iets mee hebben. 
+We starten het onderzoek. We moeten eerst een paper vinden of verslag met genoeg meetwaarde heeft met meerde meetwaarde onder de zelfde omstandigheden. We doen het onderzoek met vier mensen dus hebben besloten om ieder 1 uit te kiezen. Om zeker te weten dat er 1 tussen zit die vol doet aan alle eizen die gesteld worden en we van alle onderzoeken kunnen verkleinen naar maar vier. Daar uit is het voor ons dan makkelijker uitkiezen.
 
 ## 10-09 
 
-Ik heb er gekozen voor het volgende onderzoek https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE153650 . Het is een onderzoek dat gaat over het bestrijden van blaaskanker met behulp van specifiek soort eiwitten. Omdat er hedendaags nog heel veel mensen aan dood gaan en ook de behandeling die ze nu gebruiken, dus chemotherapie niet altijd even goed aan slaat. Dit onderzoek wordt eerst op muizen getest. Nu nog wachten op goedkeuring van de docenten. 
+Ik heb er gekozen voor het volgende onderzoek https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE153650 . Het is een onderzoek dat gaat over het bestrijden van blaaskanker met behulp van specifiek soort eiwitten. Omdat er hedendaags nog heel veel mensen dood aan gaan en ook de behandeling die ze nu gebruiken, dus chemotherapie, niet altijd even goed aan slaat. Dit onderzoek wordt eerst op muizen getest. Nu nog wachten op goedkeuring van de docenten. 
 
 ## 11-09
 
@@ -26,30 +26,33 @@ Na goedkeuring is mijn tekst gekozen om mee verder te gaan in dit project. Nu ga
 
 ## 13-09 & 14-09
 
-Bezig met de worklfow en gekeken wat we uiteindelijk gaan doen. We hebben besloten om de het onderzoek na te bootsen maar ook een beetje te verbereden. We gaan ook kijken wat de mutatie van de kanker en wat voor gevolg het heeft op biologische proggesen verder in het lichaam.
+Bezig met de worklfow en gekeken wat we uiteindelijk gaan doen. We hebben besloten om de het onderzoek na te bootsen maar ook een beetje te verbreden. We gaan ook kijken wat de mutatie van de kanker en wat voor gevolg het heeft op biologische processen verder in het lichaam. Dat lijkt ons leuker om te doen dan het onderzoek precies na te doen.
 
 ## 16-09
 
-Het plan van aanpak gepresenteerd. We hebben ook gelijk gekozen om met het nieuwste muisen gen te gaan vergelijken. We hebben ook een taak verdeling gemaakt. Ikga bezig met bwa omdat het mij iets moeilijks lijkt rn ik mezelf wil uitdagen. 
+Het plan van aanpak gepresenteerd. We hebben ook gelijk gekozen om met het nieuwste muizen gen te gaan vergelijken. Dit omdat dat gen het nieuwst is en ook het meest van bekentst is. Misschien komen er hier door ook op een andere conclusie dan als we het met het oude gen gingen vergelijken.  We hebben ook een taak verdeling gemaakt. Ik ga bezig met bwa omdat het mij iets moeilijks lijkt en ik mezelf wil uitdagen. BWA wordt ook veel gebruikt in de bioinformatica  dus is zoiezo handig om te weten hoe het werkt. BWA is een alining tool tegen over een refence genoom. Wat belankrijk is in veel onderzoeken omdat je dan kan weten of je data ook wel overeen komt met het organisme waar je onderzoek van doet. 
 
 ## 17-09
 
-Ik ga vandaag eerst testdata maken in een oefen Folder die later weer wordt verwijderd. We maken test data omdat die data kleiner is dan de normale data en daarom makkelijker te gebruiken is in onze tools zodat het niet te lang duurt. Dit doen we even allemaal en doen het met 10000 reads omdat het ons groot genoeg lijkt.
+Ik ga vandaag eerst testdata maken in een oefen Folder die later weer wordt verwijderd. We maken test data omdat die data kleiner is dan de normale data en daarom makkelijker te gebruiken is in onze tools zodat het niet te lang duurt. We hebben maar een bepaalde tijd en als we telkens moeten wachten op dat de tools klaar zijn en het fout kan gaan op het laatste moment fout kan gaan gooi je veel belangrijke tijd over. Dit doen we even allemaal en doen het met 10000 reads omdat het ons groot genoeg lijkt. We doen het allemaal omdat het in andere onderzoeken ook gebruikt kunnen worden.
 ```{bash, eval=FALSE}
 find /students/2024-2025/Thema05/BlaasKanker/fastq/ -name "*.fastq" | \
     parallel "seqkit sample -p 0.1 {} | seqkit head -n 10000 > /students/2024-2025/Thema05/BlaasKanker/oefenengroep/testdataJasper/{/}"
 ```
 
+Hier ga ik ook een Fastqc maken van de oefendata zodat we dat ook allemaal even weten. Want later moeten we Fastqc bestanden maken van de data om te kijken of het na het trimmen de data naar wens is met niet te veel duplicaten bijvoorbeeld en of de data wel van goede kwaliteit is.
 ```{bash, eval=FALSE}
 fastqc /students/2024-2025/Thema05/BlaasKanker/oefenengroep/testdataJasper/* \
     -o /students/2024-2025/Thema05/BlaasKanker/oefenengroep/FastqcJasper/
 ```
-
+Dit doe we ook voor multiqc.
 ```{bash, eval=FALSE}
 multiqc /students/2024-2025/Thema05/BlaasKanker/oefenengroep/FastqcJasper/* -o /students/2024-2025/Thema05/BlaasKanker/oefenengroep/multiqcJasper/
 ```
 
 ## 18 -09 
+
+Vandaag ga ik bezig met BWA terwijl andere bezig zijn met het trimmen hier door werken we alvast een beetje voor uit en kunnen we, als we klaar zijn met trimmen kunnen we in 1 keer door. Ik doe het eerst simpel en in een testingtools map zodat het duidelijk is voor iedreen die het dan leest en ik het ook goed kan uitleggen.
 ``` {bash, eval= FALSE}
 # hier maken er de van de refence genome een index file zodat de tool sneller gaat. 
 bwa index /students/2024-2025/Thema05/BlaasKanker/realreferenceGenome/ncbi_dataset/data/GCF_000001635.27/GCF_000001635.27_GRCm39_genomic.fna
@@ -61,18 +64,14 @@ samtools view -b outputtest.sam > output.bam
 samtools sort -o output.sorted.bam outputtest.bam 
 
 samtools index output.sorted.bam
-
-samtools flagstat output.sorted.bam.bai
-https://www.youtube.com/watch?v=1wcFavYt6uU 
-deze turtoril heb ik gebruikt. 
-
 ```
-
+Voor deze tool te begrijpen heb ik de volgende turbotaal gebruikt om  het te begrijpen en uiteindelijk te kunnen toe passen op onze eige data : https://www.youtube.com/watch?v=1wcFavYt6uU 
+ 
 ## 20-09 
-Bezig geweest met trimmiotic, er is na het trimmen kwaliteit om laag gegaan en dat is niet logisch en we kijken naar een verklaring of we verdere moeten met ongegtimde data.
+Bezig geweest met trimmiotic, er is na het trimmen kwaliteit om laag gegaan en dat is niet logisch. Onze ongetrimde data was zo ie zo al super goed dus we hebben ook gelezen of ze het al getrimmed hebben geüpload maar we kunnen er niks over vinden. Dus we gaan eerst nog verder kijken naar wat handig is om te doen. Kijken of we het op een bepaalde manierwel kunnen trimmen of we het op de ongetrimmde data gewoon verder gaan en dan kijken het het wel gaat.
 
 ## 22-09
-Ik ga van daag even puzelen met trimomatic de onderste code heb ik van iris
+Ik ga van daag even puzzelen met trimomatic de onderste code heb ik van iris.
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
   parallel 'TrimmomaticPE -threads 4' \
@@ -86,11 +85,13 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
                   'SLIDINGWINDOW:4:20' \
                   'MINLEN:40'
 ```
-Mijn teminal doet raar en doet het dus niet en ik kom er niet uit. IK kijk even op school want een extra paar ogen helpt altijd 
-Ik ga even paar dingen opschrijven zodat ik dat dan kan achter elkaar kan gaan proberen 
+Mijn terminal doet raar. Mijn webpagina sluit telkens af en is super sloom dus het gaat niet helemaal lekker. Ik ga eerst wel veder met lezen wat we allemaal kunnen doen met trimmen zodat onze data wel goed er uit komt
 
-We kunnen het proberen met traling toe te passen. Dit verwijderd de laatste paar basen verwijderd worden totdat een totdat er een kwaliteit gevonden is 
+We kunnen het proberen met traling toe te passen. Dit verwijderd de laatste paar basen verwijderd worden totdat een totdat er een kwaliteit gevonden is die gewenst is.
+Hetzelfde geld voor leading. Maar dat is dan bij de eerste paar basen met te lage kwaliteit. 
+Min len kunnen we ook gebruiken. Die halen de sequencies er uit die te klein zijn bij een bepaalde lengte.
 
+Ik ga het eerst probren met traling
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
   parallel 'TrimmomaticPE -threads 4' \
@@ -106,14 +107,14 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
                   'TRALLING:20'
 ```
 
-Mijn laptop doet vervelend ik probeer dat eerst even op te lossen en ga anders later nog verder om te kijken wat bettere settinngs zijn 
+Mijn laptop doet vervelend ik probeer dat eerst even op te lossen en ga anders later nog verder om te kijken wat betere setting zijn om toe te passen als het nodig is
 
 ## 23-09
 bwa werkt nu echt op de test data, maar moet even wachten op het trimmen van de data want we zitten te twijfelen wat we moeten gaan trimmen. Dit gaan we even met de docent over hebben.
 In de tussen tijd gaan we verder met Strelka. Dit is een tool die variantie kan vinden in de mapping. Hier mee kunnen we kijken waar de mutaties zitten in het gen en kunnen we later kijken wat voor invloed het heeft op de eiwitten later in het biologisch proces.
 
 Hier gaan we bezig op de echte data die nog niet getrimde is zodat we zeker weten dat het het doet als het op de getrimde data gaan doen. Hier staat als het ware het zelde als op dag 18-09 maar dan met het pad waar alles is en waar alles moet staan  en alles parallel.      
-suziki sx4
+
 ``` {bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
     parallel 'bwa mem -t 8 /students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/index/GCF_000001635.27_GRCm39_genomic.fna /students/2024-2025/Thema05/BlaasKanker/outputs/fastq/{}_1.fastq /students/2024-2025/Thema05/BlaasKanker/outputs/fastq/{}_2.fastq > /students/2024-2025/Thema05/BlaasKanker/testingtools/BWA_test_vol/output/{}_aln.sam' | \
@@ -136,7 +137,8 @@ Door problemen met de laptop ga ik morgen verder met de laatste stap
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
     parallel 'samtools index -M /students/2024-2025/Thema05/BlaasKanker/testingtools/BWA_test_vol/output/aln_sorted/{}_sorted.bam'
 ```
-Het werkt zoals het zou moeten en nu even wachten op het trimmen. Hier hebben we no twijfels over wat we moeten doen met de duplicaten en gaan we dan op 25-09 gann we het mappen op de echte getrimmde data. 
+Het werkt zoals het zou moeten en nu even wachten op het trimmen. Hier hebben we no twijfels over wat we moeten doen met de duplicaten en gaan we dan op
+25-09 gaan we het mappen op de echte getrimmde data. 
 
 Nu ga ik verder met trimomatic dus kopieeer het van boven weer.Deze is de basic dan en evena aangepast zodat ik de rest niet in de weg zit.
 ```{bash, eval=FALSE}
@@ -180,7 +182,7 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 ```
 
 ## 25-09
-Vandaag gaan we mappen op de echte data. we hebben er voor gekozen om uiteidelijk niet te trimmen maar de duplicaten er uit te halen door bwa of beter te laten aan vinken. We hebben besloten om niet te trimmen omdat de data goed genoeg is voor dat we trimmen en na het trimmen de kwaliteit achter uit gaat en er gaat best veel data weg die we nog kunnen gebruiken.
+Vandaag gaan we mappen op de echte data. we hebben er voor gekozen om uiteindelijk niet te trimmen maar de duplicaten er uit te halen door bwa of beter te laten aan vinken. We hebben besloten om niet te trimmen omdat de data goed genoeg is voor dat we trimmen en na het trimmen de kwaliteit achter uit gaat en er gaat best veel data weg die we nog kunnen gebruiken.
 
 Uit Ramons github heb ik -M -R '@RG\\tID:{}\\tSM:{}\\tPL:illumina\\tLB:lib1 gehaald. Dit zorgt ervoor dat bwa de duplicaten high light als het ware en dat is nodig voor picard om het te doen
 
@@ -193,8 +195,8 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 ```
 
 ## 26-09
-Na controlle van de data ga ik vandaag mappen 
-Ik was d laaste stappen vergeten toe te voegen maar het werkt nu als het goed is
+Na controle van de data ga ik vandaag mappen.
+Ik was de laaste stappen vergeten toe te voegen maar het werkt nu als het goed is
 
 ``` {bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
@@ -205,7 +207,7 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
   parallel -j 6 "samtools index /students/2024-2025/Thema05/BlaasKanker/outputs/bwa_aln/mapping_output/sorted/{}_sorted.bam"
 ```
 
-oefen data maken voor iris voor twee bestanden.
+oefen data maken voor iris voor twee bestanden. Zodat zij verder kan werken en het niet perse op echte data het moet proberen
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
   parallel -j 20 "bwa mem -t 15 -M -R '@RG\\tID:{}\\tSM:{}\\tPL:illumina\\tLB:lib1' \
@@ -219,7 +221,7 @@ samtools sort -o /students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/
 samtools index /students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/outputtest.sorted.bam
 ```
 ## 27-09 
-ik heb de data nu goed gemaakt was blijkbaar niet geod gegaan waarchijnlijk door de slechte servers. 
+ik heb de data nu goed gemaakt was blijkbaar niet geod gegaan waarschijnlijk door de slechte servers. Want ik kreeg geen fout meldingen of wat dan ook  
 
 Ik ga nu weer nieuwe testdata maken van alle testdata. zodat iris er mee bezig kan. 
 ```{bash, eval=FALSE}
@@ -234,6 +236,5 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
   parallel -j 6 "samtools index /students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/output_sorted_bam/{}_sorted.bam"
-
-   
 ```
+Dat is gelukt dus we kunnen weer verder.
