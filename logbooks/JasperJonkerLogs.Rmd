@@ -54,11 +54,11 @@ multiqc /students/2024-2025/Thema05/BlaasKanker/oefenengroep/FastqcJasper/* -o /
 # hier maken er de van de refence genome een index file zodat de tool sneller gaat. 
 bwa index /students/2024-2025/Thema05/BlaasKanker/realreferenceGenome/ncbi_dataset/data/GCF_000001635.27/GCF_000001635.27_GRCm39_genomic.fna
 # hier strten we het mappen en noemen het output.sam op de teastdata 
-bwa mem -t 8 index/GCF_000001635.27_GRCm39_genomic.fna SRR14870694_1.fastq SRR14870694_2.fastq > outputtest.sam
+bwa mem -t 8  SRR14870694_1.fastq SRR14870694_2.fastq > outputtest.sam
 # hier veranderen we het sam file naar een bam file omdat het minder ruimte in neemt
 samtools view -b outputtest.sam > output.bam 
-# Nu gaan we sorteren op coordinaten s
-samtools sort -o output.sorted.bam output.bam 
+# Nu gaan we sorteren op coordinaten 
+samtools sort -o output.sorted.bam outputtest.bam 
 
 samtools index output.sorted.bam
 
@@ -75,34 +75,34 @@ Bezig geweest met trimmiotic, er is na het trimmen kwaliteit om laag gegaan en d
 Ik ga van daag even puzelen met trimomatic de onderste code heb ik van iris
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
-  parallel 'TrimmomaticPE -threads 8 ' \
-                  '/students/2024-2025/Thema05/BlaasKanker/fastq/{}_1.fastq' \
-                  '/students/2024-2025/Thema05/BlaasKanker/fastq/{}_2.fastq' \
-                  '/students/2024-2025/Thema05/BlaasKanker/fastq_trimmed/{}_paired.1.fastq ' \
-                  '/students/2024-2025/Thema05/BlaasKanker/fastq_trimmed/{}_unpaired.1.fastq ' \
-                  '/students/2024-2025/Thema05/BlaasKanker/fastq_trimmed/{}_paired.2.fastq ' \
-                  '/students/2024-2025/Thema05/BlaasKanker/fastq_trimmed/{}_unpaired.2.fastq ' \
-                  'ILLUMINACLIP:/students/2024-2025/Thema05/BlaasKanker/tools/trim_adapters/TruSeq3-PE.fa:2:40:10 ' \
-                  'MINLEN:40 ' \
-                  'SLIDINGWINDOW:4:20'
+  parallel 'TrimmomaticPE -threads 4' \
+                  '/students/2024-2025/Thema05/BlaasKanker/testdata/{}_1.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/testdata/{}_2.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/testingtools/trimtest/{}_paired.1.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/tessuziki sx4tingtools/trimtest/{}_unpaired.1.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/testingtools/trimtest/{}_paired.2.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/testingtools/trimtest/{}_unpaired.2.fastq' \
+                  'ILLUMINACLIP:/students/2024-2025/Thema05/BlaasKanker/tools/trim_adapters/TruSeq3-PE.fa:2:30:10' \
+                  'SLIDINGWINDOW:4:20' \
+                  'MINLEN:40'
 ```
 Mijn teminal doet raar en doet het dus niet en ik kom er niet uit. IK kijk even op school want een extra paar ogen helpt altijd 
 Ik ga even paar dingen opschrijven zodat ik dat dan kan achter elkaar kan gaan proberen 
 
-We kunnen het proberen met traling toe te passen. Dit verwijderd de laaste paar basen verwijderd worden totdat een totdat er een kwaliteit gevonden is 
+We kunnen het proberen met traling toe te passen. Dit verwijderd de laatste paar basen verwijderd worden totdat een totdat er een kwaliteit gevonden is 
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
-  parallel 'TrimmomaticPE -threads 8 ' \
-                  '/students/2024-2025/Thema05/BlaasKanker/fastq/{}_1.fastq' \
-                  '/students/2024-2025/Thema05/BlaasKanker/fastq/{}_2.fastq' \
-                  '/students/2024-2025/Thema05/BlaasKanker/fastq_trimmed/{}_paired.1.fastq ' \
-                  '/students/2024-2025/Thema05/BlaasKanker/fastq_trimmed/{}_unpaired.1.fastq ' \
-                  '/students/2024-2025/Thema05/BlaasKanker/fastq_trimmed/{}_paired.2.fastq ' \
-                  '/students/2024-2025/Thema05/BlaasKanker/fastq_trimmed/{}_unpaired.2.fastq ' \
-                  'ILLUMINACLIP:/students/2024-2025/Thema05/BlaasKanker/tools/trim_adapters/TruSeq3-PE.fa:2:40:10 ' \
-                  'MINLEN:40 ' \
+  parallel 'TrimmomaticPE -threads 4' \
+                  '/students/2024-2025/Thema05/BlaasKanker/testdata/{}_1.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/testdata/{}_2.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/testingtools/trim_jasper/{}_paired.1.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/testingtools/trim_jasper/{}_unpaired.1.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/testingtools/trim_jasper/{}_paired.2.fastq' \
+                  '//students/2024-2025/Thema05/BlaasKanker/testingtools/trim_jasper/{}_unpaired.2.fastq' \
+                  'ILLUMINACLIP:/students/2024-2025/Thema05/BlaasKanker/tools/trim_adapters/TruSeq3-PE.fa:2:30:10' \
                   'SLIDINGWINDOW:4:20' \
+                  'MINLEN:40' \
                   'TRALLING:20'
 ```
 
@@ -113,7 +113,7 @@ bwa werkt nu echt op de test data, maar moet even wachten op het trimmen van de 
 In de tussen tijd gaan we verder met Strelka. Dit is een tool die variantie kan vinden in de mapping. Hier mee kunnen we kijken waar de mutaties zitten in het gen en kunnen we later kijken wat voor invloed het heeft op de eiwitten later in het biologisch proces.
 
 Hier gaan we bezig op de echte data die nog niet getrimde is zodat we zeker weten dat het het doet als het op de getrimde data gaan doen. Hier staat als het ware het zelde als op dag 18-09 maar dan met het pad waar alles is en waar alles moet staan  en alles parallel.      
-
+suziki sx4
 ``` {bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
     parallel 'bwa mem -t 8 /students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/index/GCF_000001635.27_GRCm39_genomic.fna /students/2024-2025/Thema05/BlaasKanker/outputs/fastq/{}_1.fastq /students/2024-2025/Thema05/BlaasKanker/outputs/fastq/{}_2.fastq > /students/2024-2025/Thema05/BlaasKanker/testingtools/BWA_test_vol/output/{}_aln.sam' | \
@@ -135,5 +135,105 @@ Door problemen met de laptop ga ik morgen verder met de laatste stap
 ``` {bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
     parallel 'samtools index -M /students/2024-2025/Thema05/BlaasKanker/testingtools/BWA_test_vol/output/aln_sorted/{}_sorted.bam'
+```
+Het werkt zoals het zou moeten en nu even wachten op het trimmen. Hier hebben we no twijfels over wat we moeten doen met de duplicaten en gaan we dan op 25-09 gann we het mappen op de echte getrimmde data. 
 
+Nu ga ik verder met trimomatic dus kopieeer het van boven weer.Deze is de basic dan en evena aangepast zodat ik de rest niet in de weg zit.
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+  parallel 'TrimmomaticPE -threads 8' \
+                  '/students/2024-2025/Thema05/BlaasKanker/testdata/{}_1.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/testdata/{}_2.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/testingtools/trim_jasper/paired/{}_paired.1.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/testingtools/trim_jasper/unpaired/{}_unpaired.1.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/testingtools/trim_jasper/paired/{}_paired.2.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/testingtools/trim_jasper/unpaired/{}_unpaired.2.fastq' \
+                  'SLIDINGWINDOW:4:20' \
+                  'MINLEN:40'
+```
+
+Ik maak ook gelijk dit om de fastqc
+
+```{bash, eval=FALSE}
+fastqc /students/2024-2025/Thema05/BlaasKanker/testingtools/trim_jasper/paired/* \
+    -o /students/2024-2025/Thema05/BlaasKanker/testingtools/trim_jasper/FASTqc/
+```
+
+IK maak ook hier eeb multiqc
+```{bash, eval=FALSE}
+multiqc /students/2024-2025/Thema05/BlaasKanker/testingtools/trim_jasper/FASTqc/* -o /students/2024-2025/Thema05/BlaasKanker/testingtools/trim_jasper/MUL/
+```
+
+Het is verkeerd gegaan alles is leeg dus ik doe het nu opnieuw.
+Ik had een spelfout gemaakt in de trimomatic dus dat is gefikst
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+  parallel 'TrimmomaticPE -threads 8' \
+                  '/students/2024-2025/Thema05/BlaasKanker/testdata/{}_1.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/testdata/{}_2.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/testingtools/trim_jasper/paired/{}_paired.1.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/testingtools/trim_jasper/unpaired/{}_unpaired.1.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/testingtools/trim_jasper/paired/{}_paired.2.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/testingtools/trim_jasper/unpaired/{}_unpaired.2.fastq' \
+                  'SLIDINGWINDOW:4:20' \
+                  'MINLEN:40' \
+```
+
+## 25-09
+Vandaag gaan we mappen op de echte data. we hebben er voor gekozen om uiteidelijk niet te trimmen maar de duplicaten er uit te halen door bwa of beter te laten aan vinken. We hebben besloten om niet te trimmen omdat de data goed genoeg is voor dat we trimmen en na het trimmen de kwaliteit achter uit gaat en er gaat best veel data weg die we nog kunnen gebruiken.
+
+Uit Ramons github heb ik -M -R '@RG\\tID:{}\\tSM:{}\\tPL:illumina\\tLB:lib1 gehaald. Dit zorgt ervoor dat bwa de duplicaten high light als het ware en dat is nodig voor picard om het te doen
+
+``` {bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+  parallel -j 20 "bwa mem -t 15 -M -R '@RG\\tID:{}\\tSM:{}\\tPL:illumina\\tLB:lib1' \
+    /students/2024-2025/Thema05/BlaasKanker/outputs/bwa_aln/index/GCF_000001635.27_GRCm39_genomic.fna \
+    /students/2024-2025/Thema05/BlaasKanker/outputs/fastq_trimmed/{}_paired.1.fastq /students/2024-2025/Thema05/BlaasKanker/outputs/fastq_trimmed/{}_paired.2.fastq > \
+    /students/2024-2025/Thema05/BlaasKanker/outputs/bwa_aln/mapping_output/{}.sam"
+```
+
+## 26-09
+Na controlle van de data ga ik vandaag mappen 
+Ik was d laaste stappen vergeten toe te voegen maar het werkt nu als het goed is
+
+``` {bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+  parallel "samtools view -b /students/2024-2025/Thema05/BlaasKanker/outputs/bwa_aln/mapping_output/{}.sam > {}.bam"\
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+  parallel "samtools view -b /students/2024-2025/Thema05/BlaasKanker/outputs/bwa_aln/mapping_output/{}.sam | samtools sort -o /students/2024-2025/Thema05/BlaasKanker/outputs/bwa_aln/mapping_output/sorted/{}_sorted.bam"
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+  parallel -j 6 "samtools index /students/2024-2025/Thema05/BlaasKanker/outputs/bwa_aln/mapping_output/sorted/{}_sorted.bam"
+```
+
+oefen data maken voor iris voor twee bestanden.
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+  parallel -j 20 "bwa mem -t 15 -M -R '@RG\\tID:{}\\tSM:{}\\tPL:illumina\\tLB:lib1' \
+    /students/2024-2025/Thema05/BlaasKanker/outputs/bwa_aln/index/GCF_000001635.27_GRCm39_genomic.fna \
+ /students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/SRR14870694_1.fastq /students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/SRR14870694_2.fastq > \
+    /students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/outputtest.sam"
+samtools view -b /students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/outputtest.sam > /students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/outputtest.bam
+samtools view -b /students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/outputtest.sam > /students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/outputtest.bam
+samtools sort -o /students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/outputtest.sorted.bam /students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/outputtest.bam
+
+samtools index /students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/outputtest.sorted.bam
+```
+## 27-09 
+ik heb de data nu goed gemaakt was blijkbaar niet geod gegaan waarchijnlijk door de slechte servers. 
+
+Ik ga nu weer nieuwe testdata maken van alle testdata. zodat iris er mee bezig kan. 
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+  parallel -j 20 "bwa mem -t 20 -M -R '@RG\\tID:{}\\tSM:{}\\tPL:illumina\\tLB:lib1' \
+    /students/2024-2025/Thema05/BlaasKanker/outputs/bwa_aln/index/GCF_000001635.27_GRCm39_genomic.fna \
+    /students/2024-2025/Thema05/BlaasKanker/testdata/{}_1.fastq /students/2024-2025/Thema05/BlaasKanker/testdata/{}_2.fastq > \
+    /students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/output_sam/{}.sam"
+  
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+  parallel "samtools view -b /students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/output_sam/{}.sam | samtools sort -o /students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/output_sorted_bam/{}_sorted.bam"
+
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+  parallel -j 6 "samtools index /students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/output_sorted_bam/{}_sorted.bam"
+
+   
 ```
