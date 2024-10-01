@@ -1,0 +1,95 @@
+Type	MGI ID	Symbol	Name	Chr	Start	End	Build	Strand	Best Match Type	Best Match	Match Score
+protein coding gene	MGI:1858907	Blcap	bladder cancer associated protein	2	157398282	157408281	GRCm39	-	Name	bladder cancer associated protein	3
+protein coding gene	MGI:1928478	Brinp1	bone morphogenic protein/retinoic acid inducible neural specific 1	4	68679751	68872634	GRCm39	-	old name	deleted in bladder cancer 1 (human)	3
+protein coding gene	MGI:1098273	Amacr	alpha-methylacyl-CoA racemase	15	10981875	10995693	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:88042	Apex1	apurinic/apyrimidinic endonuclease 1	14	51162425	51164596	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:1915192	Atp5mc2	ATP synthase membrane subunit c locus 2	15	102571303	102579482	GRCm39	-	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:1096327	Axin1	axin 1	17	26357662	26414785	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:88138	Bcl2	B cell leukemia/lymphoma 2	1	106465908	106642004	GRCm39	-	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:88184	Bmyc	brain expressed myelocytomatosis oncogene	2	25596891	25597733	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:104537	Brca1	breast cancer 1, early onset	11	101379590	101442781	GRCm39	-	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:1277950	Casp9	caspase 9	4	141520923	141543287	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:103198	Cdc25a	cell division cycle 25A	9	109704647	109722963	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:99551	Cdh13	cadherin 13	8	119010472	120051660	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:88351	Cdk1	cyclin dependent kinase 1	10	69170976	69188742	GRCm39	-	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:88357	Cdk4	cyclin dependent kinase 4	10	126899404	126903157	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:104738	Cdkn2a	cyclin dependent kinase inhibitor 2A	4	89192710	89212856	GRCm39	-	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:104737	Cdkn2b	cyclin dependent kinase inhibitor 2B	4	89224536	89229276	GRCm39	-	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:1355321	Chek2	checkpoint kinase 2	5	110987845	111022011	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:105303	Cxcr2	C-X-C motif chemokine receptor 2	1	74193153	74200405	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:88588	Cyp1a1	cytochrome P450, family 1, subfamily a, polypeptide 1	9	57595211	57611107	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:103238	Cyp2c29	cytochrome P450, family 2, subfamily c, polypeptide 29	19	39275541	39319157	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:1306806	Cyp2c37	cytochrome P450, family 2. subfamily c, polypeptide 37	19	39980868	40000687	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:1306819	Cyp2c38	cytochrome P450, family 2, subfamily c, polypeptide 38	19	39379109	39451519	GRCm39	-	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:1306818	Cyp2c39	cytochrome P450, family 2, subfamily c, polypeptide 39	19	39499306	39556973	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:2147497	Cyp2c50	cytochrome P450, family 2, subfamily c, polypeptide 50	19	40078132	40102394	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:1919553	Cyp2c65	cytochrome P450, family 2, subfamily c, polypeptide 65	19	39049459	39082388	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:1917138	Cyp2c66	cytochrome P450, family 2, subfamily c, polypeptide 66	19	39102342	39175200	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:1916885	Dapk1	death associated protein kinase 1	13	60749761	60911005	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:95405	Ephx1	epoxide hydrolase 1, microsomal	1	180817121	180845134	GRCm39	-	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:95410	Erbb2	erb-b2 receptor tyrosine kinase 2	11	98303310	98328542	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:95413	Ercc2	excision repair cross-complementing rodent repair deficiency, complementation group 2	7	19115942	19129619	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:1341823	Fanca	Fanconi anemia, complementation group A	8	123995039	124045315	GRCm39	-	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:95484	Fas	Fas cell surface death receptor	19	34268066	34305172	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:99255	Fasl	Fas ligand	1	161608260	161616064	GRCm39	-	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:95515	Fgf1	fibroblast growth factor 1	18	38971726	39062525	GRCm39	-	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:95516	Fgf2	fibroblast growth factor 2	3	37402616	37464255	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:95523	Fgfr2	fibroblast growth factor receptor 2	7	129764181	129868538	GRCm39	-	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:95524	Fgfr3	fibroblast growth factor receptor 3	5	33879068	33894412	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:1277947	Fhit	fragile histidine triad gene	14	11307738	12919681	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:95860	Gstm1	glutathione S-transferase, mu 1	3	107919571	107925289	GRCm39	-	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:95861	Gstm2	glutathione S-transferase, mu 2	3	107889018	107893736	GRCm39	-	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:106026	Gstm3	glutathione S-transferase, mu 3	3	107871019	107876484	GRCm39	-	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:1309467	Gstm6	glutathione S-transferase, mu 6	3	107846163	107851065	GRCm39	-	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:95865	Gstp1	glutathione S-transferase, pi 1	19	4085411	4087912	GRCm39	-	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:95864	Gstp2	glutathione S-transferase, pi 2	19	4090288	4092221	GRCm39	-	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:2385078	Gstp3	glutathione S-transferase pi 3	19	4107477	4109569	GRCm39	-	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+pseudogene	MGI:3782108	Gstp-ps	glutathione S-transferase, pi, pseudogene	1	191758120	191758750	GRCm39	-	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:107379	Gstt1	glutathione S-transferase, theta 1	10	75619647	75634418	GRCm39	-	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:96224	Hras	Harvey rat sarcoma virus oncogene	7	140770839	140773938	GRCm39	-	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:96244	Hspa1a	heat shock protein 1A	17	35188335	35191132	GRCm39	-	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:96547	Il1rn	interleukin 1 receptor antagonist	2	24226872	24241503	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:96548	Il2	interleukin 2	3	37174862	37180103	GRCm39	-	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:1095419	Kdm6a	lysine (K)-specific demethylase 6A	X	18028814	18146175	GRCm39	+	Disease Ortholog	bladder urothelial carcinoma (subterm of urinary bladder cancer, with synonym bladder cancer)	3
+protein coding gene	MGI:96683	Kdr	kinase insert domain protein receptor	5	76093487	76139118	GRCm39	-	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:96680	Kras	Kirsten rat sarcoma viral oncogene homolog	6	145162425	145195965	GRCm39	-	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:1346869	Map2k4	mitogen-activated protein kinase kinase 4	11	65579069	65679123	GRCm39	-	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:96977	Mgmt	O-6-methylguanine-DNA methyltransferase	7	136496343	136731995	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+miRNA gene	MGI:3619426	Mir494	microRNA 494	12	109681752	109681836	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+polymorphic pseudogene	MGI:1933846	Mmp1a	matrix metallopeptidase 1a (interstitial collagenase)	9	7464141	7476857	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:1933847	Mmp1b	matrix metallopeptidase 1b (interstitial collagenase)	9	7368239	7388047	GRCm39	-	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:1100512	Mre11a	MRE11A homolog A, double strand break repair nuclease	9	14695971	14748421	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:101816	Msh2	mutS homolog 2	17	87979960	88031141	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:99926	mt-Atp8	mitochondrially encoded ATP synthase 8	MT	7766	7969	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:102501	mt-Cytb	mitochondrially encoded cytochrome b	MT	14145	15288	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:102500	mt-Nd2	mitochondrially encoded NADH dehydrogenase 2	MT	3914	4951	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:106639	Mthfr	methylenetetrahydrofolate reductase	4	148123534	148144008	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:894292	Mtr	5-methyltetrahydrofolate-homocysteine methyltransferase	13	12197598	12272999	GRCm39	-	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:1921430	Muc5b	mucin 5, subtype B, tracheobronchial	7	141392807	141426821	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:97250	Myc	myelocytomatosis oncogene	15	61857240	61862223	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:97279	Nat1	N-acetyl transferase 1	8	67943620	67945183	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:109201	Nat2	N-acetyltransferase 2 (arylamine N-acetyltransferase)	8	67947510	67955236	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:102537	Nat3	N-acetyltransferase 3	8	67976506	68001279	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:97611	Plau	plasminogen activator, urokinase	14	20886728	20893453	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:97621	Plk1	polo like kinase 1	7	121758662	121769096	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:1914287	Pmf1	polyamine-modulated factor 1	3	88301450	88317638	GRCm39	-	Disease Ortholog	bladder carcinoma (subterm of urinary bladder cancer, with synonym bladder cancer)	3
+protein coding gene	MGI:104288	Pms2	PMS1 homolog2, mismatch repair system component	5	143846782	143870786	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:109583	Pten	phosphatase and tensin homolog	19	32734977	32803560	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:97798	Ptgs2	prostaglandin-endoperoxide synthase 2	1	149975851	149983978	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:1928386	Rassf1	Ras association (RalGDS/AF-6) domain family member 1	9	107428752	107439460	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:97874	Rb1	RB transcriptional corepressor 1	14	73430298	73563446	GRCm39	-	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:102672	Runx3	runt related transcription factor 3	4	134847963	134905301	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:97608	Serpine1	serine (or cysteine) peptidase inhibitor, clade E, member 1	5	137090358	137101122	GRCm39	-	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:1345275	Slc11a1	solute carrier family 11 (proton-coupled divalent metal ion transporters), member 1	1	74414354	74425221	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:1354910	Socs1	suppressor of cytokine signaling 1	16	10601672	10603400	GRCm39	-	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:98366	Sox4	SRY (sex determining region Y)-box 4	13	29132902	29137682	GRCm39	-	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:102896	Sult1a1	sulfotransferase family 1A, phenol-preferring, member 1	7	126272037	126275604	GRCm39	-	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:1202709	Tert	telomerase reverse transcriptase	13	73775030	73797962	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:98728	Tgfbr1	transforming growth factor, beta receptor I	4	47353258	47414926	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:98754	Timp3	tissue inhibitor of metalloproteinase 3	10	86136276	86185369	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:1346060	Tlr2	toll-like receptor 2	3	83743579	83749045	GRCm39	-	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:1861735	Tmeff2	transmembrane protein with EGF-like and two follistatin-like domains 2	1	50951946	51226429	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:1341090	Tnfrsf10b	tumor necrosis factor receptor superfamily, member 10b	14	70004921	70021860	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:1344332	Wif1	Wnt inhibitory factor 1	10	120869909	120936547	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:98973	Xdh	xanthine dehydrogenase	17	74190890	74257191	GRCm39	-	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
+protein coding gene	MGI:99137	Xrcc1	X-ray repair complementing defective repair in Chinese hamster cells 1	7	24246124	24272863	GRCm39	+	Disease Ortholog	urinary bladder cancer (synonym: bladder cancer)	3
