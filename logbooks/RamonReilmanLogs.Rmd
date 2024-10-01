@@ -579,9 +579,9 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
     /students/2024-2025/Thema05/BlaasKanker/outputs/picard_dub/marked_duplicates/{}.marked_duplicates.bam"
 ```
 
+Omdat het we straks ontzettend veel varianten krijgen leek het mij een goed idee om vandaag te kijken naar het filteren van de annotaties.
+SNPeff kan doormiddel van bestand met gene symbols als het goed is zoeken naar die genen.
+Ik heb op https://www.informatics.jax.org/mgihome/homepages/help.shtml gezocht naar genen die met blaaskanker te maken hebben.
 
-```{bash, eval=FALSE}
-cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
-    parallel "java -jar snpEff.jar \
-    /students/2024-2025/Thema05/BlaasKanker/outputs/variant_calling_unfiltered/{}_variants.vcf > /students/2024-2025/Thema05/BlaasKanker/temp/annoting_test/{}_annoted.vcf"
-```
+Deze lijst kan je downloaden, maar er staat veel overbodige informatie in. Daarom heb ik een scriptje in python geschreven die de genen er uit kan halen. zie main src/python.
+Als Janine straks klaar is met annotatie, kunnen we op die manier filteren.
