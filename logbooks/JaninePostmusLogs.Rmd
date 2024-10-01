@@ -24,20 +24,23 @@ nieuwe inleiding geplaatst worden.
 **09-09-2024**\
 Nadat we de uitleg hebben gekregen hebben we groepen gevormd. Mijn groep
 is samen met Ramon, Jasper en Iris. We hebben vervolgens een begin
-gemaakt met het zoeken naar een wetenschappelijk artikel.
+gemaakt met het zoeken naar een wetenschappelijk artikel. We wouden
+graag een onderzoek wat wel te repliceren is, maar wat ook nog een
+stukje heeft wat we extra kunnen doen.
 
 **10-09-2024**\
 We hebben een definitieve keuze gemaakt voor ons onderzoek. We hebben
 gekozen voor een onderzoek met de behandeling van Entinostat op
 blaaskanker. Het onderwerp interesseert mij heel erg omdat ik kanker een
-interessant onderwerp vind.
+interessant onderwerp vind. De entinostat werkt heel erg op genexpressie
+en ook dit vind ik interessant.
 
 **11-09-2024**\
 We hebben een taakverdeling gemaakt voor het plan van aanpak. Ik ga het
 onderzoekoverzicht, de achtergrond ervan en een globale theoretische
 achtergrond presenteren tijdens de presentatie. Iris gaat de Gantt chart
-maken, Jasper gaat de workflow maken, Ramon zet het plan van aanpak in
-elkaar.
+maken, Jasper gaat de workflow maken, Ramon zet het plan van aanpak en
+de presentatie in elkaar.
 
 **12-09-2024**\
 Ik heb het artikel doorgelezen en de kernwoorden eruit gehaald zodat ik
@@ -46,35 +49,46 @@ het artikel de kopjes Abstract en Introduction hiervoor gebruikt. Hier
 staat dusdanig veel informatie in over het onderzoek dat hier voor het
 plan van aanpak voldoende uit te halen valt. Ik heb gebruik gemaakt van
 online resourches en voor het vertalen van het artikel heb ik gebruik
-gemaakt van chat gtp.
+gemaakt van copilot.
 
 **13-09-2024**\
 Ik heb de theorie aangevuld met de laatste dingen. Smiddags is er een
 les gevolgd over hoe we data kunnen downloaden op de schoolserver. Hier
-heeft Ramon onze data voor uitgevoerd.
+heeft Ramon meegedaan met de les en het voor onze data uitgevoerd.
 
 **15-09-2024**\
 Naar aanleiding van feedback vanuit de groep heb ik de theorie aangepast
 en aangevuld. Presentatie is afgemaakt door Ramon. Omdat ik met een
 gebroken enkel in huis vast zit, gaat Ramon mijn deel van de presentatie
-doen en gaan we maandag afspraken maken over de uitvoering van het
-project.
+doen en gaan we maandag afspraken maken over de verdere uitvoering van
+het project.
 
 **17-09-2024**\
 Ik heb de tool snpEff gekregen/gekozen als onderdeel van het project.
 Omdat ik de komende weken minder op school aanwezig kan zijn hebben we
 deze tool aan mij toebesteed omdat deze tool pas redelijk aan het einde
 van het proces nodig is. Hierdoor krijg ik meer tijd om processen en
-dingen te onderzoeken voordat we de tool daadwerkelijk nodig zijn. Om te
-leren hoe we moeten omgaan met de data en testdata heb ik met behulp van
-de tool seqkit testdata gemaakt voor ons project. Ik heb dit eerst
-uitgevoerd op 1 bestand om te leren hoe het werkt. Omdat onze dataset
-uit heel veel bestanden bestaat, is het noodzakelijk dat ik leer hoe ik
-het kan uitvoeren op alle bestanden. Ik weet dat ik de find functie moet
-gebruiken icm de tools fastqc en parallel, hoe ik het moet gebruiken
-weet ik nog niet. Verder hebben we afgesproken dat ik alle stappen van
-het preprocessing traject, dus de fastqc, multiqc en trimmomatic zelf ga
-uitvoeren ook met testdata om goed te begrijpen wat we doen.
+dingen te onderzoeken voordat we de tool daadwerkelijk nodig zijn.
+
+De verdeling van de tools is alsvolgt: - BWA - Mapping --\> Jasper -
+Picard - Duplicates --\> Iris - Strelka - Variant calling --\> Ramon -
+SnpEff - Variant annotation --\> Janine
+
+De volgende tools hebben we allemaal geleerd en uitgevoerd: - Seqkit -
+Making testdata - Fastqc - Making data quality rapports - Multiqc -
+Making data quality rapports from multiple fastqc rapports -
+Trimmomatic - Trimming data to enhance data quality
+
+Om te leren hoe we moeten omgaan met de data en testdata heb ik met
+behulp van de tool seqkit testdata gemaakt voor ons project. Ik heb dit
+eerst uitgevoerd op 1 bestand om te leren hoe het werkt. Omdat onze
+dataset uit heel veel bestanden bestaat, is het noodzakelijk dat ik leer
+hoe ik het kan uitvoeren op alle bestanden. Ik weet dat ik de find
+functie moet gebruiken icm de tools fastqc en parallel, hoe ik het moet
+gebruiken weet ik nog niet. Verder hebben we afgesproken dat ik alle
+stappen van het preprocessing traject, dus de fastqc, multiqc en
+trimmomatic zelf ga uitvoeren met testdata om goed te begrijpen wat we
+doen.
 
 Gebruikte commandline voor seqkit om testdata te maken van 1 fastq file:
 
@@ -84,7 +98,7 @@ Seqkit head -n 10000 /.x.fastq -o /.x.fastq
 
 Hierin is /. x.fastq een inputfile, hierbij moet het absolute pad naar
 de map gebruikt worden. -o /.x.fastq is het outputfile, ook hier moet
-het absolute pad naar de map gebruikt worden.
+het absolute pad naar de map gebruikt worden.\
 
 Vervolgens moet er een fastqc rapport gemaakt worden van alle files in
 de map, het eindrapport is met multiqc, dit bevat alle fastqc files in 1
@@ -99,14 +113,14 @@ Find wordt gebruikt om de map met files te vinden en hiervan een lijst
 te maken. Path to file staat voor het volledige pad naar het bestand.
 Het invoer bestand was in dit geval onze map met testdata. De output is
 in een persoonlijke map gekomen waarin we alle 4 zelf kunnen testen. De
-{} worden gebruikt om aan te geven dat hier de uitvoerbestanden inkomen.
+{} wordt gebruikt om aan te geven dat hier de uitvoerbestanden inkomen.
 
 **18-09-2024**\
 Ik heb uitgezocht hoe ik het multiqc rapport moet maken. Via
 verschillende bronnen en forums op internet heb ik de goede commandline
 geproduceerd en vervolgens uitgevoerd. Ik heb find gecombineerd met de
 tools fastqc en parallel om op deze manier alle fastqc rapporten in html
-en zip formaat in 1 map te krijgen. Omdat dit niet prettig leest en
+en zip format in 1 map te krijgen. Omdat dit niet prettig leest en
 analyseert heb ik met de tool multiqc alle data in 1 rapport laten
 zetten. Hierdoor is de data overzichtelijk in te zien inclusief
 grafiekjes en dergelijke. Hiermee kan je dus in één oogopslag zien hoe
@@ -122,9 +136,9 @@ inzicht kan creeëren hoe zo'n rapport werkt en welke onderdelen het
 belangrijkste zijn.
 
 **22-09-2024**\
-Omdat het trimmen van de data nog niet goed is gegaan hebben wij
-allemaal dit opnieuw uitgevoerd en uitgezocht wat de goede commandline
-is. Ik heb dit gedaan door eerst te kijken naar wat trimmomatic is voor
+Omdat het trimmen van de data nog niet goed is gegaan hebben wij dit
+allemaal opnieuw uitgevoerd en uitgezocht wat de goede commandline is.
+Ik heb dit gedaan door eerst te kijken naar wat trimmomatic is voor
 programma en de documentatie goed door te nemen.
 
 **23-09-2024**\
@@ -159,8 +173,19 @@ settings om hier vervolgens fastqc op los te laten en een multiqc
 rapport maken zodat ik dit kan vergelijken met het multiqc rapport voor
 het trimmen van de data. Wordt de data beter? Wordt het slechter? Wat
 zegt dat over de data? Ik heb eerst de settings gebruikt zoals gelogd op
-23-09-2024. Vervolgens heb ik op de paired fastq files fastqc losgelaten
-en hier een multiqc van gemaakt.
+23-09-2024.\
+
+Na het trimmen van de data komen er 4 files als output namelijk: -
+R1_paired - R1_unpaired - R2_paired - R2_unpaired
+
+De paired bestanden worden gebruikt voor de verdere bewerking omdat
+paired data beide kanten van de read gebruikt. Dit is gunstig omdat je
+op deze manier zoveel mogelijk data meeneemt in je beoordeling. Bij
+unpaired data wordt maar 1 kant van de read gebruikt waardoor er veel
+verlies is van data en dus mogelijk de mutaties die je nodig bent.
+
+Vervolgens heb ik op de paired fastq files fastqc losgelaten en hier een
+multiqc van gemaakt.
 
 Eerst fastqc maken van de paired data
 
@@ -182,8 +207,168 @@ vandaag heb ik het opgegeven om er nog verder mee bezig te gaan. Ronald
 is op de hoogte gesteld en gaat voor ons kijken of hij het kan
 oplossen.\
 
-| Run ID | LEADING | TRAILING | SLIDING WINDOW | MINLEN | AVGQUAL | HEADCROP | CROP | ILLUMINACLIP |
+| Run ID   | LEADING | TRAILING | SLIDING WINDOW | MINLEN | AVGQUAL | HEADCROP | CROP | ILLUMINACLIP |
 |--------|--------|--------|--------|--------|--------|--------|--------|--------|
-|Data van| 3       | 3        | 4:20           | 40     | NONE    | NONE     | NONE | NONE         |
-|project |         |          |                |        |         |          |      |              |
-|        |         |          |                |        |         |          |      |              |
+| Data van | 3       | 3        | 4:20           | 40     | NONE    | NONE     | NONE | NONE         |
+| project  |         |          |                |        |         |          |      |              |
+|          |         |          |                |        |         |          |      |              |
+
+**26-09-2024**\
+Ramon heeft de volgende trimmomatic settings gebruikt. Dit zijn de
+settings die uiteindelijk gebruikt voor de mapping:\
+
+| Run ID   | LEADING | TRAILING | SLIDING WINDOW | MINLEN | AVGQUAL | HEADCROP | CROP | ILLUMINACLIP |
+|--------|--------|--------|--------|--------|--------|--------|--------|--------|
+| Data van | 34      | 34       | NONE           | 40     | NONE    | NONE     | NONE | NONE         |
+| project  |         |          |                |        |         |          |      |              |
+|          |         |          |                |        |         |          |      |              |
+
+Ik heb vandaag besteed aan mij inlezen over de tool SnpEff, ik wil
+begrijpen hoe deze tool werkt, waarom we hem gebruiken en hoe we deze
+gaan inzetten op ons project. Ik heb de tool alvast op de schoolserver
+in ons project gedownload. Ik ga morgen verder met uitzoeken hoe de tool
+werkt en meer over de tool leren.
+
+**27-09-2024** Ik ben begonnen met het nalezen en aanvullen van mijn
+logboek. Daarna ben ik verder gegaan met het leren van SnpEff. De tool
+is correct gedownload op de server en werkt. Door Ramon is er een test
+data set gemaakt met output van BWA mapping, die ik kan gebruiken om een
+goede commandline op te stellen voor deze tool. Dit is handig om dit
+vooraf te doen zodat ik, wanneer we eraan toe zijn met de echte data,
+alleen de data hoef te veranderen waardoor het gehele groepsproces
+sneller gaat.
+
+**29-09-2024** Aan het testen gegaan met snpEff op een testdata set.
+Deze testdata set is door Ramon gemaakt en te vinden in:
+/students/2024-2025/Thema05/BlaasKanker/testingtools/test_variant_calling
+
+Test command
+
+```{bash, eval=FALSE}
+java -Xmx8g -jar /students/2024-2025/Thema05/BlaasKanker/tools/snpeff/snpEff/snpEff.jar eff \
+mm39 /students/2024-2025/Thema05/BlaasKanker/testingtools/test_variant_calling/SRR14870694_variants.vcf \
+> /students/2024-2025/Thema05/BlaasKanker/testingtools/test_variant_calling/test_output_variants.vcf
+```
+
+Notes: Het command moet uitgevoerd worden vanuit de map waar de tool in
+staat.\
+Er moet een reference genome in het command worden meegenomen, deze
+reference genomes zitten in de database van de tool of kunnen ingevoegd
+worden. Ons reference genome van de muis is GRCm39. Bij het downloaden
+van de referencegenome is de volgende foutmelding gekomen: FATAL ERROR:
+Failed to download database from
+[<https://snpeff.blob.core.windows.net/databases/v5_2/snpEff_v5_2_mm39.zip>,
+<https://snpeff.blob.core.windows.net/databases/v5_0/snpEff_v5_0_mm39.zip>,
+<https://snpeff.blob.core.windows.net/databases/v5_1/snpEff_v5_1_mm39.zip>]\
+
+Door te zoeken op internet ben ik een github forum tegengekomen die een
+mogelijke oplossing bied. Ik ga de volgende stappen uitvoeren vanaf de
+link: <https://github.com/pcingola/SnpEff/issues/536>\
+De stappen beschreven door gebruiker 'lukedow':\
+I had the same issue with mm39, but was eventually able to build the db
+manually. I tried a few of the options in the snpEff documentation, but
+the one that ultimately worked was the .gtf approach.
+
+Most of what you need to know is in the documentation, but not always
+super clear. Here were the key points for me:
+
+Make sure you retrieve all of the required FASTA and GTF (and/or GFF)
+files from the same genome build, e.g. from UCSC
+(<https://useast.ensembl.org/Mus_musculus/Info/Index>). Unzip them into
+a specific directory (snpEff/data/mm39/) so the script can find them,
+and rename the files: Mus_musculus.GRCm39.dna.primary_assembly.fa.gz:
+sequences.fa Mus_musculus.GRCm39.cds.all.fa.gz: cds.fa
+Mus_musculus.GRCm39.pep.all.fa.gz: protein.fa
+Mus_musculus.GRCm39.112.gtf.gz: genes.gtf
+
+Modify the snpEff.config file to include the line: mm39.genome : Mouse
+
+Build the database: java -Xmx4g -jar snpEff.jar build -gtf22 -v mm39
+
+This should create and save the .bin files required for annotation into
+/snpEff/data/mm39/ Should be good to go!\
+
+Ik heb alle stappen exact zoals hierboven beschreven uitgevoerd. Daarna
+heb ik opnieuw onderstaand command uitgevoerd.\
+
+```{bash, eval=FALSE}
+java -Xmx8g -jar /students/2024-2025/Thema05/BlaasKanker/tools/snpeff/snpEff/snpEff.jar eff \
+mm39 /students/2024-2025/Thema05/BlaasKanker/testingtools/test_variant_calling/SRR14870694_variants.vcf \
+> /students/2024-2025/Thema05/BlaasKanker/testingtools/test_variant_calling/test_output_variants.vcf
+```
+
+Het command werkt er is een output gecreeërd van een enkel file. Ik ga
+nu het command zo aanpassen dat hij de hele map aan vcf files in 1 keer
+meeneemt.\
+
+```{bash, eval=FALSE}
+ls /students/2024-2025/Thema05/BlaasKanker/testingtools/test_variant_calling/*.vcf | parallel -j 4 \
+"java -Xmx8g -jar /students/2024-2025/Thema05/BlaasKanker/tools/snpeff/snpEff/snpEff.jar eff mm39 > /students/2024-2025/Thema05/BlaasKanker/testingtools/test_variant_calling/test_output_variants/{/.}.vcf"
+```
+
+Bovenstaande commandline werkt. Ik voer alle bestanden in vanuit 1 map
+en voer met de tool snpEff vervolgens de variant calling uit. In
+bovenstaand command gebruik ik alleen de optie 'eff', deze optie
+annoteert alleen de varianten. Voor de volgende ronde voeg ik de
+volgende opties toe:\
+- Xmx8g -\> stelt de maximale hoeveelheid geheugen in die Java mag
+gebruiken.\
+- eff -\> voor het annoteren van de varianten\
+- verbose (-v) -\> Hiermee wordt een gedetailleerd logbestand gemaakt
+die handig kan zijn voor foutopsporing\
+
+Het command ziet er dan alsvolgt uit:\
+
+```{bash, eval=FALSE}
+ls /students/2024-2025/Thema05/BlaasKanker/testingtools/test_variant_calling/*.vcf | parallel -j 4 \
+"java -Xmx8g -jar /students/2024-2025/Thema05/BlaasKanker/tools/snpeff/snpEff/snpEff.jar ann -v -stats /students/2024-2025/Thema05/BlaasKanker/testingtools/test_variant_calling/test_output_variants/ex1.html mm39 > /students/2024-2025/Thema05/BlaasKanker/testingtools/test_variant_calling/test_output_variants/{/.}.vcf"
+```
+
+Bovenstaand command werkt, echter is de output leeg van de testdata
+leeg.
+
+**01-10-2024** We hebben besloten om tussen de stappen variant calling
+en variant annotation een filter stap toe te voegen. Dit doen we met de
+tool VcfFilter. Deze tool filtert de data dusdanig dat alleen de meest
+relevante data behouden wordt. Dit scheelt tijd omdat de hoeveelheid
+data aanzienlijk vermindert door de filterstap. Voor de uitvoering kan
+er gekeken worden in het logboek van Ramon Reilman. --\>\
+
+Ik ga de gefilterde data gebruiken voor de variant annotation. Ik
+gebruik het command zoals ik gister heb vastgesteld. Ik voeg hier alleen
+nog de optie -t 8 (8 threads) aan toe zodat er maximaal 8 cpu threads
+worden gebruikt. Hiermee reduceer ik de cpu belasting van de
+schoolserver. Ik heb dit eerst nog getest op de testdata. Tijdens het
+testen ben ik erachter gekomen dat de threads functie niet meer werkend
+is. Via dit bericht <https://github.com/pcingola/SnpEff/issues/429> is
+te lezen dat het een bekend probleem is. Echter is de documentatie van
+snpEff nog niet aangepast. Ik ga nu gebruik maken van de parallel -j
+functie om de threads te verdelen. Ik gebruik parallel -j 8 om zo de
+workload op de schoolserver te verminderen.\
+
+```{bash, eval=FALSE}
+ls /students/2024-2025/Thema05/BlaasKanker/outputs/variant_calling_unfiltered/*.vcf | parallel -j 8 \
+"java -Xmx8g -jar /students/2024-2025/Thema05/BlaasKanker/tools/snpeff/snpEff/snpEff.jar ann -v -stats /students/2024-2025/Thema05/BlaasKanker/outputs/variant_annotation_unfiltered/stats.html mm39 > /students/2024-2025/Thema05/BlaasKanker/outputs/variant_annotation_unfiltered/{/.}.vcf"
+```
+
+Na het uitvoeren van bovenstaand command krijg ik de volgende
+foutmelding: WARNING!: Mitochondrion chromosome 'MT' does not have a
+mitochondrion codon table (codon table = 'Standard'). You should update
+the config file. Ik probeer uit te zoeken waar ik de tabel kan vinden om
+deze in het configuration file toe te voegen.
+
+\
+Omdat ik niet precies weet waar het misgaat heb ik besloten de database
+rondom mm39 opnieuw te bouwen. Hiervoor volg ik deze instructie:
+<https://pcingola.github.io/SnpEff/snpeff/build_db/>\
+Ik heb van deze link op het ncbi
+<https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001635.27/> de
+fasta sequence, gft en gff file gedownload. Deze heb ik in de volgende
+map gezet:
+/students/2024-2025/Thema05/BlaasKanker/tools/snpeff/snpEff/data/mm39.
+
+Na het opnieuw bouwen van de database en uitvoeren van de tool op onze
+data krijg ik nog steeds de foutmelding: Mitochondrion chromosome 'MT'
+does not have a mitochondrion codon table (codon table = 'Standard').
+
+Ik heb voor nu besloten om hulp te vragen bij de docenten.
