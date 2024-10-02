@@ -579,9 +579,88 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
     /students/2024-2025/Thema05/BlaasKanker/outputs/picard_dub/marked_duplicates/{}.marked_duplicates.bam"
 ```
 
+
+
 Omdat het we straks ontzettend veel varianten krijgen leek het mij een goed idee om vandaag te kijken naar het filteren van de annotaties.
 SNPeff kan doormiddel van bestand met gene symbols als het goed is zoeken naar die genen.
 Ik heb op https://www.informatics.jax.org/mgihome/homepages/help.shtml gezocht naar genen die met blaaskanker te maken hebben.
 
 Deze lijst kan je downloaden, maar er staat veel overbodige informatie in. Daarom heb ik een scriptje in python geschreven die de genen er uit kan halen. zie main src/python.
 Als Janine straks klaar is met annotatie, kunnen we op die manier filteren.
+
+
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+    parallel -j 8 \
+    "java -Xmx8g -jar /students/2024-2025/Thema05/BlaasKanker/tools/snpeff/snpEff/snpEff.jar ann -v -stats \
+    /students/2024-2025/Thema05/BlaasKanker/temp/annoting_test/stats.html mm39 \
+    /students/2024-2025/Thema05/BlaasKanker/outputs/variant_calling_unfiltered/{}_variants.vcf > /students/2024-2025/Thema05/BlaasKanker/temp/annoting_test/{}.vcf"
+```
+
+Eigen data base bouwen:
+
+blablabla
+
+gene.gtf en vcf chromosomen komen niet overeen
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+parallel -j 8 \
+"bcftools annotate --rename-chrs /students/2024-2025/Thema05/BlaasKanker/etc/chromosome_map.txt /students/2024-2025/Thema05/BlaasKanker/outputs/variant_calling_unfiltered/{}_variants.vcf > /students/2024-2025/Thema05/BlaasKanker/outputs/calling_renamed/{}_variants.vcf"
+
+```
+
+Contig 'NC_000067.7' is not defined in the header. (Quick workaround: index the file with tabix.
+backup data voor de zekerheid
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+parallel -j 8 \
+"tabix -p vcf {}_variants.vcf"
+```
+
+[tabix] the compression of 'SRR14870694_variants.vcf' is not BGZF
+
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+parallel -j 8 \
+"bgzip -c {}_variants.vcf > {}_variants.vcf.gz"
+```
+
+
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+parallel -j 8 \
+"tabix -p vcf {}_variants.vcf.gz"
+```
+
+
+Dit werkt ook niet
+
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+    parallel -j 8 \
+    "bcftools reheader --fai /students/2024-2025/Thema05/BlaasKanker/tools/testGenome/ncbi_dataset/data/GCF_000001635.27/GCF_000001635.27_GRCm39_genomic.fna.fai \
+    -o /students/2024-2025/Thema05/BlaasKanker/outputs/calling_renamed/{}_remade.vcf \
+    /students/2024-2025/Thema05/BlaasKanker/outputs/variant_calling_unfiltered/{}_variants.vcf"
+
+
+```
+
+
+students/2024-2025/Thema05/BlaasKanker/outputs/variant_calling_unfiltered/{}_variants.vcf
+
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+parallel -j 8 \
+"bcftools annotate --rename-chrs /students/2024-2025/Thema05/BlaasKanker/etc/chromosome_map.txt /students/2024-2025/Thema05/BlaasKanker/outputs/calling_renamed/{}_remade.vcf > /students/2024-2025/Thema05/BlaasKanker/outputs/chromosome_remade_varients/{}_variants.vcf"
+```
+
+
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+    parallel -j 8 \
+    "java -Xmx8g -jar /students/2024-2025/Thema05/BlaasKanker/tools/snpeff/snpEff/snpEff.jar ann -v -stats \
+    /students/2024-2025/Thema05/BlaasKanker/temp/annoting_test/stats.html mm39 \
+    /students/2024-2025/Thema05/BlaasKanker/outputs/chromosome_remade_varients/{}_variants.vcf > /students/2024-2025/Thema05/BlaasKanker/temp/annoting_test/{}.vcf"
+```
+
+cut -f 1 /path/to/your_file.gtf | sort | uniq
