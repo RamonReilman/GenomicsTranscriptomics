@@ -655,6 +655,8 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
                 '-READ_NAME_REGEX null'
 ```
 
+
+## Vrijdag 27 september:
 Hij geeft geen foutmeldingen meer. Om te kijken of er iets is veranderd gaan we fastqc runnen op de bam files.
 
 ```{bash, eval=FALSE}
@@ -668,7 +670,7 @@ multiqc /students/2024-2025/Thema05/BlaasKanker/testingtools/picard_test/fastqc_
   -o /students/2024-2025/Thema05/BlaasKanker/testingtools/picard_test/multiqc_bam
 ```
 
-
+Uit de metrics.txt van picard:
 219 664: UNPAIRED_READ_DUPLICATES
 95 019: READ_PAIR_DUPLICATES
 3 776 845: READ_PAIR_OPTICAL_DUPLICATES
@@ -679,13 +681,7 @@ Dit betekend dat echt veel duplicaten door het sequencen (optical) komen.
 
 Nu fastqc runnen op de data voordat hij door picard heen ging.
 
-! voor picard ongeveer 20.8% duplixaten en na ongeveer 18.5% (ff gem berekenen), dus picard heeft ongeveer 2% dup verijwijderd
 
-! hoe vind fastqc duplicaten ?
-! vergelijken met hoe picard duplicaten vind
-! multiqc vergelijken voor en na picard
-
-! wat overblijft ws biologische duplicaten
 
 Picard op de echte data:
 ```{bash, eval=FALSE}
@@ -710,4 +706,72 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
                 '-READ_NAME_REGEX null'
 ```
 
+! picard documentatie bronvermelden
+BRON Picard:
+https://broadinstitute.github.io/picard/index.html
 
+
+## Dinsdag 1 oktober:
+FastQC zegt dat voor picard er ongeveer 20.8% duplicaten waren en na Picard ongeveer 18.5%, dus picard heeft ongeveer 2% dup verwijderd. Maar Picard zegt dat er 0.062808% is die picard heeft herkend als duplicaten.
+
+Hoe vind fastqc duplicaten ?
+FastQC kijkt dus alleen naar de single-end sequence data (alleen de forward read). waardoor hij dus niet naar de volledige data kijkt en hij geeft daardoor vaak een aanzienlijk hogere inschatting van duplicaten dan dat er daadwerkelijk is.
+(FastP doet t beter schijnt)
+Dus de duplicatie levels uit de FastQC test die we hebben uitgevoerd zijn niet betrouwbaar.
+
+BRON FastQC:
+https://dnatech.genomecenter.ucdavis.edu/faqs/why-does-fastqc-show-unexpectedly-high-sequence-duplication-levels-pcr-duplicates/
+
+Kunnen we proberen om een rapport te maken met FastP? (staat al op de server)\
+voorbeeld van de git van FastP:
+```{bash, eval=FALSE}
+fastp -i in.R1.fq.gz -I in.R2.fq.gz -o out.R1.fq.gz -O out.R2.fq.gz
+```
+BRON FastP:
+https://github.com/OpenGene/fastp/blob/master/README.md
+
+Ik betwijfel of FastP de tool is die we kunnen gebruiken voor een duplicaten check, aangezien de data die in FastP moet een R1 en een R2 bestand is. En de data die we erin willen is een bam bestand.
+
+
+! Wat overblijft ws biologische duplicaten ? Ik weet niet meer wat hiermee moet tbh
+
+! kijken: zijn de statistieken in het artikel ook relevant voor ons ?
+Uit artikel:
+Statistical analyses were performed using GraphPad Prism, version 8.0. Two-tailed t tests or Mann-Whitney U tests were used to compare 2 groups, while 3 or more groups were compared using 2-way ANOVA followed by either Tukey’s or Dunnett’s multiple-comparison test. A P value of less than 0.05 was considered significant.
+
+onze data: 
+- treated(3 samples)
+- non-treated (3 samples)
+
+Wij gebruiken maar twee groepen, dus wij kunnen alleen de Two-tailed t tests en de Mann-Whitney U tests gebruiken.
+
+
+## Donderdag 3 oktober:
+Welke input is nodig? tabel met:
+- snp(identiek nummer)
+- chromsoom waar de snp op ligt
+- positie in basenparen waar de snp in het chromsoom ligt
+- p-waarde
+
+Uit de SNPeff tool komt een bestand met de snp id, het chromosoom en de positie waar de snp op ligt:
+(#CHROM  POS     ID      REF     ALT     QUAL    FILTER  INFO)
+! Maar hoe we aan de P-waarde moeten komen nog even uitzoeken, want die staat ook niet in de info (waar hij soms wel schijnt te staan).
+
+Als we de dataset hebben kunnen we de voorbeeld code van de r-graph-gallary proberen:
+```{r, eval=FALSE}
+# Load the library
+library(qqman)
+
+# Make the Manhattan plot on the gwasResults dataset
+manhattan(gwasResults, chr="CHR", bp="BP", snp="SNP", p="P" )
+```
+
+
+Plink schijnt uit een vcf bestand p-values te kunnen halen. Maar morgen even om advies vragen of dit de beste manier is om aan de p-values te komen.
+
+BRON plink:
+https://zzz.bwh.harvard.edu/plink/anal.shtml
+
+
+BRON snp manhattan plot in R:
+https://r-graph-gallery.com/101_Manhattan_plot.html
