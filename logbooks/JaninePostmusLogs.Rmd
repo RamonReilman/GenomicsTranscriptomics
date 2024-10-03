@@ -16,66 +16,89 @@ knitr::opts_chunk$set(echo = TRUE)
 
 In dit logboek zal ik bijhouden wat ik voor het project Genomics &
 Transcriptomics, leerjaar 2 kwartaal 1, allemaal uitvoer. Hierbij
-onderbouw ik mijn keuzes met waarom ik iets doe hoe
-ik dat heb gedaan. Ik maak gebruik van de wat, hoe en waarom methode. Wat heb ik gedaan? Hoe heb ik dit gedaan en waarom heb ik dit gedaan? Ook zal ik hier resultaten van tonen.
-Ik begin met het loggen over Genomics en er zal op
+onderbouw ik mijn keuzes met waarom ik iets doe hoe ik dat heb gedaan.
+Ik maak gebruik van de wat, hoe en waarom methode. Wat heb ik gedaan?
+Hoe heb ik dit gedaan en waarom heb ik dit gedaan? Ook zal ik hier
+resultaten van tonen. Ik begin met het loggen over Genomics en er zal op
 het moment dat er overgegaan wordt op het transcriptomics gedeelte een
 nieuwe inleiding geplaatst worden.
 
 **09-09-2024**\
 Nadat we de uitleg hebben gekregen hebben we groepen gevormd. Mijn groep
 is samen met Ramon, Jasper en Iris. We hebben vervolgens een begin
-gemaakt met het zoeken naar een wetenschappelijk artikel. Dit hebben we gedaan via de volgende link: [Wetenschappelijke artikelen](https://www.ncbi.nlm.nih.gov/gds/?term=(%22expression+profiling+by+high+throughput+sequencing%22%5BDataSet+Type%5D)+AND+%22genome+variation+profiling+by+high+throughput+sequencing%22%5BDataSet+Type%5D) \ 
-We hebben afgesproken dat we allemaal 1 artikel uitzoeken en uiteindelijk op basis van Marcel zijn oordeel een definieve keus maken. Marcel controleert de artikelen of deze voldoende informatie bevatten zodat het voor ons te repliceren is. De keuzes waren: \
-- MLL-leukemie-inductie door t(9;11)-chromosomale translocatie in menselijke hematopoietische stamcellen met behulp van genoombewerking. Gekozen door Iris. \
-- De behandeling van Entinostat op blaaskanker in de muis. Gekozen door Jasper. \
-- IGF2BP1 geïnduceert neuroblastoom dat oncogenexpressie bevordert. Gekozen door Ramon. \
-- Het DNA-methylatielandschap van de progressie van de ziekte van glioblastoom. Gekozen door Janine. \
-
+gemaakt met het zoeken naar een wetenschappelijk artikel. Dit hebben we
+gedaan via de volgende link: [Wetenschappelijke
+artikelen](https://www.ncbi.nlm.nih.gov/gds/?term=(%22expression+profiling+by+high+throughput+sequencing%22%5BDataSet+Type%5D)+AND+%22genome+variation+profiling+by+high+throughput+sequencing%22%5BDataSet+Type%5D)
+  We hebben afgesproken dat we allemaal 1 artikel uitzoeken en
+uiteindelijk op basis van Marcel zijn oordeel een definieve keus maken.
+Marcel controleert de artikelen of deze voldoende informatie bevatten
+zodat het voor ons te repliceren is. De keuzes waren:\
+- MLL-leukemie-inductie door t(9;11)-chromosomale translocatie in
+menselijke hematopoietische stamcellen met behulp van genoombewerking.
+Gekozen door Iris.\
+- De behandeling van Entinostat op blaaskanker in de muis. Gekozen door
+Jasper.\
+- IGF2BP1 geïnduceert neuroblastoom dat oncogenexpressie bevordert.
+Gekozen door Ramon.\
+- Het DNA-methylatielandschap van de progressie van de ziekte van
+glioblastoom. Gekozen door Janine.\
 
 **10-09-2024**\
-De experimenten van Janine en Iris zijn afgekeurd wegens ontbrekende of onvoldoende data. Vervolgens hebben we als groep gekozen voor Jasper zijn artikel. \
-We hebben gekozen voor een onderzoek met de behandeling van Entinostat op
-blaaskanker. Het onderwerp interesseert mij heel erg omdat ik kanker een
-interessant onderwerp vind. De entinostat werkt heel erg op genexpressie en het immuunsysteem. Ik vind genexpressie erg interessant omdat dit heel veel bepaald in ons lichaam. \
-Onze onderzoeksvraag is:  Hoe kunnen de mutaties die we vinden blaaskanker veroorzaken? \
-
+De experimenten van Janine en Iris zijn afgekeurd wegens ontbrekende of
+onvoldoende data. Vervolgens hebben we als groep gekozen voor Jasper
+zijn artikel.\
+We hebben gekozen voor een onderzoek met de behandeling van Entinostat
+op blaaskanker. Het onderwerp interesseert mij heel erg omdat ik kanker
+een interessant onderwerp vind. De entinostat werkt heel erg op
+genexpressie en het immuunsysteem. Ik vind genexpressie erg interessant
+omdat dit heel veel bepaald in ons lichaam.\
+Onze onderzoeksvraag is: Hoe kunnen de mutaties die we vinden
+blaaskanker veroorzaken?\
 
 **11-09-2024**\
-We hebben een taakverdeling gemaakt voor het plan van aanpak. \
-Ik ga het onderzoekoverzicht, de achtergrond ervan en een globale theoretische achtergrond presenteren tijdens de presentatie. \
-Iris gaat de Gantt chart maken. \
-Jasper gaat de workflow maken. \
-Ramon zet het plan van aanpak en de presentatie in elkaar. \ 
-Verder hadden we vandaag statistiek les dus geen tijd meer gehad voor dit project. \
+We hebben een taakverdeling gemaakt voor het plan van aanpak.\
+Ik ga het onderzoekoverzicht, de achtergrond ervan en een globale
+theoretische achtergrond presenteren tijdens de presentatie.\
+Iris gaat de Gantt chart maken.\
+Jasper gaat de workflow maken.\
+Ramon zet het plan van aanpak en de presentatie in elkaar.   Verder
+hadden we vandaag statistiek les dus geen tijd meer gehad voor dit
+project.\
 
 **12-09-2024**\
 Ik heb het artikel doorgelezen en de kernwoorden eruit gehaald zodat ik
-hierop verder kon bouwen aan de theoretische achtergrond. De volgende kernwoorden heb ik gebruikt: \
+hierop verder kon bouwen aan de theoretische achtergrond. De volgende
+kernwoorden heb ik gebruikt:\
 - Immuuncheckpointremmers (ICI's)\
-- Entinostat \
-- Histondeacetylase remmers (HDAC remmers) \
-- Immuunreactie op tumor-neo antigenen \
+- Entinostat\
+- Histondeacetylase remmers (HDAC remmers)\
+- Immuunreactie op tumor-neo antigenen\
 
-
-Ik heb vanuit het artikel de kopjes Abstract en Introduction hiervoor gebruikt. Hier
-staat dusdanig veel informatie in over het onderzoek dat hier voor het
-plan van aanpak voldoende uit te halen valt. Ik heb gebruik gemaakt van
-online resourches en voor het vertalen van het artikel heb ik gebruik
-gemaakt van copilot. Voor de bronnen en de verwerking van de kernwoorden kan gekeken worden in ons Plan van Aanpak. Dit is te vinden in onze [Github](https://github.com/RamonReilman/GenomicsTranscriptomics) onder Plan van aanpak. \
+Ik heb vanuit het artikel de kopjes Abstract en Introduction hiervoor
+gebruikt. Hier staat dusdanig veel informatie in over het onderzoek dat
+hier voor het plan van aanpak voldoende uit te halen valt. Ik heb
+gebruik gemaakt van online resourches en voor het vertalen van het
+artikel heb ik gebruik gemaakt van copilot. Voor de bronnen en de
+verwerking van de kernwoorden kan gekeken worden in ons Plan van Aanpak.
+Dit is te vinden in onze
+[Github](https://github.com/RamonReilman/GenomicsTranscriptomics) onder
+Plan van aanpak.\
 
 **13-09-2024**\
-Ik heb de theorie aangevuld met de laatste dingen. In de pva staat die onder alinea 'Entinostat en zijn werking'.\
-Smiddags is er een les gevolgd over hoe we data kunnen downloaden op de schoolserver. Hier
-heeft Ramon meegedaan met de les en het voor onze data uitgevoerd. Ik heb voor mijzelf aantekeningen gemaakt. 
+Ik heb de theorie aangevuld met de laatste dingen. In de pva staat die
+onder alinea 'Entinostat en zijn werking'.\
+Smiddags is er een les gevolgd over hoe we data kunnen downloaden op de
+schoolserver. Hier heeft Ramon meegedaan met de les en het voor onze
+data uitgevoerd. Ik heb voor mijzelf aantekeningen gemaakt.
 
 **15-09-2024**\
-Naar aanleiding van feedback vanuit de groep heb ik een deel van de theorie aangepast
-en aangevuld. Er klopte iets niet over de projectopzet, ik  heb dit gecorrigeerd en vervolgens gemeld aan de groep zodat de presentatie gemaakt kon worden. \
-De presentatie is afgemaakt door Ramon. Omdat ik met een
-gebroken enkel in huis vast zit, gaat Ramon mijn deel van de presentatie
-doen en gaan we maandag afspraken maken over de verdere uitvoering van
-het project.
+Naar aanleiding van feedback vanuit de groep heb ik een deel van de
+theorie aangepast en aangevuld. Er klopte iets niet over de
+projectopzet, ik heb dit gecorrigeerd en vervolgens gemeld aan de groep
+zodat de presentatie afgemaakt kon worden.\
+De presentatie is afgemaakt door Ramon. Omdat ik met een gebroken enkel
+in huis vast zit, gaat Ramon mijn deel van de presentatie doen en gaan
+we maandag afspraken maken over de verdere uitvoering van het project.
 
 **17-09-2024**\
 Ik heb de tool snpEff gekregen/gekozen als onderdeel van het project.
@@ -84,26 +107,28 @@ deze tool aan mij toebesteed omdat deze tool pas redelijk aan het einde
 van het proces nodig is. Hierdoor krijg ik meer tijd om processen en
 dingen te onderzoeken voordat we de tool daadwerkelijk nodig zijn.
 
-De verdeling van de tools is alsvolgt: \
-- BWA - Mapping --\> Jasper \
-- Picard - Duplicates --\> Iris \
-- Strelka - Variant calling --\> Ramon \
-- SnpEff - Variant annotation --\> Janine \
+De verdeling van de tools is alsvolgt:\
+- BWA - Mapping --\> Jasper\
+- Picard - Duplicates --\> Iris\
+- Strelka - Variant calling --\> Ramon\
+- SnpEff - Variant annotation --\> Janine\
 
-De volgende tools hebben we allemaal zelf geleerd en uitgevoerd: \
-- Seqkit -> Making testdata \ 
-- Fastqc -> Making data quality rapports \
-- Multiqc -> Making data quality rapports from multiple fastqc rapports \
-- Trimmomatic - Trimming data to enhance data quality \
+De volgende tools hebben we allemaal zelf geleerd en uitgevoerd:\
+- Seqkit -\> Making testdata   - Fastqc -\> Making data quality
+rapports\
+- Multiqc -\> Making data quality rapports from multiple fastqc
+rapports\
+- Trimmomatic - Trimming data to enhance data quality\
 
 Om te leren hoe we moeten omgaan met de data en testdata heb ik met
-behulp van de tool seqkit testdata gemaakt voor ons project. Ik heb de testdata gemaakt op basis van onze echte data.\
-Ik heb dit eerst uitgevoerd op 1 bestand om te leren hoe het werkt. Omdat onze
-dataset uit heel veel bestanden bestaat, is het noodzakelijk dat ik leer
-hoe ik het kan uitvoeren op alle bestanden. Ik weet dat ik de find
-functie moet gebruiken icm de tools fastqc en parallel, hoe ik het moet
-gebruiken weet ik nog niet. Verder hebben we afgesproken dat ik alle
-stappen van het preprocessing traject, dus de fastqc, multiqc en
+behulp van de tool seqkit testdata gemaakt voor ons project. Ik heb de
+testdata gemaakt op basis van onze echte data.\
+Ik heb dit eerst uitgevoerd op 1 bestand om te leren hoe het werkt.
+Omdat onze dataset uit heel veel bestanden bestaat, is het noodzakelijk
+dat ik leer hoe ik het kan uitvoeren op alle bestanden. Ik weet dat ik
+de find functie moet gebruiken icm de tools fastqc en parallel, hoe ik
+het moet gebruiken weet ik nog niet. Verder hebben we afgesproken dat ik
+alle stappen van het preprocessing traject, dus de fastqc, multiqc en
 trimmomatic zelf ga uitvoeren met testdata om goed te begrijpen wat we
 doen.
 
@@ -114,21 +139,24 @@ Seqkit head -n 10000 /.x.fastq -o /.x.fastq
 ```
 
 Hierin is /. x.fastq een inputfile, hierbij moet het absolute pad naar
-de map gebruikt worden. \
--o /.x.fastq is het outputfile, ook hier moet het absolute pad naar de map gebruikt worden.\
+de map gebruikt worden.\
+-o /.x.fastq is het outputfile, ook hier moet het absolute pad naar de
+map gebruikt worden.\
 
 Vervolgens moet er een fastqc rapport gemaakt worden van alle files in
-de map. Fastqc is een tool die ervoor zorgt dat de data overzichtelijk in een quality rapport komt te staan. Hier worden de volgende onderdelen op kwaliteit beoordeeld: \
-- Basic Statistics \
-- Per sequence counts \
-- Per base sequence quality \
-- Per sequence quality scores \
-- Per base sequence content \
-- Per sequence GC content \
-- Per base N content \
-- Sequence Duplication Levels \
-- Overrepresented Sequences \
-- Adapter Content \
+de map. Fastqc is een tool die ervoor zorgt dat de data overzichtelijk
+in een quality rapport komt te staan. Hier worden de volgende onderdelen
+op kwaliteit beoordeeld:\
+- Basic Statistics\
+- Per sequence counts\
+- Per base sequence quality\
+- Per sequence quality scores\
+- Per base sequence content\
+- Per sequence GC content\
+- Per base N content\
+- Sequence Duplication Levels\
+- Overrepresented Sequences\
+- Adapter Content\
 
 Fastqc uitvoeren op meerdere bestanden in 1 keer.
 
@@ -141,52 +169,82 @@ Find wordt gebruikt om de map met files te vinden en hiervan een lijst
 te maken. Path to file staat voor het volledige pad naar het bestand.
 Het invoer bestand was in dit geval onze map met testdata. De output is
 in een persoonlijke map gekomen waarin we alle 4 zelf kunnen testen. De
-{} wordt gebruikt om aan te geven dat hier de uitvoerbestanden inkomen. \
+{} wordt gebruikt om aan te geven dat hier de uitvoerbestanden inkomen.\
 
 **18-09-2024**\
-Omdat er met veel data gewerkt wordt heb je dus veel bestanden waarvan een fastqc rapport gemaakt wordt. Omdat het heel moeilijk, zo niet onmogelijk, is om al deze bestanden met het oog los van elkaar te beoordelen gebruiken we hiervoor de tool multiqc.
-Ik heb uitgezocht hoe ik het multiqc rapport moet maken. Via
-verschillende bronnen en forums op internet heb ik de goede commandline
-geproduceerd en vervolgens uitgevoerd. \
+Omdat er met veel data gewerkt wordt heb je dus veel bestanden waarvan
+een fastqc rapport gemaakt wordt. Omdat het heel moeilijk, zo niet
+onmogelijk, is om al deze bestanden met het oog los van elkaar te
+beoordelen gebruiken we hiervoor de tool multiqc. Ik heb uitgezocht hoe
+ik het multiqc rapport moet maken. Via verschillende bronnen en forums
+op internet heb ik de goede commandline geproduceerd en vervolgens
+uitgevoerd.\
 
 ```{bash, eval=FALSE}
 find find /students/2024-2025/Thema05/BlaasKanker/fastq -name "*.fastq" |parallel multiqc -o /students/2024-2025/Thema05/BlaasKanker/oefenengroep/testdataJanine/MultiqcJanine/{}
 
 ```
 
-
 **20-09-2024**\
-Om beter te begrijpen wat al deze kwaliteitscontroles, van de fastqc en multiqc, nu eigenlijk zeggen heb ik hier een verslag van gemaakt. Dit verslag staat in onze teams groep. "2.1.2 Genomics & transcriptomics Ramon Reijlman, Janine Postmus, Jasper Jonker en Iris Ineke" met de titel "Verslag_multiqc_rapport.docx". \
+Om beter te begrijpen wat al deze kwaliteitscontroles, van de fastqc en
+multiqc, nu eigenlijk zeggen heb ik hier een verslag van gemaakt. Dit
+verslag staat in onze teams groep. "2.1.2 Genomics & transcriptomics
+Ramon Reijlman, Janine Postmus, Jasper Jonker en Iris Ineke" met de
+titel "Verslag_multiqc_rapport.docx".\
 
-Ik vind het belangrijk om het op deze manier te hebben gedaan omdat ik op deze manier sneller inzicht kan creeëren voor mijzelf hoe zo'n rapport werkt en welke onderdelen het belangrijkste zijn. Ik zal hier de conclusie neerzetten die ook in het verslag staat. Dit is op basis van de getrimde data welke we op dit moment hebben. \
+Ik vind het belangrijk om het op deze manier te hebben gedaan omdat ik
+op deze manier sneller inzicht kan creeëren voor mijzelf hoe zo'n
+rapport werkt en welke onderdelen het belangrijkste zijn. Ik zal hier de
+conclusie neerzetten die ook in het verslag staat. Dit is op basis van
+de getrimde data welke we op dit moment hebben.\
 
-Conclusie: \
-Onze data is op de meeste vlakken goed/zeer goed. Het enige wat opvalt is dat er een relatief hoog duplicatieniveau is. Dit kan meerdere oorzaken hebben. De meest waarschijnlijke reden in deze data is dat er sprake is van PCR overamplificatie of van zeer expressieve genen in de RNA-sequentie data. Omdat er gebruik is gemaakt van Entinostat wat de expressie van genen stimuleert is dit een optie. Omdat we de data niet zelf hebben geproduceerd, kunnen we hier nooit helemaal met zekerheid iets over zeggen.  
+Conclusie:\
+Onze data is op de meeste vlakken goed/zeer goed. Het enige wat opvalt
+is dat er een relatief hoog duplicatieniveau is. Dit kan meerdere
+oorzaken hebben. De meest waarschijnlijke reden in deze data is dat er
+sprake is van PCR overamplificatie of van zeer expressieve genen in de
+RNA-sequentie data. Omdat er gebruik is gemaakt van Entinostat wat de
+expressie van genen stimuleert is dit een optie. Omdat we de data niet
+zelf hebben geproduceerd, kunnen we hier nooit helemaal met zekerheid
+iets over zeggen.
 
 **22-09-2024**\
 Omdat het trimmen van de data nog niet goed is gegaan hebben wij dit
 allemaal opnieuw uitgevoerd en uitgezocht wat de goede commandline is.
 Ik heb dit gedaan door eerst te kijken naar wat trimmomatic is voor
-programma en de documentatie goed door te nemen. Ik heb hiervoor de officiële documentatie gelezen van trimmomatic via: [documentatie trimmomatic](http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/TrimmomaticManual_V0.32.pdf) \
-Verder heb ik deze video op youtube gekeken:[bioinformatics trimmomatic](https://www.youtube.com/watch?v=Op3W5TEej3k) \
+programma en de documentatie goed door te nemen. Ik heb hiervoor de
+officiële documentatie gelezen van trimmomatic via: [documentatie
+trimmomatic](http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/TrimmomaticManual_V0.32.pdf)\
+Verder heb ik deze video op youtube gekeken:[bioinformatics
+trimmomatic](https://www.youtube.com/watch?v=Op3W5TEej3k)\
 
-Ik heb in de documentatie vooral gekeken naar de opties die je met trimmomatic kan meegeven en welke gunstig zouden zijn voor onze data. Ik denk dat de opties ILUMACLIP, MINLEN, LEADING en TRAILING voor ons project gunstig zijn. \
-- ILUMACLIP zorgt ervoor dat als er adapters zijn toegevoegd aan de data dat deze gevonden en verwijderd worden. Adaptersequenties kunnen de kwaliteit van de data beïnvloeden en ervoor zorgen dat er foutieve resultaten in de analyse zitten. Hierdoor krijg je betrouwbaardere informatie. \
-- MINLEN is een optie waarbij je kan aangeven dat er een het aantal reads, dat onder de gespecificeerde minimumlengte zit, verwijderd wordt. \
-- LEADING is een optie welke de basen aan de voorkant van de read, welke meestal een slechte kwaliteit hebben, verwijderd wordt. \
-- TRAILING is een optie welke de basen aan de achterkant van de read, welke meestal een slechte kwaliteit hebben, verwijderd wordt. \
-
+Ik heb in de documentatie vooral gekeken naar de opties die je met
+trimmomatic kan meegeven en welke gunstig zouden zijn voor onze data. Ik
+denk dat de opties ILUMACLIP, MINLEN, LEADING en TRAILING voor ons
+project gunstig zijn.\
+- ILUMACLIP zorgt ervoor dat als er adapters zijn toegevoegd aan de data
+dat deze gevonden en verwijderd worden. Adaptersequenties kunnen de
+kwaliteit van de data beïnvloeden en ervoor zorgen dat er foutieve
+resultaten in de analyse zitten. Hierdoor krijg je betrouwbaardere
+informatie.\
+- MINLEN is een optie waarbij je kan aangeven dat er een het aantal
+reads, dat onder de gespecificeerde minimumlengte zit, verwijderd
+wordt.\
+- LEADING is een optie welke de basen aan de voorkant van de read, welke
+meestal een slechte kwaliteit hebben, verwijderd wordt.\
+- TRAILING is een optie welke de basen aan de achterkant van de read,
+welke meestal een slechte kwaliteit hebben, verwijderd wordt.\
 
 **23-09-2024**\
 Verder gegaan met trimmomatic, het zoeken naar de goede instellingen
 zodat het fastq rapport zoveel mogelijk groen kleurt. Dit is belangrijk
 om zo te kunnen kijken of de data nog verder geperfectioneerd kan
-worden. Hoe meer groen de dataset is hoe beter deze gebruikt kan worden voor
-de volgende stap in het proces, de mapping. \
+worden. Hoe meer groen de dataset is hoe beter deze gebruikt kan worden
+voor de volgende stap in het proces, de mapping.\
 
 Ik heb het command voor trimmomatic hier neergezet om het zo makkelijker
 aan te kunnen passen om makkelijker met de settings te kunnen
-experimenteren, dit is ook het uiteindelijke command geworden. \
+experimenteren, dit is ook het uiteindelijke command geworden.\
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
@@ -240,8 +298,10 @@ multiqc /students/2024-2025/Thema05/BlaasKanker/oefenengroep/testdataJanine/trim
 Door onderstaande settings te gebruiken heb ik een multiqc rapport
 gecreeërd, tot onze grote verbazing blijkt deze leeg te zijn. Voor
 vandaag heb ik het opgegeven om er nog verder mee bezig te gaan. Ronald
-is op de hoogte gesteld en gaat voor ons kijken of hij het kan
-oplossen. Uiteindelijk blijkt het probleem alleen bij mij voor te komen, de reden hiervoor is onbekend en in overleg met Ronald laten we het hierbij voor dit project. \
+is op de hoogte gesteld en gaat voor ons kijken of hij het kan oplossen.
+Uiteindelijk blijkt het probleem alleen bij mij voor te komen, de reden
+hiervoor is onbekend en in overleg met Ronald laten we het hierbij voor
+dit project.\
 
 | Run ID   | LEADING | TRAILING | SLIDING WINDOW | MINLEN | AVGQUAL | HEADCROP | CROP | ILLUMINACLIP |
 |--------|--------|--------|--------|--------|--------|--------|--------|--------|
@@ -263,24 +323,31 @@ Ik heb vandaag besteed aan mij inlezen over de tool SnpEff, ik wil
 begrijpen hoe deze tool werkt, waarom we hem gebruiken en hoe we deze
 gaan inzetten op ons project. Ik heb de tool alvast op de schoolserver
 in ons project gedownload. Ik ga morgen verder met uitzoeken hoe de tool
-werkt en meer over de tool leren. Jasper is begonnen met de tool BWA voor de mapping van onze data. Kijk voor informatie hierover in het logboek van Jasper. Te vinden op onze github onder logbooks, JasperJonkerLogbooks: [github](https://github.com/RamonReilman/GenomicsTranscriptomics) \
+werkt en meer over de tool leren. Jasper is begonnen met de tool BWA
+voor de mapping van onze data. Kijk voor informatie hierover in het
+logboek van Jasper. Te vinden op onze github onder logbooks,
+JasperJonkerLogbooks:
+[github](https://github.com/RamonReilman/GenomicsTranscriptomics)\
 
 **27-09-2024**\
-Ik ben begonnen met het nalezen en aanvullen van mijn
-logboek. Daarna ben ik verder gegaan met het leren van SnpEff. De tool
-is correct gedownload op de server en werkt. Door Ramon is er een test
-data set gemaakt met output van BWA mapping, die ik kan gebruiken om een
-goede commandline op te stellen voor deze tool. Dit is handig om dit
-vooraf te doen zodat ik, wanneer we eraan toe zijn met de echte data,
-alleen de data hoef te veranderen waardoor het gehele groepsproces
-sneller gaat. Ik heb dit filmpje gekeken: [filmpje snpeff](https://www.youtube.com/watch?v=-rmreyRAbkE&t=544s) en de officiële documentatie gelezen: [snpEff documentatie](https://pcingola.github.io/SnpEff/snpeff/introduction/) \
+Ik ben begonnen met het nalezen en aanvullen van mijn logboek. Daarna
+ben ik verder gegaan met het leren van SnpEff. De tool is correct
+gedownload op de server en werkt. Door Ramon is er een test data set
+gemaakt met output van BWA mapping, die ik kan gebruiken om een goede
+commandline op te stellen voor deze tool. Dit is handig om dit vooraf te
+doen zodat ik, wanneer we eraan toe zijn met de echte data, alleen de
+data hoef te veranderen waardoor het gehele groepsproces sneller gaat.
+Ik heb dit filmpje gekeken: [filmpje
+snpeff](https://www.youtube.com/watch?v=-rmreyRAbkE&t=544s) en de
+officiële documentatie gelezen: [snpEff
+documentatie](https://pcingola.github.io/SnpEff/snpeff/introduction/)\
 
 **29-09-2024**\
-Aan het testen gegaan met snpEff op een testdata set.
-Deze testdata set is door Ramon gemaakt en te vinden in:
-/students/2024-2025/Thema05/BlaasKanker/testingtools/test_variant_calling \
+Aan het testen gegaan met snpEff op een testdata set. Deze testdata set
+is door Ramon gemaakt en te vinden in:
+/students/2024-2025/Thema05/BlaasKanker/testingtools/test_variant_calling\
 
-Test command 1: \
+Test command 1:\
 
 ```{bash, eval=FALSE}
 java -Xmx8g -jar /students/2024-2025/Thema05/BlaasKanker/tools/snpeff/snpEff/snpEff.jar eff \
@@ -288,23 +355,23 @@ mm39 /students/2024-2025/Thema05/BlaasKanker/testingtools/test_variant_calling/S
 > /students/2024-2025/Thema05/BlaasKanker/testingtools/test_variant_calling/test_output_variants.vcf
 ```
 
-Notes: \
-- Het command moet uitgevoerd worden vanuit de map waar de tool in
-staat.\
+[[Notes:\\\\](Notes:){.uri}](%5BNotes:%5D(Notes:)%7B.uri%7D){.uri} - Het
+command moet uitgevoerd worden vanuit de map waar de tool in staat.\
 - Er moet een reference genome in het command worden meegenomen, deze
 reference genomes zitten in de database van de tool of kunnen ingevoegd
-worden. Ons reference genome van de muis is GRCm39. \
+worden. Ons reference genome van de muis is GRCm39.\
 
-Bij het downloaden van de referencegenome is de volgende foutmelding gekomen: \
-FATAL ERROR:
-Failed to download database from
+Bij het downloaden van de referencegenome is de volgende foutmelding
+gekomen:\
+FATAL ERROR: Failed to download database from
 [<https://snpeff.blob.core.windows.net/databases/v5_2/snpEff_v5_2_mm39.zip>,
 <https://snpeff.blob.core.windows.net/databases/v5_0/snpEff_v5_0_mm39.zip>,
 <https://snpeff.blob.core.windows.net/databases/v5_1/snpEff_v5_1_mm39.zip>]\
 
-Oplossing: \
+Oplossing:\
 Door te zoeken op internet ben ik een github forum tegengekomen die een
-mogelijke oplossing bied. Ik ga de volgende stappen uitvoeren vanaf deze [github](<https://github.com/pcingola/SnpEff/issues/536>) \
+mogelijke oplossing bied. Ik ga de volgende stappen uitvoeren vanaf deze
+[github](https://github.com/pcingola/SnpEff/issues/536)\
 De stappen beschreven door gebruiker 'lukedow':\
 
 **Problemsolving**\
@@ -320,8 +387,8 @@ files from the same genome build, e.g. from UCSC
 (<https://useast.ensembl.org/Mus_musculus/Info/Index>). Unzip them into
 a specific directory (snpEff/data/mm39/) so the script can find them,
 and rename the files:\
-Mus_musculus.GRCm39.dna.primary_assembly.fa.gz:
-sequences.fa Mus_musculus.GRCm39.cds.all.fa.gz: cds.fa
+Mus_musculus.GRCm39.dna.primary_assembly.fa.gz: sequences.fa
+Mus_musculus.GRCm39.cds.all.fa.gz: cds.fa
 Mus_musculus.GRCm39.pep.all.fa.gz: protein.fa
 Mus_musculus.GRCm39.112.gtf.gz: genes.gtf
 
@@ -357,11 +424,11 @@ bovenstaand command gebruik ik alleen de optie 'eff', deze optie
 annoteert alleen de varianten. Voor de volgende ronde voeg ik de
 volgende opties toe:\
 
-- Xmx8g -\> stelt de maximale hoeveelheid geheugen in die Java mag
-gebruiken.\
-- eff -\> voor het annoteren van de varianten\
-- verbose (-v) -\> Hiermee wordt een gedetailleerd logbestand gemaakt
-die handig kan zijn voor foutopsporing\
+-   Xmx8g -\> stelt de maximale hoeveelheid geheugen in die Java mag
+    gebruiken.\
+-   eff -\> voor het annoteren van de varianten\
+-   verbose (-v) -\> Hiermee wordt een gedetailleerd logbestand gemaakt
+    die handig kan zijn voor foutopsporing\
 
 Het command ziet er dan alsvolgt uit:\
 
@@ -371,7 +438,7 @@ ls /students/2024-2025/Thema05/BlaasKanker/testingtools/test_variant_calling/*.v
 ```
 
 Bovenstaand command werkt, echter is de output leeg van de testdata
-leeg. De reden hiervoor is op dit moment onbekend. \
+leeg. De reden hiervoor is op dit moment onbekend.\
 
 **01-10-2024** We hebben besloten om tussen de stappen variant calling
 en variant annotation een filter stap toe te voegen. Dit doen we met de
@@ -386,11 +453,12 @@ nog de optie -t 8 (8 threads) aan toe zodat er maximaal 8 cpu threads
 worden gebruikt. Hiermee reduceer ik de cpu belasting van de
 schoolserver. Ik heb dit eerst nog getest op de testdata. Tijdens het
 testen ben ik erachter gekomen dat de threads functie niet meer werkend
-is. Via dit bericht [github issues](<https://github.com/pcingola/SnpEff/issues/429>) is
-te lezen dat het een bekend probleem is. Echter is de documentatie van
-snpEff nog niet aangepast. Ik ga nu gebruik maken van de parallel -j
-functie om de threads te verdelen. Ik gebruik parallel -j 8 om zo de
-workload op de schoolserver te verminderen.\
+is. Via dit bericht [github
+issues](https://github.com/pcingola/SnpEff/issues/429) is te lezen dat
+het een bekend probleem is. Echter is de documentatie van snpEff nog
+niet aangepast. Ik ga nu gebruik maken van de parallel -j functie om de
+threads te verdelen. Ik gebruik parallel -j 8 om zo de workload op de
+schoolserver te verminderen.\
 
 ```{bash, eval=FALSE}
 ls /students/2024-2025/Thema05/BlaasKanker/outputs/variant_calling_unfiltered/*.vcf | parallel -j 8 \
@@ -401,25 +469,48 @@ Na het uitvoeren van bovenstaand command krijg ik de volgende
 foutmelding: WARNING!: Mitochondrion chromosome 'MT' does not have a
 mitochondrion codon table (codon table = 'Standard'). You should update
 the config file. Ik probeer uit te zoeken waar ik de tabel kan vinden om
-deze in het configuration file toe te voegen. \
+deze in het configuration file toe te voegen.\
 
 Omdat ik niet precies weet waar het misgaat heb ik besloten de database
-rondom mm39 opnieuw te bouwen. Hiervoor volg ik deze instructie [github instructie]
-(<https://pcingola.github.io/SnpEff/snpeff/build_db/>)\
-Ik heb van deze link op het [ncbi](<https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001635.27/>) de
-fasta sequence, gft en gff file gedownload. Deze heb ik in de volgende
-map gezet: \ 
-/students/2024-2025/Thema05/BlaasKanker/tools/snpeff/snpEff/data/mm39. \
+rondom mm39 opnieuw te bouwen. Hiervoor volg ik deze instructie [github
+instructie] (<https://pcingola.github.io/SnpEff/snpeff/build_db/>)\
+Ik heb van deze link op het
+[ncbi](https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001635.27/)
+de fasta sequence, gft en gff file gedownload. Deze heb ik in de
+volgende map gezet:  
+/students/2024-2025/Thema05/BlaasKanker/tools/snpeff/snpEff/data/mm39.\
 
 Na het opnieuw bouwen van de database en uitvoeren van de tool op onze
 data krijg ik nog steeds de foutmelding: Mitochondrion chromosome 'MT'
-does not have a mitochondrion codon table (codon table = 'Standard'). \
+does not have a mitochondrion codon table (codon table = 'Standard').\
 
-Ik heb voor nu besloten om hulp te vragen bij de docenten, ook Ramon kijkt nog even mee.\
+Ik heb voor nu besloten om hulp te vragen bij de docenten, ook Ramon
+kijkt nog even mee.\
 
-**2-10-2024**
-Ramon heeft laten zien dat hij door middel van nog 2 andere tools mijn tool snpEff bijna werkend heeft gekregen. Kijk voor de stappen die hij heeft ondernomen in zijn logboek: Te vinden op onze [github](https://github.com/RamonReilman/GenomicsTranscriptomics) onder logbooks, RamonReilmanLogbooks:  \
+**2-10-2024** Ramon heeft laten zien dat hij door middel van nog 2
+andere tools mijn tool snpEff bijna werkend heeft gekregen. Kijk voor de
+stappen die hij heeft ondernomen in zijn logboek: Te vinden op onze
+[github](https://github.com/RamonReilman/GenomicsTranscriptomics) onder
+logbooks, RamonReilmanLogbooks:\
 
-**3-10-2024**
-Ik heb afgelopen week feedback gekregen op mijn logboek van Ronald. Hierbij is gebleken dat ik alles veel duidelijker en uitgebreider moet verwoorden. Daarom neem ik hier vandaag de tijd voor om het hele logboek van vooraan tot en met nu volledig aan te vullen. Hierbij ga ik de hoe, wat en waarom toepassen om op deze manier zoveel mogelijk tijdsverantwoording te vangen. \
+**3-10-2024** Ik heb afgelopen week feedback gekregen op mijn logboek
+van Ronald. Hierbij is gebleken dat ik alles veel duidelijker en
+uitgebreider moet verwoorden. Daarom neem ik hier vandaag de tijd voor
+om het hele logboek van vooraan tot en met nu volledig aan te vullen.
+Hierbij ga ik de hoe, wat en waarom toepassen om op deze manier zoveel
+mogelijk tijdsverantwoording te vangen.\
 
+Ik ga onderzoeken of we de output vcf bestanden die uit de variant
+annotation komen ook kunnen filteren op impact van mutaties. Hiermee
+zouden we het lezen en interpreteren van de mutaties namelijk veel
+makkelijker maken. Ik ga kijken of hier tools voor zijn en en welke dat
+zijn.  
+
+Er zijn in principe 2 tools die dit kunnen doen en dit zijn VEP (Variant
+effect predictor) en SnpSift. Omdat SnpSift samenwerkt met SnpEff is het
+in dit geval de meest gunstige tool om te gebruiken. SnpSift is een
+toolbox met heel veel verschillende opties. Ik ga onderzoeken welke
+opties we het beste kunnen gebruiken om een zo gunstig mogelijke
+uitkomst te genereren. Wanneer de meest optimale uitkomst hebben kunnen
+we hier makkelijker plotjes van maken voor ons wetenschappelijke
+artikel.
