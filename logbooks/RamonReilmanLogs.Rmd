@@ -774,4 +774,41 @@ grep ^# SRR14870694.vcf
 Hieruit kan ik de naam vinden voor geen naam bij INFO
 Omdat ik er niet zeker van kan zijn dat de bcftools wel goed zoekt en vcftools wel goed filterd ga ik mijn eigen scriptje schrijven die genen uit een txt bestand kan vinden in een vcf bestand.
 
+Het python3 scriptje staat ook weer in src/python.
+Met dit scriptje kan ik een gene.txt bestand meegeven waar gezochte genen in staan.
+Het scriptje zal deze genen dan zoeken in het VCF bestand, en een VCF output geven met de lines die het gen bevatten.
 
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+    parallel -j 8 \
+    "python3 /homes/rreilman/jaar2/kwartaal2/vak2/GenomicsTranscriptomics/src/python/vcf_gene_finder.py /students/2024-2025/Thema05/BlaasKanker/temp/annoting_test/{}.vcf /students/2024-2025/Thema05/BlaasKanker/etc/gene_file.txt --output_file /students/2024-2025/Thema05/BlaasKanker/temp/marked_cancer/{}.vcf"
+```
+
+Als het goed is staat in deze output alle genen die te maken kunnen hebben met blaaskanker in een muis.
+
+Tot nu toe zijn alle SNPeff testen gedaan in mijn temp folder, ik ga het nu uitvoeren voor de ouputs folder.
+Morgen zal ik dan met het groepje verder sorteren en filtreren.
+
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+    parallel -j 6 \
+    "java -Xmx8g -jar /students/2024-2025/Thema05/BlaasKanker/tools/snpeff/snpEff/snpEff.jar ann -v -stats \
+    /students/2024-2025/Thema05/BlaasKanker/outputs/variant_annotation/stats.html mm39 \
+    /students/2024-2025/Thema05/BlaasKanker/outputs/chromosome_remade_varients/{}_variants.vcf > /students/2024-2025/Thema05/BlaasKanker/outputs/variant_annotation/{}.vcf"
+```
+
+Nu hebben we de variant calling uitgevoerd, deze bevat 23,753 variants, wat voornamelijk variants zijn die herkend zijn bij erfbare mutaties, en niet de mutaties die wij zoeken.
+
+Daarom gaan wij gericht zoeken naar genen die belangrijk zijn bij processen waar blaas kanker kan ontstaan
+Ik heb daarvoor zoals eerder benoemd een bestand voor gedownload met alle genen.
+https://www.informatics.jax.org/mgihome/homepages/help.shtml
+
+Deze kan ik met mijn eigen scriptje omzetten naar een lijst met genen.
+Deze kan ik als input gebruiken om die genen te vinden in de vcf bestanden.
+
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+    parallel -j 8 \
+    "python3 /homes/rreilman/jaar2/kwartaal2/vak2/GenomicsTranscriptomics/src/python/vcf_gene_finder.py /students/2024-2025/Thema05/BlaasKanker/outputs/variant_annotation/{}.vcf /students/2024-2025/Thema05/BlaasKanker/etc/gene_file.txt --output_file /students/2024-2025/Thema05/BlaasKanker/outputs/variant_annotation_cancer_genes/{}.vcf"
+```
+Morgen zal ik deze nieuwe vcf bestanden processen tot iets wat leesbaar is, zodat we kunnen achterhalen hoeveel varianten we over hebben gehouden.

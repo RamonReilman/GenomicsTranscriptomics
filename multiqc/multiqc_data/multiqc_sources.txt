@@ -1,0 +1,13 @@
+Module	Section	Sample Name	Source
+FastQC	all_sections	SRR14870694_1	/students/2024-2025/Thema05/BlaasKanker/fastqc/SRR14870694_1_fastqc.zip
+FastQC	all_sections	SRR14870694_2	/students/2024-2025/Thema05/BlaasKanker/fastqc/SRR14870694_2_fastqc.zip
+FastQC	all_sections	SRR14870695_1	/students/2024-2025/Thema05/BlaasKanker/fastqc/SRR14870695_1_fastqc.zip
+FastQC	all_sections	SRR14870695_2	/students/2024-2025/Thema05/BlaasKanker/fastqc/SRR14870695_2_fastqc.zip
+FastQC	all_sections	SRR14870696_1	/students/2024-2025/Thema05/BlaasKanker/fastqc/SRR14870696_1_fastqc.zip
+FastQC	all_sections	SRR14870696_2	/students/2024-2025/Thema05/BlaasKanker/fastqc/SRR14870696_2_fastqc.zip
+FastQC	all_sections	SRR14870697_1	/students/2024-2025/Thema05/BlaasKanker/fastqc/SRR14870697_1_fastqc.zip
+FastQC	all_sections	SRR14870697_2	/students/2024-2025/Thema05/BlaasKanker/fastqc/SRR14870697_2_fastqc.zip
+FastQC	all_sections	SRR14870698_1	/students/2024-2025/Thema05/BlaasKanker/fastqc/SRR14870698_1_fastqc.zip
+FastQC	all_sections	SRR14870698_2	/students/2024-2025/Thema05/BlaasKanker/fastqc/SRR14870698_2_fastqc.zip
+FastQC	all_sections	SRR14870699_1	/students/2024-2025/Thema05/BlaasKanker/fastqc/SRR14870699_1_fastqc.zip
+FastQC	all_sections	SRR14870699_2	/students/2024-2025/Thema05/BlaasKanker/fastqc/SRR14870699_2_fastqc.zip
