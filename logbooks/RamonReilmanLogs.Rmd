@@ -579,8 +579,6 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
     /students/2024-2025/Thema05/BlaasKanker/outputs/picard_dub/marked_duplicates/{}.marked_duplicates.bam"
 ```
 
-
-
 Omdat het we straks ontzettend veel varianten krijgen leek het mij een goed idee om vandaag te kijken naar het filteren van de annotaties.
 SNPeff kan doormiddel van bestand met gene symbols als het goed is zoeken naar die genen.
 Ik heb op https://www.informatics.jax.org/mgihome/homepages/help.shtml gezocht naar genen die met blaaskanker te maken hebben.
@@ -588,7 +586,7 @@ Ik heb op https://www.informatics.jax.org/mgihome/homepages/help.shtml gezocht n
 Deze lijst kan je downloaden, maar er staat veel overbodige informatie in. Daarom heb ik een scriptje in python geschreven die de genen er uit kan halen. zie main src/python.
 Als Janine straks klaar is met annotatie, kunnen we op die manier filteren.
 
-
+Janine loopt vast met snpEff, er zijn probelemen met MT tabellen?
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
     parallel -j 8 \
@@ -596,45 +594,48 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
     /students/2024-2025/Thema05/BlaasKanker/temp/annoting_test/stats.html mm39 \
     /students/2024-2025/Thema05/BlaasKanker/outputs/variant_calling_unfiltered/{}_variants.vcf > /students/2024-2025/Thema05/BlaasKanker/temp/annoting_test/{}.vcf"
 ```
+Heb op github een zelfde soort issue gevonden, die heb gevolgd en dat probleem was vervolgens opgelost.
+https://github.com/pcingola/SnpEff/issues/536#issuecomment-2189201996
+Dankjewel lukedow.
 
-Eigen data base bouwen:
 
-blablabla
-
-gene.gtf en vcf chromosomen komen niet overeen
+Daarna heb ik snpeff weer uitgevoerd. Maar toen ontstond er het volgende probleem, de chromosoom benaming in de vcf bestanden en de net gebouwde data base komen niet overeen. Ik hen online op ncbi een mapje gevonden die de ncbi benaming omzet naar chromosome nummers, zie etc/chromosome_map.txt
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 parallel -j 8 \
 "bcftools annotate --rename-chrs /students/2024-2025/Thema05/BlaasKanker/etc/chromosome_map.txt /students/2024-2025/Thema05/BlaasKanker/outputs/variant_calling_unfiltered/{}_variants.vcf > /students/2024-2025/Thema05/BlaasKanker/outputs/calling_renamed/{}_variants.vcf"
 
 ```
+Hierna kreeg ik de volgende foutmelding, geen idee wat het inhoud maar er was een quick workaround voor
+'Contig 'NC_000067.7' is not defined in the header. (Quick workaround: index the file with tabix.'
 
-Contig 'NC_000067.7' is not defined in the header. (Quick workaround: index the file with tabix.
-backup data voor de zekerheid
+
+Ik heb voor de zekerheid een backup gemaakt van de variant calling data, en het volgende command uitgevoerd.
+Die zou een index van de file moeten maken
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 parallel -j 8 \
 "tabix -p vcf {}_variants.vcf"
 ```
+Hier kwam nog een foutmelding uit, de bestanden moesten compressed zijn.
+'[tabix] the compression of 'SRR14870694_variants.vcf' is not BGZF'
 
-[tabix] the compression of 'SRR14870694_variants.vcf' is not BGZF
-
+Ik heb de bestanden dus eerst met bgzip omgezet naar bestanden die compressed zijn
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 parallel -j 8 \
 "bgzip -c {}_variants.vcf > {}_variants.vcf.gz"
 ```
 
-
+Hierna opnieuw de index met tabix uitgevoerd.
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 parallel -j 8 \
 "tabix -p vcf {}_variants.vcf.gz"
 ```
+Dit werkt ook niet: 'Contig 'NC_000067.7' is not defined in the header. (Quick workaround: index the file with tabix.'
 
-
-Dit werkt ook niet
-
+Uiteindelijk bleek ik dus dat ik de header opnieuw moest maken van elk bestand met de .fai versie van onze referentie genoom.
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
     parallel -j 8 \
@@ -644,17 +645,14 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 
 
 ```
-
-
-students/2024-2025/Thema05/BlaasKanker/outputs/variant_calling_unfiltered/{}_variants.vcf
+Dit heeft vervolgens wel gewerkt.
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 parallel -j 8 \
 "bcftools annotate --rename-chrs /students/2024-2025/Thema05/BlaasKanker/etc/chromosome_map.txt /students/2024-2025/Thema05/BlaasKanker/outputs/calling_renamed/{}_remade.vcf > /students/2024-2025/Thema05/BlaasKanker/outputs/chromosome_remade_varients/{}_variants.vcf"
 ```
-
-
+En daardoor kon ik de namen van de chromosomen omzetten met de chromosome map.
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
     parallel -j 8 \
@@ -663,20 +661,22 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
     /students/2024-2025/Thema05/BlaasKanker/outputs/chromosome_remade_varients/{}_variants.vcf > /students/2024-2025/Thema05/BlaasKanker/temp/annoting_test/{}.vcf"
 ```
 
-cut -f 1 /path/to/your_file.gtf | sort | uniq
+Eindelijk kon ik met snpEff toch wel de variant annotatie uitvoeren.
+Deze geeft een tabel met chromosomen met een n van aantal variants.
+In deze tabel staan een aantal NT_*** chromosomen, die ik niet ken en niet voorkomen in mijn chromosome map. Morgen zal ik hier verder naar kijken.
 
 ## 02-10-2024
-
-Nieuwe mapping gemaakt voor de header, opnieuw uitvoeren
+Ik heb op de website hieronder een downloadbare tabel kunnen vinden die ook de meest NT_*** chromosomen kan mappen
 https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001635.27/
 
+Ik heb dus weer de namen veranderd in mijn variant calling bestanden
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 parallel -j 8 \
 "bcftools annotate --rename-chrs /students/2024-2025/Thema05/BlaasKanker/etc/chromey_map_updated.txt /students/2024-2025/Thema05/BlaasKanker/outputs/calling_renamed/{}_remade.vcf > /students/2024-2025/Thema05/BlaasKanker/outputs/chromosome_remade_varients/{}_variants.vcf"
 ```
 
-
+snpEff weer uitgevoerd.
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
     parallel -j 8 \
@@ -684,10 +684,8 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
     /students/2024-2025/Thema05/BlaasKanker/temp/annoting_test/stats.html mm39 \
     /students/2024-2025/Thema05/BlaasKanker/outputs/chromosome_remade_varients/{}_variants.vcf > /students/2024-2025/Thema05/BlaasKanker/temp/annoting_test/{}.vcf"
 ```
-
-Unkown testing
-aanpassing 1 naar un, geef meer CHROMOSOME_Not_found
-Dit ontstaat dus door de Un chromosomen.
+Er stonden nu een aantal CHROMOSOME_Not_found errors, en een UN in de tabel.
+De UN staat dus voor unkown gedeelte, en kan dus niet gemapt worden aan een bestaand chromosoom. Deze veroorzaakt ook de CHROMOSOME_Not_found errors.
 
 
 ### Vsualisatie:
@@ -706,3 +704,46 @@ wget https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M35/genco
 ```
 
 Dit bestand staat vol met data die ik niet nodig heb, als het goed is kan ik met een python scriptje hier de belangrijke data wel uithalen
+Het python scriptje kan dus GTF bestanden omzetten naar bed bestanden met de data die wij nodig hebben.
+
+snpEff geeft nog wel een aantal warnings weer
+
+WARNING_TRANSCRIPT_INCOMPLETE   5223
+WARNING_TRANSCRIPT_MULTIPLE_STOP_CODONS 63
+WARNING_TRANSCRIPT_NO_START_CODON       3093
+WARNING_TRANSCRIPT_NO_STOP_CODON        2347
+Na de warnings te lezen op de website van snpEff blijkt dit te liggen aan onze gebouwde database.
+
+Ik zal nog 1 keer proberen de database opnieuw te bouwen, volgens de website van snpEff
+
+```{basj, eval=FALSE}
+cd snpeff/snpEff/data
+mkdir mm39; cd mm39
+
+wget https://ftp.ensembl.org/pub/current/gtf/mus_musculus/Mus_musculus.GRCm39.112.gtf.gz
+mv Mus_musculus.GRCm39.112.gtf.gz genes.gtf.gz
+
+mkdir /snpeff/snpEff/data/genome
+cd /snpeff/snpEff/data/genome
+
+wget https://ftp.ensembl.org/pub/current/fasta/mus_musculus/dna/Mus_musculus.GRCm39.dna.toplevel.fa.gz
+mv Mus_musculus.GRCm39.dna.toplevel.fa.gz mm39.fa.gz
+gzip -d de bestanden
+java -jar snpEff.jar build -gtf22 -v mm39
+```
+Nieuwe database is gebouwd
+
+
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+    parallel -j 8 \
+    "java -Xmx8g -jar /students/2024-2025/Thema05/BlaasKanker/tools/snpeff/snpEff/snpEff.jar ann -nodownload -v -stats \
+    /students/2024-2025/Thema05/BlaasKanker/temp/annoting_test/stats.html mm39 \
+    /students/2024-2025/Thema05/BlaasKanker/outputs/chromosome_remade_varients/{}_variants.vcf > /students/2024-2025/Thema05/BlaasKanker/temp/annoting_test/{}.vcf"
+
+```
+
+Deze manier van het bouwen van een database voor mm39 werkt niet.
+Ik blijf de vorige gebruiken. De waarschuwingen kunnen voorkomen wanneer het genoom niet helemaal gebrepen is, en dat kan aangezien we ook Unkown chromosome maps hebben.
+
+Ik zal nu eerst filteren naar de genen die ik heb gevonden op MGI
