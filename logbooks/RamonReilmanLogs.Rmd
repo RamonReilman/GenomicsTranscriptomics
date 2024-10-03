@@ -664,3 +664,45 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 ```
 
 cut -f 1 /path/to/your_file.gtf | sort | uniq
+
+## 02-10-2024
+
+Nieuwe mapping gemaakt voor de header, opnieuw uitvoeren
+https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001635.27/
+
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+parallel -j 8 \
+"bcftools annotate --rename-chrs /students/2024-2025/Thema05/BlaasKanker/etc/chromey_map_updated.txt /students/2024-2025/Thema05/BlaasKanker/outputs/calling_renamed/{}_remade.vcf > /students/2024-2025/Thema05/BlaasKanker/outputs/chromosome_remade_varients/{}_variants.vcf"
+```
+
+
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+    parallel -j 8 \
+    "java -Xmx8g -jar /students/2024-2025/Thema05/BlaasKanker/tools/snpeff/snpEff/snpEff.jar ann -v -stats \
+    /students/2024-2025/Thema05/BlaasKanker/temp/annoting_test/stats.html mm39 \
+    /students/2024-2025/Thema05/BlaasKanker/outputs/chromosome_remade_varients/{}_variants.vcf > /students/2024-2025/Thema05/BlaasKanker/temp/annoting_test/{}.vcf"
+```
+
+Unkown testing
+aanpassing 1 naar un, geef meer CHROMOSOME_Not_found
+Dit ontstaat dus door de Un chromosomen.
+
+
+### Vsualisatie:
+https://cmdcolin.github.io/awesome-genome-visualization/?language=R&latest=true&platform=&tag=GWAS
+
+
+## 3-10-2024
+Waarschijnlijk hebben we een BED file nodig met chromsomen, exon posities en genen voor de visualisatie. Die hebben wij op dit moment niet, dus ik zal deze voor het mm39 muis referentie genoom genereren.
+
+Voor het genereren van een BED file hebben we een GTF bestand nodig, deze bevat alle data die we nodig hebben
+
+```{bash, eval=FALSE}
+
+wget https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M35/gencode.vM35.annotation.gtf.gz
+
+```
+
+Dit bestand staat vol met data die ik niet nodig heb, als het goed is kan ik met een python scriptje hier de belangrijke data wel uithalen
