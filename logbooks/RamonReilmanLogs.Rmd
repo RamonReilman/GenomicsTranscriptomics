@@ -736,7 +736,7 @@ Nieuwe database is gebouwd
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
-    parallel -j 8 \
+    parallel -j 6 \
     "java -Xmx8g -jar /students/2024-2025/Thema05/BlaasKanker/tools/snpeff/snpEff/snpEff.jar ann -nodownload -v -stats \
     /students/2024-2025/Thema05/BlaasKanker/temp/annoting_test/stats.html mm39 \
     /students/2024-2025/Thema05/BlaasKanker/outputs/chromosome_remade_varients/{}_variants.vcf > /students/2024-2025/Thema05/BlaasKanker/temp/annoting_test/{}.vcf"
@@ -747,3 +747,31 @@ Deze manier van het bouwen van een database voor mm39 werkt niet.
 Ik blijf de vorige gebruiken. De waarschuwingen kunnen voorkomen wanneer het genoom niet helemaal gebrepen is, en dat kan aangezien we ook Unkown chromosome maps hebben.
 
 Ik zal nu eerst filteren naar de genen die ik heb gevonden op MGI
+```{bash, eval=FALSE}
+python3 parse_mgi.py ../../data/MGI_file.txt --output_file /students/2024-2025/Thema05/BlaasKanker/etc/gene_file.txt
+```
+Zet MGI feature file om naar een bestand met gene names
+
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+    parallel -j 8 \
+    "vcftools --vcf /students/2024-2025/Thema05/BlaasKanker/temp/annoting_test/{}.vcf --keep /students/2024-2025/Thema05/BlaasKanker/etc/gene_file.txt --recode --out /students/2024-2025/Thema05/BlaasKanker/temp/marked_cancer/{}"
+
+```
+
+Er zijn 0 varianten over gebleven, om te controleren of het filteren werkt filter ik op 1 gen wararvan ik wee dat deze in een vcf bestand voor komt
+
+```{bash, eval=FALSE}
+bcftools view --include 'INFO == "Xkr4"' SRR14870694.vcf > test_sample.vcf
+```
+Om te testen of deze echt wel bestaat
+[filter.c:2933 filters_init1] Error: the tag "INFO" is not defined in the VCF header
+De info header heeft een ID voor gene naam
+
+```{bash, eval=FALSE}
+grep ^# SRR14870694.vcf
+```
+Hieruit kan ik de naam vinden voor geen naam bij INFO
+Omdat ik er niet zeker van kan zijn dat de bcftools wel goed zoekt en vcftools wel goed filterd ga ik mijn eigen scriptje schrijven die genen uit een txt bestand kan vinden in een vcf bestand.
+
+
