@@ -18,116 +18,128 @@ This is an R Markdown document. Markdown is a simple formatting syntax
 for authoring HTML, PDF, and MS Word documents. For more details on
 using R Markdown see <http://rmarkdown.rstudio.com>.
 
-
 ## inleiding
+
 ! inleiding schrijven
 
-
 ## Maandag 9 september
-Artikelen gelezen en twee uitgepikt (tweede artikel op aanraden van
-Janine).
 
-Invloed RAG in DNA van B-cellen:
-<https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE130224>
+We hebben afgesproken om allemaal een artikel uit te kiezen en daar dan
+een van uit te kiezen. Ik vindt dit een interessant artikel:
+<https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE130224> Het gaat
+over de invloed van RAG in DNA van B-cellen.
 
-Leukemie: <https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE103811>
+Janine kwam met een ander artikel die eigenlijk nog leuker is:
+<https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE103811> Dit
+artikel gaat over leukemie.
 
 Het artikel over leukemie heeft niet genoeg sampels om goed mee te
-kunnen werken deze periode.
+kunnen werken deze periode, dus deze kunnen we niet kiezen.
 
-Trello aangemaakt.
-
+We hebben een Trello-bord aangemaakt.
 
 ## Dinsdag 10 september
-We hebben besloten dat we het artikel 'RNAseq and TCRseq analysis of
-entinostat treated bladder tumors' (PMID: 34396985) gaan gebruiken deze
-periode. Dit artikel ziet er interessant uit en is goedgekeurd door
-Marcel.
 
-De git repo staat nu ook op mijn laptop met eigen branch (en Ramon heeft
-de logboeken aangemaakt).
+We hebben besloten dat we het artikel van Jasper: 'RNAseq and TCRseq
+analysis of entinostat treated bladder tumors' (PMID: 34396985) gaan
+gebruiken deze periode. Dit artikel ziet er interessant uit en is
+goedgekeurd door Marcel.
 
-Het artikel gaat (van wat ik begrijp) over blaaskanker. ICI's
-(immune-checkpoint inhibitors) is een manier om de blaaskanker te
-bestrijden (De ICI's krijgt de patiënt via een infuus en zorgen ervoor
-dat het immuunsysteem beter de tumoren kan bestrijden). Deze vorm van
-therapie werkt nog maar bij 20% van de patiënten. Er is dus verbetering
-nodig op dit gebied. In dit onderzoek hebben ze met behulp van testen op
-muizen laten zien dat entinostat samen met anti–PD-1 helpt tegen
-blaaskanker. Entinostat lijkt een vorm van chemotherapie die samen met
-een andere stof effectief werkt tegen kanker (door de expressie van
-tumor-antigenen te activeren). Anti-PD-1 is in dit geval de andere stof.
-PD-1 zorgt er voor dat de t-cel geen andere cel dood (waaronder
-kankercel). Anti-PD-1 zal er dus voor zorgen dat je lichaam wel de cel
-zal doden.
+De git repo (die Ramon heeft gemaakt) staat nu ook op mijn laptop met
+eigen branch.
+
+Ik heb het artikel een beetje doorgelezen om een idee te krijgen van
+waar het over gaat; Het artikel gaat (van wat ik begrijp) over
+blaaskanker. ICI's (immune-checkpoint inhibitors) is een manier om de
+blaaskanker te bestrijden (De ICI's krijgt de patiënt via een infuus en
+zorgen ervoor dat het immuunsysteem beter de tumoren kan bestrijden).
+Deze vorm van therapie werkt nog maar bij 20% van de patiënten. Er is
+dus verbetering nodig op dit gebied. In dit onderzoek hebben ze met
+behulp van testen op muizen laten zien dat entinostat samen met
+anti–PD-1 helpt tegen blaaskanker. Entinostat lijkt een vorm van
+chemotherapie die samen met een andere stof effectief werkt tegen kanker
+(door de expressie van tumor-antigenen te activeren). Anti-PD-1 is in
+dit geval de andere stof. PD-1 zorgt er voor dat de t-cel geen andere
+cel dood (waaronder kankercel). Anti-PD-1 zal er dus voor zorgen dat je
+lichaam wel de cel zal doden.
 
 We hebben een taakverdeling gemaakt voor het plan van aanpak. Ik ga de
 planning maken in de vorm van een gantt chart. Eerst moet ik nog even
 uitzoeken wat dit precies is.
 
-
 ## Woensdag 11 september
-De verdeling een klein beetje aangepast. Vrijdag na de les over de data
-downloaden advies vragen over de sample keuzes (hoe besluiten we welke
-samples we willen gebruiken en welke niet ?).
 
+De verdeling is een klein beetje aangepast. Vrijdag na de les over de
+data downloaden moeten we advies vragen aan de docent over de sample
+keuzes: hoe besluiten we welke samples we willen gebruiken en welke
+niet?
 
 ## Donderdag 12 september
-Vandaag uitzoeken hoe je een gantt chart moet maken. Een gantt chart is
-blijkbaar een soort algemeen beeld van de planning. Je kan in word of
-excel een gantt chart maken (Excel is mooier). Of in Microsoft Projects.
+
+Vandaag ga ik uitzoeken hoe je een gantt chart moet maken voor de
+planning. Een gantt chart is blijkbaar een soort algemeen beeld van de
+planning. Je kan in word of excel een gantt chart maken (Excel is
+mooier). Of in Microsoft Projects. Microsoft Projects is handig omdat
+iedereen er dan makkelijk bij kan.\
 Microsoft Projects is helaas niet beschikbaar voor ons. Dan is Excel de
-beste optie. Vandaag eerst uitzoeken hoe Excel werkt.
+beste optie, aangezien we hierin ook allemaal via Teams bij kunnen, maar het wordt dan wel iets minder mooi dan met Microsoft Projects. Vandaag dus eerst uitzoeken hoe Excel werkt, aangezien ik hier niet veel ervaring mee heb. \
 
-Planning uitschrijven van wat we nu weten: Week 1: Maandag 9 september:
-artikel vinden rest van de week: plan van aanpak schrijven
+Ik heb de planning uitgeschrijven van wat we nu weten om een beter beeld voor mezelf te vormen: \
+Week 1: \
+Maandag 9 september: artikel vinden rest van de week: plan van aanpak schrijven
 
-Week 2: Maandag 16 september: presentatie plan van aanpak, feedback
-verwerken. Dinsdag 17 september - einde week: NGS Quality Control
+Week 2: \
+Maandag 16 september: presentatie plan van aanpak, feedback verwerken. \
+Dinsdag 17 september - einde week: NGS Quality Control
 
-Week 3: Maandag 23 september - donderdag 26 september: read mapping and
-QC Vrijdag 27 september: varient calling
+Week 3: \
+Maandag 23 september - donderdag 26 september: read mapping and QC \
+Vrijdag 27 september: varient calling
 
-Week 4: Maandag 30 september - einde week: annotation
+Week 4: \
+Maandag 30 september - einde week: annotation
 
-Week 5: Maandag 7 oktober - einde week: visualisation, plan van aanpak
-maken
+Week 5: \
+Maandag 7 oktober - einde week: visualisation, plan van aanpak maken
 
-week 6: Maandag 14 oktober: presentatie plan van aanpak Dinsdag 15
-oktober - vrijdag: read mapping and quantification Vrijdag 18 oktober:
-Statistics (distributions, normalization, PCA)
+Week 6: \
+Maandag 14 oktober: presentatie plan van aanpak \
+Dinsdag 15 oktober - vrijdag: read mapping and quantification \
+Vrijdag 18 oktober: Statistics (distributions, normalization, PCA)
 
-Week 7: Maandag 21 oktober - dinsdag?: exploratory data analysis
-(chapter 3) Dinsdag 22 oktober: Statistics (batch effects, regression,
-linear models) Woensdag 23 oktober: Finding Differentially Expressed
-Genes (chapter 4) Vrijdag 25 oktober: Statistics (Enrichment analysis)
+Week 7: \
+Maandag 21 oktober - dinsdag?: exploratory data analysis (chapter 3) \
+Dinsdag 22 oktober: Statistics (batch effects, regression, linear models) \
+Woensdag 23 oktober: Finding Differentially Expressed Genes (chapter 4) \
+Vrijdag 25 oktober: Statistics (Enrichment analysis)
 
-Week 8: Maandag 28 oktober - einde week: Data Analysis and Visualization
-(chapter 5) Einde week: Hand in Lab Journal
+Week 8: \
+Maandag 28 oktober - einde week: Data Analysis and Visualization (chapter 5) \
+Einde week: Hand in Lab Journal
 
-Het lukte even niet in Excel met de data, maar ben er nu achter dankzij
-Janine dat Excel met het Amerikaanse data systeem werkt. Dus de maand en
+Het lukt even niet in Excel om de juiste data erin te zetten, maar ik ben er nu achter dankzij Janine dat Excel met het Amerikaanse data systeem werkt. Dus de maand en
 dag moeten andersom. Ik heb nu in Excel een simpele gantt chart gemaakt.
-Morgen vragen aan Ronald of Marcel of dit de goede richting is
-(Misschien nog periodes (weken) toevoegen als het lukt).
+Morgen ga ik vragen aan Ronald of Marcel of dit voldoet aan wat ze verwachten van de Gant Chart. \
+(Misschien is het duidelijker om nog periodes (in weken) toe te voegen als het lukt).
 
 
 ## Vrijdag 13 september
-Vandaag heb ik aan Marcel gevraagd of de gantt chart in de goede
-richting is. De x-as waar de data staat moet veranderd worden naar de
-weeknummers. Vandaag even kijken hoe dat moet. (De duration staat nu in
-getallen van 0-1, hoeveel tijd van een week het duurt, waarin 1 een hele
-week is). Dat is nu gedaan en het Excel bestand staat in Teams.
+Vandaag heb ik aan Marcel gevraagd of de gantt chart in de goede richting is. 
+De x-as waar de data staat moet veranderd worden naar de weeknummers. Dit is namelijk duidelijker (net zoals ik gister al vermoedde). Vandaag zal ik kijken hoe dat moet.
+De weken staan goed, maar de duration is nu verkeerd, omdat die nog steeds in dagen staat in plaats van weken. Dit is opgelost door de duration in
+getallen van 0-1 te doen. Dus hoeveel tijd van een week het duurt, waarin 1 een hele
+week is. Dat is nu gedaan en het Excel bestand staat in Teams.
 
 
 ## Zaterdag 14 september
-Ramon gaf aan dat er nog een taak in moest: Functionele analyse. Die
+Ramon gaf aan dat er nog een taak in de planning moest: Functionele analyse. Die
 staat er nu ook in.
 
-Doorgelezen plan van
+Ik heb het plan van aanpak doorgelezen en feedback gegeven op wat we hebben nu.
+De kopjes 'entinostat' en 'werking entinostat' kunnen beter samengevoegd worden denk ik. En 
 
-Kopjes 'entinostat' en 'werking entinostat' samengevoegd: Entinostat is
-een zeer selectieve remmer van histondeacetylase (HDAC) 1 en 3. HDAC's
+De kopjes 'entinostat' en 'werking entinostat' zijn nu samengevoegd: \
+Entinostat is een zeer selectieve remmer van histondeacetylase (HDAC) 1 en 3. HDAC's
 verwijderen acetylgroepen van histonen, wat ervoor zorgt dat DNA
 strakker om de histonen wordt gewikkeld, waardoor genen minder
 toegankelijk worden voor transcriptieregelaars. Dit onderdrukt de
@@ -149,15 +161,15 @@ zoals entinostat, veelbelovend voor de behandeling van blaaskanker.
 Presentatie doorgelezen en spellingsfoutjes aangepast (marp nodig om
 html aan te maken van de presentatie).
 
-
 ## Maandag 16 september:
+
 Presentatie gehad plan van aanpak. We hebben besproken hoe we het gaan
 aanpakken dat Janine een tijdje niet op school aanwezig kan zijn. Ook
 hebben we een verdere taakverdeling gemaakt. Ik moet de komende tijd
 inlezen over de tool 'Picard'.
 
-
 ## Dinsdag 17 september:
+
 Testdata maken: Met find maak je een list van de bestanden die in de map
 staan met alle data (je geeft het pad daarnaar mee). Vervolgens paralell
 (zorgt voor efficientie): Neemt de eerste 10% van elk bestand en print
@@ -196,8 +208,8 @@ variabele opzetten als shortcut.
 We hebben een recent genoege versie van java, dus dat is al goed
 geregeld.
 
-
 ## Woensdag 18 september
+
 nieuw deel: trimmomatic: De code voor de testdata: de eerste regel
 (begint bij cat) zorgt ervoor dat de namen van de
 files(SRR_Acc_List.txt) worden ingeveuld bij parallel tussen de {} als
@@ -241,8 +253,8 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 Deze laten runnen op de school server (die mappen waar ze steeds heen
 gaan moet je eerst zelf aanmaken).
 
-
 ## Donderdag 19 september:
+
 De terminal zegt dat hij de Trimmomatic succesvol heeft afgerond, maar
 hij print nog wel (wat lijkt op html) code. Geen idee waarom. Via 'htop'
 kun je ook zien dat hij nog wel een deel van de server inneemt, dus hij
@@ -252,8 +264,8 @@ poging van Ramon op de test data blijkt dat de kwaliteit achteruit gaat
 na het trimmen, wat gek is. Maar dit kan liggen aan dat de sub sets wat
 klein zijn ? Morgen vragen in de les hoe dit kan.
 
-
 ## Vrijdag 20 september:
+
 Na echt heel lang bezig te zijn geweest was Trimmomatic eindelijk klaar
 op Ramon zijn laptop en de kwaliteit van de data is inderdaad echt
 achteruit gegaan. We hebben Ronald gevraagd wat een mogelijke oorzaak is
@@ -267,14 +279,14 @@ uit te voeren op de data, omdat de data zelf al best goed is. Maar eerst
 gaan we proberen of we het kunnen verbeteren. Maar het is wel
 opmerkelijk.
 
-
 ## Zaterdag 21 september:
+
 Ik denk dat we in trimmomatic kunnen aangeven dat het einde getrimd moet
 worden. Dit is handig omdat in de fastqc analyze af te lezen is dat in
 de 'per base sequence quality plot' het einde de kwaliteit minder werd.
 
-
 ## Zondag 22 september
+
 Onderstaande code zijn de aangepaste instellingen voor Trimmomatic.
 
 ```{bash, eval=FALSE}
@@ -328,7 +340,7 @@ grafiek: 'sequence qualty histograms gehaald)
 
 Oke. Uit de plot 'sequence quality histograms' kun je aflezen dat het
 begin van de reads nog beter kunnen, dus 'leading:32' toevoegen (32 uit
-de grafiek gehaald: 'sequence quality histogram). \
+de grafiek gehaald: 'sequence quality histogram).\
 Nieuwe poging:
 
 ```{bash, eval=FALSE}
@@ -377,8 +389,8 @@ Oke de 'Sequence Length Distribution' kan nog steeds beter, maar de
 minlen helemaal naar 97 moet. Dus alles weer opnieuw, maar dan met de
 minlen op 97.
 
-Per ongeluk de verkeerde terminal gebruikt, nu staat het report in
-mijn branch op git in plaats van mijn laptop. Later verwijderen.
+Per ongeluk de verkeerde terminal gebruikt, nu staat het report in mijn
+branch op git in plaats van mijn laptop. Later verwijderen.
 
 Ik heb per ongeluk precies hetzelfde gedaan zonder de nieuwe
 instellingen. Dus alle mappen weer legen enzovoort. Ik heb per ongeluk
@@ -390,8 +402,8 @@ lees de grafiek dan denk k verkeerd af. Ik snap het niet meer. Dinsdag
 even vragen. (folder waar het report in staat heet:
 'trimtest_multiqc3').
 
-
 ## Dinsdag 24 september:
+
 Planning voor komende week gemaakt samen. We moeten even vragen of we de
 duplicaten (die niet goed zijn) moeten verbeteren met picard (tool). Als
 dit zo is ga ik daarmee verder. Zo niet gaan Ramon en ik samen bezig met
@@ -443,7 +455,6 @@ niet
 
 De testdata goedmaken is niet gelukt, dus ik ga op de echte data verder.
 
-
 kijken of Whole exome sequencing invloed kan hebben op duplicaties.
 opzoeken hoe WES wordt uitgevoerd
 
@@ -465,8 +476,8 @@ korte stukjes dna, omdat de paired-end elkaar overlappen lijkt)
 betere induik probes:
 <https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-016-2698-y>
 
-
 ## Woensdag 25 september:
+
 Oke. Ramon kwam net met het nieuws dat de geo dataset incompleet is. wat
 betekend dat we geen somatic kunnen uitvoeren op de data. Maar als we
 germline doen, dan hebben we ook verschillende allelen die als mutatie
@@ -487,16 +498,16 @@ picard.jar PicardToolName \
 	OPTION2=value2
 ```
 
-
 ## Donderdag 26 september:
+
 Eerst moeten we waarschijnlijk 'MarkDuplicates' gebruiken om de
 duplicaten te herkennen. Misschien 'samtools' gebruiken voor
 daadwerkelijk verwijderen van duplicaten daarna ?
 
-Welke 'PicardToolName' gaan we gebruiken uitzoeken:
-(input is )
+Welke 'PicardToolName' gaan we gebruiken uitzoeken: (input is )
 
 ##### EstimateLibraryComplexity:
+
 Deze tool kan inschatten hoeveel duplicaten er zijn door te kijken naar
 de eerste paar basen (van forward en reverse) en die met elkaar te
 vergelijken. Hij geeft een schatting van hoe groot je bestand is zonder
@@ -510,45 +521,63 @@ options:\
 - MAX_DIFF_RATE (0.03 by default): kijkt of de basen gelijk zijn aan
 elkaar met een 3% afwijking mogelijk.
 
-Dit lijkt me dus niet geschikt voor wat we willen, aangezien het de duplicaten niet verwijderd of markeert.
+Dit lijkt me dus niet geschikt voor wat we willen, aangezien het de
+duplicaten niet verwijderd of markeert.
 
 ##### MarkDuplicates:
-Markeert de duplicaten door de basenparen te vergelijken. Hij leest de forward en reverse (net als bij EstimateLibraryComplexity) en vergelijkt de eerste paar basen met elkaar. 
-Vervolgens vergelijkt hij de kwaliteit met elkaar om de originele read te vinden.
 
-Output: \
-een BAM/SAM file waarin de duplicaten gemarkeerd zijn in het SAM 'flag field' (met 0x0400)(is hexidecimale manier van noteren; staat voor 1024). \
-Geeft ook een bestand met statistieken over aantal duplicaten (van paired en unpaired).
+Markeert de duplicaten door de basenparen te vergelijken. Hij leest de
+forward en reverse (net als bij EstimateLibraryComplexity) en vergelijkt
+de eerste paar basen met elkaar. Vervolgens vergelijkt hij de kwaliteit
+met elkaar om de originele read te vinden.
+
+Output:\
+een BAM/SAM file waarin de duplicaten gemarkeerd zijn in het SAM 'flag
+field' (met 0x0400)(is hexidecimale manier van noteren; staat voor
+1024).\
+Geeft ook een bestand met statistieken over aantal duplicaten (van
+paired en unpaired).
 
 option:\
 BARCODE_TAG (misschien nuttig):\
-helpt om duplicaten beter te herkennen. Dit doet hij door elke read een (unieke) barcode te geven (zo kun je later beter zien welke duplicaten van hetzelfde fragment komen).
+helpt om duplicaten beter te herkennen. Dit doet hij door elke read een
+(unieke) barcode te geven (zo kun je later beter zien welke duplicaten
+van hetzelfde fragment komen).
 
-TAGGING_POLICY (niet nodig): \
-geeft de mogelijkheid de om te kiezen of je alle duplicaten wil markeren of alleen optische (fouten in sequencen). 
+TAGGING_POLICY (niet nodig):\
+geeft de mogelijkheid de om te kiezen of je alle duplicaten wil markeren
+of alleen optische (fouten in sequencen).
 
 input: coördinaten of query gesorteerd. (!)
 
-READ_NAME_REGEX/OPTICAL_DUPLICATE_PIXEL_DISTANCE (niet nodig): \
-kijkt of de duplicaten door PCR of het sequence apparaat gemaakt zijn met 'DontTag'. 
+READ_NAME_REGEX/OPTICAL_DUPLICATE_PIXEL_DISTANCE (niet nodig):\
+kijkt of de duplicaten door PCR of het sequence apparaat gemaakt zijn
+met 'DontTag'.
 
-REMOVE_DUPLICATE of REMOVE_SEQUENCING_DUPLICATES: \
-Verwijdert de duplicaten. 'REMOVE_DUPLICATE' verwijdert alle duplicaten en 'REMOVE_SEQUENCING_DUPLICATES' verwidjert alleen de door duplicaten onstaan door sequencen. Dus die moet waarschijnlijk samen met de tagging policy en read_name_regex of optical_duplicate_pixel_distance. Dus wij gaan eerst remove_duplicate gebruiken.
-(kijken welke van de twee voor ons het beste is). 
+REMOVE_DUPLICATE of REMOVE_SEQUENCING_DUPLICATES:\
+Verwijdert de duplicaten. 'REMOVE_DUPLICATE' verwijdert alle duplicaten
+en 'REMOVE_SEQUENCING_DUPLICATES' verwidjert alleen de door duplicaten
+onstaan door sequencen. Dus die moet waarschijnlijk samen met de tagging
+policy en read_name_regex of optical_duplicate_pixel_distance. Dus wij
+gaan eerst remove_duplicate gebruiken. (kijken welke van de twee voor
+ons het beste is).
 
-Dus: \
-wij gaan voor nu eerst 'MarkDuplicates' gebruiken met 'BARCODE_TAG' voor het identificeren van de duplicates en daarna remove_duplicate.
+Dus:\
+wij gaan voor nu eerst 'MarkDuplicates' gebruiken met 'BARCODE_TAG' voor
+het identificeren van de duplicates en daarna remove_duplicate.
 
 Voorbeeld van de documentatie:
+
 ```{bash, eval=FALSE}
 java -jar picard.jar MarkDuplicates \
       I=input.bam \
       O=marked_duplicates.bam \
       M=marked_dup_metrics.txt
 ```
-De input komt van Jasper van de mapping.
-Voor de 'O' een map maken waar de marked duplicates in kunnen.
-Voor de 'M' ook een map maken waar de statistieken in kunnen.
+
+De input komt van Jasper van de mapping. Voor de 'O' een map maken waar
+de marked duplicates in kunnen. Voor de 'M' ook een map maken waar de
+statistieken in kunnen.
 
 ```{bash, eval=FALSE}
 java -jar picard.jar MarkDuplicates \
@@ -557,15 +586,21 @@ java -jar picard.jar MarkDuplicates \
       M=marked_dup_metrics.txt \
       REMOVER_DUPLICATES=true 
 ```
-De volgorde van de opties die je mee geeft maakt niet uit volgens de documentatie.
 
-Eerst even zonder 'BARCODE_TAG' proberen, want de barcodetag wordt vooral gebruikt bij single-cell-sequencing en is bij onze data dus niet nodig (de focus ligt bij ons niet op elke unieke cell, maar op de genexpressie van meerder cellen).
+De volgorde van de opties die je mee geeft maakt niet uit volgens de
+documentatie.
+
+Eerst even zonder 'BARCODE_TAG' proberen, want de barcodetag wordt
+vooral gebruikt bij single-cell-sequencing en is bij onze data dus niet
+nodig (de focus ligt bij ons niet op elke unieke cell, maar op de
+genexpressie van meerder cellen).
 
 oke:\
-Je kan dus alleen gebruik maken van picard als je in de tools folder zit en dan in picard gaat.
+Je kan dus alleen gebruik maken van picard als je in de tools folder zit
+en dan in picard gaat.
 
-code proberen op testdata output van Jasper.
-Paden invullen:
+code proberen op testdata output van Jasper. Paden invullen:
+
 ```{bash, eval=FALSE}
 java -jar picard.jar MarkDuplicates \
       I=/students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/output.sorted.bam \
@@ -574,9 +609,10 @@ java -jar picard.jar MarkDuplicates \
       REMOVER_DUPLICATES=true 
 ```
 
-foutmelding: De command line syntax is veranderd.
-Nieuwe versie, \
-note: misschien moet er ook nog 'java -jar picard.jar' voor de 'MarkDuplicates':
+foutmelding: De command line syntax is veranderd. Nieuwe versie,\
+note: misschien moet er ook nog 'java -jar picard.jar' voor de
+'MarkDuplicates':
+
 ```{bash, eval=FALSE}
 MarkDuplicates \
 -I /students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/output.sorted.bam \
@@ -586,6 +622,7 @@ MarkDuplicates \
 ```
 
 Ja, dat moest er nog voor en het is remove_duplicates (zonder r):
+
 ```{bash, eval=FALSE}
 java -jar picard.jar MarkDuplicates \
       -I /students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/output.sorted.bam \
@@ -594,26 +631,35 @@ java -jar picard.jar MarkDuplicates \
       -REMOVE_DUPLICATES true
 ```
 
-oke, hij deed iets, maar is gestopt. \
-foutmelding: \
-'A field field parsed out of a read name was expected to contain an integer and did not. Read name: SRR14870694.3479784. Cause: String 'SRR14870694.3479784' did not start with a parsable number.' \
+oke, hij deed iets, maar is gestopt.\
+foutmelding:\
+'A field field parsed out of a read name was expected to contain an
+integer and did not. Read name: SRR14870694.3479784. Cause: String
+'SRR14870694.3479784' did not start with a parsable number.'\
 
-We kunnen proberen het getal te scheiden van de 'SRR' door middel van een '_', maar ik ben bang dat picard dat niet goed genoeg vind en een naam wil met enkel cijfers.
+We kunnen proberen het getal te scheiden van de 'SRR' door middel van
+een '\_', maar ik ben bang dat picard dat niet goed genoeg vind en een
+naam wil met enkel cijfers.
 
-Ik heb gevraagd om meningen van de groep en Ramon is er dus achter gekomen dat je 'READ_NAME_REGEX=null' kunt gebruiken. En dan maakt het niet uit hoe je input bestand heet.
+Ik heb gevraagd om meningen van de groep en Ramon is er dus achter
+gekomen dat je 'READ_NAME_REGEX=null' kunt gebruiken. En dan maakt het
+niet uit hoe je input bestand heet.
 
-Nieuwe foutmelding: \
-'Cannot invoke "htsjdk.samtools.SAMReadGroupRecord.getReadGroupId()" because the return value of "htsjdk.samtools.SAMRecord.getReadGroup()" is null'
+Nieuwe foutmelding:\
+'Cannot invoke "htsjdk.samtools.SAMReadGroupRecord.getReadGroupId()"
+because the return value of "htsjdk.samtools.SAMRecord.getReadGroup()"
+is null'
 
-De testdata is niet de juiste vorm, dus ik ga verder met de echte data. \
+De testdata is niet de juiste vorm, dus ik ga verder met de echte data.\
 
 Ik heb een lijst gemaakt van alle bestanden die ik als input wil:
+
 ```{bash, eval=FALSE}
 find . -name "*sorted.bam" > sorted_bam_files.txt
 ```
 
-
 Parralel toegepast:
+
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/testingtools/picard_test/sorted_bam_files.txt | \
   parallel java -jar picard.jar MarkDuplicates \
@@ -624,12 +670,16 @@ cat /students/2024-2025/Thema05/BlaasKanker/testingtools/picard_test/sorted_bam_
                 -READ_NAME_REGEX null
 ```
 
-volgende foutmelding: \
-'This program requires input that are either coordinate or query sorted (according to the header, or at least ASSUME_SORT_ORDER and the content.)'
+volgende foutmelding:\
+'This program requires input that are either coordinate or query sorted
+(according to the header, or at least ASSUME_SORT_ORDER and the
+content.)'
 
-Het lijkt erop dat de sorted bam bestanden niet de goede indeling hebben om door Picard verwertk te worden.
+Het lijkt erop dat de sorted bam bestanden niet de goede indeling hebben
+om door Picard verwertk te worden.
 
 nieuwe poging met haakjes om de comandos:
+
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/testingtools/picard_test/sorted_bam_files.txt | \
   parallel java -jar picard.jar MarkDuplicates \
@@ -639,12 +689,14 @@ cat /students/2024-2025/Thema05/BlaasKanker/testingtools/picard_test/sorted_bam_
                 '-REMOVE_DUPLICATES true' \
                 '-READ_NAME_REGEX null'
 ```
+
 geeft dezelfde foutmelding.
 
-het txt bestand heb ik zo aangepast dat alleen de naam van het bestand er nu in staat zonder de './' ervoor.
-En nu nog een keer proberen.
-Zelfde foutmelding nog steeds. Morgen naar kijken met Ramon en eventueel docent.
-Ramon zijn mapping data gekregen om command op te testen.
+het txt bestand heb ik zo aangepast dat alleen de naam van het bestand
+er nu in staat zonder de './' ervoor. En nu nog een keer proberen.
+Zelfde foutmelding nog steeds. Morgen naar kijken met Ramon en eventueel
+docent. Ramon zijn mapping data gekregen om command op te testen.
+
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
   parallel java -jar picard.jar MarkDuplicates \
@@ -655,35 +707,33 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
                 '-READ_NAME_REGEX null'
 ```
 
-
 ## Vrijdag 27 september:
-Hij geeft geen foutmeldingen meer. Om te kijken of er iets is veranderd gaan we fastqc runnen op de bam files.
+
+Hij geeft geen foutmeldingen meer. Om te kijken of er iets is veranderd
+gaan we fastqc runnen op de bam files.
 
 ```{bash, eval=FALSE}
 fastqc /students/2024-2025/Thema05/BlaasKanker/testingtools/picard_test/poging_1/*.bam  \
   -o /students/2024-2025/Thema05/BlaasKanker/testingtools/picard_test/fastqc_bam -t 12
 ```
 
-
 ```{bash, eval=FALSE}
 multiqc /students/2024-2025/Thema05/BlaasKanker/testingtools/picard_test/fastqc_bam/* \
   -o /students/2024-2025/Thema05/BlaasKanker/testingtools/picard_test/multiqc_bam
 ```
 
-Uit de metrics.txt van picard:
-219 664: UNPAIRED_READ_DUPLICATES
-95 019: READ_PAIR_DUPLICATES
-3 776 845: READ_PAIR_OPTICAL_DUPLICATES
+Uit de metrics.txt van picard: 219 664: UNPAIRED_READ_DUPLICATES 95 019:
+READ_PAIR_DUPLICATES 3 776 845: READ_PAIR_OPTICAL_DUPLICATES
 
 UNPAIRED_READ_DUPLICATES en READ_PAIR_DUPLICATES opgeteld: 314 683
 
-Dit betekend dat echt veel duplicaten door het sequencen (optical) komen.
+Dit betekend dat echt veel duplicaten door het sequencen (optical)
+komen.
 
 Nu fastqc runnen op de data voordat hij door picard heen ging.
 
-
-
 Picard op de echte data:
+
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
   parallel java -jar picard.jar MarkDuplicates \
@@ -694,8 +744,9 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
                 '-READ_NAME_REGEX null'
 ```
 
+Testdata maken voor Janine haar tool, zodat je makkelijker kan testen
+zonder lang te hoeven wachten:
 
-Testdata maken voor Janine haar tool, zodat je makkelijker kan testen zonder lang te hoeven wachten:
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
   parallel java -jar picard.jar MarkDuplicates \
@@ -706,58 +757,68 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
                 '-READ_NAME_REGEX null'
 ```
 
-! picard documentatie bronvermelden
-BRON Picard:
-https://broadinstitute.github.io/picard/index.html
-
+! picard documentatie bronvermelden BRON Picard:
+<https://broadinstitute.github.io/picard/index.html>
 
 ## Dinsdag 1 oktober:
-FastQC zegt dat voor picard er ongeveer 20.8% duplicaten waren en na Picard ongeveer 18.5%, dus picard heeft ongeveer 2% dup verwijderd. Maar Picard zegt dat er 0.062808% is die picard heeft herkend als duplicaten.
 
-Hoe vind fastqc duplicaten ?
-FastQC kijkt dus alleen naar de single-end sequence data (alleen de forward read). waardoor hij dus niet naar de volledige data kijkt en hij geeft daardoor vaak een aanzienlijk hogere inschatting van duplicaten dan dat er daadwerkelijk is.
-(FastP doet t beter schijnt)
-Dus de duplicatie levels uit de FastQC test die we hebben uitgevoerd zijn niet betrouwbaar.
+FastQC zegt dat voor picard er ongeveer 20.8% duplicaten waren en na
+Picard ongeveer 18.5%, dus picard heeft ongeveer 2% dup verwijderd. Maar
+Picard zegt dat er 0.062808% is die picard heeft herkend als duplicaten.
+
+Hoe vind fastqc duplicaten ? FastQC kijkt dus alleen naar de single-end
+sequence data (alleen de forward read). waardoor hij dus niet naar de
+volledige data kijkt en hij geeft daardoor vaak een aanzienlijk hogere
+inschatting van duplicaten dan dat er daadwerkelijk is. (FastP doet t
+beter schijnt) Dus de duplicatie levels uit de FastQC test die we hebben
+uitgevoerd zijn niet betrouwbaar.
 
 BRON FastQC:
-https://dnatech.genomecenter.ucdavis.edu/faqs/why-does-fastqc-show-unexpectedly-high-sequence-duplication-levels-pcr-duplicates/
+<https://dnatech.genomecenter.ucdavis.edu/faqs/why-does-fastqc-show-unexpectedly-high-sequence-duplication-levels-pcr-duplicates/>
 
-Kunnen we proberen om een rapport te maken met FastP? (staat al op de server)\
+Kunnen we proberen om een rapport te maken met FastP? (staat al op de
+server)\
 voorbeeld van de git van FastP:
+
 ```{bash, eval=FALSE}
 fastp -i in.R1.fq.gz -I in.R2.fq.gz -o out.R1.fq.gz -O out.R2.fq.gz
 ```
-BRON FastP:
-https://github.com/OpenGene/fastp/blob/master/README.md
 
-Ik betwijfel of FastP de tool is die we kunnen gebruiken voor een duplicaten check, aangezien de data die in FastP moet een R1 en een R2 bestand is. En de data die we erin willen is een bam bestand.
+BRON FastP: <https://github.com/OpenGene/fastp/blob/master/README.md>
 
+Ik betwijfel of FastP de tool is die we kunnen gebruiken voor een
+duplicaten check, aangezien de data die in FastP moet een R1 en een R2
+bestand is. En de data die we erin willen is een bam bestand.
 
-! Wat overblijft ws biologische duplicaten ? Ik weet niet meer wat hiermee moet tbh
+! Wat overblijft ws biologische duplicaten ? Ik weet niet meer wat
+hiermee moet tbh
 
 ! kijken: zijn de statistieken in het artikel ook relevant voor ons ?
-Uit artikel:
-Statistical analyses were performed using GraphPad Prism, version 8.0. Two-tailed t tests or Mann-Whitney U tests were used to compare 2 groups, while 3 or more groups were compared using 2-way ANOVA followed by either Tukey’s or Dunnett’s multiple-comparison test. A P value of less than 0.05 was considered significant.
+Uit artikel: Statistical analyses were performed using GraphPad Prism,
+version 8.0. Two-tailed t tests or Mann-Whitney U tests were used to
+compare 2 groups, while 3 or more groups were compared using 2-way ANOVA
+followed by either Tukey’s or Dunnett’s multiple-comparison test. A P
+value of less than 0.05 was considered significant.
 
-onze data: 
-- treated(3 samples)
-- non-treated (3 samples)
+onze data: - treated(3 samples) - non-treated (3 samples)
 
-Wij gebruiken maar twee groepen, dus wij kunnen alleen de Two-tailed t tests en de Mann-Whitney U tests gebruiken.
-
+Wij gebruiken maar twee groepen, dus wij kunnen alleen de Two-tailed t
+tests en de Mann-Whitney U tests gebruiken.
 
 ## Donderdag 3 oktober:
-Welke input is nodig? tabel met:
-- snp(identiek nummer)
-- chromsoom waar de snp op ligt
-- positie in basenparen waar de snp in het chromsoom ligt
-- p-waarde
 
-Uit de SNPeff tool komt een bestand met de snp id, het chromosoom en de positie waar de snp op ligt:
-(#CHROM  POS     ID      REF     ALT     QUAL    FILTER  INFO)
-! Maar hoe we aan de P-waarde moeten komen nog even uitzoeken, want die staat ook niet in de info (waar hij soms wel schijnt te staan).
+Welke input is nodig? tabel met: - snp(identiek nummer) - chromsoom waar
+de snp op ligt - positie in basenparen waar de snp in het chromsoom
+ligt - p-waarde
 
-Als we de dataset hebben kunnen we de voorbeeld code van de r-graph-gallary proberen:
+Uit de SNPeff tool komt een bestand met de snp id, het chromosoom en de
+positie waar de snp op ligt: (#CHROM POS ID REF ALT QUAL FILTER INFO) !
+Maar hoe we aan de P-waarde moeten komen nog even uitzoeken, want die
+staat ook niet in de info (waar hij soms wel schijnt te staan).
+
+Als we de dataset hebben kunnen we de voorbeeld code van de
+r-graph-gallary proberen:
+
 ```{r, eval=FALSE}
 # Load the library
 library(qqman)
@@ -766,12 +827,90 @@ library(qqman)
 manhattan(gwasResults, chr="CHR", bp="BP", snp="SNP", p="P" )
 ```
 
+Plink schijnt uit een vcf bestand p-values te kunnen halen. Maar morgen
+even om advies vragen of dit de beste manier is om aan de p-values te
+komen.
 
-Plink schijnt uit een vcf bestand p-values te kunnen halen. Maar morgen even om advies vragen of dit de beste manier is om aan de p-values te komen.
-
-BRON plink:
-https://zzz.bwh.harvard.edu/plink/anal.shtml
-
+BRON plink: 
+<https://zzz.bwh.harvard.edu/plink/anal.shtml>
 
 BRON snp manhattan plot in R:
-https://r-graph-gallery.com/101_Manhattan_plot.html
+<https://r-graph-gallery.com/101_Manhattan_plot.html>
+
+
+
+## Vrijdag 4 oktober:
+Het logboek verbeterd vandaag (wat na een gesprek met Marcel niet nodig was geweest).
+Marcel heeft advies gegeven. Een manhattan plot is niet echt geschikt voor onze data. Hij raadde aan om trackviewer te gebruiken voor een loliplot (welke mutaties op een enkel gen). Dit ga ik doen. Ook zei hij dat we nog bfctools kunnen gebruiken om de mutaties tussen de samples te vergelijken met elkaar. Dit gaat Ramon doen.
+
+
+## Zaterdag 5 oktober:
+trackViewer installeren:
+```{r, eval=FALSE}
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("trackViewer")
+```
+
+
+## Zondag 6 oktober:
+'library(TxDb.Hsapiens.UCSC.hg19.knownGene)' wordt gebruikt in het voorbeeld van de documentatie van trackviewer, maar die moeten wij aanpassen naar het genoom van de muis.
+(!genoom mens --> muis)
+
+Omdat we een file gebruiken ipv de library hebben we misschien de library: 'rtracklayer' nodig. 
+(uit documentatie: Description Extensible framework for interacting with multiple genome
+browsers)
+
+
+## Maandag 7 oktober:
+Er komt een foutmelding uit de code die aangeeft dat de tabixfiles(index) niet aanwezig zijn. Met behulp van Ramon zijn logboek die files gemaakt(!zie 1/10 van Ramon zijn logboek)
+Op het file die ik gebruik uitgevoerd:
+```{bash, eval=FALSE}
+bgzip /students/2024-2025/Thema05/BlaasKanker/outputs/cp_variant_annotation_cancer_genes/variant_annotation_cancer_genes/SRR14870694.vcf
+```
+
+Hij zegt iets met permissioin dennied terwijl ik de map heb aangemaakt en de rechten goed staan, dus we kijken er morgen samen even naar.
+
+
+code eerst nog zonder juiste referentie genoom, moet later dus met rtracklaye waarschijnlijk:
+```{r, eval=FALSE}
+library(VariantAnnotation)
+library(TxDb.Mmusculus.UCSC.mm10.knownGene)
+library(org.Mm.eg.db)
+
+fl <- "/students/2024-2025/Thema05/BlaasKanker/outputs/variant_annotation_cancer_genes/SRR14870694.vcf" # Zorg ervoor dat het bestandspad correct is
+gr <- GRanges("22", IRanges(50968014, 50970514, names="gen_naam"))
+
+if (.Platform$OS.type != "windows") {
+  # Gebruik ScanVcfParam voor het definiëren van het GRanges-object
+  vcf <- readVcf(fl, "mm10", param=ScanVcfParam(which=gr))
+
+  mutation.frequency <- rowRanges(vcf)
+  mcols(mutation.frequency) <- cbind(mcols(mutation.frequency), 
+                                     VariantAnnotation::info(vcf))
+  mutation.frequency$border <- "gray30"
+  mutation.frequency$color <- ifelse(grepl("^rs", names(mutation.frequency)), 
+                                     "lightcyan", "lavender")
+  mutation.frequency$score <- mutation.frequency$AF * 100
+  seqlevelsStyle(mutation.frequency) <- "UCSC"
+
+  if (!grepl("chr", seqlevels(mutation.frequency)[1])) {
+    seqlevels(mutation.frequency) <- paste0("chr", seqlevels(mutation.frequency))
+  }
+}
+
+seqlevelsStyle(gr) <- "UCSC"
+trs <- geneModelFromTxdb(TxDb.Mmusculus.UCSC.mm10.knownGene,
+                         org.Mm.eg.db,
+                         gr=gr)
+features <- c(range(trs[[1]]$dat), range(trs[[5]]$dat))
+names(features) <- c(trs[[1]]$name, trs[[5]]$name)
+features$fill <- c("lightblue", "mistyrose")
+features$height <- c(.02, .04)
+
+if (.Platform$OS.type != "windows") {
+  lolliplot(mutation.frequency, features, ranges=gr)
+}
+```
+
