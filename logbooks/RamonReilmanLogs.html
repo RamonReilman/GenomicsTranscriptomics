@@ -383,6 +383,14 @@ display: none;
 trim</a></li>
 </ul></li>
 <li><a href="#section-18" id="toc-section-18">26-09-2024</a></li>
+<li><a href="#section-19" id="toc-section-19">27-09-2024</a></li>
+<li><a href="#section-20" id="toc-section-20">01-10-2024</a></li>
+<li><a href="#section-21" id="toc-section-21">02-10-2024</a>
+<ul>
+<li><a href="#vsualisatie" id="toc-vsualisatie">Vsualisatie:</a></li>
+</ul></li>
+<li><a href="#section-22" id="toc-section-22">3-10-2024</a></li>
+<li><a href="#section-23" id="toc-section-23">04-10-2024</a></li>
 </ul></li>
 </ul>
 </div>
@@ -548,17 +556,17 @@ dit nieuwe Trimmomatic experimenten uitgevoerd.</p>
 heeft van 4:20, en een minlen van 20. Ik voer deze uit om te kijken hoe
 deze settings samen invloed heeft op de testdata in vergelijking tot de
 ongetrimde data.</p>
-<table>
+<table style="width:100%;">
 <colgroup>
-<col width="9%" />
-<col width="9%" />
-<col width="10%" />
-<col width="17%" />
-<col width="8%" />
-<col width="9%" />
-<col width="10%" />
-<col width="6%" />
-<col width="15%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -665,17 +673,17 @@ dit kan verwijderd worden door de sliding window. Na het verwijderen is
 kan ik nog een MINLEN van 30, zodat de hele kleine sequenties verwijderd
 worden. Adapter verwijderen is niet nodig, omdat er geen adapters
 gedetecteerd worden.</p>
-<table>
+<table style="width:100%;">
 <colgroup>
-<col width="9%" />
-<col width="9%" />
-<col width="10%" />
-<col width="17%" />
-<col width="8%" />
-<col width="9%" />
-<col width="10%" />
-<col width="6%" />
-<col width="15%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -756,17 +764,17 @@ Het enige wat nu niet goed is is de distributie van de lengte.</p>
 sequenties is niet goed, al weet ik niet wat de oorzaak is. Om te kijken
 of er verbetering is voer ik hetzelfde command uit met een hogere
 minlen.</p>
-<table>
+<table style="width:100%;">
 <colgroup>
-<col width="9%" />
-<col width="9%" />
-<col width="10%" />
-<col width="17%" />
-<col width="8%" />
-<col width="9%" />
-<col width="10%" />
-<col width="6%" />
-<col width="15%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -974,17 +982,17 @@ advies vragen aan de docenten.</p>
 <p>Deze week gaan wij mappen en duplicaten markeren, maar daarvoor
 moeten we eerst zeker zijn of we de ongetrimde data gaan gebruiken of
 wel getrimde data.</p>
-<table>
+<table style="width:100%;">
 <colgroup>
-<col width="9%" />
-<col width="9%" />
-<col width="10%" />
-<col width="17%" />
-<col width="8%" />
-<col width="9%" />
-<col width="10%" />
-<col width="6%" />
-<col width="15%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
+<col width="11%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -1078,7 +1086,294 @@ worden.</p>
 <div id="section-18" class="section level2">
 <h2>26-09-2024</h2>
 <p>Vandaag voeren wij de BWA mapping uit
-<!-- TODO Ref naar Jasper --></p>
+<!-- TODO Ref naar Jasper, plaats commands --></p>
+</div>
+<div id="section-19" class="section level2">
+<h2>27-09-2024</h2>
+<p>Omdat wij geen normaal data hebben is het uitvoeren van een
+somatische variant call onmogelijk. Dit is een groot probleem omdat de
+erfbare mutaties nu ook gecalled zullen worden, en we mogelijke honderd
+duizenden mutaties krijgen. Om vervolgens dan de tumor mutaties vinden
+is lastig, mogelijk zelfs onmogelijk in de korte tijd die wij
+hebben.</p>
+<p>Ik heb de schrijvers van het artikel gemailed, en zij zijn nu aan het
+kijken of er wat gedaan kan worden. Er moet toch een eindproduct komen.
+We zullen dus met een meer generieke variant calling tool bezig gaan.
+Lofreq <!-- TODO vraag jasper permissie --></p>
+<pre class="bash"><code>cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+    parallel &quot;lofreq call \
+    -f /students/2024-2025/Thema05/BlaasKanker/outputs/bwa_aln/index/GCF_000001635.27_GRCm39_genomic.fna \
+    -o /students/2024-2025/Thema05/BlaasKanker/testingtools/test_variant_calling/{}_variants.vcf \
+    /students/2024-2025/Thema05/BlaasKanker/testingtools/picard_test/poging_1/{}.marked_duplicates.bam&quot;</code></pre>
+<p>De reference heeft een ander bestand nodig</p>
+<pre class="bash"><code>samtools faidx /students/2024-2025/Thema05/BlaasKanker/outputs/bwa_aln/index/GCF_000001635.27_GRCm39_genomic.fna
+</code></pre>
+<p>Na dit uitgevoerd te hebben kan lofreq weer, zonder enige specifieke
+instellingen zodat Janine kan oefenen met snpeff dit weekend.</p>
+</div>
+<div id="section-20" class="section level2">
+<h2>01-10-2024</h2>
+<p>Vandaag ga ik van bij alle data met lofreq de variant calling
+uitvoeren, zo krijgen we bestanden waarin alle mutaties van de muizen
+staan in verhouding tot de reference genome. Hierbij zullen dus ook de
+erfelijke mutaties meegenomen worden, omdat we geen sequence data van
+gezonde muizen hebben. Ik hoef geen settings mee te geven voor de
+kwaliteit van de data, en ook voor de output hoef ik nu geen filter
+stappen toe te voegen, het filteren wordt gedaan met een andere tool
+later deze week.</p>
+<pre class="bash"><code>cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+    parallel &quot;lofreq call \
+    -f /students/2024-2025/Thema05/BlaasKanker/outputs/bwa_aln/index/GCF_000001635.27_GRCm39_genomic.fna \
+    -o /students/2024-2025/Thema05/BlaasKanker/outputs/variant_calling_unfiltered/{}_variants.vcf \
+    --verbose \
+    /students/2024-2025/Thema05/BlaasKanker/outputs/picard_dub/marked_duplicates/{}.marked_duplicates.bam&quot;</code></pre>
+<p>Omdat het we straks ontzettend veel varianten krijgen leek het mij
+een goed idee om vandaag te kijken naar het filteren van de annotaties.
+SNPeff kan doormiddel van bestand met gene symbols als het goed is
+zoeken naar die genen. Ik heb op <a href="https://www.informatics.jax.org/mgihome/homepages/help.shtml" class="uri">https://www.informatics.jax.org/mgihome/homepages/help.shtml</a>
+gezocht naar genen die met blaaskanker te maken hebben.</p>
+<p>Deze lijst kan je downloaden, maar er staat veel overbodige
+informatie in. Daarom heb ik een scriptje in python geschreven die de
+genen er uit kan halen. zie main src/python. Als Janine straks klaar is
+met annotatie, kunnen we op die manier filteren.</p>
+<p>Janine loopt vast met snpEff, er zijn probelemen met MT tabellen?</p>
+<pre class="bash"><code>cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+    parallel -j 8 \
+    &quot;java -Xmx8g -jar /students/2024-2025/Thema05/BlaasKanker/tools/snpeff/snpEff/snpEff.jar ann -v -stats \
+    /students/2024-2025/Thema05/BlaasKanker/temp/annoting_test/stats.html mm39 \
+    /students/2024-2025/Thema05/BlaasKanker/outputs/variant_calling_unfiltered/{}_variants.vcf &gt; /students/2024-2025/Thema05/BlaasKanker/temp/annoting_test/{}.vcf&quot;</code></pre>
+<p>Heb op github een zelfde soort issue gevonden, die heb gevolgd en dat
+probleem was vervolgens opgelost. <a href="https://github.com/pcingola/SnpEff/issues/536#issuecomment-2189201996" class="uri">https://github.com/pcingola/SnpEff/issues/536#issuecomment-2189201996</a>
+Dankjewel lukedow.</p>
+<p>Daarna heb ik snpeff weer uitgevoerd. Maar toen ontstond er het
+volgende probleem, de chromosoom benaming in de vcf bestanden en de net
+gebouwde data base komen niet overeen. Ik hen online op ncbi een mapje
+gevonden die de ncbi benaming omzet naar chromosome nummers, zie
+etc/chromosome_map.txt</p>
+<pre class="bash"><code>cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+parallel -j 8 \
+&quot;bcftools annotate --rename-chrs /students/2024-2025/Thema05/BlaasKanker/etc/chromosome_map.txt /students/2024-2025/Thema05/BlaasKanker/outputs/variant_calling_unfiltered/{}_variants.vcf &gt; /students/2024-2025/Thema05/BlaasKanker/outputs/calling_renamed/{}_variants.vcf&quot;
+</code></pre>
+<p>Hierna kreeg ik de volgende foutmelding, geen idee wat het inhoud
+maar er was een quick workaround voor ‘Contig ’NC_000067.7’ is not
+defined in the header. (Quick workaround: index the file with
+tabix.’</p>
+<p>Ik heb voor de zekerheid een backup gemaakt van de variant calling
+data, en het volgende command uitgevoerd. Die zou een index van de file
+moeten maken</p>
+<pre class="bash"><code>cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+parallel -j 8 \
+&quot;tabix -p vcf {}_variants.vcf&quot;</code></pre>
+<p>Hier kwam nog een foutmelding uit, de bestanden moesten compressed
+zijn. ‘[tabix] the compression of ’SRR14870694_variants.vcf’ is not
+BGZF’</p>
+<p>Ik heb de bestanden dus eerst met bgzip omgezet naar bestanden die
+compressed zijn</p>
+<pre class="bash"><code>cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+parallel -j 8 \
+&quot;bgzip -c {}_variants.vcf &gt; {}_variants.vcf.gz&quot;</code></pre>
+<p>Hierna opnieuw de index met tabix uitgevoerd.</p>
+<pre class="bash"><code>cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+parallel -j 8 \
+&quot;tabix -p vcf {}_variants.vcf.gz&quot;</code></pre>
+<p>Dit werkt ook niet: ‘Contig ’NC_000067.7’ is not defined in the
+header. (Quick workaround: index the file with tabix.’</p>
+<p>Uiteindelijk bleek ik dus dat ik de header opnieuw moest maken van
+elk bestand met de .fai versie van onze referentie genoom.</p>
+<pre class="bash"><code>cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+    parallel -j 8 \
+    &quot;bcftools reheader --fai /students/2024-2025/Thema05/BlaasKanker/tools/testGenome/ncbi_dataset/data/GCF_000001635.27/GCF_000001635.27_GRCm39_genomic.fna.fai \
+    -o /students/2024-2025/Thema05/BlaasKanker/outputs/calling_renamed/{}_remade.vcf \
+    /students/2024-2025/Thema05/BlaasKanker/outputs/variant_calling_unfiltered/{}_variants.vcf&quot;
+</code></pre>
+<p>Dit heeft vervolgens wel gewerkt.</p>
+<pre class="bash"><code>cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+parallel -j 8 \
+&quot;bcftools annotate --rename-chrs /students/2024-2025/Thema05/BlaasKanker/etc/chromosome_map.txt /students/2024-2025/Thema05/BlaasKanker/outputs/calling_renamed/{}_remade.vcf &gt; /students/2024-2025/Thema05/BlaasKanker/outputs/chromosome_remade_varients/{}_variants.vcf&quot;</code></pre>
+<p>En daardoor kon ik de namen van de chromosomen omzetten met de
+chromosome map.</p>
+<pre class="bash"><code>cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+    parallel -j 8 \
+    &quot;java -Xmx8g -jar /students/2024-2025/Thema05/BlaasKanker/tools/snpeff/snpEff/snpEff.jar ann -v -stats \
+    /students/2024-2025/Thema05/BlaasKanker/temp/annoting_test/stats.html mm39 \
+    /students/2024-2025/Thema05/BlaasKanker/outputs/chromosome_remade_varients/{}_variants.vcf &gt; /students/2024-2025/Thema05/BlaasKanker/temp/annoting_test/{}.vcf&quot;</code></pre>
+<p>Eindelijk kon ik met snpEff toch wel de variant annotatie uitvoeren.
+Deze geeft een tabel met chromosomen met een n van aantal variants. In
+deze tabel staan een aantal NT_*** chromosomen, die ik niet ken en niet
+voorkomen in mijn chromosome map. Morgen zal ik hier verder naar
+kijken.</p>
+</div>
+<div id="section-21" class="section level2">
+<h2>02-10-2024</h2>
+<p>Ik heb op de website hieronder een downloadbare tabel kunnen vinden
+die ook de meest NT_*** chromosomen kan mappen <a href="https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001635.27/" class="uri">https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001635.27/</a></p>
+<p>Ik heb dus weer de namen veranderd in mijn variant calling
+bestanden</p>
+<pre class="bash"><code>cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+parallel -j 8 \
+&quot;bcftools annotate --rename-chrs /students/2024-2025/Thema05/BlaasKanker/etc/chromey_map_updated.txt /students/2024-2025/Thema05/BlaasKanker/outputs/calling_renamed/{}_remade.vcf &gt; /students/2024-2025/Thema05/BlaasKanker/outputs/chromosome_remade_varients/{}_variants.vcf&quot;</code></pre>
+<p>snpEff weer uitgevoerd.</p>
+<pre class="bash"><code>cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+    parallel -j 8 \
+    &quot;java -Xmx8g -jar /students/2024-2025/Thema05/BlaasKanker/tools/snpeff/snpEff/snpEff.jar ann -v -stats \
+    /students/2024-2025/Thema05/BlaasKanker/temp/annoting_test/stats.html mm39 \
+    /students/2024-2025/Thema05/BlaasKanker/outputs/chromosome_remade_varients/{}_variants.vcf &gt; /students/2024-2025/Thema05/BlaasKanker/temp/annoting_test/{}.vcf&quot;</code></pre>
+<p>Er stonden nu een aantal CHROMOSOME_Not_found errors, en een UN in de
+tabel. De UN staat dus voor unkown gedeelte, en kan dus niet gemapt
+worden aan een bestaand chromosoom. Deze veroorzaakt ook de
+CHROMOSOME_Not_found errors.</p>
+<div id="vsualisatie" class="section level3">
+<h3>Vsualisatie:</h3>
+<p><a href="https://cmdcolin.github.io/awesome-genome-visualization/?language=R&amp;latest=true&amp;platform=&amp;tag=GWAS" class="uri">https://cmdcolin.github.io/awesome-genome-visualization/?language=R&amp;latest=true&amp;platform=&amp;tag=GWAS</a></p>
+</div>
+</div>
+<div id="section-22" class="section level2">
+<h2>3-10-2024</h2>
+<p>Waarschijnlijk hebben we een BED file nodig met chromsomen, exon
+posities en genen voor de visualisatie. Die hebben wij op dit moment
+niet, dus ik zal deze voor het mm39 muis referentie genoom
+genereren.</p>
+<p>Voor het genereren van een BED file hebben we een GTF bestand nodig,
+deze bevat alle data die we nodig hebben</p>
+<pre class="bash"><code>
+wget https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M35/gencode.vM35.annotation.gtf.gz
+</code></pre>
+<p>Dit bestand staat vol met data die ik niet nodig heb, als het goed is
+kan ik met een python scriptje hier de belangrijke data wel uithalen Het
+python scriptje kan dus GTF bestanden omzetten naar bed bestanden met de
+data die wij nodig hebben.</p>
+<p>snpEff geeft nog wel een aantal warnings weer</p>
+<p>WARNING_TRANSCRIPT_INCOMPLETE 5223
+WARNING_TRANSCRIPT_MULTIPLE_STOP_CODONS 63
+WARNING_TRANSCRIPT_NO_START_CODON 3093 WARNING_TRANSCRIPT_NO_STOP_CODON
+2347 Na de warnings te lezen op de website van snpEff blijkt dit te
+liggen aan onze gebouwde database.</p>
+<p>Ik zal nog 1 keer proberen de database opnieuw te bouwen, volgens de
+website van snpEff</p>
+<pre class="basj"><code>cd snpeff/snpEff/data
+mkdir mm39; cd mm39
+
+wget https://ftp.ensembl.org/pub/current/gtf/mus_musculus/Mus_musculus.GRCm39.112.gtf.gz
+mv Mus_musculus.GRCm39.112.gtf.gz genes.gtf.gz
+
+mkdir /snpeff/snpEff/data/genome
+cd /snpeff/snpEff/data/genome
+
+wget https://ftp.ensembl.org/pub/current/fasta/mus_musculus/dna/Mus_musculus.GRCm39.dna.toplevel.fa.gz
+mv Mus_musculus.GRCm39.dna.toplevel.fa.gz mm39.fa.gz
+gzip -d de bestanden
+java -jar snpEff.jar build -gtf22 -v mm39</code></pre>
+<p>Nieuwe database is gebouwd</p>
+<pre class="bash"><code>cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+    parallel -j 6 \
+    &quot;java -Xmx8g -jar /students/2024-2025/Thema05/BlaasKanker/tools/snpeff/snpEff/snpEff.jar ann -nodownload -v -stats \
+    /students/2024-2025/Thema05/BlaasKanker/temp/annoting_test/stats.html mm39 \
+    /students/2024-2025/Thema05/BlaasKanker/outputs/chromosome_remade_varients/{}_variants.vcf &gt; /students/2024-2025/Thema05/BlaasKanker/temp/annoting_test/{}.vcf&quot;
+</code></pre>
+<p>Deze manier van het bouwen van een database voor mm39 werkt niet. Ik
+blijf de vorige gebruiken. De waarschuwingen kunnen voorkomen wanneer
+het genoom niet helemaal gebrepen is, en dat kan aangezien we ook Unkown
+chromosome maps hebben.</p>
+<p>Ik zal nu eerst filteren naar de genen die ik heb gevonden op MGI</p>
+<pre class="bash"><code>python3 parse_mgi.py ../../data/MGI_file.txt --output_file /students/2024-2025/Thema05/BlaasKanker/etc/gene_file.txt</code></pre>
+<p>Zet MGI feature file om naar een bestand met gene names</p>
+<pre class="bash"><code>cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+    parallel -j 8 \
+    &quot;vcftools --vcf /students/2024-2025/Thema05/BlaasKanker/temp/annoting_test/{}.vcf --keep /students/2024-2025/Thema05/BlaasKanker/etc/gene_file.txt --recode --out /students/2024-2025/Thema05/BlaasKanker/temp/marked_cancer/{}&quot;
+</code></pre>
+<p>Er zijn 0 varianten over gebleven, om te controleren of het filteren
+werkt filter ik op 1 gen wararvan ik wee dat deze in een vcf bestand
+voor komt</p>
+<pre class="bash"><code>bcftools view --include &#39;INFO == &quot;Xkr4&quot;&#39; SRR14870694.vcf &gt; test_sample.vcf</code></pre>
+<p>Om te testen of deze echt wel bestaat [filter.c:2933 filters_init1]
+Error: the tag “INFO” is not defined in the VCF header De info header
+heeft een ID voor gene naam</p>
+<pre class="bash"><code>grep ^# SRR14870694.vcf</code></pre>
+<p>Hieruit kan ik de naam vinden voor geen naam bij INFO Omdat ik er
+niet zeker van kan zijn dat de bcftools wel goed zoekt en vcftools wel
+goed filterd ga ik mijn eigen scriptje schrijven die genen uit een txt
+bestand kan vinden in een vcf bestand.</p>
+<p>Het python3 scriptje staat ook weer in src/python. Met dit scriptje
+kan ik een gene.txt bestand meegeven waar gezochte genen in staan. Het
+scriptje zal deze genen dan zoeken in het VCF bestand, en een VCF output
+geven met de lines die het gen bevatten.</p>
+<pre class="bash"><code>cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+    parallel -j 8 \
+    &quot;python3 /homes/rreilman/jaar2/kwartaal2/vak2/GenomicsTranscriptomics/src/python/vcf_gene_finder.py /students/2024-2025/Thema05/BlaasKanker/temp/annoting_test/{}.vcf /students/2024-2025/Thema05/BlaasKanker/etc/gene_file.txt --output_file /students/2024-2025/Thema05/BlaasKanker/temp/marked_cancer/{}.vcf&quot;</code></pre>
+<p>Als het goed is staat in deze output alle genen die te maken kunnen
+hebben met blaaskanker in een muis.</p>
+<p>Tot nu toe zijn alle SNPeff testen gedaan in mijn temp folder, ik ga
+het nu uitvoeren voor de ouputs folder. Morgen zal ik dan met het
+groepje verder sorteren en filtreren.</p>
+<pre class="bash"><code>cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+    parallel -j 6 \
+    &quot;java -Xmx8g -jar /students/2024-2025/Thema05/BlaasKanker/tools/snpeff/snpEff/snpEff.jar ann -v -stats \
+    /students/2024-2025/Thema05/BlaasKanker/outputs/variant_annotation/stats.html mm39 \
+    /students/2024-2025/Thema05/BlaasKanker/outputs/chromosome_remade_varients/{}_variants.vcf &gt; /students/2024-2025/Thema05/BlaasKanker/outputs/variant_annotation/{}.vcf&quot;</code></pre>
+<p>Nu hebben we de variant calling uitgevoerd, deze bevat 23,753
+variants, wat voornamelijk variants zijn die herkend zijn bij erfbare
+mutaties, en niet de mutaties die wij zoeken.</p>
+<p>Daarom gaan wij gericht zoeken naar genen die belangrijk zijn bij
+processen waar blaas kanker kan ontstaan Ik heb daarvoor zoals eerder
+benoemd een bestand voor gedownload met alle genen. <a href="https://www.informatics.jax.org/mgihome/homepages/help.shtml" class="uri">https://www.informatics.jax.org/mgihome/homepages/help.shtml</a></p>
+<p>Deze kan ik met mijn eigen scriptje omzetten naar een lijst met
+genen. Deze kan ik als input gebruiken om die genen te vinden in de vcf
+bestanden.</p>
+<pre class="bash"><code>cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+    parallel -j 8 \
+    &quot;python3 /homes/rreilman/jaar2/kwartaal2/vak2/GenomicsTranscriptomics/src/python/vcf_gene_finder.py /students/2024-2025/Thema05/BlaasKanker/outputs/variant_annotation/{}.vcf /students/2024-2025/Thema05/BlaasKanker/etc/gene_file.txt --output_file /students/2024-2025/Thema05/BlaasKanker/outputs/variant_annotation_cancer_genes/{}.vcf&quot;</code></pre>
+<p>Morgen zal ik deze nieuwe vcf bestanden processen tot iets wat
+leesbaar is, zodat we kunnen achterhalen hoeveel varianten we over
+hebben gehouden.</p>
+</div>
+<div id="section-23" class="section level2">
+<h2>04-10-2024</h2>
+<p>Voordat ik de VCF bestanden verder kan verwerken moet ik deze
+valideren. Dit zal ik eerst doen op de bestanden zonder kanker gen
+filter</p>
+<pre class="bash"><code>java -jar SnpSift.jar vcfCheck ../../../outputs/variant_annotation/*.vcf
+</code></pre>
+<p>Hieruit komt dat de vcf bestanden niet gesorteerd zijn, dit kan ook
+uitgevoerd worden met SnpSift</p>
+<pre class="bash"><code>cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+    parallel -j 8 \
+    &quot;java -jar SnpSift.jar sort /students/2024-2025/Thema05/BlaasKanker/outputs/variant_annotation/{}.vcf &gt; /students/2024-2025/Thema05/BlaasKanker/outputs/variant_ann_sorted/{}_sorted.vcf&quot;
+</code></pre>
+<p>Nu moet ik de sorted bestanden weer valideren:</p>
+<pre class="bash"><code>java -jar SnpSift.jar vcfCheck ../../../outputs/variant_ann_sorted/*.vcf</code></pre>
+<p>Hieruit komt dat de vcf bestanden valide zijn, en we deze verder
+kunnen gaan gebruiken voor de verwerking van deze bestanden Ik zal mijn
+python3 filter script nu opnieuw uit voeren op de gesorteerde data.</p>
+<pre class="bash"><code>cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+    parallel -j 8 \
+    &quot;python3 /homes/rreilman/jaar2/kwartaal2/vak2/GenomicsTranscriptomics/src/python/vcf_gene_finder.py /students/2024-2025/Thema05/BlaasKanker/outputs/variant_ann_sorted/{}_sorted.vcf /students/2024-2025/Thema05/BlaasKanker/etc/gene_file.txt --output_file /students/2024-2025/Thema05/BlaasKanker/outputs/variant_annotation_cancer_genes/{}.vcf&quot;</code></pre>
+<p>Hier kan ik dan ook weer een validator gebruiken om te controleren of
+dit een valide vcf bestand is.</p>
+<pre class="bash"><code>java -jar SnpSift.jar vcfCheck ../../../outputs/variant_annotation_cancer_genes/*.vcf</code></pre>
+<p>Hier uit komt “Cannot find header for INFO field ‘ANN’”, wat inhoud
+dat ik in mijn python3 script aan moet passen zodat deze ook de headers
+meeneemt. Ik zal deze nu aanpassen, zodat ##INFO header ook in het
+output bestand komt te staan</p>
+<p>Dan kan ik opnieuw het scriptje uitvoeren</p>
+<pre class="bash"><code>cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+    parallel -j 8 \
+    &quot;python3 /homes/rreilman/jaar2/kwartaal2/vak2/GenomicsTranscriptomics/src/python/vcf_gene_finder.py /students/2024-2025/Thema05/BlaasKanker/outputs/variant_ann_sorted/{}_sorted.vcf /students/2024-2025/Thema05/BlaasKanker/etc/gene_file.txt --output_file /students/2024-2025/Thema05/BlaasKanker/outputs/variant_annotation_cancer_genes/{}.vcf&quot;</code></pre>
+<p>En het vervolgens weer valideren met hetzelfde command als hiervoor.
+Hoewel deze validator zegt dat mijn gegenereerde data wel valide is, kan
+ik met bcftools stats geen output krijgen. Ik zal proberen alle headers
+toe te voegen, om te kijken of deze output wel valide is</p>
+<p>Ik neem nu alle headers mee, zodat er meer meta data over het bestand
+is.</p>
+<p>Nu kan ik het script opnieuw uitvoeren en valideren met SnpSift, hier
+komt weer valide. Ook bcftools stats werkt nu op deze bestanden. Zo
+kunnen we met vcfstats straks plotjes genereren waarmee we ook kunnen
+spreken over wat de vcf bestanden betekenen en vertellen. Hiervoor wordt
+dus vcfstats gebruikt, en python package die plotjes met vcf data kan
+genereren. <a href="https://github.com/pwwang/vcfstats" class="uri">https://github.com/pwwang/vcfstats</a></p>
+<p>vcfstats –vcf SRR14870694_sorted.vcf<br />
+–outdir examples/<br />
+–formula ‘COUNT(1) ~ CONTIG’<br />
+–title ‘Number of variants on each chromosome’</p>
 </div>
 </div>
 
