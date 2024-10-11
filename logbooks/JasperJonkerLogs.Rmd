@@ -223,7 +223,7 @@ samtools index /students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/ou
 ## 27-09 
 ik heb de data nu goed gemaakt was blijkbaar niet geod gegaan waarschijnlijk door de slechte servers. Want ik kreeg geen fout meldingen of wat dan ook  
 
-Ik ga nu weer nieuwe testdata maken van alle testdata. zodat iris er mee bezig kan. 
+Ik ga nu weer nieuwe testdata maken van alle testdata. zodat iris er mee bezig kan. Die heeft mijn data nodig om haar tool te kunnen gebruiken.
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
   parallel -j 20 "bwa mem -t 20 -M -R '@RG\\tID:{}\\tSM:{}\\tPL:illumina\\tLB:lib1' \
@@ -238,3 +238,44 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
   parallel -j 6 "samtools index /students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/output_sorted_bam/{}_sorted.bam"
 ```
 Dat is gelukt dus we kunnen weer verder.
+
+## 04-10
+Ik ga GSEA bekijken en downloaden. GSEA is een tool waar je mee kan kijken of vooraf gedefinieerde set genen significant, overeenstemde verschillen heeft onder 2 verschillende biologische processen. Hier mee kunnen we kijken wat voor invloed de mutaties hebben. We gaan het nu nog niet gebruiken. Dat komt omdat we nu nog niet weten wat de bedoeling is met de eind bestanden die we hebben gemaakt. 
+
+Nu ga ik dus bezig met vcfstats. Dit om de vcf bestanden te laten zien.
+
+```{bash, eval=FALSE}
+# om vcfstats te downloaden
+pip install -U vcfstats
+```
+Hier onder is het command voor op de data gelijk op een oefen pagina op alle sequences 
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+parallel "vcfstats --vcf /students/2024-2025/Thema05/BlaasKanker/outputs/variant_ann_sorted/{}_sorted.vcf\
+    --outdir /students/2024-2025/Thema05/BlaasKanker/testingtools/vcfstatsoefen/ \
+    --formula 'COUNT(1) ~ CONTIG' \
+    --title 'Number of variants on each chromosome({})'"
+```
+Hier doen we het op de mutaiies die over blijven die een mutaies hebben die dan vervolgens kanker kunnen veroorzaken .
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+parallel "vcfstats --vcf /students/2024-2025/Thema05/BlaasKanker/outputs/variant_annotation_cancer_genes/{}.vcf\
+    --outdir /students/2024-2025/Thema05/BlaasKanker/testingtools/vcfstatsoefen/cancer/ \
+    --formula 'COUNT(1) ~ CONTIG' \
+    --title 'Number of variants on each chromosome(kanker)({})'"
+```
+Hier onder zie je de twee figueren van hetzelde sample maar de linker zijn alle varianten en de rechter zijn alle varianten die kanker veroorzaken.
+```{r echo=FALSE}
+library(cowplot)
+library(ggplot2)
+
+p1 <- ggdraw() + draw_image("/students/2024-2025/Thema05/BlaasKanker/testingtools/vcfstatsoefen/number-of-variants-on-each-chromosome-srr14870694.col.png", scale = 1)
+p2 <- ggdraw() + draw_image("/students/2024-2025/Thema05/BlaasKanker/testingtools/vcfstatsoefen/cancer/number-of-variants-on-each-chromosome-kanker-srr14870694.col.png", scale = 1)
+
+plot_grid(p1, p2)
+```
+
+Hier kan je zien dat er op het chromosoom 7 de meeste zijn die kanker veroorzaken. Omdat het zoveel is gaan we later nog filteren op hoe erg de invloed is van de mutatie op het biologisch proces en pakken we de gene met een een groot gevolg. 
+
+ 
+
