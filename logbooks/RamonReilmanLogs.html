@@ -391,6 +391,8 @@ trim</a></li>
 </ul></li>
 <li><a href="#section-22" id="toc-section-22">3-10-2024</a></li>
 <li><a href="#section-23" id="toc-section-23">04-10-2024</a></li>
+<li><a href="#section-24" id="toc-section-24">08-10-2024</a></li>
+<li><a href="#section-25" id="toc-section-25">09-10-2024</a></li>
 </ul></li>
 </ul>
 </div>
@@ -556,17 +558,17 @@ dit nieuwe Trimmomatic experimenten uitgevoerd.</p>
 heeft van 4:20, en een minlen van 20. Ik voer deze uit om te kijken hoe
 deze settings samen invloed heeft op de testdata in vergelijking tot de
 ongetrimde data.</p>
-<table style="width:100%;">
+<table style="width:94%;">
 <colgroup>
-<col width="11%" />
-<col width="11%" />
-<col width="11%" />
-<col width="11%" />
-<col width="11%" />
-<col width="11%" />
-<col width="11%" />
-<col width="11%" />
-<col width="11%" />
+<col width="10%" />
+<col width="8%" />
+<col width="9%" />
+<col width="14%" />
+<col width="7%" />
+<col width="8%" />
+<col width="9%" />
+<col width="13%" />
+<col width="12%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -673,17 +675,17 @@ dit kan verwijderd worden door de sliding window. Na het verwijderen is
 kan ik nog een MINLEN van 30, zodat de hele kleine sequenties verwijderd
 worden. Adapter verwijderen is niet nodig, omdat er geen adapters
 gedetecteerd worden.</p>
-<table style="width:100%;">
+<table style="width:94%;">
 <colgroup>
-<col width="11%" />
-<col width="11%" />
-<col width="11%" />
-<col width="11%" />
-<col width="11%" />
-<col width="11%" />
-<col width="11%" />
-<col width="11%" />
-<col width="11%" />
+<col width="14%" />
+<col width="8%" />
+<col width="8%" />
+<col width="13%" />
+<col width="7%" />
+<col width="8%" />
+<col width="8%" />
+<col width="12%" />
+<col width="12%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -764,17 +766,17 @@ Het enige wat nu niet goed is is de distributie van de lengte.</p>
 sequenties is niet goed, al weet ik niet wat de oorzaak is. Om te kijken
 of er verbetering is voer ik hetzelfde command uit met een hogere
 minlen.</p>
-<table style="width:100%;">
+<table style="width:94%;">
 <colgroup>
-<col width="11%" />
-<col width="11%" />
-<col width="11%" />
-<col width="11%" />
-<col width="11%" />
-<col width="11%" />
-<col width="11%" />
-<col width="11%" />
-<col width="11%" />
+<col width="14%" />
+<col width="8%" />
+<col width="8%" />
+<col width="13%" />
+<col width="7%" />
+<col width="8%" />
+<col width="8%" />
+<col width="12%" />
+<col width="12%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -934,7 +936,7 @@ mem tijdens het mappen, de aangepaste commands staan hier onder.</p>
   parallel &quot;samtools view -b /students/2024-2025/Thema05/BlaasKanker/temp/mappingTest/first_output/{}.sam | samtools sort -o /students/2024-2025/Thema05/BlaasKanker/temp/mappingTest/sorted_bam/{}_sorted.bam&quot;</code></pre>
 <p>Jasper heeft deze stap in 2 gesplitst, maar voeg ik samen zodat het
 meer hands off is voor mij.</p>
-<pre class="bsah"><code>cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+<pre class="bash"><code>cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
   parallel -j 6 &quot;samtools index /students/2024-2025/Thema05/BlaasKanker/temp/mappingTest/sorted_output/{}.sorted.bam&quot;</code></pre>
 <p>Ook deze bestanden moeten met samtools index gedaan worden, het
 bestand wat hier uitkomt heeft picard ook nodig.</p>
@@ -982,17 +984,17 @@ advies vragen aan de docenten.</p>
 <p>Deze week gaan wij mappen en duplicaten markeren, maar daarvoor
 moeten we eerst zeker zijn of we de ongetrimde data gaan gebruiken of
 wel getrimde data.</p>
-<table style="width:100%;">
+<table style="width:94%;">
 <colgroup>
-<col width="11%" />
-<col width="11%" />
-<col width="11%" />
-<col width="11%" />
-<col width="11%" />
-<col width="11%" />
-<col width="11%" />
-<col width="11%" />
-<col width="11%" />
+<col width="10%" />
+<col width="9%" />
+<col width="10%" />
+<col width="15%" />
+<col width="8%" />
+<col width="9%" />
+<col width="10%" />
+<col width="6%" />
+<col width="14%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -1250,7 +1252,7 @@ WARNING_TRANSCRIPT_NO_START_CODON 3093 WARNING_TRANSCRIPT_NO_STOP_CODON
 liggen aan onze gebouwde database.</p>
 <p>Ik zal nog 1 keer proberen de database opnieuw te bouwen, volgens de
 website van snpEff</p>
-<pre class="basj"><code>cd snpeff/snpEff/data
+<pre class="bash"><code>cd snpeff/snpEff/data
 mkdir mm39; cd mm39
 
 wget https://ftp.ensembl.org/pub/current/gtf/mus_musculus/Mus_musculus.GRCm39.112.gtf.gz
@@ -1370,10 +1372,317 @@ kunnen we met vcfstats straks plotjes genereren waarmee we ook kunnen
 spreken over wat de vcf bestanden betekenen en vertellen. Hiervoor wordt
 dus vcfstats gebruikt, en python package die plotjes met vcf data kan
 genereren. <a href="https://github.com/pwwang/vcfstats" class="uri">https://github.com/pwwang/vcfstats</a></p>
-<p>vcfstats –vcf SRR14870694_sorted.vcf<br />
-–outdir examples/<br />
-–formula ‘COUNT(1) ~ CONTIG’<br />
-–title ‘Number of variants on each chromosome’</p>
+<pre class="bash"><code>vcfstats --vcf SRR14870694_sorted.vcf \
+    --outdir examples/ \
+    --formula &#39;COUNT(1) ~ CONTIG&#39; \
+    --title &#39;Number of variants on each chromosome&#39; </code></pre>
+<p>De output hiervan is het aantal varianten per chromosome voor dat vcf
+bestand. Als ik dit nog een keer zou uitvoeren op het bestand die op
+kanker genen is gefilterd kunnen die 2 plotjes vergeleken worden.</p>
+</div>
+<div id="section-24" class="section level2">
+<h2>08-10-2024</h2>
+<p>Tabix genereren voor Iris, eerst vcf filter opnieuw uitvoeren omdat
+er per ongelukt duplicaten in de output zijn gekomen. Dus het scriptje
+is nu aangepast</p>
+<pre class="bash"><code>
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+    parallel -j 8 \
+    &quot;python3 /homes/rreilman/jaar2/kwartaal2/vak2/GenomicsTranscriptomics/src/python/vcf_gene_finder.py /students/2024-2025/Thema05/BlaasKanker/outputs/variant_ann_sorted/{}_sorted.vcf /students/2024-2025/Thema05/BlaasKanker/etc/gene_file.txt --output_file /students/2024-2025/Thema05/BlaasKanker/outputs/variant_annotation_cancer_genes/{}.vcf&quot;
+</code></pre>
+<p>Nu met tabix een index genereren. Deze hebben we nodig om een plotje
+te maken.</p>
+<pre class="bash"><code>cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+parallel -j 8 \
+&quot;bgzip -c {}.vcf &gt; {}.vcf.gz&quot;</code></pre>
+<pre class="bash"><code>cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+parallel -j 8 \
+&quot;tabix -p vcf {}.vcf.gz&quot;</code></pre>
+<p>Trackviewer herkend de namen niet mv alles en haal gz weg</p>
+</div>
+<div id="section-25" class="section level2">
+<h2>09-10-2024</h2>
+<p>Wij hebben eerder een bed bestand gegenereerd met een python
+scriptje, deze bevat <em>alle</em> genen in een muis. Ook hebben wij een
+gene panel opgesteld die de genen bevat die wij waardevol vinden.</p>
+<p>Vandaag heb ik een python scriptje gemaakt die het bed bestand ook
+nog filtered op basis van de genen waar wij naar zoeken.</p>
+<p>Nu kunnen Iris en ik vandaag een loliplot maken waarbij ook de exonen
+van de genen weer gegeven zijn.</p>
+<pre class="r"><code>library(VariantAnnotation)
+library(BiocManager)
+
+
+library(dplyr)
+library(trackViewer)</code></pre>
+<pre class="r"><code>vcf_data &lt;- readVcfAsVRanges(&quot;/students/2024-2025/Thema05/BlaasKanker/outputs/variant_annotation_cancer_genes/SRR14870694.vcf&quot;, genome = &quot;mm39&quot;)
+
+gr &lt;- GRanges(&quot;1&quot;, IRanges(74419628, 74419928))
+vcf_data$score &lt;- vcf_data$AF * 100
+lolliplot(vcf_data, gr)</code></pre>
+<p>Nu hebben we een simpel plotje van varianten op chromosome 1. Met
+allel frequentie op de y-as Graag wil ik de exon locaties laten zien van
+een gezocht gen.</p>
+<p>Ik zal het gefilterde bed bestand gaan verwerken.</p>
+<pre class="r"><code>bed_file &lt;- read.table(&quot;/students/2024-2025/Thema05/BlaasKanker/etc/filtered_bed.bed&quot;)
+names(bed_file) &lt;- c(&quot;chromosome&quot;, &quot;exon_start&quot;, &quot;exon_end&quot;, &quot;gene_name&quot;)</code></pre>
+<p>Bed bestand is nu ingeladen</p>
+<pre class="r"><code>list_granges &lt;- list()
+bed_splitted = split(bed_file, bed_file$gene_name)
+for (gene in names(bed_splitted)){
+        ranges &lt;- IRanges(start = bed_splitted[[gene]]$exon_start,
+                      end = bed_splitted[[gene]]$exon_end,
+                      names = bed_splitted[[gene]]$gene_name)
+    
+    granges = GRanges(seqnames = bed_splitted[[gene]]$chromosome,
+                      ranges = ranges)
+    mcols(granges)$gene_name = gene
+    list_granges[[gene]] &lt;- granges
+}
+list_granges &lt;- GRangesList(list_granges)</code></pre>
+<pre class="r"><code>gene_list = list()
+count = 1
+for (gene in names(bed_splitted)){
+    gene_list[[count]] &lt;- gene
+    count = count + 1
+}
+gene_list[[1]]</code></pre>
+<pre class="r"><code>gene &lt;- &quot;Tmeff2&quot;
+
+e &lt;- end(list_granges[[gene]])
+s &lt;- start(list_granges[[gene]])
+
+diff &lt;- e - s
+
+sample &lt;- GRanges(&quot;2&quot;, IRanges(s, width=1))
+gr &lt;- GRanges(&quot;2&quot;, IRanges(s,
+                           width = diff))
+vcf_data$score &lt;- vcf_data$AF * 100
+lolliplot(sample, gr)</code></pre>
+<p>Ons VCF bestand mist headers die wij met een galaxy tool uit de ANN
+kunnen halen. SnpSift extract Fields. Zo krijgen we straks de gen namen
+als header, en ook de impact van de mutatie.</p>
+<p>Ik heb hiervoor de volgende instellingen gebruikt.</p>
+<div id="tool-parameters" class="section level4">
+<h4>Tool Parameters</h4>
+<table style="width:100%;">
+<colgroup>
+<col width="18%" />
+<col width="63%" />
+<col width="7%" />
+<col width="9%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Input Parameter</th>
+<th></th>
+<th>Value</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Variant input file in VCF format</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table style="width:99%;">
+<colgroup>
+<col width="35%" />
+<col width="2%" />
+<col width="57%" />
+<col width="2%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Fields to extract</td>
+<td></td>
+<td>CHROM POS ID REF ALT FILTER ANN[*].GENE ANN[*].IMPACT</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>One effect per line</td>
+<td></td>
+<td>1</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>multiple field separator</td>
+<td></td>
+<td>Empty.</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>empty field text</td>
+<td></td>
+<td>Empty.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Nu kunnen we 1 van de 6 bestanden inladen en lezen en VRanges van
+maken</p>
+<pre class="r"><code>snp_data &lt;- read.csv2(&quot;/students/2024-2025/Thema05/BlaasKanker/outputs/vcf_ann_snpSift/SRR14870694.vcf.tabular&quot;, sep = &quot;\t&quot;, na.strings = &quot;unkown&quot;)
+snp_data &lt;- snp_data[!is.na(snp_data$POS) &amp; !is.na(snp_data$CHROM) &amp; !is.na(snp_data$ANN....GENE), ]
+snp_data</code></pre>
+<p>GRanges maken van de data</p>
+<pre class="r"><code>list_variant_ranges = list()
+
+for (gene_vcf in unique(snp_data$ANN....GENE))
+{
+    
+    vcf_range &lt;- IRanges(start = snp_data$POS[snp_data$ANN....GENE == gene_vcf],
+                    end = snp_data$POS[snp_data$ANN....GENE == gene_vcf],
+                    names = gene_vcf,
+                    impact = snp_data$ANN....IMPACT[snp_data$ANN....GENE == gene_vcf])
+    vcf_grange &lt;- GRanges(seqnames = unique(snp_data$CHROM[snp_data$ANN....GENE == gene_vcf]),
+                      ranges = vcf_range)
+    list_variant_ranges[[gene_vcf]] &lt;- vcf_grange
+    
+}
+list_variant_ranges &lt;- GRangesList(list_variant_ranges)</code></pre>
+<p>Nu is er een lijst aangemaakt met een GRanges voor alle varianten</p>
+<pre class="r"><code>gene_variants = list()
+count = 1
+for (gene in unique(snp_data$ANN....GENE)){
+    if (!is.null(bed_splitted[[gene]]))
+    {
+        gene_variants[[count]] &lt;- gene
+        count = count + 1
+    }
+
+}</code></pre>
+<p>Dit geeft een lijst met alle genen met een variant in dat gen Hier
+kan nu 1 uit gekozen worden en een loliplot van gemaakt worden</p>
+<p>Er moet nu een nieuwe list_granges gemaakt worden met alleen de genen
+die staan in het vcf bestand</p>
+<pre class="r"><code>list_exons &lt;- list()
+
+for (gene in unique(snp_data$ANN....GENE)){
+        ranges &lt;- IRanges(start = bed_splitted[[gene]]$exon_start,
+                      end = bed_splitted[[gene]]$exon_end,
+                      names = bed_splitted[[gene]]$gene_name)
+        if (!is.null(ranges))
+        {
+            granges = GRanges(seqnames = bed_splitted[[gene]]$chromosome,
+                              ranges = ranges)
+            list_exons[[gene]] &lt;- granges
+        }
+    
+
+}
+
+list_exons &lt;- GRangesList(list_granges)</code></pre>
+<pre class="r"><code>gene &lt;- gene_variants[[18]]
+
+# Get Exons positions
+e &lt;- end(list_exons[[gene]])
+s &lt;- start(list_exons[[gene]])
+diff &lt;- e - s
+variants_info &lt;- unique(list_variant_ranges[[gene]])
+
+
+SNPs &lt;- start(variants_info)
+chromosome &lt;- unique(snp_data$CHROM[snp_data$ANN....GENE == gene])
+
+height_map &lt;- c(&quot;LOW&quot; = 1, &quot;MODIFIER&quot; = 10, &quot;MODERATE&quot; = 5, &quot;HIGH&quot; = 15)
+sample.gr &lt;- GRanges(chromosome, IRanges(SNPs, width = 1, names = paste0(&quot;&quot;, SNPs)))
+
+sample.gr$impact &lt;- variants_info$impact
+
+
+sample.gr$score &lt;- height_map[sample.gr$impact]
+
+
+sample.gr$color &lt;- &quot;#0118F9&quot;
+
+gr = GRanges(chromosome, IRanges(s, width = diff))
+gr$fill &lt;- &quot;#FF8833&quot;
+gr$height &lt;- unit(3, &quot;mm&quot;)
+
+
+yaxis &lt;- c(0,5,10,15)
+names(yaxis) &lt;- c(&quot;LOW&quot;, &quot;MOD&quot;, &quot;MODI&quot;, &quot;HIGH&quot;)
+lolliplot(sample.gr, gr, ylab = &quot; &quot;,
+          xlab = &quot;Chromosome position&quot;,
+          yaxis = yaxis,)
+
+grid.text(&quot;Mutation impact&quot;, x=.1, y=.62, just=&quot;bottom&quot;, 
+          gp=gpar(cex=1))
+
+grid.text(paste(&quot;Variants on&quot;, gene ), x=.5, y=.98, just=&quot;top&quot;, 
+          gp=gpar(cex=1.5, fontface=&quot;bold&quot;))
+grid.text(paste(&quot;On chromosome&quot;, chromosome ), x=.5, y=.93, just=&quot;top&quot;, 
+          gp=gpar(cex=1))</code></pre>
+<p>De gebruikte galaxy tool zorgt voor duplicaten omdat er meerdere
+dingen uit de info kolom gehaald kunnen worden. Deze worden telkens op
+een nieuwe regel geplaatst, er kan op 1 positie maar 1 variant zijn. Dus
+wordt unique gebruikt om duplicaten weg te halen. Ik heb er voor gekozen
+om die duplicaten niet weer te geven maar deze te verwijderen, dit omdat
+er te weinig tijd was om te diep in te gaan op de data en dit
+verwerken.</p>
+<p>Ons bed bestand is gegenereerd met een snel python scriptje van een
+GTF bestand, en de meeste exonen hebben dus overlap. Er blijkt ook een
+tool te zijn op de galaxy server die GFF omzet naar bed, deze zal ik nu
+gaan proberen. Het bed bestand die hier uitkomt bevat niet de namen van
+de genen, die hebben we wel nodig.</p>
+<p>Er is ook nog een gtf to bed tool, deze zal ik ook gaan testen om te
+kijken of die gebruikt kan worden. Ook deze maakt een bed file zonder de
+gen namen er in te zetten.</p>
+<p>Ik blijf voor deze opdracht dus het zelf gemaakte bed bestand
+gebruiken, ookal is deze minder accuraat.</p>
+<p>Het is nog niet helemaal duidelijk om te zien wanneer een variant in
+een intron of exon ligt, dit zou ik graag nog met kleur aan willen
+geven. Deze kan ik er weer uithalen snpSift extract.</p>
+<pre class="r"><code>exon_ranges &lt;- ranges(list_exons[[gene]])
+
+exon_variants &lt;- subsetByOverlaps(ranges(variants_info), exon_ranges)
+
+exon_index &lt;- which(ranges(variants_info) %in% exon_variants)
+
+sample.gr$color[exon_index] &lt;- &quot;#B22222&quot;
+
+legends &lt;- list(labels=c(&quot;Intronic&quot;, &quot;Exonic&quot;), 
+                fill=c(&quot;#0118F9&quot;, &quot;#B22222&quot;), 
+                color=c(&quot;gray80&quot;, &quot;gray80&quot;)) ## legend labels
+
+yaxis &lt;- c(0,5,10,15)
+names(yaxis) &lt;- c(&quot;LOW&quot;, &quot;MOD&quot;, &quot;MODI&quot;, &quot;HIGH&quot;)
+names(gr) &lt;- rep(paste(&quot;Exons of&quot;, gene), length(gr))
+lolliplot(sample.gr, gr, ylab = &quot; &quot;,
+          xlab = &quot;Chromosome position&quot;,
+          yaxis = yaxis,
+          legend = legends)
+
+
+grid.text(&quot;Mutation impact&quot;, x=.1, y=.7, just=&quot;bottom&quot;, 
+          gp=gpar(cex=1))
+grid.text(paste(&quot;Variants on&quot;, gene ), x=.2, y=.98, just=&quot;top&quot;, 
+          gp=gpar(cex=1.5, fontface=&quot;bold&quot;))
+grid.text(paste(&quot;On chromosome&quot;, chromosome ), x=.2, y=.93, just=&quot;top&quot;, 
+          gp=gpar(cex=1))</code></pre>
+</div>
 </div>
 </div>
 

@@ -5,9 +5,6 @@ date: "2024-09-10"
 output:
   html_document:
     toc: yes
-editor_options: 
-  markdown: 
-    wrap: sentence
 ---
 
 ```{r setup, include=FALSE}
@@ -18,19 +15,15 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## 10-9-2024
 
-Bezig geweest met verschillende literatuur onderzoeken lezen.
-Met de groep 1 van de door ons ingestuurde literatuur onderzoeken gekozen.
+Bezig geweest met verschillende literatuur onderzoeken lezen. Met de groep 1 van de door ons ingestuurde literatuur onderzoeken gekozen.
 
 ## 11-9-2024
 
-Voor plan van aanpak en het nabootsen van het artikel moet er bekend zijn welke tools gebruikt zijn door het artikel.
-Ik ben begonnen met dit uitzoeken door het artikel en dan vooral materiaal en methode te gaan lezen en verwerken.
+Voor plan van aanpak en het nabootsen van het artikel moet er bekend zijn welke tools gebruikt zijn door het artikel. Ik ben begonnen met dit uitzoeken door het artikel en dan vooral materiaal en methode te gaan lezen en verwerken.
 
 ## 12-9-2024
 
-Vandaag verder gegaan met de gebruikte tools opsporen.
-Ook heb ik gekeken wat voor type sequencing toegepast is (WES) en met welke sequencer (Illumina HiSeq 2500).
-Alle gebruikte tools zijn gevonden en wat ze doen ook.
+Vandaag verder gegaan met de gebruikte tools opsporen. Ook heb ik gekeken wat voor type sequencing toegepast is (WES) en met welke sequencer (Illumina HiSeq 2500). Alle gebruikte tools zijn gevonden en wat ze doen ook.
 
 -   Burrows-Wheeler Aligner, voor de aligning van het DNA tegen het referentie genoom.
 -   Picard, Het verwijderen van duplicaten en sorteren
@@ -51,35 +44,28 @@ prefetch $(</students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt) --output-d
 
 Nu staat de data gedownload op de school server zodat we bezig kunnen met quality controle.
 
-Verder bezig geweest met presentatie van het plan van aanpak voorbereiden.
-Het lezen van de tools, en gebruik hiervan begrijpen.
+Verder bezig geweest met presentatie van het plan van aanpak voorbereiden. Het lezen van de tools, en gebruik hiervan begrijpen.
 
 ## 14-9-2024
 
-Plan van aanpak deadline dag, alle git branches zijn gemerged nadat feedback is gegeven en dit is aangepast.
-Daarna zijn alle kopjes samengevoegd naar 1 bestand en deze is geknit tot pdf.
+Plan van aanpak deadline dag, alle git branches zijn gemerged nadat feedback is gegeven en dit is aangepast. Daarna zijn alle kopjes samengevoegd naar 1 bestand en deze is geknit tot pdf.
 
 Janine heeft haar enkel gebroken, zal de presentatie missen en ik moet haar stukje last moment opvangen.
 
 ## 15-9-2024
 
-De presentatie van het plan van aanpak is gemaakt.
-Na nog wat feedback van de groepsgenoten is de achtergrond informatie iets meer uitgebreid.
-Ook zijn spelfoutjes verwijderd en is de workflow flowchart een beetje aangepast (van nederlands naar engels).
+De presentatie van het plan van aanpak is gemaakt. Na nog wat feedback van de groepsgenoten is de achtergrond informatie iets meer uitgebreid. Ook zijn spelfoutjes verwijderd en is de workflow flowchart een beetje aangepast (van nederlands naar engels).
 
 ## 16-9-2024
 
-Presentatie van plan van aanpak gedaan.
-Daarna zijn we bezig geweest met het "uitpakken" van de gedownloade SRR bestanden, dit moet omdat deze gecomprimeerd zijn.
-Dit is gedaan met het volgende bash command.
+Presentatie van plan van aanpak gedaan. Daarna zijn we bezig geweest met het "uitpakken" van de gedownloade SRR bestanden, dit moet omdat deze gecomprimeerd zijn. Dit is gedaan met het volgende bash command.
 
 ```{bash , eval=FALSE}
 find /students/2024-2025/Thema05/BlaasKanker/SRA/ -name "*.sra" | \
   parallel fasterq-dump -O /students/2024-2025/Thema05/BlaasKanker/fastq/ {}
 ```
 
-Thuis ben ik bezig geweest met het kijken en proberen van testdata maken.
-Testdata moet gemaakt worden om tools/commands te testen zonder dat deze uren, misschien wel dagen moeten draaien voordat ze een foutmelding geven.
+Thuis ben ik bezig geweest met het kijken en proberen van testdata maken. Testdata moet gemaakt worden om tools/commands te testen zonder dat deze uren, misschien wel dagen moeten draaien voordat ze een foutmelding geven.
 
 De docent heeft ons verteld dat deze testdata gemaakt moet worden met seqkit split2 ik heb vervolgens een command gemaakt die dit gebruikt:
 
@@ -88,12 +74,9 @@ find /students/2024-2025/Thema05/BlaasKanker/fastq/ -name "*.fastq" -printf "%f\
   parallel seqkit split2 -O /students/2024-2025/Thema05/BlaasKanker/testdata/ -s 10000 -f {}
 ```
 
-Het enige probleem met deze methode is dat het de fastq bestanden split op de -s N.
-als een fastq file dan een miljoen reads heeft krijg je 1.000.000 / 10.000 bestanden.
-Niet heel praktisch.
+Het enige probleem met deze methode is dat het de fastq bestanden split op de -s N. als een fastq file dan een miljoen reads heeft krijg je 1.000.000 / 10.000 bestanden. Niet heel praktisch.
 
-Nadat ik de documentatie van seqkit heb gelezen kwam ik uit bij seqkit sample.
-seqkit sample bij het meegeven van een -n argument laad het hele fastq bestand in het geheugen, dat is onhandig bij hele grote fastq bestanden.
+Nadat ik de documentatie van seqkit heb gelezen kwam ik uit bij seqkit sample. seqkit sample bij het meegeven van een -n argument laad het hele fastq bestand in het geheugen, dat is onhandig bij hele grote fastq bestanden.
 
 Op de website stond een methode die meer geheugen vriendelijk is, en hiermee heb ik een bash command gemaakt:
 
@@ -106,9 +89,7 @@ Deze maakt testdata, van elk bestand 10.000 sequenties.
 
 ## 17-9-2024
 
-Vandaag hebben wij een fastqc en multiqc uitgevoerd op onze test data.
-Dit is gedaan om te bepalen wat de kwaliteit is van onze data.
-En met deze informatie kan er met Trimmomatic de kwaliteit van de data verbeterd worden.
+Vandaag hebben wij een fastqc en multiqc uitgevoerd op onze test data. Dit is gedaan om te bepalen wat de kwaliteit is van onze data. En met deze informatie kan er met Trimmomatic de kwaliteit van de data verbeterd worden.
 
 ```{bash, eval=FALSE}
 fastqc /students/2024-2025/Thema05/BlaasKanker/testdata/* -o /students/2024-2025/Thema05/BlaasKanker/testingtools/fastqc/ -t 10
@@ -118,8 +99,7 @@ fastqc /students/2024-2025/Thema05/BlaasKanker/testdata/* -o /students/2024-2025
 multiqc /students/2024-2025/Thema05/BlaasKanker/testingtools/fastqc/* -o /students/2024-2025/Thema05/BlaasKanker/testingtools/multiqc
 ```
 
-Uit de plotjes bleek het volgende: De kwaliteit van de sequenties was goed, bij het begin en einde een beetje lager dan het midden, zoals verwacht.
-Er zijn wel veel duplicaten, wat mogelijk kan komen doordat het een whole exome sequencing is, maar hier ga ik later onderzoek naar doen.
+Uit de plotjes bleek het volgende: De kwaliteit van de sequenties was goed, bij het begin en einde een beetje lager dan het midden, zoals verwacht. Er zijn wel veel duplicaten, wat mogelijk kan komen doordat het een whole exome sequencing is, maar hier ga ik later onderzoek naar doen.
 
 Verder heb ik deze dag en les Jasper en Iris geholpen met het uitvoeren van een fastqc en multiqc op onze data.
 
@@ -127,9 +107,7 @@ Verder heb ik deze dag en les Jasper en Iris geholpen met het uitvoeren van een 
 
 Vandaag is gekeken naar de documentatie van Trimmomatic, ook heeft de docent er wat over uitgelegd.
 
-We hebben een adapterfile gedownload om adapters uit onze sequenties te knippen.
-En we hebben een Trimmomatic uitgevoerd, de settings hadden we gekregen van de docent.
-Deze settings hebben wij niet aangepast, om te kijken wat het doet op onze data.
+We hebben een adapterfile gedownload om adapters uit onze sequenties te knippen. En we hebben een Trimmomatic uitgevoerd, de settings hadden we gekregen van de docent. Deze settings hebben wij niet aangepast, om te kijken wat het doet op onze data.
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
@@ -147,9 +125,7 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
                   'SLIDINGWINDOW:4:20'
 ```
 
-Hierna is een fastqc en multiqc uitgevoerd, en het bleek dat de kwaliteit van onze data verslechterd is.
-Op alle vlakken.
-Wij begrepen niet waarom, dus hebben wat settings weggehaald en het opnieuw uitgevoerd met andere settings.
+Hierna is een fastqc en multiqc uitgevoerd, en het bleek dat de kwaliteit van onze data verslechterd is. Op alle vlakken. Wij begrepen niet waarom, dus hebben wat settings weggehaald en het opnieuw uitgevoerd met andere settings.
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
@@ -164,37 +140,27 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
                   'MINLEN:20'
 ```
 
-Het uitvoeren van Trimmomatic, zelfs op data van 10.000 sequenties duurde ontzettend lang.
-Wij begrijpen niet waarom.
+Het uitvoeren van Trimmomatic, zelfs op data van 10.000 sequenties duurde ontzettend lang. Wij begrijpen niet waarom.
 
-De unpaired bestanden hadden 0 sequenties nadat we het met deze settings hebben uitgevoerd.
-De unpaired bestanden die Trimmomatic maakt bevatten de sequenties van of de reverse of forward, waarbij de andere de kwaliteits controle niet gered heeft.
+De unpaired bestanden hadden 0 sequenties nadat we het met deze settings hebben uitgevoerd. De unpaired bestanden die Trimmomatic maakt bevatten de sequenties van of de reverse of forward, waarbij de andere de kwaliteits controle niet gered heeft.
 
 ## 20-09-2024
 
-Vandaag hebben wij aan de docent gevraagd hoe het dan dat de data een minder goede kwaliteit geeft.
-Wij hebben de tip gekregen om goed na te denken over de settings, en goed de plotjes lezen van multiqc.
-Op advies van de docent hebben we de testdata verhoogd naar 500.000 sequenties, zodat het ook tijdens het mappen duidelijker leesbaar wordt.
+Vandaag hebben wij aan de docent gevraagd hoe het dan dat de data een minder goede kwaliteit geeft. Wij hebben de tip gekregen om goed na te denken over de settings, en goed de plotjes lezen van multiqc. Op advies van de docent hebben we de testdata verhoogd naar 500.000 sequenties, zodat het ook tijdens het mappen duidelijker leesbaar wordt.
 
 ## 21-09-2024
 
 Ik heb de plotjes gelezen van fastqc en multiqc, en heb op basis van dit nieuwe Trimmomatic experimenten uitgevoerd.
 
-Ik wil trimmomatic uitvoeren die adapters weghaalt, een slidingwindow heeft van 4:20, en een minlen van 20.
-Ik voer deze uit om te kijken hoe deze settings samen invloed heeft op de testdata in vergelijking tot de ongetrimde data.
+Ik wil trimmomatic uitvoeren die adapters weghaalt, een slidingwindow heeft van 4:20, en een minlen van 20. Ik voer deze uit om te kijken hoe deze settings samen invloed heeft op de testdata in vergelijking tot de ongetrimde data.
 
-+-----------+---------+----------+----------------+--------+---------+----------+---------------+--------------+
 | Run ID    | LEADING | TRAILING | SLIDING WINDOW | MINLEN | AVGQUAL | HEADCROP | CROP          | ILLUMINACLIP |
-+===========+=========+==========+================+========+=========+==========+===============+==============+
+|-----------|---------|----------|----------------|--------|---------|----------|---------------|--------------|
 | A4:20ML20 | NONE    | NONE     | 4:20           | 20     | NONE    | NONE     | TruSeq3-PE.fa |              |
-+-----------+---------+----------+----------------+--------+---------+----------+---------------+--------------+
 |           |         |          |                |        |         |          |               |              |
-+-----------+---------+----------+----------------+--------+---------+----------+---------------+--------------+
 |           |         |          |                |        |         |          |               |              |
-+-----------+---------+----------+----------------+--------+---------+----------+---------------+--------------+
 
-Na een korte controle bleek onze adapter file niet goed te zijn, dit was door onbekende redenen een html file.
-Dit kan eventueel verklaren waarom het zo lang duurde om Trimmomatic uit te voeren.
+Na een korte controle bleek onze adapter file niet goed te zijn, dit was door onbekende redenen een html file. Dit kan eventueel verklaren waarom het zo lang duurde om Trimmomatic uit te voeren.
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
@@ -219,21 +185,11 @@ multiqc /students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_20_ML20/fastq
   /students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_20_ML20/multiqc
 ```
 
-Als ik kijk naar onze test data ongetrimmed ziet dat er erg goed uit.
-het GC% ligt bij alle bestanden rond de 45% zoals verwacht.
-De kwaliteit is goed, behalve aan het begin en einde, zoals verwacht.
-Er zijn geen waarschuwingen, of adapters gevonden.
-Dit laat mij denken dat we mogelijk de adapter optie weg kunnen laten.
+Als ik kijk naar onze test data ongetrimmed ziet dat er erg goed uit. het GC% ligt bij alle bestanden rond de 45% zoals verwacht. De kwaliteit is goed, behalve aan het begin en einde, zoals verwacht. Er zijn geen waarschuwingen, of adapters gevonden. Dit laat mij denken dat we mogelijk de adapter optie weg kunnen laten.
 
-Als ik vervolgens kijk naar de getrimmde data valt mij een aantal dingen op.
-Er zijn 2 soorten output: paired en unpaired.
-het aantal sequenties van paired is velen malen hoger dan de unpaired files.
-Na het opzoeken wat deze files zijn kwam ik op het volgende: De .paired bestanden zijn bestanden waarin zowel de forward als reverse sequentie goed gekeurd zijn door Trimmomatics.
-De .unpaired bestanden hebben de sequenties waarvan alleen dat bijpassende bestand goed gekeurd is door Trimmomatics.
+Als ik vervolgens kijk naar de getrimmde data valt mij een aantal dingen op. Er zijn 2 soorten output: paired en unpaired. het aantal sequenties van paired is velen malen hoger dan de unpaired files. Na het opzoeken wat deze files zijn kwam ik op het volgende: De .paired bestanden zijn bestanden waarin zowel de forward als reverse sequentie goed gekeurd zijn door Trimmomatics. De .unpaired bestanden hebben de sequenties waarvan alleen dat bijpassende bestand goed gekeurd is door Trimmomatics.
 
-Deze .unpaired bestanden hebben best wel een invloed op onze multiqc output, dus zal ik een multiqc uitvoeren op alleen de paired data.
-Voor het onderzoek downstream lijkt mij het beste om mogelijk ook de unpaired sequenties achter te laten.
-Dit zijn nu single end sequenties die een stuk lastiger zijn om te mappen.
+Deze .unpaired bestanden hebben best wel een invloed op onze multiqc output, dus zal ik een multiqc uitvoeren op alleen de paired data. Voor het onderzoek downstream lijkt mij het beste om mogelijk ook de unpaired sequenties achter te laten. Dit zijn nu single end sequenties die een stuk lastiger zijn om te mappen.
 
 ## 22-09-2024
 
@@ -246,24 +202,15 @@ multiqc /students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_20_ML20/outpu
 
 De kwaliteit is niet veel verbeterd.
 
-Het is goed om nu een stap terug te nemen en kijken naar de ongetrimde data.
-Welke dingen kunnen verbeterd worden en welke trimmomatic settings kunnen hiervoor gebruikt worden?
+Het is goed om nu een stap terug te nemen en kijken naar de ongetrimde data. Welke dingen kunnen verbeterd worden en welke trimmomatic settings kunnen hiervoor gebruikt worden?
 
-Aan het begin en einde van de sequences is een verlaging van kwaliteit, deze is verwacht.
-Dit kan verwijderd worden door leading en triailing.
-Over de sequenties zijn een paar dips in kwaliteit zichtbaar, dit kan verwijderd worden door de sliding window.
-Na het verwijderen is kan ik nog een MINLEN van 30, zodat de hele kleine sequenties verwijderd worden.
-Adapter verwijderen is niet nodig, omdat er geen adapters gedetecteerd worden.
+Aan het begin en einde van de sequences is een verlaging van kwaliteit, deze is verwacht. Dit kan verwijderd worden door leading en triailing. Over de sequenties zijn een paar dips in kwaliteit zichtbaar, dit kan verwijderd worden door de sliding window. Na het verwijderen is kan ik nog een MINLEN van 30, zodat de hele kleine sequenties verwijderd worden. Adapter verwijderen is niet nodig, omdat er geen adapters gedetecteerd worden.
 
-+-----------------+---------+----------+----------------+--------+---------+----------+---------------+--------------+
 | Run ID          | LEADING | TRAILING | SLIDING WINDOW | MINLEN | AVGQUAL | HEADCROP | CROP          | ILLUMINACLIP |
-+=================+=========+==========+================+========+=========+==========+===============+==============+
+|-----------------|---------|----------|----------------|--------|---------|----------|---------------|--------------|
 | A4:20ML20       | NONE    | NONE     | 4:20           | 20     | NONE    | NONE     | TruSeq3-PE.fa |              |
-+-----------------+---------+----------+----------------+--------+---------+----------+---------------+--------------+
 | A4:32ML30L34T35 | 34      | 35       | 4:32           | 30     | NONE    | NONE     | NONE          |              |
-+-----------------+---------+----------+----------------+--------+---------+----------+---------------+--------------+
 |                 |         |          |                |        |         |          |               |              |
-+-----------------+---------+----------+----------------+--------+---------+----------+---------------+--------------+
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
@@ -289,26 +236,18 @@ multiqc /students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_32_ML30_L34_T
   /students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_32_ML30_L34_T35/output/multiqc
 ```
 
-De kwaliteit van de sequentie is nu een zo goed als rechte lijn met een phred score van rond de 37.
-De kans dat een nucleotide nu fout is is 0.000199526% (<https://eafyounian.github.io/phred_score_converter/>).
-Het enige wat nu niet goed is is de distributie van de lengte.
+De kwaliteit van de sequentie is nu een zo goed als rechte lijn met een phred score van rond de 37. De kans dat een nucleotide nu fout is is 0.000199526% (<https://eafyounian.github.io/phred_score_converter/>). Het enige wat nu niet goed is is de distributie van de lengte.
 
 ## 23-09-2024
 
-De kwaliteit is nu goed, alleen de verdeling van de lengtes van de sequenties is niet goed, al weet ik niet wat de oorzaak is.
-Om te kijken of er verbetering is voer ik hetzelfde command uit met een hogere minlen.
+De kwaliteit is nu goed, alleen de verdeling van de lengtes van de sequenties is niet goed, al weet ik niet wat de oorzaak is. Om te kijken of er verbetering is voer ik hetzelfde command uit met een hogere minlen.
 
-+-----------------+---------+----------+----------------+--------+---------+----------+---------------+--------------+
 | Run ID          | LEADING | TRAILING | SLIDING WINDOW | MINLEN | AVGQUAL | HEADCROP | CROP          | ILLUMINACLIP |
-+=================+=========+==========+================+========+=========+==========+===============+==============+
+|-----------------|---------|----------|----------------|--------|---------|----------|---------------|--------------|
 | A4:20ML20       | NONE    | NONE     | 4:20           | 20     | NONE    | NONE     | TruSeq3-PE.fa |              |
-+-----------------+---------+----------+----------------+--------+---------+----------+---------------+--------------+
 | A4:32ML30L34T35 | 34      | 35       | 4:32           | 30     | NONE    | NONE     | NONE          |              |
-+-----------------+---------+----------+----------------+--------+---------+----------+---------------+--------------+
 | A4:32ML50L34T35 | 34      | 35       | 4:32           | 50     | NONE    | NONE     | NONE          |              |
-+-----------------+---------+----------+----------------+--------+---------+----------+---------------+--------------+
 |                 |         |          |                |        |         |          |               |              |
-+-----------------+---------+----------+----------------+--------+---------+----------+---------------+--------------+
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
@@ -334,17 +273,13 @@ multiqc /students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_32_ML50_L34_T
   /students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_32_ML50_L34_T35/output/multiqc
 ```
 
-Hieruit blijkt nogsteeds een incorrecte verdeling te zijn van de lengtes van sequenties.
-Ik zal ergens deze week vragen naar een oplossing hiervoor.
+Hieruit blijkt nogsteeds een incorrecte verdeling te zijn van de lengtes van sequenties. Ik zal ergens deze week vragen naar een oplossing hiervoor.
 
 ## 23-09-2024
 
 Vandaag zijn we bezig geweest met het mappen via bwa, zie hiervoor Jasper zijn logboek.
 
-Ik ben daarnaast bezig geweest met het installeren van Strelka.
-Strelka is een software die wij gaan gebruiken om varianten te vinden in onze data.
-Deze staat niet standaard op de server, dus zal ik handmatig moeten installeren.
-### Strelka installeren Download the strelka git:
+Ik ben daarnaast bezig geweest met het installeren van Strelka. Strelka is een software die wij gaan gebruiken om varianten te vinden in onze data. Deze staat niet standaard op de server, dus zal ik handmatig moeten installeren. \### Strelka installeren Download the strelka git:
 
 ```{bash, eval=FALSE}
 wget "https://github.com/Illumina/strelka/releases/download/v2.9.10/strelka-2.9.10.centos6_x86_64.tar.bz2"
@@ -365,9 +300,7 @@ Na korte research heb ik gevonden dat ik python versies lokaal kan installeren m
 git clone https://github.com/pyenv/pyenv.git
 ```
 
-Nu staat pyenv in onze tools folder, en kan deze gebruikt worden om andere python versies te installeren.
-1 groot probleem is dat pyenv in de gebruikers home dingen installeerd, dat wil ik niet aangezien de home folder maar 25 gigabytes mag zijn.
-Ik moet in mijn \~/.bashrc bestand dus een andere locatie aangeven voor pyenv.
+Nu staat pyenv in onze tools folder, en kan deze gebruikt worden om andere python versies te installeren. 1 groot probleem is dat pyenv in de gebruikers home dingen installeerd, dat wil ik niet aangezien de home folder maar 25 gigabytes mag zijn. Ik moet in mijn \~/.bashrc bestand dus een andere locatie aangeven voor pyenv.
 
 ```{bash, eval=FALSE}
 export PYENV_ROOT="/students/2024-2025/Thema05/BlaasKanker/tools/python_versies"
@@ -377,8 +310,7 @@ eval "$(/students/2024-2025/Thema05/BlaasKanker/tools/pyenv/bin/pyenv init --pat
 export PYENV_CACHE_PATH="/students/2024-2025/Thema05/BlaasKanker/tools/.pyenvcache/"
 ```
 
-Op deze manier kan ik een dir meegeven waar ik de versies wil hebben.
-Nu kan ik een python versie installeren.
+Op deze manier kan ik een dir meegeven waar ik de versies wil hebben. Nu kan ik een python versie installeren.
 
 ```{bash, eval=FALSE}
 /students/2024-2025/Thema05/BlaasKanker/tools/pyenv/bin/pyenv install 2.7
@@ -387,16 +319,11 @@ pip2.7 install virtualenv
 python2.7 -m virtualenv strelkaVENV
 ```
 
-Nu hebben we een virtualenv van python 2.7 in onze tools folder.
-Hier kunnen we de benodigde pakketjes installeren, die ook gebruikt kunnen worden door mijn groeps genoten.
+Nu hebben we een virtualenv van python 2.7 in onze tools folder. Hier kunnen we de benodigde pakketjes installeren, die ook gebruikt kunnen worden door mijn groeps genoten.
 
 ## 24-09-2024
 
-Omdat er een aantal duplicaten zijn, die mogelijk een negatieve impact kunnen hebben bij variant calling (kan een bias veroorzaken) Gaan wij deze duplicaten verwijderen met picard.
-Vandaag ga ik de documentatie lezen en kijken of ik de tool werkend kan krijgen.
-<!-- TODO ref naar jaspers logboek --> Eerst heb ik Jasper zijn logboek gevolgd om een index te maken, en de fastq files te mappen naar het referentie genoom.
-Daarna heb ik picard gerund op 1 van de outputs, als test.
-Deze gaf meerdere foutmeldingen.
+Omdat er een aantal duplicaten zijn, die mogelijk een negatieve impact kunnen hebben bij variant calling (kan een bias veroorzaken) Gaan wij deze duplicaten verwijderen met picard. Vandaag ga ik de documentatie lezen en kijken of ik de tool werkend kan krijgen. <!-- TODO ref naar jaspers logboek --> Eerst heb ik Jasper zijn logboek gevolgd om een index te maken, en de fastq files te mappen naar het referentie genoom. Daarna heb ik picard gerund op 1 van de outputs, als test. Deze gaf meerdere foutmeldingen.
 
 ```{bash, eval=FALSE}
 java -jar picard.jar MarkDuplicates \
@@ -405,8 +332,7 @@ java -jar picard.jar MarkDuplicates \
   "M=/students/2024-2025/Thema05/BlaasKanker/temp/picard_test/duplicates.txt" \
 ```
 
-Een van deze foutmeldingen was dat de naam van het input bestand niet correct was.
-Na een google search heb ik een oplossing gevonden hiervoor.
+Een van deze foutmeldingen was dat de naam van het input bestand niet correct was. Na een google search heb ik een oplossing gevonden hiervoor.
 
 ```{bash, eval=FALSE}
 java -jar picard.jar MarkDuplicates \
@@ -418,10 +344,7 @@ java -jar picard.jar MarkDuplicates \
 
 Nu maakt de naam van het input bestand niet uit.
 
-Een volgende error had een iets andere oplossing.
-In de bam files mist een @RG header, deze header geeft groep, ID, platofrm en library aan van de samples.
-En deze header heeft picard nodig om het input bestand te lezen.
-Deze kan je meegeven aan bwa mem tijdens het mappen, de aangepaste commands staan hier onder.
+Een volgende error had een iets andere oplossing. In de bam files mist een @RG header, deze header geeft groep, ID, platofrm en library aan van de samples. En deze header heeft picard nodig om het input bestand te lezen. Deze kan je meegeven aan bwa mem tijdens het mappen, de aangepaste commands staan hier onder.
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
@@ -439,7 +362,7 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 
 Jasper heeft deze stap in 2 gesplitst, maar voeg ik samen zodat het meer hands off is voor mij.
 
-```{bsah, eval=FALSE}
+```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
   parallel -j 6 "samtools index /students/2024-2025/Thema05/BlaasKanker/temp/mappingTest/sorted_output/{}.sorted.bam"
 ```
@@ -458,19 +381,11 @@ java -jar picard.jar MarkDuplicates \
   "READ_NAME_REGEX=null"
 ```
 
-Het uitput bestand is gemaakt, en bevat duplicaten die een mark hebben.
-Zo kunnen tools downstream deze vermijden.
+Het uitput bestand is gemaakt, en bevat duplicaten die een mark hebben. Zo kunnen tools downstream deze vermijden.
 
 ## 25-09-2024
 
-Vandaag wil ik gaan kijken naar hoe we strelka moeten gebruiken.
-Eerder in het logboek heb ik uitgelegd hoe die geinstalleerd is met python2.7 Op de officiele website kon ik zo'n soort gelijk bestand vinden.
-Alleen is er een probleem.
-Onze tumor is ingebracht, en heft niks te maken met de germline.
-Opzich is dit geen probleem, want strelka heeft een somatische workflow.
-Alleen hebben wij de .bam file nodig van een normale muis, zonder de tumor.
-In het artikel staat wel benoemd dat ze die hebben, maar ik kon deze files nergens vinden.
-Ik heb het contact persoon een mail gestuurd, en we hopen en wachten nu op een antwoord.
+Vandaag wil ik gaan kijken naar hoe we strelka moeten gebruiken. Eerder in het logboek heb ik uitgelegd hoe die geinstalleerd is met python2.7 Op de officiele website kon ik zo'n soort gelijk bestand vinden. Alleen is er een probleem. Onze tumor is ingebracht, en heft niks te maken met de germline. Opzich is dit geen probleem, want strelka heeft een somatische workflow. Alleen hebben wij de .bam file nodig van een normale muis, zonder de tumor. In het artikel staat wel benoemd dat ze die hebben, maar ik kon deze files nergens vinden. Ik heb het contact persoon een mail gestuurd, en we hopen en wachten nu op een antwoord.
 
 Deze konden wij dus niet uitvoeren zonder normal file.
 
@@ -482,22 +397,19 @@ python2.7 /students/2024-2025/Thema05/BlaasKanker/tools/strelka-2.9.10.centos6_x
 
 ```
 
-Het probleem bij het uitvoeren van dit command is dat alle erfbare mutaties ook gemarkeerd worden.
-Het is vervolgens erg lastig om de germline en somatische mutaties uit elkaar te halen.
+Het probleem bij het uitvoeren van dit command is dat alle erfbare mutaties ook gemarkeerd worden. Het is vervolgens erg lastig om de germline en somatische mutaties uit elkaar te halen.
 
 ```{bash, eval=FALSE}
 python2.7 /students/2024-2025/Thema05/BlaasKanker/tools/strelka-2.9.10.centos6_x86_64/bin/configureStrelkaGermlineWorkflow.py     --bam /students/2024-2025/Thema05/BlaasKanker/temp/mappingTest/sorted_bam/SRR14870694_sorted.bam     --referenceFasta /students/2024-2025/Thema05/BlaasKanker/tools/testGenome/ncbi_dataset/data/GCF_000001635.27/GCF_000001635.27_GRCm39_genomic.fna     --runDir /students/2024-2025/Thema05/BlaasKanker/temp/demo_somatic
 ```
 
-Dit command werkte niet, er miste een bestand bij het referentie genoom.
-Deze kan aangemaakt worden met de volgende samtool feature.
+Dit command werkte niet, er miste een bestand bij het referentie genoom. Deze kan aangemaakt worden met de volgende samtool feature.
 
 ```{bash, eval=FALSE}
 samtools faidx GCF_000001635.27_GRCm39_genomic.fna
 ```
 
-Command is weer uitgevoerd, en nu kregen we een output bestand.
-Helaas heb ik nog niks gehoord van het contact persoon, en zal de 27e advies vragen aan de docenten.
+Command is weer uitgevoerd, en nu kregen we een output bestand. Helaas heb ik nog niks gehoord van het contact persoon, en zal de 27e advies vragen aan de docenten.
 
 ```{bash, eval=FALSE}
 python2.7 /students/2024-2025/Thema05/BlaasKanker/tools/strelka-2.9.10.centos6_x86_64/bin/configureStrelkaGermlineWorkflow.py     --bam /students/2024-2025/Thema05/BlaasKanker/temp/mappingTest/sorted_bam/SRR14870694_sorted.bam     --referenceFasta /students/2024-2025/Thema05/BlaasKanker/tools/testGenome/ncbi_dataset/data/GCF_000001635.27/GCF_000001635.27_GRCm39_genomic.fna     --runDir /students/2024-2025/Thema05/BlaasKanker/temp/demo_somatic
@@ -507,23 +419,13 @@ python2.7 /students/2024-2025/Thema05/BlaasKanker/tools/strelka-2.9.10.centos6_x
 
 Deze week gaan wij mappen en duplicaten markeren, maar daarvoor moeten we eerst zeker zijn of we de ongetrimde data gaan gebruiken of wel getrimde data.
 
-+----------+---------+----------+----------------+--------+---------+----------+------+---------------+
 | Run ID   | LEADING | TRAILING | SLIDING WINDOW | MINLEN | AVGQUAL | HEADCROP | CROP | ILLUMINACLIP  |
-+==========+=========+==========+================+========+=========+==========+======+===============+
+|----------|---------|----------|----------------|--------|---------|----------|------|---------------|
 | FinalRun | 34      | 34       | NONE           | 40     | NONE    | NONE     | None | TruSeq3-PE.fa |
-+----------+---------+----------+----------------+--------+---------+----------+------+---------------+
 |          |         |          |                |        |         |          |      |               |
-+----------+---------+----------+----------------+--------+---------+----------+------+---------------+
 |          |         |          |                |        |         |          |      |               |
-+----------+---------+----------+----------------+--------+---------+----------+------+---------------+
 
-Waarom hebben we deze settings gekozen?
-De kwaliteit in het midden van de sequenties is rond de 35, er wijkt zo weinig van af dat een sliding window niet nodig is.
-Aan het begin en eind dipt de kwaliteit iets wat naar de 32, deze halen wij voor de zekerheid weg, maar meer niet.
-Zo blijft de lengte van de sequenties lang genoeg om goed te kunnen mappen.
-Ook halen wij de adapters weg voor de zekerheid, als er 1 of 2 toch zijn worden die dan verwijderd.
-De sliding window wordt ook niet gebruikt omdat deze er voor zorgt dat er veel meer korte sequenties zijn, wat onnodig is aangezien de kwaliteit al goed is.
-MINLEN van 40 zorgt ervoor dat er niet te korte reads zijn die bij downstream workflows mogelijk problemen kunnen veroorzaken, of gewoon lastiger zijn om te gebruiken.
+Waarom hebben we deze settings gekozen? De kwaliteit in het midden van de sequenties is rond de 35, er wijkt zo weinig van af dat een sliding window niet nodig is. Aan het begin en eind dipt de kwaliteit iets wat naar de 32, deze halen wij voor de zekerheid weg, maar meer niet. Zo blijft de lengte van de sequenties lang genoeg om goed te kunnen mappen. Ook halen wij de adapters weg voor de zekerheid, als er 1 of 2 toch zijn worden die dan verwijderd. De sliding window wordt ook niet gebruikt omdat deze er voor zorgt dat er veel meer korte sequenties zijn, wat onnodig is aangezien de kwaliteit al goed is. MINLEN van 40 zorgt ervoor dat er niet te korte reads zijn die bij downstream workflows mogelijk problemen kunnen veroorzaken, of gewoon lastiger zijn om te gebruiken.
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
@@ -549,10 +451,7 @@ fastqc /students/2024-2025/Thema05/BlaasKanker/outputs/fastq_trimmed/*_paired* -
 multiqc /students/2024-2025/Thema05/BlaasKanker/outputs/fastqc_trimmed/*_paired* -o /students/2024-2025/Thema05/BlaasKanker/outputs/multiqc_trimmed
 ```
 
-De kwaliteit van de sequenties ligt tussen de 35 en 37, wat goed is. de kans dat een nucleotide incorrect is ligt tussen de 0.000316228 en 0.000199526 (<https://eafyounian.github.io/phred_score_converter/>).
-Er worden ook geen adapters gevonden.
-Er zijn nu wel een aantal kortere sequenties, maar de meeste liggen nog tussen de 90-95, de te korte sequenties van 40 en daaronder zijn wel verwijderd.
-Zo krijgen we sequenties van hoge kwaliteit die toch nog goed gemapped kunnen worden.
+De kwaliteit van de sequenties ligt tussen de 35 en 37, wat goed is. de kans dat een nucleotide incorrect is ligt tussen de 0.000316228 en 0.000199526 (<https://eafyounian.github.io/phred_score_converter/>). Er worden ook geen adapters gevonden. Er zijn nu wel een aantal kortere sequenties, maar de meeste liggen nog tussen de 90-95, de te korte sequenties van 40 en daaronder zijn wel verwijderd. Zo krijgen we sequenties van hoge kwaliteit die toch nog goed gemapped kunnen worden.
 
 ## 26-09-2024
 
@@ -560,14 +459,9 @@ Vandaag voeren wij de BWA mapping uit <!-- TODO Ref naar Jasper, plaats commands
 
 ## 27-09-2024
 
-Omdat wij geen normaal data hebben is het uitvoeren van een somatische variant call onmogelijk.
-Dit is een groot probleem omdat de erfbare mutaties nu ook gecalled zullen worden, en we mogelijke honderd duizenden mutaties krijgen.
-Om vervolgens dan de tumor mutaties vinden is lastig, mogelijk zelfs onmogelijk in de korte tijd die wij hebben.
+Omdat wij geen normaal data hebben is het uitvoeren van een somatische variant call onmogelijk. Dit is een groot probleem omdat de erfbare mutaties nu ook gecalled zullen worden, en we mogelijke honderd duizenden mutaties krijgen. Om vervolgens dan de tumor mutaties vinden is lastig, mogelijk zelfs onmogelijk in de korte tijd die wij hebben.
 
-Ik heb de schrijvers van het artikel gemailed, en zij zijn nu aan het kijken of er wat gedaan kan worden.
-Er moet toch een eindproduct komen.
-We zullen dus met een meer generieke variant calling tool bezig gaan.
-Lofreq <!-- TODO vraag jasper permissie -->
+Ik heb de schrijvers van het artikel gemailed, en zij zijn nu aan het kijken of er wat gedaan kan worden. Er moet toch een eindproduct komen. We zullen dus met een meer generieke variant calling tool bezig gaan. Lofreq <!-- TODO vraag jasper permissie -->
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
@@ -588,9 +482,7 @@ Na dit uitgevoerd te hebben kan lofreq weer, zonder enige specifieke instellinge
 
 ## 01-10-2024
 
-Vandaag ga ik van bij alle data met lofreq de variant calling uitvoeren, zo krijgen we bestanden waarin alle mutaties van de muizen staan in verhouding tot de reference genome.
-Hierbij zullen dus ook de erfelijke mutaties meegenomen worden, omdat we geen sequence data van gezonde muizen hebben.
-Ik hoef geen settings mee te geven voor de kwaliteit van de data, en ook voor de output hoef ik nu geen filter stappen toe te voegen, het filteren wordt gedaan met een andere tool later deze week.
+Vandaag ga ik van bij alle data met lofreq de variant calling uitvoeren, zo krijgen we bestanden waarin alle mutaties van de muizen staan in verhouding tot de reference genome. Hierbij zullen dus ook de erfelijke mutaties meegenomen worden, omdat we geen sequence data van gezonde muizen hebben. Ik hoef geen settings mee te geven voor de kwaliteit van de data, en ook voor de output hoef ik nu geen filter stappen toe te voegen, het filteren wordt gedaan met een andere tool later deze week.
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
@@ -601,14 +493,9 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
     /students/2024-2025/Thema05/BlaasKanker/outputs/picard_dub/marked_duplicates/{}.marked_duplicates.bam"
 ```
 
-Omdat het we straks ontzettend veel varianten krijgen leek het mij een goed idee om vandaag te kijken naar het filteren van de annotaties.
-SNPeff kan doormiddel van bestand met gene symbols als het goed is zoeken naar die genen.
-Ik heb op <https://www.informatics.jax.org/mgihome/homepages/help.shtml> gezocht naar genen die met blaaskanker te maken hebben.
+Omdat het we straks ontzettend veel varianten krijgen leek het mij een goed idee om vandaag te kijken naar het filteren van de annotaties. SNPeff kan doormiddel van bestand met gene symbols als het goed is zoeken naar die genen. Ik heb op <https://www.informatics.jax.org/mgihome/homepages/help.shtml> gezocht naar genen die met blaaskanker te maken hebben.
 
-Deze lijst kan je downloaden, maar er staat veel overbodige informatie in.
-Daarom heb ik een scriptje in python geschreven die de genen er uit kan halen.
-zie main src/python.
-Als Janine straks klaar is met annotatie, kunnen we op die manier filteren.
+Deze lijst kan je downloaden, maar er staat veel overbodige informatie in. Daarom heb ik een scriptje in python geschreven die de genen er uit kan halen. zie main src/python. Als Janine straks klaar is met annotatie, kunnen we op die manier filteren.
 
 Janine loopt vast met snpEff, er zijn probelemen met MT tabellen?
 
@@ -620,12 +507,9 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
     /students/2024-2025/Thema05/BlaasKanker/outputs/variant_calling_unfiltered/{}_variants.vcf > /students/2024-2025/Thema05/BlaasKanker/temp/annoting_test/{}.vcf"
 ```
 
-Heb op github een zelfde soort issue gevonden, die heb gevolgd en dat probleem was vervolgens opgelost.
-<https://github.com/pcingola/SnpEff/issues/536#issuecomment-2189201996> Dankjewel lukedow.
+Heb op github een zelfde soort issue gevonden, die heb gevolgd en dat probleem was vervolgens opgelost. <https://github.com/pcingola/SnpEff/issues/536#issuecomment-2189201996> Dankjewel lukedow.
 
-Daarna heb ik snpeff weer uitgevoerd.
-Maar toen ontstond er het volgende probleem, de chromosoom benaming in de vcf bestanden en de net gebouwde data base komen niet overeen.
-Ik hen online op ncbi een mapje gevonden die de ncbi benaming omzet naar chromosome nummers, zie etc/chromosome_map.txt
+Daarna heb ik snpeff weer uitgevoerd. Maar toen ontstond er het volgende probleem, de chromosoom benaming in de vcf bestanden en de net gebouwde data base komen niet overeen. Ik hen online op ncbi een mapje gevonden die de ncbi benaming omzet naar chromosome nummers, zie etc/chromosome_map.txt
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
@@ -634,11 +518,9 @@ parallel -j 8 \
 
 ```
 
-Hierna kreeg ik de volgende foutmelding, geen idee wat het inhoud maar er was een quick workaround voor 'Contig 'NC_000067.7' is not defined in the header.
-(Quick workaround: index the file with tabix.'
+Hierna kreeg ik de volgende foutmelding, geen idee wat het inhoud maar er was een quick workaround voor 'Contig 'NC_000067.7' is not defined in the header. (Quick workaround: index the file with tabix.'
 
-Ik heb voor de zekerheid een backup gemaakt van de variant calling data, en het volgende command uitgevoerd.
-Die zou een index van de file moeten maken
+Ik heb voor de zekerheid een backup gemaakt van de variant calling data, en het volgende command uitgevoerd. Die zou een index van de file moeten maken
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
@@ -646,8 +528,7 @@ parallel -j 8 \
 "tabix -p vcf {}_variants.vcf"
 ```
 
-Hier kwam nog een foutmelding uit, de bestanden moesten compressed zijn.
-'[tabix] the compression of 'SRR14870694_variants.vcf' is not BGZF'
+Hier kwam nog een foutmelding uit, de bestanden moesten compressed zijn. '[tabix] the compression of 'SRR14870694_variants.vcf' is not BGZF'
 
 Ik heb de bestanden dus eerst met bgzip omgezet naar bestanden die compressed zijn
 
@@ -665,8 +546,7 @@ parallel -j 8 \
 "tabix -p vcf {}_variants.vcf.gz"
 ```
 
-Dit werkt ook niet: 'Contig 'NC_000067.7' is not defined in the header.
-(Quick workaround: index the file with tabix.'
+Dit werkt ook niet: 'Contig 'NC_000067.7' is not defined in the header. (Quick workaround: index the file with tabix.'
 
 Uiteindelijk bleek ik dus dat ik de header opnieuw moest maken van elk bestand met de .fai versie van onze referentie genoom.
 
@@ -698,10 +578,7 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
     /students/2024-2025/Thema05/BlaasKanker/outputs/chromosome_remade_varients/{}_variants.vcf > /students/2024-2025/Thema05/BlaasKanker/temp/annoting_test/{}.vcf"
 ```
 
-Eindelijk kon ik met snpEff toch wel de variant annotatie uitvoeren.
-Deze geeft een tabel met chromosomen met een n van aantal variants.
-In deze tabel staan een aantal NT\_\*\*\* chromosomen, die ik niet ken en niet voorkomen in mijn chromosome map.
-Morgen zal ik hier verder naar kijken.
+Eindelijk kon ik met snpEff toch wel de variant annotatie uitvoeren. Deze geeft een tabel met chromosomen met een n van aantal variants. In deze tabel staan een aantal NT\_\*\*\* chromosomen, die ik niet ken en niet voorkomen in mijn chromosome map. Morgen zal ik hier verder naar kijken.
 
 ## 02-10-2024
 
@@ -725,9 +602,7 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
     /students/2024-2025/Thema05/BlaasKanker/outputs/chromosome_remade_varients/{}_variants.vcf > /students/2024-2025/Thema05/BlaasKanker/temp/annoting_test/{}.vcf"
 ```
 
-Er stonden nu een aantal CHROMOSOME_Not_found errors, en een UN in de tabel.
-De UN staat dus voor unkown gedeelte, en kan dus niet gemapt worden aan een bestaand chromosoom.
-Deze veroorzaakt ook de CHROMOSOME_Not_found errors.
+Er stonden nu een aantal CHROMOSOME_Not_found errors, en een UN in de tabel. De UN staat dus voor unkown gedeelte, en kan dus niet gemapt worden aan een bestaand chromosoom. Deze veroorzaakt ook de CHROMOSOME_Not_found errors.
 
 ### Vsualisatie:
 
@@ -735,8 +610,7 @@ Deze veroorzaakt ook de CHROMOSOME_Not_found errors.
 
 ## 3-10-2024
 
-Waarschijnlijk hebben we een BED file nodig met chromsomen, exon posities en genen voor de visualisatie.
-Die hebben wij op dit moment niet, dus ik zal deze voor het mm39 muis referentie genoom genereren.
+Waarschijnlijk hebben we een BED file nodig met chromsomen, exon posities en genen voor de visualisatie. Die hebben wij op dit moment niet, dus ik zal deze voor het mm39 muis referentie genoom genereren.
 
 Voor het genereren van een BED file hebben we een GTF bestand nodig, deze bevat alle data die we nodig hebben
 
@@ -754,7 +628,7 @@ WARNING_TRANSCRIPT_INCOMPLETE 5223 WARNING_TRANSCRIPT_MULTIPLE_STOP_CODONS 63 WA
 
 Ik zal nog 1 keer proberen de database opnieuw te bouwen, volgens de website van snpEff
 
-```{basj, eval=FALSE}
+```{bash, eval=FALSE}
 cd snpeff/snpEff/data
 mkdir mm39; cd mm39
 
@@ -781,9 +655,7 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 
 ```
 
-Deze manier van het bouwen van een database voor mm39 werkt niet.
-Ik blijf de vorige gebruiken.
-De waarschuwingen kunnen voorkomen wanneer het genoom niet helemaal gebrepen is, en dat kan aangezien we ook Unkown chromosome maps hebben.
+Deze manier van het bouwen van een database voor mm39 werkt niet. Ik blijf de vorige gebruiken. De waarschuwingen kunnen voorkomen wanneer het genoom niet helemaal gebrepen is, en dat kan aangezien we ook Unkown chromosome maps hebben.
 
 Ik zal nu eerst filteren naar de genen die ik heb gevonden op MGI
 
@@ -814,9 +686,7 @@ grep ^# SRR14870694.vcf
 
 Hieruit kan ik de naam vinden voor geen naam bij INFO Omdat ik er niet zeker van kan zijn dat de bcftools wel goed zoekt en vcftools wel goed filterd ga ik mijn eigen scriptje schrijven die genen uit een txt bestand kan vinden in een vcf bestand.
 
-Het python3 scriptje staat ook weer in src/python.
-Met dit scriptje kan ik een gene.txt bestand meegeven waar gezochte genen in staan.
-Het scriptje zal deze genen dan zoeken in het VCF bestand, en een VCF output geven met de lines die het gen bevatten.
+Het python3 scriptje staat ook weer in src/python. Met dit scriptje kan ik een gene.txt bestand meegeven waar gezochte genen in staan. Het scriptje zal deze genen dan zoeken in het VCF bestand, en een VCF output geven met de lines die het gen bevatten.
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
@@ -826,8 +696,7 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 
 Als het goed is staat in deze output alle genen die te maken kunnen hebben met blaaskanker in een muis.
 
-Tot nu toe zijn alle SNPeff testen gedaan in mijn temp folder, ik ga het nu uitvoeren voor de ouputs folder.
-Morgen zal ik dan met het groepje verder sorteren en filtreren.
+Tot nu toe zijn alle SNPeff testen gedaan in mijn temp folder, ik ga het nu uitvoeren voor de ouputs folder. Morgen zal ik dan met het groepje verder sorteren en filtreren.
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
@@ -839,11 +708,9 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 
 Nu hebben we de variant calling uitgevoerd, deze bevat 23,753 variants, wat voornamelijk variants zijn die herkend zijn bij erfbare mutaties, en niet de mutaties die wij zoeken.
 
-Daarom gaan wij gericht zoeken naar genen die belangrijk zijn bij processen waar blaas kanker kan ontstaan Ik heb daarvoor zoals eerder benoemd een bestand voor gedownload met alle genen.
-<https://www.informatics.jax.org/mgihome/homepages/help.shtml>
+Daarom gaan wij gericht zoeken naar genen die belangrijk zijn bij processen waar blaas kanker kan ontstaan Ik heb daarvoor zoals eerder benoemd een bestand voor gedownload met alle genen. <https://www.informatics.jax.org/mgihome/homepages/help.shtml>
 
-Deze kan ik met mijn eigen scriptje omzetten naar een lijst met genen.
-Deze kan ik als input gebruiken om die genen te vinden in de vcf bestanden.
+Deze kan ik met mijn eigen scriptje omzetten naar een lijst met genen. Deze kan ik als input gebruiken om die genen te vinden in de vcf bestanden.
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
@@ -855,8 +722,7 @@ Morgen zal ik deze nieuwe vcf bestanden processen tot iets wat leesbaar is, zoda
 
 ## 04-10-2024
 
-Voordat ik de VCF bestanden verder kan verwerken moet ik deze valideren.
-Dit zal ik eerst doen op de bestanden zonder kanker gen filter
+Voordat ik de VCF bestanden verder kan verwerken moet ik deze valideren. Dit zal ik eerst doen op de bestanden zonder kanker gen filter
 
 ```{bash, eval=FALSE}
 java -jar SnpSift.jar vcfCheck ../../../outputs/variant_annotation/*.vcf
@@ -892,8 +758,7 @@ Hier kan ik dan ook weer een validator gebruiken om te controleren of dit een va
 java -jar SnpSift.jar vcfCheck ../../../outputs/variant_annotation_cancer_genes/*.vcf
 ```
 
-Hier uit komt "Cannot find header for INFO field 'ANN'", wat inhoud dat ik in mijn python3 script aan moet passen zodat deze ook de headers meeneemt.
-Ik zal deze nu aanpassen, zodat ##INFO header ook in het output bestand komt te staan
+Hier uit komt "Cannot find header for INFO field 'ANN'", wat inhoud dat ik in mijn python3 script aan moet passen zodat deze ook de headers meeneemt. Ik zal deze nu aanpassen, zodat ##INFO header ook in het output bestand komt te staan
 
 Dan kan ik opnieuw het scriptje uitvoeren
 
@@ -903,17 +768,11 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
     "python3 /homes/rreilman/jaar2/kwartaal2/vak2/GenomicsTranscriptomics/src/python/vcf_gene_finder.py /students/2024-2025/Thema05/BlaasKanker/outputs/variant_ann_sorted/{}_sorted.vcf /students/2024-2025/Thema05/BlaasKanker/etc/gene_file.txt --output_file /students/2024-2025/Thema05/BlaasKanker/outputs/variant_annotation_cancer_genes/{}.vcf"
 ```
 
-En het vervolgens weer valideren met hetzelfde command als hiervoor.
-Hoewel deze validator zegt dat mijn gegenereerde data wel valide is, kan ik met bcftools stats geen output krijgen.
-Ik zal proberen alle headers toe te voegen, om te kijken of deze output wel valide is
+En het vervolgens weer valideren met hetzelfde command als hiervoor. Hoewel deze validator zegt dat mijn gegenereerde data wel valide is, kan ik met bcftools stats geen output krijgen. Ik zal proberen alle headers toe te voegen, om te kijken of deze output wel valide is
 
 Ik neem nu alle headers mee, zodat er meer meta data over het bestand is.
 
-Nu kan ik het script opnieuw uitvoeren en valideren met SnpSift, hier komt weer valide.
-Ook bcftools stats werkt nu op deze bestanden.
-Zo kunnen we met vcfstats straks plotjes genereren waarmee we ook kunnen spreken over wat de vcf bestanden betekenen en vertellen.
-Hiervoor wordt dus vcfstats gebruikt, en python package die plotjes met vcf data kan genereren.
-<https://github.com/pwwang/vcfstats>
+Nu kan ik het script opnieuw uitvoeren en valideren met SnpSift, hier komt weer valide. Ook bcftools stats werkt nu op deze bestanden. Zo kunnen we met vcfstats straks plotjes genereren waarmee we ook kunnen spreken over wat de vcf bestanden betekenen en vertellen. Hiervoor wordt dus vcfstats gebruikt, en python package die plotjes met vcf data kan genereren. <https://github.com/pwwang/vcfstats>
 
 ```{bash, eval=FALSE}
 vcfstats --vcf SRR14870694_sorted.vcf \
@@ -922,13 +781,11 @@ vcfstats --vcf SRR14870694_sorted.vcf \
     --title 'Number of variants on each chromosome' 
 ```
 
-De output hiervan is het aantal varianten per chromosome voor dat vcf bestand.
-Als ik dit nog een keer zou uitvoeren op het bestand die op kanker genen is gefilterd kunnen die 2 plotjes vergeleken worden.
+De output hiervan is het aantal varianten per chromosome voor dat vcf bestand. Als ik dit nog een keer zou uitvoeren op het bestand die op kanker genen is gefilterd kunnen die 2 plotjes vergeleken worden.
 
 ## 08-10-2024
 
-Tabix genereren voor Iris, eerst vcf filter opnieuw uitvoeren omdat er per ongelukt duplicaten in de output zijn gekomen.
-Dus het scriptje is nu aangepast
+Tabix genereren voor Iris, eerst vcf filter opnieuw uitvoeren omdat er per ongelukt duplicaten in de output zijn gekomen. Dus het scriptje is nu aangepast
 
 ```{bash, eval=FALSE}
 
@@ -938,8 +795,7 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 
 ```
 
-Nu met tabix een index genereren.
-Deze hebben we nodig om een plotje te maken.
+Nu met tabix een index genereren. Deze hebben we nodig om een plotje te maken.
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
@@ -957,8 +813,7 @@ Trackviewer herkend de namen niet mv alles en haal gz weg
 
 ## 09-10-2024
 
-Wij hebben eerder een bed bestand gegenereerd met een python scriptje, deze bevat *alle* genen in een muis.
-Ook hebben wij een gene panel opgesteld die de genen bevat die wij waardevol vinden.
+Wij hebben eerder een bed bestand gegenereerd met een python scriptje, deze bevat *alle* genen in een muis. Ook hebben wij een gene panel opgesteld die de genen bevat die wij waardevol vinden.
 
 Vandaag heb ik een python scriptje gemaakt die het bed bestand ook nog filtered op basis van de genen waar wij naar zoeken.
 
@@ -967,25 +822,24 @@ Nu kunnen Iris en ik vandaag een loliplot maken waarbij ook de exonen van de gen
 ```{r, eval=FALSE}
 library(VariantAnnotation)
 library(BiocManager)
+library(GenomicRanges)
 library(dplyr)
 library(trackViewer)
 ```
 
-```{r}
+```{r, eval=FALSE}
 vcf_data <- readVcfAsVRanges("/students/2024-2025/Thema05/BlaasKanker/outputs/variant_annotation_cancer_genes/SRR14870694.vcf", genome = "mm39")
 
 gr <- GRanges("1", IRanges(74419628, 74419928))
 vcf_data$score <- vcf_data$AF * 100
 lolliplot(vcf_data, gr)
-ranges(vcf_data)
 ```
 
-Nu hebben we een simpel plotje van varianten op chromosome 1.
-Met allel frequentie op de y-as Graag wil ik de exon locaties laten zien van een gezocht gen.
+Nu hebben we een simpel plotje van varianten op chromosome 1. Met allel frequentie op de y-as Graag wil ik de exon locaties laten zien van een gezocht gen.
 
 Ik zal het gefilterde bed bestand gaan verwerken.
 
-```{r}
+```{r, eval=FALSE}
 bed_file <- read.table("/students/2024-2025/Thema05/BlaasKanker/etc/filtered_bed.bed")
 names(bed_file) <- c("chromosome", "exon_start", "exon_end", "gene_name")
 
@@ -993,7 +847,7 @@ names(bed_file) <- c("chromosome", "exon_start", "exon_end", "gene_name")
 
 Bed bestand is nu ingeladen
 
-```{r}
+```{r, eval=FALSE}
 list_granges <- list()
 bed_splitted = split(bed_file, bed_file$gene_name)
 for (gene in names(bed_splitted)){
@@ -1010,7 +864,7 @@ list_granges <- GRangesList(list_granges)
 
 ```
 
-```{r}
+```{r, eval=FALSE}
 gene_list = list()
 count = 1
 for (gene in names(bed_splitted)){
@@ -1020,9 +874,7 @@ for (gene in names(bed_splitted)){
 gene_list[[1]]
 ```
 
-Start, eind en
-
-```{r}
+```{r, eval=FALSE}
 gene <- "Tmeff2"
 
 e <- end(list_granges[[gene]])
@@ -1038,59 +890,49 @@ lolliplot(sample, gr)
 
 ```
 
-Ons VCF bestand mist headers die wij met een galaxy tool uit de ANN kunnen halen.
-SnpSift extract Fields.
-Zo krijgen we straks de gen namen als header, en ook de impact van de mutatie.
+Ons VCF bestand mist headers die wij met een galaxy tool uit de ANN kunnen halen. SnpSift extract Fields. Zo krijgen we straks de gen namen als header, en ook de impact van de mutatie.
 
 Ik heb hiervoor de volgende instellingen gebruikt.
 
 #### Tool Parameters
 
-| Input Parameter |                                                          | Value |         |
-|-----------------|----------------------------------------------------------|-------|---------|
-|                 |                                                          |       |         |
-|                 |                                                          
-                   Variant input file in VCF format                          |       |         |
+| Input Parameter                  |     | Value |     |
+|----------------------------------|-----|-------|-----|
+|                                  |     |       |     |
+|                                  |     |       |     |
+| Variant input file in VCF format |     |       |     |
 
-+--------------------------------------------------+---+---------------------------------------------------------------------------------+---+
-|                                                  |   |                                                                                 |   |
-+--------------------------------------------------+---+---------------------------------------------------------------------------------+---+
-|                                                  |   |                                                                                 |   |
-| Fields to extract                                |   | CHROM POS ID REF ALT FILTER ANN[\*].GENE ANN[\*].IMPACT                         |   |
-+--------------------------------------------------+---+---------------------------------------------------------------------------------+---+
-|                                                  |   |                                                                                 |   |
-| One effect per line                              |   | 1                                                                               |   |
-+--------------------------------------------------+---+---------------------------------------------------------------------------------+---+
-|                                                  |   |                                                                                 |   |
-| multiple field separator                         |   | Empty.                                                                          |   |
-+--------------------------------------------------+---+---------------------------------------------------------------------------------+---+
-|                                                  |   |                                                                                 |   |
-| empty field text                                 |   | Empty.                                                                          |   |
-+--------------------------------------------------+---+---------------------------------------------------------------------------------+---+
+|                          |     |                                                         |     |
+|--------------------------|-----|---------------------------------------------------------|-----|
+|                          |     |                                                         |     |
+| Fields to extract        |     | CHROM POS ID REF ALT FILTER ANN[\*].GENE ANN[\*].IMPACT |     |
+| One effect per line      |     | 1                                                       |     |
+| multiple field separator |     | Empty.                                                  |     |
+| empty field text         |     | Empty.                                                  |     |
 
 Nu kunnen we 1 van de 6 bestanden inladen en lezen en VRanges van maken
 
-```{r}
+```{r, eval=FALSE}
 snp_data <- read.csv2("/students/2024-2025/Thema05/BlaasKanker/outputs/vcf_ann_snpSift/SRR14870694.vcf.tabular", sep = "\t", na.strings = "unkown")
+snp_data <- snp_data[!is.na(snp_data$POS) & !is.na(snp_data$CHROM) & !is.na(snp_data$ANN....GENE), ]
 snp_data
 ```
 
 GRanges maken van de data
 
-```{r}
+```{r, eval=FALSE}
 list_variant_ranges = list()
 
 for (gene_vcf in unique(snp_data$ANN....GENE))
 {
     
-    range <- IRanges(start = snp_data$POS[snp_data$ANN....GENE == gene_vcf],
+    vcf_range <- IRanges(start = snp_data$POS[snp_data$ANN....GENE == gene_vcf],
                     end = snp_data$POS[snp_data$ANN....GENE == gene_vcf],
-                    names = gene_vcf)
-    grange <- GRanges(seqnames = unique(snp_data$CHROM[snp_data$ANN....GENE == gene_vcf]),
-                      ranges = range)
-
-
-    list_variant_ranges[[gene_vcf]] <- grange
+                    names = gene_vcf,
+                    impact = snp_data$ANN....IMPACT[snp_data$ANN....GENE == gene_vcf])
+    vcf_grange <- GRanges(seqnames = unique(snp_data$CHROM[snp_data$ANN....GENE == gene_vcf]),
+                      ranges = vcf_range)
+    list_variant_ranges[[gene_vcf]] <- vcf_grange
     
 }
 list_variant_ranges <- GRangesList(list_variant_ranges)
@@ -1098,7 +940,7 @@ list_variant_ranges <- GRangesList(list_variant_ranges)
 
 Nu is er een lijst aangemaakt met een GRanges voor alle varianten
 
-```{r}
+```{r, eval=FALSE}
 gene_variants = list()
 count = 1
 for (gene in unique(snp_data$ANN....GENE)){
@@ -1113,11 +955,11 @@ for (gene in unique(snp_data$ANN....GENE)){
 
 ```
 
-Dit geeft een lijst met alle genen met een variant in dat gen
-Hier kan nu 1 uit gekozen worden en een loliplot van gemaakt worden
+Dit geeft een lijst met alle genen met een variant in dat gen Hier kan nu 1 uit gekozen worden en een loliplot van gemaakt worden
 
 Er moet nu een nieuwe list_granges gemaakt worden met alleen de genen die staan in het vcf bestand
-```{r}
+
+```{r, eval=FALSE}
 list_exons <- list()
 
 for (gene in unique(snp_data$ANN....GENE)){
@@ -1138,29 +980,31 @@ list_exons <- GRangesList(list_granges)
 
 ```
 
-```{r}
+```{r, eval=FALSE}
 
-gene = "Muc5b"
+
+gene <- gene_variants[[6]]
 
 # Get Exons positions
 e <- end(list_exons[[gene]])
 s <- start(list_exons[[gene]])
 diff <- e - s
+variants_info <- unique(list_variant_ranges[[gene]])
 
-SNPs <- unique(start(list_variant_ranges[[gene]]))
 
+SNPs <- start(variants_info)
 chromosome <- unique(snp_data$CHROM[snp_data$ANN....GENE == gene])
 
-height_map <- c("LOW" = 1, "MODIFIER" = 5, "MODERATE" = 10, "HIGH" = 15)
-sample.gr <- GRanges(chromosome, IRanges(SNPs, width = 1, names = paste0("snp", SNPs)))
+height_map <- c("LOW" = 1, "MODIFIER" = 10, "MODERATE" = 5, "HIGH" = 15)
+sample.gr <- GRanges(chromosome, IRanges(SNPs, width = 1, names = paste0("", SNPs)))
 
-sample.gr$impact <- snp_data$ANN....IMPACT[snp_data$POS %in% SNPs]
+sample.gr$impact <- variants_info$impact
 
 
 sample.gr$score <- height_map[sample.gr$impact]
 
 
-sample.gr$color <- sample.int(10, length(SNPs), replace = T)
+sample.gr$color <- "#0118F9"
 
 gr = GRanges(chromosome, IRanges(s, width = diff))
 gr$fill <- "#FF8833"
@@ -1168,7 +1012,7 @@ gr$height <- unit(3, "mm")
 
 
 yaxis <- c(0,5,10,15)
-names(yaxis) <- c("LOW", "MODI", "MOD", "HIGH")
+names(yaxis) <- c("LOW", "MOD", "MODI", "HIGH")
 lolliplot(sample.gr, gr, ylab = " ",
           xlab = "Chromosome position",
           yaxis = yaxis,)
@@ -1176,21 +1020,48 @@ lolliplot(sample.gr, gr, ylab = " ",
 grid.text("Mutation impact", x=.1, y=.62, just="bottom", 
           gp=gpar(cex=1))
 
-grid.text(paste("Variants on", gene), x=.5, y=.98, just="top", 
+grid.text(paste("Variants on", gene ), x=.5, y=.98, just="top", 
           gp=gpar(cex=1.5, fontface="bold"))
+grid.text(paste("On chromosome", chromosome ), x=.5, y=.93, just="top", 
+          gp=gpar(cex=1))
 ```
-De gebruikte galaxy tool zorgt voor duplicaten omdat er meerdere dingen uit de info kolom gehaald kunnen worden.
-Deze worden telkens op een nieuwe regel geplaatst, er kan op 1 positie maar 1 variant zijn. Dus wordt unique gebruikt om duplicaten weg te halen.
 
-Ons bed bestand is gegenereerd met een snel python scriptje van een GTF bestand, en de meeste exonen hebben dus overlap. Er blijkt ook een tool te zijn op de galaxy server die GFF omzet naar bed, deze zal ik nu gaan proberen.
-Het bed bestand die hier uitkomt bevat niet de namen van de genen, die hebben we wel nodig.
+De gebruikte galaxy tool zorgt voor duplicaten omdat er meerdere dingen uit de info kolom gehaald kunnen worden. Deze worden telkens op een nieuwe regel geplaatst, er kan op 1 positie maar 1 variant zijn. Dus wordt unique gebruikt om duplicaten weg te halen. Ik heb er voor gekozen om die duplicaten niet weer te geven maar deze te verwijderen, dit omdat er te weinig tijd was om te diep in te gaan op de data en dit verwerken.
 
-Er is ook nog een gtf to bed tool, deze zal ik ook gaan testen om te kijken of die gebruikt kan worden.
-Ook deze maakt een bed file zonder de gen namen er in te zetten.
+Ons bed bestand is gegenereerd met een snel python scriptje van een GTF bestand, en de meeste exonen hebben dus overlap. Er blijkt ook een tool te zijn op de galaxy server die GFF omzet naar bed, deze zal ik nu gaan proberen. Het bed bestand die hier uitkomt bevat niet de namen van de genen, die hebben we wel nodig.
+
+Er is ook nog een gtf to bed tool, deze zal ik ook gaan testen om te kijken of die gebruikt kan worden. Ook deze maakt een bed file zonder de gen namen er in te zetten.
 
 Ik blijf voor deze opdracht dus het zelf gemaakte bed bestand gebruiken, ookal is deze minder accuraat.
 
-In het plotje is het volgende zichtbaar:
-op de x as de positie op een chromosoom, met daarbij de exonen van het gezochte gen die komen uit het bed bestand. De lolipops geven weer waar een mutatie is gevonden, en de hoogte van de loli geeft weer wat voor impact de mutatie heeft op het gen.
-Zo zien we in het lange exon dat er 5 mutaties zijn gevonden waarbij 2 mutaties een lage impact heeft op het gen, en 3 een moderate impact.
+Het is nog niet helemaal duidelijk om te zien wanneer een variant in een intron of exon ligt, dit zou ik graag nog met kleur aan willen geven. Deze kan ik er weer uithalen snpSift extract.
 
+```{r}
+exon_ranges <- ranges(list_exons[[gene]])
+
+exon_variants <- subsetByOverlaps(ranges(variants_info), exon_ranges)
+
+exon_index <- which(ranges(variants_info) %in% exon_variants)
+
+sample.gr$color[exon_index] <- "#B22222"
+
+legends <- list(labels=c("Intronic", "Exonic"), 
+                fill=c("#0118F9", "#B22222"), 
+                color=c("gray80", "gray80")) ## legend labels
+
+yaxis <- c(0,5,10,15)
+names(yaxis) <- c("LOW", "MOD", "MODI", "HIGH")
+names(gr) <- rep(paste("Exons of", gene), length(gr))
+lolliplot(sample.gr, gr, ylab = " ",
+          xlab = "Chromosome position",
+          yaxis = yaxis,
+          legend = legends)
+
+
+grid.text("Mutation impact", x=.1, y=.7, just="bottom", 
+          gp=gpar(cex=1))
+grid.text(paste("Variants on", gene ), x=.2, y=.98, just="top", 
+          gp=gpar(cex=1.5, fontface="bold"))
+grid.text(paste("On chromosome", chromosome ), x=.2, y=.93, just="top", 
+          gp=gpar(cex=1))
+```
