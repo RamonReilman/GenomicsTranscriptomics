@@ -1041,3 +1041,67 @@ snpift extract fields op galaxy gebruikt om gennamen en high's uit vcf te halen.
 ## Vrijdag 11 oktober:
 We hebben vandaag de logboeken uitgewisseld met op welke data alles is uitgevoerd. Ook alle referenties toegevoegd.
 En logboek geknit naar html (voorheen steeds vergeten).
+
+
+## Zondag 13 oktober:
+Ik moet voor het plan van aanpak de samples uitzoeken. 
+De verschillende samples:
+
+- Baseline_RNAseq (4)
+- NonTreated_RNAseq (6)
+- Treated_RNAseq (6)
+
+- NSG_Baseline_000_RNAseq (5)
+- NSG_Non-Treatment_000_RNAseq (5)
+- NSG_Entinostat_000_RNAseq (5)
+
+- Baseline_TCRseq (6)
+- NonTreated_TCRseq (6)
+- Treated_TCRseq (6)
+
+Er zijn dus drie groepen:
+
+- RNAseq
+- NGS_RNAseq
+- TCRseq
+
+en elke groep bestaat uit:
+
+- Baseline
+- Non_treated
+- Treated
+
+De sample nummers van de TCRseq en de RNAseq zijn allebei in de 400, Dus ik vermoed dat ze twee sequence techieken op dezelfde samples hebben uitgevoerd. 
+
+Wat is het verschil tussen de TCRseq, RNAseq en NGS_RNAseq:
+
+- RNAseq: meet de genexpressie (onder bepaalde omstandigheden)
+- TCRseq: meet de reactie van het immuumsysteem (door te kijken naar de hoeveelheid T-celreceptors ( cellen die het antigenen herkennen))
+- NGS_RNAseq: NGS-muizen zijn muizen die een zwak immuumsysteem hebben en daardoor gebruikt worden om menselijke cellen in te enten (zonder dat het immuumsysteem van de muis ze afstoot).
+
+Wat is het verschil tussen de Baseline, Non_treated en Treated:
+
+- Baseline is voor de tumor
+- Non_treated is na de tumor zonder entinostat
+- Treated is na de tumor met entinostat
+
+
+
+quality control:
+welke tools gaan we gebruiken en waarom:
+- trimmomatic: om de lage kwaliteit reads van het sequencen eruit te halen. Waarom: Om foutieve conclusies door foutieve data later te voorkomen (als je data gebruikt die niet klopt, trek je uit die data ook conclusies die niet overeenkomen met de werkelijkheid).
+- fastqc: geeft een rapport met de kwaliteit van de data. Waarom: Hieruit kun je bepalen wat je eventueel wilt aanpassen met Trimmomatic.
+- multiqc: voegt alle fastqc rapporten van samples samen tot een rapport. Waarom: Zo kun je makkelijker de resultaten van fastqc van alle samples bekijken.
+
+
+
+! Presenteren:
+
+- samples met ngs enzo (tabel leveren aan Ramon)
+- quility control (bulletpoints: trimmomatic, fastqc, multiqc)
+
+
+
+
+! Vragen dinsdag Ramon:
+- welke data heb je gedownload? vanaf de ncbi pagina ?

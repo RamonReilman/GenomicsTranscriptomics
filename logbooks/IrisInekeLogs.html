@@ -1247,6 +1247,69 @@ te halen.</p>
 is uitgevoerd. Ook alle referenties toegevoegd. En logboek geknit naar
 html (voorheen steeds vergeten).</p>
 </div>
+<div id="zondag-13-oktober" class="section level2">
+<h2>Zondag 13 oktober:</h2>
+<p>Ik moet voor het plan van aanpak de samples uitzoeken. De
+verschillende samples:</p>
+<ul>
+<li><p>Baseline_RNAseq (4)</p></li>
+<li><p>NonTreated_RNAseq (6)</p></li>
+<li><p>Treated_RNAseq (6)</p></li>
+<li><p>NSG_Baseline_000_RNAseq (5)</p></li>
+<li><p>NSG_Non-Treatment_000_RNAseq (5)</p></li>
+<li><p>NSG_Entinostat_000_RNAseq (5)</p></li>
+<li><p>Baseline_TCRseq (6)</p></li>
+<li><p>NonTreated_TCRseq (6)</p></li>
+<li><p>Treated_TCRseq (6)</p></li>
+</ul>
+<p>Er zijn dus drie groepen:</p>
+<ul>
+<li>RNAseq</li>
+<li>NGS_RNAseq</li>
+<li>TCRseq</li>
+</ul>
+<p>en elke groep bestaat uit:</p>
+<ul>
+<li>Baseline</li>
+<li>Non_treated</li>
+<li>Treated</li>
+</ul>
+<p>De sample nummers van de TCRseq en de RNAseq zijn allebei in de 400,
+Dus ik vermoed dat ze twee sequence techieken op dezelfde samples hebben
+uitgevoerd.</p>
+<p>Wat is het verschil tussen de TCRseq, RNAseq en NGS_RNAseq:</p>
+<ul>
+<li>RNAseq: meet de genexpressie (onder bepaalde omstandigheden)</li>
+<li>TCRseq: meet de reactie van het immuumsysteem (door te kijken naar
+de hoeveelheid T-celreceptors ( cellen die het antigenen
+herkennen))</li>
+<li>NGS_RNAseq: NGS-muizen zijn muizen die een zwak immuumsysteem hebben
+en daardoor gebruikt worden om menselijke cellen in te enten (zonder dat
+het immuumsysteem van de muis ze afstoot).</li>
+</ul>
+<p>Wat is het verschil tussen de Baseline, Non_treated en Treated:</p>
+<ul>
+<li>Baseline is voor de tumor</li>
+<li>Non_treated is na de tumor zonder entinostat</li>
+<li>Treated is na de tumor met entinostat</li>
+</ul>
+<p>quality control: welke tools gaan we gebruiken en waarom: -
+trimmomatic: om de lage kwaliteit reads van het sequencen eruit te
+halen. Waarom: Om foutieve conclusies door foutieve data later te
+voorkomen (als je data gebruikt die niet klopt, trek je uit die data ook
+conclusies die niet overeenkomen met de werkelijkheid). - fastqc: geeft
+een rapport met de kwaliteit van de data. Waarom: Hieruit kun je bepalen
+wat je eventueel wilt aanpassen met Trimmomatic. - multiqc: voegt alle
+fastqc rapporten van samples samen tot een rapport. Waarom: Zo kun je
+makkelijker de resultaten van fastqc van alle samples bekijken.</p>
+<p>! Presenteren:</p>
+<ul>
+<li>samples met ngs enzo (tabel leveren aan Ramon)</li>
+<li>quility control (bulletpoints: trimmomatic, fastqc, multiqc)</li>
+</ul>
+<p>! Vragen dinsdag Ramon: - welke data heb je gedownload? vanaf de ncbi
+pagina ?</p>
+</div>
 
 
 
