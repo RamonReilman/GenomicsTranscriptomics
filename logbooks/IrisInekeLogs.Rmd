@@ -2,9 +2,11 @@
 title: "Logbook Iris Ineke"
 author: "Iris Ineke"
 date: "2024-09-10"
-output: html_document
-editor_options: 
-  markdown: 
+output:
+  html_document: default
+  pdf_document: default
+editor_options:
+  markdown:
     wrap: 72
 ---
 
@@ -175,7 +177,7 @@ staan met alle data (je geeft het pad daarnaar mee). Vervolgens paralell
 (zorgt voor efficientie): Neemt de eerste 10% van elk bestand en print
 die (van elk bestand) in een nieuw bestand in de folder testdataIris.
 
-```{bash, eval=FALSE}
+```{bash testdata_maken, eval=FALSE}
 find /students/2024-2025/Thema05/BlaasKanker/fastq -name "*.fastq" | \
   parallel "seqkit sample -p 0.1 {} | seqkit head -n 10000 > /students/2024-2025/Thema05/BlaasKanker/oefenengroep/testdataIris/{/}"
 ```
@@ -183,7 +185,7 @@ find /students/2024-2025/Thema05/BlaasKanker/fastq -name "*.fastq" | \
 fastqc: kwaliteitscontrole report Je roept de tool aan en geeft de input
 en met -o de plek waar de output heen moet.
 
-```{bash, eval=FALSE}
+```{bash fastqc, eval=FALSE}
 fastqc /students/2024-2025/Thema05/BlaasKanker/oefenengroep/testdataIris/*  \
   -o /students/2024-2025/Thema05/BlaasKanker/oefenengroep/fastqcIris/
 ```
@@ -191,7 +193,7 @@ fastqc /students/2024-2025/Thema05/BlaasKanker/oefenengroep/testdataIris/*  \
 multiqc: samenvoegen alle fastqc files: Je roept de tool aan en geeft de
 input en met -o de plek waar de output heen moet.
 
-```{bash, eval=FALSE}
+```{bash multiqc, eval=FALSE}
 multiqc /students/2024-2025/Thema05/BlaasKanker/oefenengroep/fastqcIris/ -o /students/2024-2025/Thema05/BlaasKanker/oefenengroep/multiqcIris/
 ```
 
@@ -219,7 +221,7 @@ stuk moet zijn staat op 40 op aanraden van Marcel. En de slidingwindow
 hebben we op de standaard instelling gelaten. De eerste keer runnen
 werkte het niet, omdat we de adapter nog moesten downloaden.
 
-```{bash, eval=FALSE}
+```{bash trimmomatic_testdata, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
   parallel 'TrimmomaticPE -threads 4 ' \
                   '/students/2024-2025/Thema05/BlaasKanker/testdata/{}_1.fastq' \
@@ -236,7 +238,7 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 De code voor de echte data: De paden aangepast naar de files van de
 echte data.
 
-```{bash, eval=FALSE}
+```{bash trimmomatic, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
   parallel 'TrimmomaticPE -threads 8 ' \
                   '/students/2024-2025/Thema05/BlaasKanker/fastq/{}_1.fastq' \
@@ -289,7 +291,7 @@ de 'per base sequence quality plot' het einde de kwaliteit minder werd.
 
 Onderstaande code zijn de aangepaste instellingen voor Trimmomatic.
 
-```{bash, eval=FALSE}
+```{bash trimmomatic_testdata2, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
   parallel 'TrimmomaticPE -threads 4' \
                   '/students/2024-2025/Thema05/BlaasKanker/testdata/{}_1.fastq' \
@@ -316,14 +318,14 @@ kans is dat er alsnog reads zijn die korter zijn dan de minlen
 Nu FastQC en multiQC op de getrimde documenten uitvoeren: Map aanmaken
 in testingtools: trimtest_fastqc
 
-```{bash, eval=FALSE}
+```{bash fastqc_testdata, eval=FALSE}
 fastqc /students/2024-2025/Thema05/BlaasKanker/testingtools/trimtest/*  \
   -o /students/2024-2025/Thema05/BlaasKanker/testingtools/trimtest_fastqc
 ```
 
 Map aanmaken in testingtools: trimtest_multiqc
 
-```{bash, eval=FALSE}
+```{bash multiqc_testdata, eval=FALSE}
 multiqc /students/2024-2025/Thema05/BlaasKanker/testingtools/trimtest_fastqc -o /students/2024-2025/Thema05/BlaasKanker/testingtools/trimtest_multiqc
 ```
 
@@ -343,7 +345,7 @@ begin van de reads nog beter kunnen, dus 'leading:32' toevoegen (32 uit
 de grafiek gehaald: 'sequence quality histogram).\
 Nieuwe poging:
 
-```{bash, eval=FALSE}
+```{bash trimmomatic_testdata3, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
   parallel 'TrimmomaticPE -threads 4' \
                   '/students/2024-2025/Thema05/BlaasKanker/testdata/{}_1.fastq' \
@@ -366,21 +368,21 @@ nu doet hij het wel.
 Vervolgens: maak map in testingtools: trimtest_fastqc2 FastQC op poging
 drie trim:
 
-```{bash, eval=FALSE}
+```{bash fastqc_testdata2, eval=FALSE}
 fastqc /students/2024-2025/Thema05/BlaasKanker/testingtools/trimtest2/*  \
   -o /students/2024-2025/Thema05/BlaasKanker/testingtools/trimtest_fastqc2
 ```
 
 Vervolgens: maak map in testingtools: trimtest_multiqc2
 
-```{bash, eval=FALSE}
+```{bash multiqc_testdata2, eval=FALSE}
 multiqc /students/2024-2025/Thema05/BlaasKanker/testingtools/trimtest_fastqc2 -o /students/2024-2025/Thema05/BlaasKanker/testingtools/trimtest_multiqc2
 ```
 
 Vervolgens de report naar eigen laptop zetten om te openen: in eigen
 terminal:
 
-```{bash, eval=FALSE}
+```{bash rapport_to_laptop, eval=FALSE}
 scp -r ieineke@bioinf.nl:/students/2024-2025/Thema05/BlaasKanker/testingtools/trimtest_multiqc2/ .
 ```
 
@@ -414,19 +416,19 @@ versie 3.2.0): nieuwe folder maken in terminal: 'picard'
 
 de tool downloaden op de school terminal:
 
-```{bash, eval=FAlSE}
+```{bash picard_downloaden, eval=FALSE}
 wget https://github.com/broadinstitute/picard/releases/download/3.2.0/picard.jar
 ```
 
 de file unzippen (was achteraf niet nodig):
 
-```{bash, eval=FAlSE}
+```{bash unzip, eval=FALSE}
 unzip picard.jar 
 ```
 
 de help van de tool:
 
-```{bash, eval=FAlSE}
+```{bash picard_help, eval=FALSE}
 java -jar picard.jar -h
 ```
 
@@ -470,21 +472,19 @@ probes aan dezelfde gebieden kunnen binden(of overlappen). En hierdoor
 kan het stukje dna meer dan een keer gelezen worden. (dit is vaak bij
 korte stukjes dna, omdat de paired-end elkaar overlappen lijkt)
 
-! BRON probes:
-<https://www.idtdna.com/pages/technology/next-generation-sequencing/dna-sequencing/targeted-sequencing/exome-sequencing>
+[BRON probes](https://www.idtdna.com/pages/technology/next-generation-sequencing/dna-sequencing/targeted-sequencing/exome-sequencing)
 
-betere induik probes:
-<https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-016-2698-y>
+[betere induik probes](https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-016-2698-y)
+
 
 ## Woensdag 25 september:
-
 Oke. Ramon kwam net met het nieuws dat de geo dataset incompleet is. wat
 betekend dat we geen somatic kunnen uitvoeren op de data. Maar als we
 germline doen, dan hebben we ook verschillende allelen die als mutatie
 worden herkend. Hoe gaan we dit oplossen in de tijd die we hebben ?
 
 We hebben overlegd welke Trimmomatic settings we willen gebruiken
-(trailing, leading, illuminaclip).
+(trailing, leading, illuminaclip). En Ramon heeft Trimmomatic uitgevoerd. Zie het [logboek van Ramon](https://github.com/RamonReilman/GenomicsTranscriptomics/blob/main/logbooks/RamonReilmanLogs.Rmd)
 
 We willen de duplicaten verwijderen. Dus doc lezen van tool.
 
@@ -492,22 +492,23 @@ wat moeten we picard laten doen: duplicaten verwijderen
 
 Hoe de tool gerund moet worden:
 
-```{bash, eval=FALSE}
+```{bash picard_usage, eval=FALSE}
 picard.jar PicardToolName \
 	OPTION1=value1 \
 	OPTION2=value2
 ```
 
-## Donderdag 26 september:
 
+
+## Donderdag 26 september:
 Eerst moeten we waarschijnlijk 'MarkDuplicates' gebruiken om de
 duplicaten te herkennen. Misschien 'samtools' gebruiken voor
 daadwerkelijk verwijderen van duplicaten daarna ?
 
 Welke 'PicardToolName' gaan we gebruiken uitzoeken: (input is )
+Jasper heeft de BWA uitgevoert. Zie hiervoor het [logboek van Jasper](https://github.com/RamonReilman/GenomicsTranscriptomics/blob/main/logbooks/JasperJonkerLogs.Rmd)
 
 ##### EstimateLibraryComplexity:
-
 Deze tool kan inschatten hoeveel duplicaten er zijn door te kijken naar
 de eerste paar basen (van forward en reverse) en die met elkaar te
 vergelijken. Hij geeft een schatting van hoe groot je bestand is zonder
@@ -525,7 +526,6 @@ Dit lijkt me dus niet geschikt voor wat we willen, aangezien het de
 duplicaten niet verwijderd of markeert.
 
 ##### MarkDuplicates:
-
 Markeert de duplicaten door de basenparen te vergelijken. Hij leest de
 forward en reverse (net als bij EstimateLibraryComplexity) en vergelijkt
 de eerste paar basen met elkaar. Vervolgens vergelijkt hij de kwaliteit
@@ -568,18 +568,18 @@ het identificeren van de duplicates en daarna remove_duplicate.
 
 Voorbeeld van de documentatie:
 
-```{bash, eval=FALSE}
+```{bash picard_testdata, eval=FALSE}
 java -jar picard.jar MarkDuplicates \
       I=input.bam \
       O=marked_duplicates.bam \
       M=marked_dup_metrics.txt
 ```
 
-De input komt van Jasper van de mapping. Voor de 'O' een map maken waar
+De input komt van !Jasper van de mapping. Voor de 'O' een map maken waar
 de marked duplicates in kunnen. Voor de 'M' ook een map maken waar de
 statistieken in kunnen.
 
-```{bash, eval=FALSE}
+```{bash picard_testdata2, eval=FALSE}
 java -jar picard.jar MarkDuplicates \
       I=input.bam \
       O=marked_duplicates.bam \
@@ -601,7 +601,7 @@ en dan in picard gaat.
 
 code proberen op testdata output van Jasper. Paden invullen:
 
-```{bash, eval=FALSE}
+```{bash picard_testdata3, eval=FALSE}
 java -jar picard.jar MarkDuplicates \
       I=/students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/output.sorted.bam \
       O=/students/2024-2025/Thema05/BlaasKanker/testingtools/picard_test/poging_1/marked_duplicates.bam \
@@ -613,7 +613,7 @@ foutmelding: De command line syntax is veranderd. Nieuwe versie,\
 note: misschien moet er ook nog 'java -jar picard.jar' voor de
 'MarkDuplicates':
 
-```{bash, eval=FALSE}
+```{bash picard, eval=FALSE}
 MarkDuplicates \
 -I /students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/output.sorted.bam \
 -O /students/2024-2025/Thema05/BlaasKanker/testingtools/picard_test/poging_1/marked_duplicates.bam \
@@ -623,7 +623,7 @@ MarkDuplicates \
 
 Ja, dat moest er nog voor en het is remove_duplicates (zonder r):
 
-```{bash, eval=FALSE}
+```{bash picard2, eval=FALSE}
 java -jar picard.jar MarkDuplicates \
       -I /students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/output.sorted.bam \
       -O /students/2024-2025/Thema05/BlaasKanker/testingtools/picard_test/poging_1/marked_duplicates.bam \
@@ -638,7 +638,7 @@ integer and did not. Read name: SRR14870694.3479784. Cause: String
 'SRR14870694.3479784' did not start with a parsable number.'\
 
 We kunnen proberen het getal te scheiden van de 'SRR' door middel van
-een '\_', maar ik ben bang dat picard dat niet goed genoeg vind en een
+een slash, maar ik ben bang dat picard dat niet goed genoeg vind en een
 naam wil met enkel cijfers.
 
 Ik heb gevraagd om meningen van de groep en Ramon is er dus achter
@@ -654,7 +654,7 @@ De testdata is niet de juiste vorm, dus ik ga verder met de echte data.\
 
 Ik heb een lijst gemaakt van alle bestanden die ik als input wil:
 
-```{bash, eval=FALSE}
+```{bash input_picard, eval=FALSE}
 find . -name "*sorted.bam" > sorted_bam_files.txt
 ```
 
@@ -757,10 +757,11 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
                 '-READ_NAME_REGEX null'
 ```
 
-! picard documentatie bronvermelden BRON Picard:
-<https://broadinstitute.github.io/picard/index.html>
+Voor het gerbuik van picard heb ik de [picard documentatie](https://broadinstitute.github.io/picard/index.html) gebruikt
+
 
 ## Dinsdag 1 oktober:
+Ramon heeft de lofreq uitgevoerd vandaag. Zie hiervoor [Ramon zijn logboek](https://github.com/RamonReilman/GenomicsTranscriptomics/blob/main/logbooks/RamonReilmanLogs.Rmd)
 
 FastQC zegt dat voor picard er ongeveer 20.8% duplicaten waren en na
 Picard ongeveer 18.5%, dus picard heeft ongeveer 2% dup verwijderd. Maar
@@ -773,8 +774,7 @@ inschatting van duplicaten dan dat er daadwerkelijk is. (FastP doet t
 beter schijnt) Dus de duplicatie levels uit de FastQC test die we hebben
 uitgevoerd zijn niet betrouwbaar.
 
-BRON FastQC:
-<https://dnatech.genomecenter.ucdavis.edu/faqs/why-does-fastqc-show-unexpectedly-high-sequence-duplication-levels-pcr-duplicates/>
+[BRON FastQC](https://dnatech.genomecenter.ucdavis.edu/faqs/why-does-fastqc-show-unexpectedly-high-sequence-duplication-levels-pcr-duplicates/)
 
 Kunnen we proberen om een rapport te maken met FastP? (staat al op de
 server)\
@@ -784,7 +784,7 @@ voorbeeld van de git van FastP:
 fastp -i in.R1.fq.gz -I in.R2.fq.gz -o out.R1.fq.gz -O out.R2.fq.gz
 ```
 
-BRON FastP: <https://github.com/OpenGene/fastp/blob/master/README.md>
+[BRON FastP](https://github.com/OpenGene/fastp/blob/master/README.md)
 
 Ik betwijfel of FastP de tool is die we kunnen gebruiken voor een
 duplicaten check, aangezien de data die in FastP moet een R1 en een R2
@@ -806,6 +806,8 @@ Wij gebruiken maar twee groepen, dus wij kunnen alleen de Two-tailed t
 tests en de Mann-Whitney U tests gebruiken.
 
 ## Donderdag 3 oktober:
+Ramon heeft de snpeff gedaan vandaag nadat Janine vast liep hierin. Zie hiervoor [Ramon zijn logboek](https://github.com/RamonReilman/GenomicsTranscriptomics/blob/main/logbooks/RamonReilmanLogs.Rmd)
+In [Janine haar logboek](https://github.com/RamonReilman/GenomicsTranscriptomics/blob/main/logbooks/JaninePostmusLogs.Rmd) staat dus wel allemaal informatie hier over.
 
 Welke input is nodig? tabel met: - snp(identiek nummer) - chromsoom waar
 de snp op ligt - positie in basenparen waar de snp in het chromsoom
@@ -831,11 +833,9 @@ Plink schijnt uit een vcf bestand p-values te kunnen halen. Maar morgen
 even om advies vragen of dit de beste manier is om aan de p-values te
 komen.
 
-BRON plink: 
-<https://zzz.bwh.harvard.edu/plink/anal.shtml>
+[BRON plink](https://zzz.bwh.harvard.edu/plink/anal.shtml)
 
-BRON snp manhattan plot in R:
-<https://r-graph-gallery.com/101_Manhattan_plot.html>
+[BRON snp manhattan plot in R](https://r-graph-gallery.com/101_Manhattan_plot.html)
 
 
 
@@ -873,7 +873,7 @@ bgzip /students/2024-2025/Thema05/BlaasKanker/outputs/cp_variant_annotation_canc
 Hij zegt iets met permissioin dennied terwijl ik de map heb aangemaakt en de rechten goed staan, dus we kijken er morgen samen even naar.
 
 
-code eerst nog zonder juiste referentie genoom, moet later dus met rtracklaye waarschijnlijk:
+Code eerst nog zonder juiste referentie genoom, moet later dus met rtracklayer waarschijnlijk:
 ```{r, eval=FALSE}
 library(VariantAnnotation)
 library(TxDb.Mmusculus.UCSC.mm10.knownGene)
@@ -913,4 +913,131 @@ if (.Platform$OS.type != "windows") {
   lolliplot(mutation.frequency, features, ranges=gr)
 }
 ```
+met Ramon:
+```{r, eval=FALSE}
+library(BiocManager)
+#BiocManager::install("BSgenome.Mmusculus.UCSC.mm39")
+library(trackViewer)
+library(VariantAnnotation)
+library(BSgenome.Mmusculus.UCSC.mm39)
+library(org.Mm.eg.db)
 
+fl <- "/students/2024-2025/Thema05/BlaasKanker/outputs/variant_annotation_cancer_genes/SRR14870694.vcf" # Zorg ervoor dat het bestandspad correct is
+gr <- GRanges("1", IRanges(50968014, 50970514, names="gen_naam"))
+
+if (.Platform$OS.type != "windows") {
+  # Gebruik ScanVcfParam voor het definiëren van het GRanges-object
+  vcf <- readVcf(fl, "mm39", param=ScanVcfParam(which=gr))
+
+  mutation.frequency <- rowRanges(vcf)
+  mcols(mutation.frequency) <- cbind(mcols(mutation.frequency), 
+                                     VariantAnnotation::info(vcf))
+  mutation.frequency$border <- "gray30"
+  mutation.frequency$color <- ifelse(grepl("^rs", names(mutation.frequency)), 
+                                     "lightcyan", "lavender")
+  mutation.frequency$score <- mutation.frequency$AF * 100
+  seqlevelsStyle(mutation.frequency) <- "UCSC"
+
+  if (!grepl("chr", seqlevels(mutation.frequency)[1])) {
+    seqlevels(mutation.frequency) <- paste0("chr", seqlevels(mutation.frequency))
+  }
+}
+
+seqlevelsStyle(gr) <- "UCSC"
+trs <- geneModelFromTxdb(BSgenome.Mmusculus.UCSC.mm39,
+                         org.Mm.eg.db,
+                         gr=gr)
+features <- c(range(trs[[1]]$dat), range(trs[[5]]$dat))
+names(features) <- c(trs[[1]]$name, trs[[5]]$name)
+features$fill <- c("lightblue", "mistyrose")
+features$height <- c(.02, .04)
+
+if (.Platform$OS.type != "windows") {
+  lolliplot(mutation.frequency, features, ranges=gr)
+}
+```
+
+Na hulp van Marcel:
+```{r, eval=FALSE}
+vcf <- readVcfAsVRanges("/students/2024-2025/Thema05/BlaasKanker/outputs/variant_annotation_cancer_genes/SRR1487069.vcf.gz", genome = "mm39")
+gr <- GRanges("1", IRanges(74419628, 74419928))
+vcf$score <- vcf$AF * 100
+lolliplot(vcf, gr)
+```
+snpift extract fields op galaxy, fileds to extract invullen (onderin staan de extra opties die je erin kan stoppen, naast chrom pos enz.)
+
+
+! exon positie in plot doen:
+! bed irange en grange
+! irnage(begin), width(eind-start)
+
+
+## 9 oktober 2024:
+
+```{r, eval=FALSE}
+data <- read.table('/students/2024-2025/Thema05/BlaasKanker/etc/filtered_bed.bed')
+head(data)
+```
+
+```{r kolommen_naam_aanpassen, eval=FALSE}
+names(data) <- c('chromosoom', 'start_exon', 'end_exon', 'gene_name')
+head(data)
+```
+
+```{r table_exon_aantal_per_chromosoom, eval=FALSE}
+exon_aantal_per_chromosoom_tabel <- table(data$chromosoom)
+print(exon_aantal_per_chromosoom_tabel)
+```
+
+De load() functie werkt niet op bed data, dus maken we er eerst een .Rdata van:
+```{r bed_to_Rdata, eval=FALSE}
+save(data, file = "data.RData")
+```
+
+```{r load_Rdata, eval=FALSE}
+load('data.RData')
+```
+
+```{r, eval=FALSE}
+bed_splitted <- split(data, data$gene_name)
+# Print the namen van de eerste 10 genen
+for (gene in names(bed_splitted)[1:10]) {
+    print(gene)
+}
+```
+Over elk gen heen gaan in de lijst met gennamen:
+```{r fout_verbeterd_exonlist, eval=FALSE}
+exons_list <- list()
+
+for (gene in names(bed_splitted)) {
+    gene_data <- bed_splitted[[gene]]
+    
+    
+    ranges_all <- IRanges(start = gene_data$start, 
+                      end = gene_data$end, 
+                      names = gene_data$gene_name)
+    
+    
+    granges_alle <- GRanges(seqnames = gene_data$chromosoom,
+                        ranges = ranges_all)
+    
+    exons_list[[gene]] <- granges_alle
+}
+
+```
+
+```{r grangeslist_van_exonslist, eval=FALSE}
+exonlist_data <- GRangesList(exons_list)
+```
+
+```{r check_head, eval=FALSE}
+head(exonlist_data)
+```
+
+Met Ramon en Jasper verder aan gewerkt op schoolcomputer van Ramon.
+snpift extract fields op galaxy gebruikt om gennamen en high's uit vcf te halen.
+
+
+## Vrijdag 11 oktober:
+We hebben vandaag de logboeken uitgewisseld met op welke data alles is uitgevoerd. Ook alle referenties toegevoegd.
+En logboek geknit naar html (voorheen steeds vergeten).
