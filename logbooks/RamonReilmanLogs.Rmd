@@ -9,6 +9,14 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(VariantAnnotation)
+library(BiocManager)
+library(GenomicRanges)
+library(dplyr)
+if (!requireNamespace("trackViewer", quietly = TRUE)) { # Only needed if BiocManager is not installed
+  BiocManager::install("trackViewer")
+}
+library(trackViewer)
 ```
 
 # Logboek Ramon Reilman
@@ -819,15 +827,7 @@ Vandaag heb ik een python scriptje gemaakt die het bed bestand ook nog filtered 
 
 Nu kunnen Iris en ik vandaag een loliplot maken waarbij ook de exonen van de genen weer gegeven zijn.
 
-```{r, eval=FALSE}
-library(VariantAnnotation)
-library(BiocManager)
-library(GenomicRanges)
-library(dplyr)
-library(trackViewer)
-```
-
-```{r, eval=FALSE}
+```{r}
 vcf_data <- readVcfAsVRanges("/students/2024-2025/Thema05/BlaasKanker/outputs/variant_annotation_cancer_genes/SRR14870694.vcf", genome = "mm39")
 
 gr <- GRanges("1", IRanges(74419628, 74419928))
@@ -839,7 +839,7 @@ Nu hebben we een simpel plotje van varianten op chromosome 1. Met allel frequent
 
 Ik zal het gefilterde bed bestand gaan verwerken.
 
-```{r, eval=FALSE}
+```{r}
 bed_file <- read.table("/students/2024-2025/Thema05/BlaasKanker/etc/filtered_bed.bed")
 names(bed_file) <- c("chromosome", "exon_start", "exon_end", "gene_name")
 
@@ -847,7 +847,7 @@ names(bed_file) <- c("chromosome", "exon_start", "exon_end", "gene_name")
 
 Bed bestand is nu ingeladen
 
-```{r, eval=FALSE}
+```{r}
 list_granges <- list()
 bed_splitted = split(bed_file, bed_file$gene_name)
 for (gene in names(bed_splitted)){
@@ -864,7 +864,7 @@ list_granges <- GRangesList(list_granges)
 
 ```
 
-```{r, eval=FALSE}
+```{r}
 gene_list = list()
 count = 1
 for (gene in names(bed_splitted)){
@@ -874,7 +874,7 @@ for (gene in names(bed_splitted)){
 gene_list[[1]]
 ```
 
-```{r, eval=FALSE}
+```{r}
 gene <- "Tmeff2"
 
 e <- end(list_granges[[gene]])
@@ -912,15 +912,14 @@ Ik heb hiervoor de volgende instellingen gebruikt.
 
 Nu kunnen we 1 van de 6 bestanden inladen en lezen en VRanges van maken
 
-```{r, eval=FALSE}
+```{r}
 snp_data <- read.csv2("/students/2024-2025/Thema05/BlaasKanker/outputs/vcf_ann_snpSift/SRR14870694.vcf.tabular", sep = "\t", na.strings = "unkown")
-snp_data <- snp_data[!is.na(snp_data$POS) & !is.na(snp_data$CHROM) & !is.na(snp_data$ANN....GENE), ]
-snp_data
+
 ```
 
 GRanges maken van de data
 
-```{r, eval=FALSE}
+```{r}
 list_variant_ranges = list()
 
 for (gene_vcf in unique(snp_data$ANN....GENE))
@@ -940,7 +939,7 @@ list_variant_ranges <- GRangesList(list_variant_ranges)
 
 Nu is er een lijst aangemaakt met een GRanges voor alle varianten
 
-```{r, eval=FALSE}
+```{r}
 gene_variants = list()
 count = 1
 for (gene in unique(snp_data$ANN....GENE)){
@@ -959,7 +958,7 @@ Dit geeft een lijst met alle genen met een variant in dat gen Hier kan nu 1 uit 
 
 Er moet nu een nieuwe list_granges gemaakt worden met alleen de genen die staan in het vcf bestand
 
-```{r, eval=FALSE}
+```{r}
 list_exons <- list()
 
 for (gene in unique(snp_data$ANN....GENE)){
@@ -980,7 +979,7 @@ list_exons <- GRangesList(list_granges)
 
 ```
 
-```{r, eval=FALSE}
+```{r}
 
 
 gene <- gene_variants[[6]]
@@ -1034,7 +1033,8 @@ Er is ook nog een gtf to bed tool, deze zal ik ook gaan testen om te kijken of d
 
 Ik blijf voor deze opdracht dus het zelf gemaakte bed bestand gebruiken, ookal is deze minder accuraat.
 
-Het is nog niet helemaal duidelijk om te zien wanneer een variant in een intron of exon ligt, dit zou ik graag nog met kleur aan willen geven. Deze kan ik er weer uithalen snpSift extract.
+Het is nog niet helemaal duidelijk om te zien wanneer een variant in een intron of exon ligt, dit zou ik graag nog met kleur aan willen geven. Dit kan ik zelf vinden aan de hand van de exon ranges in het BED bestand.
+
 
 ```{r}
 exon_ranges <- ranges(list_exons[[gene]])
