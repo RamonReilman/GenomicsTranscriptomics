@@ -56,13 +56,13 @@ Verder bezig geweest met presentatie van het plan van aanpak voorbereiden. Het l
 
 ## 14-9-2024
 
-Plan van aanpak deadline dag, alle git branches zijn gemerged nadat feedback is gegeven en dit is aangepast. Daarna zijn alle kopjes samengevoegd naar 1 bestand en deze is geknit tot pdf.
+Plan van aanpak deadline dag, alle git branches zijn merged nadat feedback is gegeven en dit is aangepast. Daarna zijn alle kopjes samengevoegd naar 1 bestand en deze is geknit tot pdf.
 
 Janine heeft haar enkel gebroken, zal de presentatie missen en ik moet haar stukje last moment opvangen.
 
 ## 15-9-2024
 
-De presentatie van het plan van aanpak is gemaakt. Na nog wat feedback van de groepsgenoten is de achtergrond informatie iets meer uitgebreid. Ook zijn spelfoutjes verwijderd en is de workflow flowchart een beetje aangepast (van nederlands naar engels).
+De presentatie van het plan van aanpak is gemaakt. Na nog wat feedback van de groepsgenoten is de achtergrond informatie iets meer uitgebreid. Ook zijn spelfouten verwijderd en is de workflow flowchart een beetje aangepast (van Nederlands naar engels).
 
 ## 16-9-2024
 
@@ -150,7 +150,7 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 
 Het uitvoeren van Trimmomatic, zelfs op data van 10.000 sequenties duurde ontzettend lang. Wij begrijpen niet waarom.
 
-De unpaired bestanden hadden 0 sequenties nadat we het met deze settings hebben uitgevoerd. De unpaired bestanden die Trimmomatic maakt bevatten de sequenties van of de reverse of forward, waarbij de andere de kwaliteits controle niet gered heeft.
+De unpaired bestanden hadden 0 sequenties nadat we het met deze settings hebben uitgevoerd. De unpaired bestanden die Trimmomatic maakt bevatten de sequenties van of de reverse of forward, waarbij de andere de kwaliteit controle niet gered heeft.
 
 ## 20-09-2024
 
@@ -281,7 +281,7 @@ multiqc /students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_32_ML50_L34_T
   /students/2024-2025/Thema05/BlaasKanker/trimmingtesting/A4_32_ML50_L34_T35/output/multiqc
 ```
 
-Hieruit blijkt nogsteeds een incorrecte verdeling te zijn van de lengtes van sequenties. Ik zal ergens deze week vragen naar een oplossing hiervoor.
+Hieruit blijkt nog steeds een incorrecte verdeling te zijn van de lengtes van sequenties. Ik zal ergens deze week vragen naar een oplossing hiervoor.
 
 ## 23-09-2024
 
@@ -308,7 +308,7 @@ Na korte research heb ik gevonden dat ik python versies lokaal kan installeren m
 git clone https://github.com/pyenv/pyenv.git
 ```
 
-Nu staat pyenv in onze tools folder, en kan deze gebruikt worden om andere python versies te installeren. 1 groot probleem is dat pyenv in de gebruikers home dingen installeerd, dat wil ik niet aangezien de home folder maar 25 gigabytes mag zijn. Ik moet in mijn \~/.bashrc bestand dus een andere locatie aangeven voor pyenv.
+Nu staat pyenv in onze tools folder, en kan deze gebruikt worden om andere python versies te installeren. 1 groot probleem is dat pyenv in de gebruikers home dingen installeert, dat wil ik niet aangezien de home folder maar 25 gigabytes mag zijn. Ik moet in mijn \~/.bashrc bestand dus een andere locatie aangeven voor pyenv.
 
 ```{bash, eval=FALSE}
 export PYENV_ROOT="/students/2024-2025/Thema05/BlaasKanker/tools/python_versies"
@@ -331,7 +331,8 @@ Nu hebben we een virtualenv van python 2.7 in onze tools folder. Hier kunnen we 
 
 ## 24-09-2024
 
-Omdat er een aantal duplicaten zijn, die mogelijk een negatieve impact kunnen hebben bij variant calling (kan een bias veroorzaken) Gaan wij deze duplicaten verwijderen met picard. Vandaag ga ik de documentatie lezen en kijken of ik de tool werkend kan krijgen. <!-- TODO ref naar jaspers logboek --> Eerst heb ik Jasper zijn logboek gevolgd om een index te maken, en de fastq files te mappen naar het referentie genoom. Daarna heb ik picard gerund op 1 van de outputs, als test. Deze gaf meerdere foutmeldingen.
+Omdat er een aantal duplicaten zijn, die mogelijk een negatieve impact kunnen hebben bij variant calling (kan een bias veroorzaken) Gaan wij deze duplicaten verwijderen met picard. Vandaag ga ik de documentatie lezen en kijken of ik de tool werkend kan krijgen.
+Eerst heb ik Jasper zijn logboek gevolgd om een index te maken, en de fastq files te mappen naar het referentie genoom. Daarna heb ik picard gerund op 1 van de outputs, als test. Deze gaf meerdere foutmeldingen.
 
 ```{bash, eval=FALSE}
 java -jar picard.jar MarkDuplicates \
@@ -352,7 +353,7 @@ java -jar picard.jar MarkDuplicates \
 
 Nu maakt de naam van het input bestand niet uit.
 
-Een volgende error had een iets andere oplossing. In de bam files mist een @RG header, deze header geeft groep, ID, platofrm en library aan van de samples. En deze header heeft picard nodig om het input bestand te lezen. Deze kan je meegeven aan bwa mem tijdens het mappen, de aangepaste commands staan hier onder.
+Een volgende error had een iets andere oplossing. In de bam files mist een @RG header, deze header geeft groep, ID, platform en library aan van de samples. En deze header heeft picard nodig om het input bestand te lezen. Deze kan je meegeven aan bwa mem tijdens het mappen, de aangepaste commands staan hier onder.
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
@@ -393,7 +394,7 @@ Het uitput bestand is gemaakt, en bevat duplicaten die een mark hebben. Zo kunne
 
 ## 25-09-2024
 
-Vandaag wil ik gaan kijken naar hoe we strelka moeten gebruiken. Eerder in het logboek heb ik uitgelegd hoe die geinstalleerd is met python2.7 Op de officiele website kon ik zo'n soort gelijk bestand vinden. Alleen is er een probleem. Onze tumor is ingebracht, en heft niks te maken met de germline. Opzich is dit geen probleem, want strelka heeft een somatische workflow. Alleen hebben wij de .bam file nodig van een normale muis, zonder de tumor. In het artikel staat wel benoemd dat ze die hebben, maar ik kon deze files nergens vinden. Ik heb het contact persoon een mail gestuurd, en we hopen en wachten nu op een antwoord.
+Vandaag wil ik gaan kijken naar hoe we strelka moeten gebruiken. Eerder in het logboek heb ik uitgelegd hoe die geïnstalleerd is met python2.7 Op de officiële website kon ik zo'n soort gelijk bestand vinden. Alleen is er een probleem. Onze tumor is ingebracht, en heft niks te maken met de germline. Opzich is dit geen probleem, want strelka heeft een somatische workflow. Alleen hebben wij de .bam file nodig van een normale muis, zonder de tumor. In het artikel staat wel benoemd dat ze die hebben, maar ik kon deze files nergens vinden. Ik heb het contact persoon een mail gestuurd, en we hopen en wachten nu op een antwoord.
 
 Deze konden wij dus niet uitvoeren zonder normal file.
 
@@ -405,7 +406,7 @@ python2.7 /students/2024-2025/Thema05/BlaasKanker/tools/strelka-2.9.10.centos6_x
 
 ```
 
-Het probleem bij het uitvoeren van dit command is dat alle erfbare mutaties ook gemarkeerd worden. Het is vervolgens erg lastig om de germline en somatische mutaties uit elkaar te halen.
+Het probleem bij het uitvoeren van dit command is dat alle overerfbaar mutaties ook gemarkeerd worden. Het is vervolgens erg lastig om de germline en somatische mutaties uit elkaar te halen.
 
 ```{bash, eval=FALSE}
 python2.7 /students/2024-2025/Thema05/BlaasKanker/tools/strelka-2.9.10.centos6_x86_64/bin/configureStrelkaGermlineWorkflow.py     --bam /students/2024-2025/Thema05/BlaasKanker/temp/mappingTest/sorted_bam/SRR14870694_sorted.bam     --referenceFasta /students/2024-2025/Thema05/BlaasKanker/tools/testGenome/ncbi_dataset/data/GCF_000001635.27/GCF_000001635.27_GRCm39_genomic.fna     --runDir /students/2024-2025/Thema05/BlaasKanker/temp/demo_somatic
@@ -463,7 +464,7 @@ De kwaliteit van de sequenties ligt tussen de 35 en 37, wat goed is. de kans dat
 
 Na het trimmen kan de mapping uitgevoerd worden met BWA
 ### Mapping with BWA
-Het meeste hiervan is gedaan door jasper, en de mapping is uitgevoerd met het volgende command:
+Het meeste hiervan is gedaan door Jasper, en de mapping is uitgevoerd met het volgende command:
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
   parallel -j 20 "bwa mem -t 15 -M -R '@RG\\tID:{}\\tSM:{}\\tPL:illumina\\tLB:lib1' \
@@ -475,7 +476,7 @@ Voor meer uitleg kan zowel gekeken worden naar Jasper, als mijn logboek.
 
 ## 27-09-2024
 
-Omdat wij geen normaal data hebben is het uitvoeren van een somatische variant call onmogelijk. Dit is een groot probleem omdat de erfbare mutaties nu ook gecalled zullen worden, en we mogelijke honderd duizenden mutaties krijgen. Om vervolgens dan de tumor mutaties vinden is lastig, mogelijk zelfs onmogelijk in de korte tijd die wij hebben.
+Omdat wij geen normaal data hebben is het uitvoeren van een somatische variant call onmogelijk. Dit is een groot probleem omdat de overerfbaar mutaties nu ook gecalled zullen worden, en we mogelijke honderd duizenden mutaties krijgen. Om vervolgens dan de tumor mutaties vinden is lastig, mogelijk zelfs onmogelijk in de korte tijd die wij hebben.
 
 Ik heb de schrijvers van het artikel gemailed, en zij zijn nu aan het kijken of er wat gedaan kan worden. Er moet toch een eindproduct komen. We zullen dus met een meer generieke variant calling tool bezig gaan: Lofreq
 
@@ -528,7 +529,7 @@ Omdat het we straks ontzettend veel varianten krijgen leek het mij een goed idee
 
 Deze lijst kan je downloaden, maar er staat veel overbodige informatie in. Daarom heb ik een scriptje in python geschreven die de genen er uit kan halen. zie main src/python. Als Janine straks klaar is met annotatie, kunnen we op die manier filteren.
 
-Janine loopt vast met snpEff, er zijn probelemen met MT tabellen?
+Janine loopt vast met snpEff, er zijn problemen met MT tabellen?
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
@@ -641,7 +642,7 @@ Mogelijke manieren om te visualiseren.
 
 ## 03-10-2024
 
-Waarschijnlijk hebben we een BED file nodig met chromsomen, exon posities en genen voor de visualisatie. Die hebben wij op dit moment niet, dus ik zal deze voor het mm39 muis referentie genoom genereren.
+Waarschijnlijk hebben we een BED file nodig met chromosomen, exon posities en genen voor de visualisatie. Die hebben wij op dit moment niet, dus ik zal deze voor het mm39 muis referentie genoom genereren.
 
 Voor het genereren van een BED file hebben we een GTF bestand nodig, deze bevat alle data die we nodig hebben
 
@@ -651,7 +652,7 @@ wget https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M35/genco
 
 ```
 
-Dit bestand staat vol met data die ik niet nodig heb, als het goed is kan ik met een python scriptje hier de belangrijke data wel uithalen Het python scriptje kan dus GTF bestanden omzetten naar bed bestanden met de data die wij nodig hebben.
+Dit bestand staat vol met data die ik niet nodig heb, als het goed is kan ik met een python script hier de belangrijke data wel uithalen Het python scriptje kan dus GTF bestanden omzetten naar bed bestanden met de data die wij nodig hebben.
 
 snpEff geeft nog wel een aantal warnings weer
 
@@ -686,7 +687,7 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 
 ```
 
-Deze manier van het bouwen van een database voor mm39 werkt niet. Ik blijf de vorige gebruiken. De waarschuwingen kunnen voorkomen wanneer het genoom niet helemaal gebrepen is, en dat kan aangezien we ook Unkown chromosome maps hebben.
+Deze manier van het bouwen van een database voor mm39 werkt niet. Ik blijf de vorige gebruiken. De waarschuwingen kunnen voorkomen wanneer het genoom niet helemaal begrepen is, en dat kan aangezien we ook Unkown chromosome maps hebben.
 
 Ik zal nu eerst filteren naar de genen die ik heb gevonden op MGI
 
@@ -694,7 +695,7 @@ Ik zal nu eerst filteren naar de genen die ik heb gevonden op MGI
 python3 parse_mgi.py ../../data/MGI_file.txt --output_file /students/2024-2025/Thema05/BlaasKanker/etc/gene_file.txt
 ```
 
-Zet MGI feature file om naar een bestand met gene names
+Zet MGI feature file om naar een bestand met gene namen
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
@@ -703,7 +704,7 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 
 ```
 
-Er zijn 0 varianten over gebleven, om te controleren of het filteren werkt filter ik op 1 gen wararvan ik wee dat deze in een vcf bestand voor komt
+Er zijn 0 varianten over gebleven, om te controleren of het filteren werkt filter ik op 1 gen waarvan ik wee dat deze in een vcf bestand voor komt
 
 ```{bash, eval=FALSE}
 bcftools view --include 'INFO == "Xkr4"' SRR14870694.vcf > test_sample.vcf
@@ -715,9 +716,9 @@ Om te testen of deze echt wel bestaat [filter.c:2933 filters_init1] Error: the t
 grep ^# SRR14870694.vcf
 ```
 
-Hieruit kan ik de naam vinden voor geen naam bij INFO Omdat ik er niet zeker van kan zijn dat de bcftools wel goed zoekt en vcftools wel goed filterd ga ik mijn eigen scriptje schrijven die genen uit een txt bestand kan vinden in een vcf bestand.
+Hieruit kan ik de naam vinden voor geen naam bij INFO Omdat ik er niet zeker van kan zijn dat de bcftools wel goed zoekt en vcftools wel goed filtert ga ik mijn eigen scriptje schrijven die genen uit een txt bestand kan vinden in een vcf bestand.
 
-Het python3 scriptje staat ook weer in src/python. Met dit scriptje kan ik een gene.txt bestand meegeven waar gezochte genen in staan. Het scriptje zal deze genen dan zoeken in het VCF bestand, en een VCF output geven met de lines die het gen bevatten.
+Het python3 scriptje staat ook weer in src/python. Met dit scriptje kan ik een gene.txt bestand meegeven waar gezochte genen in staan. Het scriptje zal deze genen dan zoeken in het VCF bestand, en een VCF output geven met de regels die het gen bevatten.
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
@@ -727,7 +728,7 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 
 Als het goed is staat in deze output alle genen die te maken kunnen hebben met blaaskanker in een muis.
 
-Tot nu toe zijn alle SNPeff testen gedaan in mijn temp folder, ik ga het nu uitvoeren voor de ouputs folder. Morgen zal ik dan met het groepje verder sorteren en filtreren.
+Tot nu toe zijn alle SNPeff testen gedaan in mijn temp folder, ik ga het nu uitvoeren voor de output folder. Morgen zal ik dan met het groepje verder sorteren en filtreren.
 
 ### Variant Annotation
 ```{bash, eval=FALSE}
@@ -738,7 +739,7 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
     /students/2024-2025/Thema05/BlaasKanker/outputs/chromosome_remade_varients/{}_variants.vcf > /students/2024-2025/Thema05/BlaasKanker/outputs/variant_annotation/{}.vcf"
 ```
 
-Nu hebben we de variant calling uitgevoerd, deze bevat 23,753 variants, wat voornamelijk variants zijn die herkend zijn bij erfbare mutaties, en niet de mutaties die wij zoeken.
+Nu hebben we de variant calling uitgevoerd, deze bevat 23,753 variants, wat voornamelijk variants zijn die herkend zijn bij overerfbaar mutaties, en niet de mutaties die wij zoeken.
 
 Daarom gaan wij gericht zoeken naar genen die belangrijk zijn bij processen waar blaas kanker kan ontstaan Ik heb daarvoor zoals eerder benoemd een bestand voor gedownload met alle genen. <https://www.informatics.jax.org/mgihome/homepages/help.shtml>
 
@@ -770,7 +771,7 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 
 ```
 
-Nu moet ik de sorted bestanden weer valideren:
+Nu moet ik de gesorteerde bestanden weer valideren:
 
 ```{bash, eval=FALSE}
 java -jar SnpSift.jar vcfCheck ../../../outputs/variant_ann_sorted/*.vcf
@@ -813,11 +814,11 @@ vcfstats --vcf SRR14870694_sorted.vcf \
     --title 'Number of variants on each chromosome' 
 ```
 
-De output hiervan is het aantal varianten per chromosome voor dat vcf bestand. Als ik dit nog een keer zou uitvoeren op het bestand die op kanker genen is gefilterd kunnen die 2 plotjes vergeleken worden.
+De output hiervan is het aantal varianten per chromosoom voor dat vcf bestand. Als ik dit nog een keer zou uitvoeren op het bestand die op kanker genen is gefilterd kunnen die 2 plotjes vergeleken worden.
 
 ## 08-10-2024
 
-Tabix genereren voor Iris, eerst vcf filter opnieuw uitvoeren omdat er per ongelukt duplicaten in de output zijn gekomen. Dus het scriptje is nu aangepast
+Tabix genereren voor Iris, eerst vcf filter opnieuw uitvoeren omdat er per ongeluk duplicaten in de output zijn gekomen. Dus het scriptje is nu aangepast
 
 ```{bash, eval=FALSE}
 
@@ -841,13 +842,11 @@ parallel -j 8 \
 "tabix -p vcf {}.vcf.gz"
 ```
 
-Trackviewer herkend de namen niet mv alles en haal gz weg
-
 ## 09-10-2024
 
 Wij hebben eerder een bed bestand gegenereerd met een python scriptje, deze bevat *alle* genen in een muis. Ook hebben wij een gene panel opgesteld die de genen bevat die wij waardevol vinden.
 
-Vandaag heb ik een python scriptje gemaakt die het bed bestand ook nog filtered op basis van de genen waar wij naar zoeken.
+Vandaag heb ik een python scriptje gemaakt die het bed bestand ook nog filtert op basis van de genen waar wij naar zoeken.
 
 Nu kunnen Iris en ik vandaag een loliplot maken waarbij ook de exonen van de genen weer gegeven zijn.
 
@@ -859,7 +858,7 @@ vcf_data$score <- vcf_data$AF * 100
 lolliplot(vcf_data, gr)
 ```
 
-Nu hebben we een simpel plotje van varianten op chromosome 1. Met allel frequentie op de y-as Graag wil ik de exon locaties laten zien van een gezocht gen.
+Nu hebben we een simpel plotje van varianten op chromosoom 1. Met allel frequentie op de y-as Graag wil ik de exon locaties laten zien van een gezocht gen.
 
 Ik zal het gefilterde bed bestand gaan verwerken.
 
@@ -1055,7 +1054,7 @@ Ons bed bestand is gegenereerd met een snel python scriptje van een GTF bestand,
 
 Er is ook nog een gtf to bed tool, deze zal ik ook gaan testen om te kijken of die gebruikt kan worden. Ook deze maakt een bed file zonder de gen namen er in te zetten.
 
-Ik blijf voor deze opdracht dus het zelf gemaakte bed bestand gebruiken, ookal is deze minder accuraat.
+Ik blijf voor deze opdracht dus het zelf gemaakte bed bestand gebruiken, ook al is deze minder accuraat.
 
 Het is nog niet helemaal duidelijk om te zien wanneer een variant in een intron of exon ligt, dit zou ik graag nog met kleur aan willen geven. Dit kan ik zelf vinden aan de hand van de exon ranges in het BED bestand.
 
