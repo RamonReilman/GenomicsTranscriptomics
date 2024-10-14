@@ -1062,7 +1062,7 @@ De verschillende samples:
 Er zijn dus drie groepen:
 
 - RNAseq
-- NGS_RNAseq
+- NSG_RNAseq
 - TCRseq
 
 en elke groep bestaat uit:
@@ -1073,11 +1073,11 @@ en elke groep bestaat uit:
 
 De sample nummers van de TCRseq en de RNAseq zijn allebei in de 400, Dus ik vermoed dat ze twee sequence techieken op dezelfde samples hebben uitgevoerd. 
 
-Wat is het verschil tussen de TCRseq, RNAseq en NGS_RNAseq:
+Wat is het verschil tussen de TCRseq, RNAseq en NSG_RNAseq:
 
 - RNAseq: meet de genexpressie (onder bepaalde omstandigheden)
 - TCRseq: meet de reactie van het immuumsysteem (door te kijken naar de hoeveelheid T-celreceptors ( cellen die het antigenen herkennen))
-- NGS_RNAseq: NGS-muizen zijn muizen die een zwak immuumsysteem hebben en daardoor gebruikt worden om menselijke cellen in te enten (zonder dat het immuumsysteem van de muis ze afstoot).
+- NSG_RNAseq: NSG-muizen zijn muizen die een zwak immuumsysteem hebben en daardoor gebruikt worden om menselijke cellen in te enten (zonder dat het immuumsysteem van de muis ze afstoot).
 
 Wat is het verschil tussen de Baseline, Non_treated en Treated:
 
@@ -1097,7 +1097,7 @@ welke tools gaan we gebruiken en waarom:
 
 ! Presenteren:
 
-- samples met ngs enzo (tabel leveren aan Ramon)
+- samples met nsg enzo (tabel leveren aan Ramon)
 - quility control (bulletpoints: trimmomatic, fastqc, multiqc)
 
 
@@ -1105,3 +1105,23 @@ welke tools gaan we gebruiken en waarom:
 
 ! Vragen dinsdag Ramon:
 - welke data heb je gedownload? vanaf de ncbi pagina ?
+
+
+## Maandag 14 oktober:
+Alles uitgeschreven voor de presentatie en het plan van aanpak:\
+
+Tabel van de samples (van de Transcriptomics):
+|                | **Baseline** | **Non_treated** | **Treated** |
+|----------------|--------------|-----------------|-------------|
+| **RNAseq**     |       4      |        6        |      6      |
+| **NSG_RNAseq** |       5      |        5        |      5      |
+| **TCRseq**     |       6      |        6        |      6      |
+
+**Samples**\
+Er zijn voor het transcriptomics gedeelte in totaal 49 samples. Deze samples bestaan uit drie groepen; RNAseq, NSG_RNAseq en TCRseq. En al deze groepen bestaan uit baseline, non_treated en treated. De RNAseq en de TCRseq zijn waarschijnlijk uitgevoerd op dezelfde samples, aangezien de identificatienummers overeenkomen met elkaar. De NSG_RNAseq zijn een andere soort samples. NSG staat in dit geval voor een soort muis die gekweekt wordt en vaak voor onderzoek wordt gebruikt. Het immuunsysteem van deze muis is namelijk zeer zwak of helemaal afwezig. Hierdoor is de NSG-muis perfect om menselijke cellen in te enten, omdat het immuunsysteem van de muis de cellen niet goed kan afbreken. Hierdoor kunnen ze in het onderzoek kijken welk effect de mutatie op menselijke cellen heeft zonder menselijke proefpersonen te hoeven gebruiken. Met de RNA-sequencing wordt er gekeken naar de genexpressie onder bepaalde omstandigheden. In dit geval dus zonder mutatie (baseline) met mutatie (non_treated) en met mutatie en medicatie (treated). De TCR-sequencing meet de reactie van het immuunsysteem door te kijken naar de hoeveelheid T-celreceptors (cellen die het antigen herkennen).
+
+
+**quality control**\
+We gaan Fastqc en Multiqc gebruiken om te bepalen wat we willen verbeteren aan de data. Dit doen we door middel van het rapport dat uit Multiqc komt (wat een samenvatting maakt van alle rapporten die uit Fastqc komen). Hierna gaan we Trimmomatic gebruiken om de lage kwaliteit reads van het sequencen eruit te halen. Dit doen we om foutieve conclusies door foutieve data later te voorkomen. Als je data gebruikt die niet klopt, trek je immers (uit die data) ook conclusies die niet overeenkomen met de werkelijkheid. Hierna voeren we nog een keer Fastqc en Multiqc uit om te kijken of Trimmomatic voldoende verbeterd heeft. Als er uit dit rapport blijkt dat de data nog niet genoeg is opgeschoond zullen we nog een keer Trimmomatic moeten gebruiken totdat we tevreden zijn.
+
+
