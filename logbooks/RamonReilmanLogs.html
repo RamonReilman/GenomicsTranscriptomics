@@ -379,20 +379,34 @@ display: none;
 <li><a href="#section-16" id="toc-section-16">24-09-2024</a></li>
 <li><a href="#section-17" id="toc-section-17">25-09-2024</a>
 <ul>
-<li><a href="#official-trim" id="toc-official-trim">Official
-trim</a></li>
+<li><a href="#trimmomatic" id="toc-trimmomatic">Trimmomatic</a></li>
 </ul></li>
-<li><a href="#section-18" id="toc-section-18">26-09-2024</a></li>
-<li><a href="#section-19" id="toc-section-19">27-09-2024</a></li>
-<li><a href="#section-20" id="toc-section-20">01-10-2024</a></li>
-<li><a href="#section-21" id="toc-section-21">02-10-2024</a>
+<li><a href="#section-18" id="toc-section-18">27-09-2024</a>
+<ul>
+<li><a href="#picard-duplicates" id="toc-picard-duplicates">Picard
+duplicates</a></li>
+</ul></li>
+<li><a href="#section-19" id="toc-section-19">01-10-2024</a>
+<ul>
+<li><a href="#variant-calling" id="toc-variant-calling">Variant
+Calling</a></li>
+</ul></li>
+<li><a href="#section-20" id="toc-section-20">02-10-2024</a>
 <ul>
 <li><a href="#vsualisatie" id="toc-vsualisatie">Vsualisatie:</a></li>
 </ul></li>
-<li><a href="#section-22" id="toc-section-22">3-10-2024</a></li>
-<li><a href="#section-23" id="toc-section-23">04-10-2024</a></li>
-<li><a href="#section-24" id="toc-section-24">08-10-2024</a></li>
-<li><a href="#section-25" id="toc-section-25">09-10-2024</a></li>
+<li><a href="#section-21" id="toc-section-21">03-10-2024</a>
+<ul>
+<li><a href="#variant-annotation" id="toc-variant-annotation">Variant
+Annotation</a></li>
+</ul></li>
+<li><a href="#section-22" id="toc-section-22">04-10-2024</a></li>
+<li><a href="#section-23" id="toc-section-23">08-10-2024</a></li>
+<li><a href="#section-24" id="toc-section-24">09-10-2024</a>
+<ul>
+<li><a href="#final-visualisation" id="toc-final-visualisation">Final
+Visualisation</a></li>
+</ul></li>
 </ul></li>
 </ul>
 </div>
@@ -979,8 +993,8 @@ genoom. Deze kan aangemaakt worden met de volgende samtool feature.</p>
 Helaas heb ik nog niks gehoord van het contact persoon, en zal de 27e
 advies vragen aan de docenten.</p>
 <pre class="bash"><code>python2.7 /students/2024-2025/Thema05/BlaasKanker/tools/strelka-2.9.10.centos6_x86_64/bin/configureStrelkaGermlineWorkflow.py     --bam /students/2024-2025/Thema05/BlaasKanker/temp/mappingTest/sorted_bam/SRR14870694_sorted.bam     --referenceFasta /students/2024-2025/Thema05/BlaasKanker/tools/testGenome/ncbi_dataset/data/GCF_000001635.27/GCF_000001635.27_GRCm39_genomic.fna     --runDir /students/2024-2025/Thema05/BlaasKanker/temp/demo_somatic</code></pre>
-<div id="official-trim" class="section level3">
-<h3>Official trim</h3>
+<div id="trimmomatic" class="section level3">
+<h3>Trimmomatic</h3>
 <p>Deze week gaan wij mappen en duplicaten markeren, maar daarvoor
 moeten we eerst zeker zijn of we de ongetrimde data gaan gebruiken of
 wel getrimde data.</p>
@@ -1083,14 +1097,19 @@ sequenties, maar de meeste liggen nog tussen de 90-95, de te korte
 sequenties van 40 en daaronder zijn wel verwijderd. Zo krijgen we
 sequenties van hoge kwaliteit die toch nog goed gemapped kunnen
 worden.</p>
+<p>Na het trimmen kan de mapping uitgevoerd worden met BWA ### Mapping
+with BWA Het meeste hiervan is gedaan door jasper, en de mapping is
+uitgevoerd met het volgende command:</p>
+<pre class="bash"><code>cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+  parallel -j 20 &quot;bwa mem -t 15 -M -R &#39;@RG\\tID:{}\\tSM:{}\\tPL:illumina\\tLB:lib1&#39; \
+    /students/2024-2025/Thema05/BlaasKanker/outputs/bwa_aln/index/GCF_000001635.27_GRCm39_genomic.fna \
+    /students/2024-2025/Thema05/BlaasKanker/outputs/fastq_trimmed/{}_paired.1.fastq /students/2024-2025/Thema05/BlaasKanker/outputs/fastq_trimmed/{}_paired.2.fastq &gt; \
+    /students/2024-2025/Thema05/BlaasKanker/outputs/bwa_aln/mapping_output/{}.sam&quot;</code></pre>
+<p>Voor meer uitleg kan zowel gekeken worden naar Jasper, als mijn
+logboek.</p>
 </div>
 </div>
 <div id="section-18" class="section level2">
-<h2>26-09-2024</h2>
-<p>Vandaag voeren wij de BWA mapping uit
-<!-- TODO Ref naar Jasper, plaats commands --></p>
-</div>
-<div id="section-19" class="section level2">
 <h2>27-09-2024</h2>
 <p>Omdat wij geen normaal data hebben is het uitvoeren van een
 somatische variant call onmogelijk. Dit is een groot probleem omdat de
@@ -1100,8 +1119,8 @@ is lastig, mogelijk zelfs onmogelijk in de korte tijd die wij
 hebben.</p>
 <p>Ik heb de schrijvers van het artikel gemailed, en zij zijn nu aan het
 kijken of er wat gedaan kan worden. Er moet toch een eindproduct komen.
-We zullen dus met een meer generieke variant calling tool bezig gaan.
-Lofreq <!-- TODO vraag jasper permissie --></p>
+We zullen dus met een meer generieke variant calling tool bezig gaan:
+Lofreq</p>
 <pre class="bash"><code>cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
     parallel &quot;lofreq call \
     -f /students/2024-2025/Thema05/BlaasKanker/outputs/bwa_aln/index/GCF_000001635.27_GRCm39_genomic.fna \
@@ -1110,11 +1129,27 @@ Lofreq <!-- TODO vraag jasper permissie --></p>
 <p>De reference heeft een ander bestand nodig</p>
 <pre class="bash"><code>samtools faidx /students/2024-2025/Thema05/BlaasKanker/outputs/bwa_aln/index/GCF_000001635.27_GRCm39_genomic.fna
 </code></pre>
-<p>Na dit uitgevoerd te hebben kan lofreq weer, zonder enige specifieke
-instellingen zodat Janine kan oefenen met snpeff dit weekend.</p>
+<p>Na dit uitgevoerd te hebben kan lofreq weer uitgevoerd worden, zonder
+enige specifieke instellingen zodat Janine kan oefenen met snpeff dit
+weekend.</p>
+<div id="picard-duplicates" class="section level3">
+<h3>Picard duplicates</h3>
+<p>Vandaag zijn ook de duplicaten met Picard gemarked met het volgende
+command:</p>
+<pre class="bash"><code>cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+  parallel java -jar picard.jar MarkDuplicates \
+                &#39;-I /students/2024-2025/Thema05/BlaasKanker/outputs/bwa_aln/mapping_output/sorted/{}_sorted.bam&#39; \
+                &#39;-O /students/2024-2025/Thema05/BlaasKanker/outputs/picard_dub/marked_duplicates/{}.marked_duplicates.bam&#39; \
+                &#39;-M /students/2024-2025/Thema05/BlaasKanker/outputs/picard_dub/metrics/{}.marked_dup_metrics.txt&#39; \
+                &#39;-REMOVE_DUPLICATES true&#39; \
+                &#39;-READ_NAME_REGEX null&#39;</code></pre>
+<p>Voor meer uitleg kan Iris haar logboek bekeken worden.</p>
 </div>
-<div id="section-20" class="section level2">
+</div>
+<div id="section-19" class="section level2">
 <h2>01-10-2024</h2>
+<div id="variant-calling" class="section level3">
+<h3>Variant Calling</h3>
 <p>Vandaag ga ik van bij alle data met lofreq de variant calling
 uitvoeren, zo krijgen we bestanden waarin alle mutaties van de muizen
 staan in verhouding tot de reference genome. Hierbij zullen dus ook de
@@ -1205,7 +1240,8 @@ deze tabel staan een aantal NT_*** chromosomen, die ik niet ken en niet
 voorkomen in mijn chromosome map. Morgen zal ik hier verder naar
 kijken.</p>
 </div>
-<div id="section-21" class="section level2">
+</div>
+<div id="section-20" class="section level2">
 <h2>02-10-2024</h2>
 <p>Ik heb op de website hieronder een downloadbare tabel kunnen vinden
 die ook de meest NT_*** chromosomen kan mappen <a href="https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001635.27/" class="uri">https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001635.27/</a></p>
@@ -1226,11 +1262,11 @@ worden aan een bestaand chromosoom. Deze veroorzaakt ook de
 CHROMOSOME_Not_found errors.</p>
 <div id="vsualisatie" class="section level3">
 <h3>Vsualisatie:</h3>
-<p><a href="https://cmdcolin.github.io/awesome-genome-visualization/?language=R&amp;latest=true&amp;platform=&amp;tag=GWAS" class="uri">https://cmdcolin.github.io/awesome-genome-visualization/?language=R&amp;latest=true&amp;platform=&amp;tag=GWAS</a></p>
+<p>Mogelijke manieren om te visualiseren. <a href="https://cmdcolin.github.io/awesome-genome-visualization/?language=R&amp;latest=true&amp;platform=&amp;tag=GWAS" class="uri">https://cmdcolin.github.io/awesome-genome-visualization/?language=R&amp;latest=true&amp;platform=&amp;tag=GWAS</a></p>
 </div>
 </div>
-<div id="section-22" class="section level2">
-<h2>3-10-2024</h2>
+<div id="section-21" class="section level2">
+<h2>03-10-2024</h2>
 <p>Waarschijnlijk hebben we een BED file nodig met chromsomen, exon
 posities en genen voor de visualisatie. Die hebben wij op dit moment
 niet, dus ik zal deze voor het mm39 muis referentie genoom
@@ -1307,6 +1343,8 @@ hebben met blaaskanker in een muis.</p>
 <p>Tot nu toe zijn alle SNPeff testen gedaan in mijn temp folder, ik ga
 het nu uitvoeren voor de ouputs folder. Morgen zal ik dan met het
 groepje verder sorteren en filtreren.</p>
+<div id="variant-annotation" class="section level3">
+<h3>Variant Annotation</h3>
 <pre class="bash"><code>cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
     parallel -j 6 \
     &quot;java -Xmx8g -jar /students/2024-2025/Thema05/BlaasKanker/tools/snpeff/snpEff/snpEff.jar ann -v -stats \
@@ -1328,7 +1366,8 @@ bestanden.</p>
 leesbaar is, zodat we kunnen achterhalen hoeveel varianten we over
 hebben gehouden.</p>
 </div>
-<div id="section-23" class="section level2">
+</div>
+<div id="section-22" class="section level2">
 <h2>04-10-2024</h2>
 <p>Voordat ik de VCF bestanden verder kan verwerken moet ik deze
 valideren. Dit zal ik eerst doen op de bestanden zonder kanker gen
@@ -1380,7 +1419,7 @@ genereren. <a href="https://github.com/pwwang/vcfstats" class="uri">https://gith
 bestand. Als ik dit nog een keer zou uitvoeren op het bestand die op
 kanker genen is gefilterd kunnen die 2 plotjes vergeleken worden.</p>
 </div>
-<div id="section-24" class="section level2">
+<div id="section-23" class="section level2">
 <h2>08-10-2024</h2>
 <p>Tabix genereren voor Iris, eerst vcf filter opnieuw uitvoeren omdat
 er per ongelukt duplicaten in de output zijn gekomen. Dus het scriptje
@@ -1400,7 +1439,7 @@ parallel -j 8 \
 &quot;tabix -p vcf {}.vcf.gz&quot;</code></pre>
 <p>Trackviewer herkend de namen niet mv alles en haal gz weg</p>
 </div>
-<div id="section-25" class="section level2">
+<div id="section-24" class="section level2">
 <h2>09-10-2024</h2>
 <p>Wij hebben eerder een bed bestand gegenereerd met een python
 scriptje, deze bevat <em>alle</em> genen in een muis. Ook hebben wij een
@@ -1644,7 +1683,11 @@ gen namen er in te zetten.</p>
 gebruiken, ookal is deze minder accuraat.</p>
 <p>Het is nog niet helemaal duidelijk om te zien wanneer een variant in
 een intron of exon ligt, dit zou ik graag nog met kleur aan willen
-geven. Deze kan ik er weer uithalen snpSift extract.</p>
+geven. Dit kan ik zelf vinden aan de hand van de exon ranges in het BED
+bestand.</p>
+</div>
+<div id="final-visualisation" class="section level3">
+<h3>Final Visualisation</h3>
 <pre class="r"><code>exon_ranges &lt;- ranges(list_exons[[gene]])
 
 exon_variants &lt;- subsetByOverlaps(ranges(variants_info), exon_ranges)

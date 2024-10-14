@@ -423,7 +423,7 @@ Command is weer uitgevoerd, en nu kregen we een output bestand. Helaas heb ik no
 python2.7 /students/2024-2025/Thema05/BlaasKanker/tools/strelka-2.9.10.centos6_x86_64/bin/configureStrelkaGermlineWorkflow.py     --bam /students/2024-2025/Thema05/BlaasKanker/temp/mappingTest/sorted_bam/SRR14870694_sorted.bam     --referenceFasta /students/2024-2025/Thema05/BlaasKanker/tools/testGenome/ncbi_dataset/data/GCF_000001635.27/GCF_000001635.27_GRCm39_genomic.fna     --runDir /students/2024-2025/Thema05/BlaasKanker/temp/demo_somatic
 ```
 
-### Official trim
+### Trimmomatic
 
 Deze week gaan wij mappen en duplicaten markeren, maar daarvoor moeten we eerst zeker zijn of we de ongetrimde data gaan gebruiken of wel getrimde data.
 
@@ -461,15 +461,23 @@ multiqc /students/2024-2025/Thema05/BlaasKanker/outputs/fastqc_trimmed/*_paired*
 
 De kwaliteit van de sequenties ligt tussen de 35 en 37, wat goed is. de kans dat een nucleotide incorrect is ligt tussen de 0.000316228 en 0.000199526 (<https://eafyounian.github.io/phred_score_converter/>). Er worden ook geen adapters gevonden. Er zijn nu wel een aantal kortere sequenties, maar de meeste liggen nog tussen de 90-95, de te korte sequenties van 40 en daaronder zijn wel verwijderd. Zo krijgen we sequenties van hoge kwaliteit die toch nog goed gemapped kunnen worden.
 
-## 26-09-2024
-
-Vandaag voeren wij de BWA mapping uit <!-- TODO Ref naar Jasper, plaats commands -->
+Na het trimmen kan de mapping uitgevoerd worden met BWA
+### Mapping with BWA
+Het meeste hiervan is gedaan door jasper, en de mapping is uitgevoerd met het volgende command:
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+  parallel -j 20 "bwa mem -t 15 -M -R '@RG\\tID:{}\\tSM:{}\\tPL:illumina\\tLB:lib1' \
+    /students/2024-2025/Thema05/BlaasKanker/outputs/bwa_aln/index/GCF_000001635.27_GRCm39_genomic.fna \
+    /students/2024-2025/Thema05/BlaasKanker/outputs/fastq_trimmed/{}_paired.1.fastq /students/2024-2025/Thema05/BlaasKanker/outputs/fastq_trimmed/{}_paired.2.fastq > \
+    /students/2024-2025/Thema05/BlaasKanker/outputs/bwa_aln/mapping_output/{}.sam"
+```
+Voor meer uitleg kan zowel gekeken worden naar Jasper, als mijn logboek.
 
 ## 27-09-2024
 
 Omdat wij geen normaal data hebben is het uitvoeren van een somatische variant call onmogelijk. Dit is een groot probleem omdat de erfbare mutaties nu ook gecalled zullen worden, en we mogelijke honderd duizenden mutaties krijgen. Om vervolgens dan de tumor mutaties vinden is lastig, mogelijk zelfs onmogelijk in de korte tijd die wij hebben.
 
-Ik heb de schrijvers van het artikel gemailed, en zij zijn nu aan het kijken of er wat gedaan kan worden. Er moet toch een eindproduct komen. We zullen dus met een meer generieke variant calling tool bezig gaan. Lofreq <!-- TODO vraag jasper permissie -->
+Ik heb de schrijvers van het artikel gemailed, en zij zijn nu aan het kijken of er wat gedaan kan worden. Er moet toch een eindproduct komen. We zullen dus met een meer generieke variant calling tool bezig gaan: Lofreq
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
@@ -486,10 +494,25 @@ samtools faidx /students/2024-2025/Thema05/BlaasKanker/outputs/bwa_aln/index/GCF
 
 ```
 
-Na dit uitgevoerd te hebben kan lofreq weer, zonder enige specifieke instellingen zodat Janine kan oefenen met snpeff dit weekend.
+Na dit uitgevoerd te hebben kan lofreq weer uitgevoerd worden, zonder enige specifieke instellingen zodat Janine kan oefenen met snpeff dit weekend.
+
+### Picard duplicates
+Vandaag zijn ook de duplicaten met Picard gemarked met het volgende command:
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+  parallel java -jar picard.jar MarkDuplicates \
+                '-I /students/2024-2025/Thema05/BlaasKanker/outputs/bwa_aln/mapping_output/sorted/{}_sorted.bam' \
+                '-O /students/2024-2025/Thema05/BlaasKanker/outputs/picard_dub/marked_duplicates/{}.marked_duplicates.bam' \
+                '-M /students/2024-2025/Thema05/BlaasKanker/outputs/picard_dub/metrics/{}.marked_dup_metrics.txt' \
+                '-REMOVE_DUPLICATES true' \
+                '-READ_NAME_REGEX null'
+```
+Voor meer uitleg kan Iris haar logboek bekeken worden.
+
+
 
 ## 01-10-2024
-
+### Variant Calling
 Vandaag ga ik van bij alle data met lofreq de variant calling uitvoeren, zo krijgen we bestanden waarin alle mutaties van de muizen staan in verhouding tot de reference genome. Hierbij zullen dus ook de erfelijke mutaties meegenomen worden, omdat we geen sequence data van gezonde muizen hebben. Ik hoef geen settings mee te geven voor de kwaliteit van de data, en ook voor de output hoef ik nu geen filter stappen toe te voegen, het filteren wordt gedaan met een andere tool later deze week.
 
 ```{bash, eval=FALSE}
@@ -613,10 +636,10 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 Er stonden nu een aantal CHROMOSOME_Not_found errors, en een UN in de tabel. De UN staat dus voor unkown gedeelte, en kan dus niet gemapt worden aan een bestaand chromosoom. Deze veroorzaakt ook de CHROMOSOME_Not_found errors.
 
 ### Vsualisatie:
-
+Mogelijke manieren om te visualiseren.
 <https://cmdcolin.github.io/awesome-genome-visualization/?language=R&latest=true&platform=&tag=GWAS>
 
-## 3-10-2024
+## 03-10-2024
 
 Waarschijnlijk hebben we een BED file nodig met chromsomen, exon posities en genen voor de visualisatie. Die hebben wij op dit moment niet, dus ik zal deze voor het mm39 muis referentie genoom genereren.
 
@@ -706,6 +729,7 @@ Als het goed is staat in deze output alle genen die te maken kunnen hebben met b
 
 Tot nu toe zijn alle SNPeff testen gedaan in mijn temp folder, ik ga het nu uitvoeren voor de ouputs folder. Morgen zal ik dan met het groepje verder sorteren en filtreren.
 
+### Variant Annotation
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
     parallel -j 6 \
@@ -1035,7 +1059,7 @@ Ik blijf voor deze opdracht dus het zelf gemaakte bed bestand gebruiken, ookal i
 
 Het is nog niet helemaal duidelijk om te zien wanneer een variant in een intron of exon ligt, dit zou ik graag nog met kleur aan willen geven. Dit kan ik zelf vinden aan de hand van de exon ranges in het BED bestand.
 
-
+### Final Visualisation
 ```{r}
 exon_ranges <- ranges(list_exons[[gene]])
 
