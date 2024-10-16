@@ -19,11 +19,9 @@ Transcriptomics, leerjaar 2 kwartaal 1, allemaal uitvoer. Hierbij
 onderbouw ik mijn keuzes met waarom ik iets doe hoe ik dat heb gedaan.
 Ik maak gebruik van de wat, hoe en waarom methode. Wat heb ik gedaan?
 Hoe heb ik dit gedaan en waarom heb ik dit gedaan? Ook zal ik hier
-resultaten van tonen. Ik begin met het loggen over Genomics en er zal op
-het moment dat er overgegaan wordt op het transcriptomics gedeelte een
-nieuwe inleiding geplaatst worden.
+resultaten van tonen.
 
-**09-09-2024**\
+##09-09-2024\
 Nadat we de uitleg hebben gekregen hebben we groepen gevormd. Mijn groep
 is samen met Ramon, Jasper en Iris. We hebben vervolgens een begin
 gemaakt met het zoeken naar een wetenschappelijk artikel. Dit hebben we
@@ -43,7 +41,7 @@ Gekozen door Ramon.\
 - Het DNA-methylatielandschap van de progressie van de ziekte van
 glioblastoom. Gekozen door Janine.\
 
-**10-09-2024**\
+##10-09-2024\
 De experimenten van Janine en Iris zijn afgekeurd wegens ontbrekende of
 onvoldoende data. Vervolgens hebben we als groep gekozen voor Jasper
 zijn artikel.\
@@ -55,7 +53,7 @@ omdat dit heel veel bepaald in ons lichaam.\
 Onze onderzoeksvraag is: Hoe kunnen de mutaties die we vinden
 blaaskanker veroorzaken?\
 
-**11-09-2024**\
+##11-09-2024\
 We hebben een taakverdeling gemaakt voor het plan van aanpak.\
 Ik ga het onderzoekoverzicht, de achtergrond ervan en een globale
 theoretische achtergrond presenteren tijdens de presentatie.\
@@ -65,7 +63,7 @@ Ramon zet het plan van aanpak en de presentatie in elkaar.   Verder
 hadden we vandaag statistiek les dus geen tijd meer gehad voor dit
 project.\
 
-**12-09-2024**\
+##12-09-2024\
 Ik heb het artikel doorgelezen en de kernwoorden eruit gehaald zodat ik
 hierop verder kon bouwen aan de theoretische achtergrond. De volgende
 kernwoorden heb ik gebruikt:\
@@ -84,14 +82,14 @@ Dit is te vinden in onze
 [Github](https://github.com/RamonReilman/GenomicsTranscriptomics) onder
 Plan van aanpak.\
 
-**13-09-2024**\
+##13-09-2024\
 Ik heb de theorie aangevuld met de laatste dingen. In de pva staat die
 onder alinea 'Entinostat en zijn werking'.\
 Smiddags is er een les gevolgd over hoe we data kunnen downloaden op de
 schoolserver. Hier heeft Ramon meegedaan met de les en het voor onze
 data uitgevoerd. Ik heb voor mijzelf aantekeningen gemaakt.
 
-**15-09-2024**\
+##15-09-2024\
 Naar aanleiding van feedback vanuit de groep heb ik een deel van de
 theorie aangepast en aangevuld. Er klopte iets niet over de
 projectopzet, ik heb dit gecorrigeerd en vervolgens gemeld aan de groep
@@ -100,7 +98,7 @@ De presentatie is afgemaakt door Ramon. Omdat ik met een gebroken enkel
 in huis vast zit, gaat Ramon mijn deel van de presentatie doen en gaan
 we maandag afspraken maken over de verdere uitvoering van het project.
 
-**17-09-2024**\
+##17-09-2024\
 Ik heb de tool snpEff gekregen/gekozen als onderdeel van het project.
 Omdat ik de komende weken minder op school aanwezig kan zijn hebben we
 deze tool aan mij toebesteed omdat deze tool pas redelijk aan het einde
@@ -171,7 +169,7 @@ Het invoer bestand was in dit geval onze map met testdata. De output is
 in een persoonlijke map gekomen waarin we alle 4 zelf kunnen testen. De
 {} wordt gebruikt om aan te geven dat hier de uitvoerbestanden inkomen.\
 
-**18-09-2024**\
+##18-09-2024\
 Omdat er met veel data gewerkt wordt heb je dus veel bestanden waarvan
 een fastqc rapport gemaakt wordt. Omdat het heel moeilijk, zo niet
 onmogelijk, is om al deze bestanden met het oog los van elkaar te
@@ -185,7 +183,7 @@ find find /students/2024-2025/Thema05/BlaasKanker/fastq -name "*.fastq" |paralle
 
 ```
 
-**20-09-2024**\
+##20-09-2024\
 Om beter te begrijpen wat al deze kwaliteitscontroles, van de fastqc en
 multiqc, nu eigenlijk zeggen heb ik hier een verslag van gemaakt. Dit
 verslag staat in onze teams groep. "2.1.2 Genomics & transcriptomics
@@ -208,7 +206,7 @@ expressie van genen stimuleert is dit een optie. Omdat we de data niet
 zelf hebben geproduceerd, kunnen we hier nooit helemaal met zekerheid
 iets over zeggen.
 
-**22-09-2024**\
+##22-09-2024\
 Omdat het trimmen van de data nog niet goed is gegaan hebben wij dit
 allemaal opnieuw uitgevoerd en uitgezocht wat de goede commandline is.
 Ik heb dit gedaan door eerst te kijken naar wat trimmomatic is voor
@@ -235,7 +233,7 @@ meestal een slechte kwaliteit hebben, verwijderd wordt.\
 - TRAILING is een optie welke de basen aan de achterkant van de read,
 welke meestal een slechte kwaliteit hebben, verwijderd wordt.\
 
-**23-09-2024**\
+##23-09-2024\
 Verder gegaan met trimmomatic, het zoeken naar de goede instellingen
 zodat het fastq rapport zoveel mogelijk groen kleurt. Dit is belangrijk
 om zo te kunnen kijken of de data nog verder geperfectioneerd kan
@@ -261,7 +259,7 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
             'MINLEN:40'
 ```
 
-**24-09-2024**\
+##24-09-2024\
 Het trimmen van de data heb ik afgemaakt, het zoeken naar de goede
 settings om hier vervolgens fastqc op los te laten en een multiqc
 rapport maken zodat ik dit kan vergelijken met het multiqc rapport voor
@@ -309,7 +307,12 @@ dit project.\
 | project  |         |          |                |        |         |          |      |              |
 |          |         |          |                |        |         |          |      |              |
 
-**26-09-2024**\
+Jasper is begonnen met de tool BWA voor de mapping van onze data. Kijk
+voor informatie hierover in het logboek van Jasper. Te vinden op onze
+github onder logbooks, JasperJonkerLogbooks:
+[github](https://github.com/RamonReilman/GenomicsTranscriptomics)\
+
+##26-09-2024\
 Ramon heeft de volgende trimmomatic settings gebruikt. Dit zijn de
 settings die uiteindelijk gebruikt voor de mapping:\
 
@@ -319,17 +322,13 @@ settings die uiteindelijk gebruikt voor de mapping:\
 | project  |         |          |                |        |         |          |      |              |
 |          |         |          |                |        |         |          |      |              |
 
-Ik heb vandaag besteed aan mij inlezen over de tool SnpEff, ik wil
-begrijpen hoe deze tool werkt, waarom we hem gebruiken en hoe we deze
-gaan inzetten op ons project. Ik heb de tool alvast op de schoolserver
-in ons project gedownload. Ik ga morgen verder met uitzoeken hoe de tool
-werkt en meer over de tool leren. Jasper is begonnen met de tool BWA
-voor de mapping van onze data. Kijk voor informatie hierover in het
-logboek van Jasper. Te vinden op onze github onder logbooks,
-JasperJonkerLogbooks:
-[github](https://github.com/RamonReilman/GenomicsTranscriptomics)\
+Ik heb vandaag besteed aan mij inlezen over de tool SnpEff (versie
+5.2C), ik wil begrijpen hoe deze tool werkt, waarom we hem gebruiken en
+hoe we deze gaan inzetten op ons project. Ik heb de tool alvast op de
+schoolserver in ons project gedownload. Ik ga morgen verder met
+uitzoeken hoe de tool werkt en meer over de tool leren.
 
-**27-09-2024**\
+##27-09-2024\
 Ik ben begonnen met het nalezen en aanvullen van mijn logboek. Daarna
 ben ik verder gegaan met het leren van SnpEff. De tool is correct
 gedownload op de server en werkt. Door Ramon is er een test data set
@@ -342,7 +341,11 @@ snpeff](https://www.youtube.com/watch?v=-rmreyRAbkE&t=544s) en de
 officiële documentatie gelezen: [snpEff
 documentatie](https://pcingola.github.io/SnpEff/snpeff/introduction/)\
 
-**29-09-2024**\
+Iris heeft picard op de echte data uitgevoerd om het hoge aantal
+duplicaten te verwijderen. Kijk hiervoor in [Logboek
+Iris](https://github.com/RamonReilman/GenomicsTranscriptomics)\
+
+##29-09-2024\
 Aan het testen gegaan met snpEff op een testdata set. Deze testdata set
 is door Ramon gemaakt en te vinden in:
 /students/2024-2025/Thema05/BlaasKanker/testingtools/test_variant_calling\
@@ -399,7 +402,7 @@ Build the database: java -Xmx4g -jar snpEff.jar build -gtf22 -v mm39
 This should create and save the .bin files required for annotation into
 /snpEff/data/mm39/ Should be good to go!\
 
-**Vervolg logboek 29-09-2024**\
+##Vervolg logboek 29-09-2024\
 Ik heb alle stappen exact zoals hierboven beschreven uitgevoerd. Daarna
 heb ik opnieuw onderstaand command uitgevoerd.\
 
@@ -440,9 +443,10 @@ ls /students/2024-2025/Thema05/BlaasKanker/testingtools/test_variant_calling/*.v
 Bovenstaand command werkt, echter is de output leeg van de testdata
 leeg. De reden hiervoor is op dit moment onbekend.\
 
-**01-10-2024** We hebben besloten om tussen de stappen variant calling
-en variant annotation een filter stap toe te voegen. Dit doen we met de
-tool VcfFilter. Deze tool filtert de data dusdanig dat alleen de meest
+##01-10-2024\
+We hebben besloten om tussen de stappen variant calling en variant
+annotation een filter stap toe te voegen. Dit doen we met de tool
+VcfFilter. Deze tool filtert de data dusdanig dat alleen de meest
 relevante data behouden wordt. Dit scheelt tijd omdat de hoeveelheid
 data aanzienlijk vermindert door de filterstap. Voor de uitvoering kan
 er gekeken worden in het logboek van Ramon Reilman. --\>\
@@ -485,20 +489,26 @@ data krijg ik nog steeds de foutmelding: Mitochondrion chromosome 'MT'
 does not have a mitochondrion codon table (codon table = 'Standard').\
 
 Ik heb voor nu besloten om hulp te vragen bij de docenten, ook Ramon
-kijkt nog even mee.\
+kijkt nog even mee. 
 
-**2-10-2024** Ramon heeft laten zien dat hij door middel van nog 2
-andere tools mijn tool snpEff bijna werkend heeft gekregen. Kijk voor de
-stappen die hij heeft ondernomen in zijn logboek: Te vinden op onze
+Ramon heeft Lofreq uitgevoerd voor de variant calling. Te vinden op onze
 [github](https://github.com/RamonReilman/GenomicsTranscriptomics) onder
 logbooks, RamonReilmanLogbooks:\
 
-**3-10-2024** Ik heb afgelopen week feedback gekregen op mijn logboek
-van Ronald. Hierbij is gebleken dat ik alles veel duidelijker en
-uitgebreider moet verwoorden. Daarom neem ik hier vandaag de tijd voor
-om het hele logboek van vooraan tot en met nu volledig aan te vullen.
-Hierbij ga ik de hoe, wat en waarom toepassen om op deze manier zoveel
-mogelijk tijdsverantwoording te vangen.\
+##2-10-2024\
+Ramon heeft laten zien dat hij door middel van nog 2 andere tools mijn
+tool snpEff bijna werkend heeft gekregen. Kijk voor de stappen die hij
+heeft ondernomen in zijn logboek: Te vinden op onze
+[github](https://github.com/RamonReilman/GenomicsTranscriptomics) onder
+logbooks, RamonReilmanLogbooks:\
+
+##3-10-2024\
+Ik heb afgelopen week feedback gekregen op mijn logboek van Ronald.
+Hierbij is gebleken dat ik alles veel duidelijker en uitgebreider moet
+verwoorden. Daarom neem ik hier vandaag de tijd voor om het hele logboek
+van vooraan tot en met nu volledig aan te vullen. Hierbij ga ik de hoe,
+wat en waarom toepassen om op deze manier zoveel mogelijk
+tijdsverantwoording te vangen.\
 
 Ik ga onderzoeken of we de output vcf bestanden die uit de variant
 annotation komen ook kunnen filteren op impact van mutaties. Hiermee
@@ -514,3 +524,63 @@ opties we het beste kunnen gebruiken om een zo gunstig mogelijke
 uitkomst te genereren. Wanneer de meest optimale uitkomst hebben kunnen
 we hier makkelijker plotjes van maken voor ons wetenschappelijke
 artikel.
+
+##04-10-2024\
+Na overleg met de groep hebben we besloten om SnpSift te gaan gebruiken
+om de impact van de genen en de soort puntmutatie eruit te filteren.
+SnpSift heeft hier een filter functie voor met de opties IMPACT en
+FUNCLASS.\
+In de IMPACT optie kunnen de volgende waarden meegegeven worden:\
+- High\
+- Moderate\
+- Low\
+- Modifier  
+
+In de FUNCLASS optie kunnen de volgende waarden meegegeven worden:\
+- None\
+- Silent\
+- Missense\
+- Nonsense\
+
+De impact wat de varianten van genen hebben kan betekenen dat het
+verloop van de ziekte, hoe erg het zich uit bijvoorbeeld, daarmee aan te
+duiden is.\
+
+Wanneer we het over de modifier optie hebben, dan gaat het om modifier
+genes. Deze genen spelen een rol in de variabiliteit van de fenotypische
+expressie van de ziekte. In het geval van blaaskanker bij muizen, kunnen
+modifier-genen de groei, progressie en respons op behandeling van
+tumoren beïnvloeden. Deze genen kunnen varianten bevatten die de
+expressie van andere genen moduleren, wat leidt tot verschillen in
+tumorontwikkeling en -gedrag tussen individuen. Dit is dus een
+belangrijke optie om mee te geven, deze genen willen we wel meenemen in
+het onderzoek.\
+
+Low impact genen (optie low impact) zijn meestal varianten die geen tot
+weinig impact hebben op de ziekte en het verloop hiervan. In [dit
+artikel](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-017-1212-4#Sec1)
+is wel te lezen dat er nog veel onderzoek is te doen naar low impact
+genen omdat het wel de fenotypische expressie kan beïnvloeden. Echter is
+er nog zeer weinig bekend over wat nu de precieze impact is van low
+impact genes. Voor ons onderzoek lijkt het niet relevant te zijn om deze
+genen mee te nemen dus dat gaan we niet doen.\
+
+High impact genes hebben zoals de naam al doet vermoeden een zeer grote
+impact op de ziekte en het verloop hiervan. Deze genen kunnen
+aanzienlijke veranderingen veroorzaken in eiwitten of de regulatie van
+de genen. Door deze veranderingen hebben ze een zeer groot fenotypisch
+effect hebben op de expressie en verloop van de ziekte. Deze optie wordt
+dus meegenomen in ons onderzoek.\
+
+Tijdens het onderzoeken naar al deze achtergrondinformatie hebben we
+besloten de tool toch niet te gaan gebruiken. Daarom ga ik geen extra
+tijd besteden aan meer theoretische achtergrond zoeken.\
+
+##11-10-2024\
+Ramon is vandaag nog met de plotjes bezig om te kijken of dit werkend te
+krijgen is. Jasper, Iris en ik hebben de logboeken tegen elkaar aan
+gelegd en alle belangrijke stappen overgenomen van elkaar. Ook heb ik
+nog het logboek aangevuld met informatie. 
+
+##16-10-2024\
+
