@@ -1,0 +1,55 @@
+---
+title: "Logbook Janine Postmus"
+author: "Janine Postmus"
+date: "2024-10-16"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introductie \
+
+Ons [onderzoek](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE153650) kijkt naar de behandeling van entinostat op blaaskanker. Het onderzoek is uitgevoerd op de Muis Musculus, oftewel de huismuis. We gaan kijken naar de rna sequenties, hier halen we de varianten uit en vervolgens kijken we naar de verschillen in varianten tussen de gezonde muis, de zieke muis en een referentiegenoom. In ons [plan van aanpak]() staat beschreven met welke tools we dit gaan doen. \
+
+## Kwaliteitscontrole \
+
+We beginnen met de kwaliteitscontrole van de data. Hiervoor gebruiken we de tool FastQC en MultiQC. Deze stap voeren we uit omdat we willen beoordelen of onze data goed genoeg is om mee te werken. Wanneer dit niet het geval is, zullen we met behulp van de tool Trimmomatic, de data dusdanig trimmen dat deze wel goed genoeg is om te gebruiken. \
+
+## STAR (Spliced Transcripts Alignment to a Reference) \
+
+Door middel van de tool [STAR](https://github.com/alexdobin/STAR) gaan we de genexpressies kwantificeren. \
+
+## DESeq2 \
+
+Door middel van de [tool](https://www.bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html) DESeq2 gaan we nu de varianten tegen elkaar aanleggen en voorbereiden voor de statistische verwerking. Omdat we nog nooit met deze tool gewerkt hebben maken we gebruik van testdata om het commando voor deze tool voor te bereiden en uiteindelijk uit te voeren. \ 
+
+```{bash, eval=FALSE}
+# Pad naar testdata
+/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/testData/All_gene_counts_RNAseq.csv 
+
+# DESeq2 installatie commandline
+BiocManager::install("DESeq2", force = TRUE)
+```
+
+```{r}
+# Inladen libraries
+library(DESeq2)
+#library(tidyverse)
+```
+
+```{r}
+# Inladen data
+
+data_counts <- read.csv2('/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/testData/All_gene_counts_RNAseq.csv')
+
+```
+
+
+
+## Statistische verwerking \
+
+
+
+
