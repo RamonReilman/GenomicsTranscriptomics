@@ -1,0 +1,801 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Logbook Janine Postmus},
+  pdfauthor={Janine Postmus},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Logbook Janine Postmus}
+\author{Janine Postmus}
+\date{2024-09-10}
+
+\begin{document}
+\maketitle
+
+\subsubsection{Inleiding genomics}\label{inleiding-genomics}
+
+In dit logboek zal ik bijhouden wat ik voor het project Genomics \&
+Transcriptomics, leerjaar 2 kwartaal 1, allemaal uitvoer. Hierbij
+onderbouw ik mijn keuzes met waarom ik iets doe hoe ik dat heb gedaan.
+Ik maak gebruik van de wat, hoe en waarom methode. Wat heb ik gedaan?
+Hoe heb ik dit gedaan en waarom heb ik dit gedaan? Ook zal ik hier
+resultaten van tonen.
+
+\#\#09-09-2024\\
+Nadat we de uitleg hebben gekregen hebben we groepen gevormd. Mijn groep
+is samen met Ramon, Jasper en Iris. We hebben vervolgens een begin
+gemaakt met het zoeken naar een wetenschappelijk artikel. Dit hebben we
+gedaan via de volgende link:
+\href{https://www.ncbi.nlm.nih.gov/gds/?term=(\%22expression+profiling+by+high+throughput+sequencing\%22\%5BDataSet+Type\%5D)+AND+\%22genome+variation+profiling+by+high+throughput+sequencing\%22\%5BDataSet+Type\%5D}{Wetenschappelijke
+artikelen} ~ We hebben afgesproken dat we allemaal 1 artikel uitzoeken
+en uiteindelijk op basis van Marcel zijn oordeel een definieve keus
+maken. Marcel controleert de artikelen of deze voldoende informatie
+bevatten zodat het voor ons te repliceren is. De keuzes waren:\\
+- MLL-leukemie-inductie door t(9;11)-chromosomale translocatie in
+menselijke hematopoietische stamcellen met behulp van genoombewerking.
+Gekozen door Iris.\\
+- De behandeling van Entinostat op blaaskanker in de muis. Gekozen door
+Jasper.\\
+- IGF2BP1 geïnduceert neuroblastoom dat oncogenexpressie bevordert.
+Gekozen door Ramon.\\
+- Het DNA-methylatielandschap van de progressie van de ziekte van
+glioblastoom. Gekozen door Janine.\\
+
+\#\#10-09-2024\\
+De experimenten van Janine en Iris zijn afgekeurd wegens ontbrekende of
+onvoldoende data. Vervolgens hebben we als groep gekozen voor Jasper
+zijn artikel.\\
+We hebben gekozen voor een onderzoek met de behandeling van Entinostat
+op blaaskanker. Het onderwerp interesseert mij heel erg omdat ik kanker
+een interessant onderwerp vind. De entinostat werkt heel erg op
+genexpressie en het immuunsysteem. Ik vind genexpressie erg interessant
+omdat dit heel veel bepaald in ons lichaam.\\
+Onze onderzoeksvraag is: Hoe kunnen de mutaties die we vinden
+blaaskanker veroorzaken?\\
+
+\#\#11-09-2024\\
+We hebben een taakverdeling gemaakt voor het plan van aanpak.\\
+Ik ga het onderzoekoverzicht, de achtergrond ervan en een globale
+theoretische achtergrond presenteren tijdens de presentatie.\\
+Iris gaat de Gantt chart maken.\\
+Jasper gaat de workflow maken.\\
+Ramon zet het plan van aanpak en de presentatie in elkaar. ~ Verder
+hadden we vandaag statistiek les dus geen tijd meer gehad voor dit
+project.\\
+
+\#\#12-09-2024\\
+Ik heb het artikel doorgelezen en de kernwoorden eruit gehaald zodat ik
+hierop verder kon bouwen aan de theoretische achtergrond. De volgende
+kernwoorden heb ik gebruikt:\\
+- Immuuncheckpointremmers (ICI's)\\
+- Entinostat\\
+- Histondeacetylase remmers (HDAC remmers)\\
+- Immuunreactie op tumor-neo antigenen\\
+
+Ik heb vanuit het artikel de kopjes Abstract en Introduction hiervoor
+gebruikt. Hier staat dusdanig veel informatie in over het onderzoek dat
+hier voor het plan van aanpak voldoende uit te halen valt. Ik heb
+gebruik gemaakt van online resourches en voor het vertalen van het
+artikel heb ik gebruik gemaakt van copilot. Voor de bronnen en de
+verwerking van de kernwoorden kan gekeken worden in ons Plan van Aanpak.
+Dit is te vinden in onze
+\href{https://github.com/RamonReilman/GenomicsTranscriptomics}{Github}
+onder Plan van aanpak.\\
+
+\#\#13-09-2024\\
+Ik heb de theorie aangevuld met de laatste dingen. In de pva staat die
+onder alinea `Entinostat en zijn werking'.\\
+Smiddags is er een les gevolgd over hoe we data kunnen downloaden op de
+schoolserver. Hier heeft Ramon meegedaan met de les en het voor onze
+data uitgevoerd. Ik heb voor mijzelf aantekeningen gemaakt.
+
+\#\#15-09-2024\\
+Naar aanleiding van feedback vanuit de groep heb ik een deel van de
+theorie aangepast en aangevuld. Er klopte iets niet over de
+projectopzet, ik heb dit gecorrigeerd en vervolgens gemeld aan de groep
+zodat de presentatie afgemaakt kon worden.\\
+De presentatie is afgemaakt door Ramon. Omdat ik met een gebroken enkel
+in huis vast zit, gaat Ramon mijn deel van de presentatie doen en gaan
+we maandag afspraken maken over de verdere uitvoering van het project.
+
+\#\#17-09-2024\\
+Ik heb de tool snpEff gekregen/gekozen als onderdeel van het project.
+Omdat ik de komende weken minder op school aanwezig kan zijn hebben we
+deze tool aan mij toebesteed omdat deze tool pas redelijk aan het einde
+van het proces nodig is. Hierdoor krijg ik meer tijd om processen en
+dingen te onderzoeken voordat we de tool daadwerkelijk nodig zijn.
+
+De verdeling van de tools is alsvolgt:\\
+- BWA - Mapping --\textgreater{} Jasper\\
+- Picard - Duplicates --\textgreater{} Iris\\
+- Strelka - Variant calling --\textgreater{} Ramon\\
+- SnpEff - Variant annotation --\textgreater{} Janine\\
+
+De volgende tools hebben we allemaal zelf geleerd en uitgevoerd:\\
+- Seqkit -\textgreater{} Making testdata ~ - Fastqc -\textgreater{}
+Making data quality rapports\\
+- Multiqc -\textgreater{} Making data quality rapports from multiple
+fastqc rapports\\
+- Trimmomatic - Trimming data to enhance data quality\\
+
+Om te leren hoe we moeten omgaan met de data en testdata heb ik met
+behulp van de tool seqkit testdata gemaakt voor ons project. Ik heb de
+testdata gemaakt op basis van onze echte data.\\
+Ik heb dit eerst uitgevoerd op 1 bestand om te leren hoe het werkt.
+Omdat onze dataset uit heel veel bestanden bestaat, is het noodzakelijk
+dat ik leer hoe ik het kan uitvoeren op alle bestanden. Ik weet dat ik
+de find functie moet gebruiken icm de tools fastqc en parallel, hoe ik
+het moet gebruiken weet ik nog niet. Verder hebben we afgesproken dat ik
+alle stappen van het preprocessing traject, dus de fastqc, multiqc en
+trimmomatic zelf ga uitvoeren met testdata om goed te begrijpen wat we
+doen.
+
+Gebruikte commandline voor seqkit om testdata te maken van 1 fastq file:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{Seqkit}\NormalTok{ head }\AttributeTok{{-}n}\NormalTok{ 10000 /.x.fastq }\AttributeTok{{-}o}\NormalTok{ /.x.fastq}
+\end{Highlighting}
+\end{Shaded}
+
+Hierin is /. x.fastq een inputfile, hierbij moet het absolute pad naar
+de map gebruikt worden.\\
+-o /.x.fastq is het outputfile, ook hier moet het absolute pad naar de
+map gebruikt worden.\\
+
+Vervolgens moet er een fastqc rapport gemaakt worden van alle files in
+de map. Fastqc is een tool die ervoor zorgt dat de data overzichtelijk
+in een quality rapport komt te staan. Hier worden de volgende onderdelen
+op kwaliteit beoordeeld:\\
+- Basic Statistics\\
+- Per sequence counts\\
+- Per base sequence quality\\
+- Per sequence quality scores\\
+- Per base sequence content\\
+- Per sequence GC content\\
+- Per base N content\\
+- Sequence Duplication Levels\\
+- Overrepresented Sequences\\
+- Adapter Content\\
+
+Fastqc uitvoeren op meerdere bestanden in 1 keer.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{find}\NormalTok{ /students/2024{-}2025/Thema05/BlaasKanker/fastq }\AttributeTok{{-}name} \StringTok{"*.fastq"} \KeywordTok{|}\ExtensionTok{parallel}\NormalTok{ fastqc }\AttributeTok{{-}o}\NormalTok{ /students/2024{-}2025/Thema05/BlaasKanker/oefenengroep/testdataJanine/MultiqcJanine/\{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Find wordt gebruikt om de map met files te vinden en hiervan een lijst
+te maken. Path to file staat voor het volledige pad naar het bestand.
+Het invoer bestand was in dit geval onze map met testdata. De output is
+in een persoonlijke map gekomen waarin we alle 4 zelf kunnen testen. De
+\{\} wordt gebruikt om aan te geven dat hier de uitvoerbestanden
+inkomen.\\
+
+\#\#18-09-2024\\
+Omdat er met veel data gewerkt wordt heb je dus veel bestanden waarvan
+een fastqc rapport gemaakt wordt. Omdat het heel moeilijk, zo niet
+onmogelijk, is om al deze bestanden met het oog los van elkaar te
+beoordelen gebruiken we hiervoor de tool multiqc. Ik heb uitgezocht hoe
+ik het multiqc rapport moet maken. Via verschillende bronnen en forums
+op internet heb ik de goede commandline geproduceerd en vervolgens
+uitgevoerd.\\
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{find}\NormalTok{ find /students/2024{-}2025/Thema05/BlaasKanker/fastq }\AttributeTok{{-}name} \StringTok{"*.fastq"} \KeywordTok{|}\ExtensionTok{parallel}\NormalTok{ multiqc }\AttributeTok{{-}o}\NormalTok{ /students/2024{-}2025/Thema05/BlaasKanker/oefenengroep/testdataJanine/MultiqcJanine/\{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\#\#20-09-2024\\
+Om beter te begrijpen wat al deze kwaliteitscontroles, van de fastqc en
+multiqc, nu eigenlijk zeggen heb ik hier een verslag van gemaakt. Dit
+verslag staat in onze teams groep. ``2.1.2 Genomics \& transcriptomics
+Ramon Reijlman, Janine Postmus, Jasper Jonker en Iris Ineke'' met de
+titel ``Verslag\_multiqc\_rapport.docx''.\\
+
+Ik vind het belangrijk om het op deze manier te hebben gedaan omdat ik
+op deze manier sneller inzicht kan creeëren voor mijzelf hoe zo'n
+rapport werkt en welke onderdelen het belangrijkste zijn. Ik zal hier de
+conclusie neerzetten die ook in het verslag staat. Dit is op basis van
+de getrimde data welke we op dit moment hebben.\\
+
+Conclusie:\\
+Onze data is op de meeste vlakken goed/zeer goed. Het enige wat opvalt
+is dat er een relatief hoog duplicatieniveau is. Dit kan meerdere
+oorzaken hebben. De meest waarschijnlijke reden in deze data is dat er
+sprake is van PCR overamplificatie of van zeer expressieve genen in de
+RNA-sequentie data. Omdat er gebruik is gemaakt van Entinostat wat de
+expressie van genen stimuleert is dit een optie. Omdat we de data niet
+zelf hebben geproduceerd, kunnen we hier nooit helemaal met zekerheid
+iets over zeggen.
+
+\#\#22-09-2024\\
+Omdat het trimmen van de data nog niet goed is gegaan hebben wij dit
+allemaal opnieuw uitgevoerd en uitgezocht wat de goede commandline is.
+Ik heb dit gedaan door eerst te kijken naar wat trimmomatic is voor
+programma en de documentatie goed door te nemen. Ik heb hiervoor de
+officiële documentatie gelezen van trimmomatic via:
+\href{http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/TrimmomaticManual_V0.32.pdf}{documentatie
+trimmomatic}\\
+Verder heb ik deze video op youtube
+gekeken:\href{https://www.youtube.com/watch?v=Op3W5TEej3k}{bioinformatics
+trimmomatic}\\
+
+Ik heb in de documentatie vooral gekeken naar de opties die je met
+trimmomatic kan meegeven en welke gunstig zouden zijn voor onze data. Ik
+denk dat de opties ILUMACLIP, MINLEN, LEADING en TRAILING voor ons
+project gunstig zijn.\\
+- ILUMACLIP zorgt ervoor dat als er adapters zijn toegevoegd aan de data
+dat deze gevonden en verwijderd worden. Adaptersequenties kunnen de
+kwaliteit van de data beïnvloeden en ervoor zorgen dat er foutieve
+resultaten in de analyse zitten. Hierdoor krijg je betrouwbaardere
+informatie.\\
+- MINLEN is een optie waarbij je kan aangeven dat er een het aantal
+reads, dat onder de gespecificeerde minimumlengte zit, verwijderd
+wordt.\\
+- LEADING is een optie welke de basen aan de voorkant van de read, welke
+meestal een slechte kwaliteit hebben, verwijderd wordt.\\
+- TRAILING is een optie welke de basen aan de achterkant van de read,
+welke meestal een slechte kwaliteit hebben, verwijderd wordt.\\
+
+\#\#23-09-2024\\
+Verder gegaan met trimmomatic, het zoeken naar de goede instellingen
+zodat het fastq rapport zoveel mogelijk groen kleurt. Dit is belangrijk
+om zo te kunnen kijken of de data nog verder geperfectioneerd kan
+worden. Hoe meer groen de dataset is hoe beter deze gebruikt kan worden
+voor de volgende stap in het proces, de mapping.\\
+
+Ik heb het command voor trimmomatic hier neergezet om het zo makkelijker
+aan te kunnen passen om makkelijker met de settings te kunnen
+experimenteren, dit is ook het uiteindelijke command geworden.\\
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{ /students/2024{-}2025/Thema05/BlaasKanker/SRR\_Acc\_List.txt }\KeywordTok{|} \DataTypeTok{\textbackslash{}}
+    \ExtensionTok{parallel} \StringTok{\textquotesingle{}TrimmomaticPE {-}threads 10\textquotesingle{}} \DataTypeTok{\textbackslash{}}
+            \StringTok{\textquotesingle{}/students/2024{-}2025/Thema05/BlaasKanker/outputs/fastq/\{\}\_1.fastq\textquotesingle{}} \DataTypeTok{\textbackslash{}}
+            \StringTok{\textquotesingle{}/students/2024{-}2025/Thema05/BlaasKanker/outputs/fastq/\{\}\_2.fastq\textquotesingle{}} \DataTypeTok{\textbackslash{}}
+            \StringTok{\textquotesingle{}/students/2024{-}2025/Thema05/BlaasKanker/oefenengroep/testdataJanine/trimdata/paird/\{\}paired\_1.fastq\textquotesingle{}} \DataTypeTok{\textbackslash{}}
+            \StringTok{\textquotesingle{}/students/2024{-}2025/Thema05/BlaasKanker/oefenengroep/testdataJanine/trimdata/unpaird/\{\}unpaired\_1.fastq\textquotesingle{}} \DataTypeTok{\textbackslash{}}
+            \StringTok{\textquotesingle{}/students/2024{-}2025/Thema05/BlaasKanker/oefenengroep/testdataJanine/trimdata/paird/\{\}paired\_2.fastq\textquotesingle{}} \DataTypeTok{\textbackslash{}}
+            \StringTok{\textquotesingle{}/students/2024{-}2025/Thema05/BlaasKanker/oefenengroep/testdataJanine/trimdata/unpaird/\{\}unpaired\_2.fastq\textquotesingle{}} \DataTypeTok{\textbackslash{}}
+            \StringTok{\textquotesingle{}LEADING:3\textquotesingle{}} \DataTypeTok{\textbackslash{}}
+            \StringTok{\textquotesingle{}TRAILING:3\textquotesingle{}} \DataTypeTok{\textbackslash{}}
+            \StringTok{\textquotesingle{}SLIDINGWINDOW:4:20\textquotesingle{}} \DataTypeTok{\textbackslash{}}
+            \StringTok{\textquotesingle{}MINLEN:40\textquotesingle{}}
+\end{Highlighting}
+\end{Shaded}
+
+\#\#24-09-2024\\
+Het trimmen van de data heb ik afgemaakt, het zoeken naar de goede
+settings om hier vervolgens fastqc op los te laten en een multiqc
+rapport maken zodat ik dit kan vergelijken met het multiqc rapport voor
+het trimmen van de data. Wordt de data beter? Wordt het slechter? Wat
+zegt dat over de data? Ik heb eerst de settings gebruikt zoals gelogd op
+23-09-2024.\\
+
+Na het trimmen van de data komen er 4 files als output namelijk: -
+R1\_paired - R1\_unpaired - R2\_paired - R2\_unpaired
+
+De paired bestanden worden gebruikt voor de verdere bewerking omdat
+paired data beide kanten van de read gebruikt. Dit is gunstig omdat je
+op deze manier zoveel mogelijk data meeneemt in je beoordeling. Bij
+unpaired data wordt maar 1 kant van de read gebruikt waardoor er veel
+verlies is van data en dus mogelijk de mutaties die je nodig bent.
+
+Vervolgens heb ik op de paired fastq files fastqc losgelaten en hier een
+multiqc van gemaakt.
+
+Eerst fastqc maken van de paired data
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{fastqc}\NormalTok{ /students/2024{-}2025/Thema05/BlaasKanker/oefenengroep/testdataJanine/trimdata/paird/}\PreprocessorTok{*} \DataTypeTok{\textbackslash{}}
+    \AttributeTok{{-}o}\NormalTok{ /students/2024{-}2025/Thema05/BlaasKanker/oefenengroep/testdataJanine/trimdata/trimfastqc }\AttributeTok{{-}t}\NormalTok{ 12}
+\end{Highlighting}
+\end{Shaded}
+
+Daarna multiqc maken van de fastqc's van de paired data
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{multiqc}\NormalTok{ /students/2024{-}2025/Thema05/BlaasKanker/oefenengroep/testdataJanine/trimdata/trimfastqc/}\PreprocessorTok{*} \DataTypeTok{\textbackslash{}}
+    \AttributeTok{{-}o}\NormalTok{ /students/2024{-}2025/Thema05/BlaasKanker/oefenengroep/testdataJanine/trimdata/multiqctrim/}
+\end{Highlighting}
+\end{Shaded}
+
+Door onderstaande settings te gebruiken heb ik een multiqc rapport
+gecreeërd, tot onze grote verbazing blijkt deze leeg te zijn. Voor
+vandaag heb ik het opgegeven om er nog verder mee bezig te gaan. Ronald
+is op de hoogte gesteld en gaat voor ons kijken of hij het kan oplossen.
+Uiteindelijk blijkt het probleem alleen bij mij voor te komen, de reden
+hiervoor is onbekend en in overleg met Ronald laten we het hierbij voor
+dit project.\\
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Run ID
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+LEADING
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+TRAILING
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+SLIDING WINDOW
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+MINLEN
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+AVGQUAL
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+HEADCROP
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+CROP
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+ILLUMINACLIP
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Data van & 3 & 3 & 4:20 & 40 & NONE & NONE & NONE & NONE \\
+project & & & & & & & & \\
+& & & & & & & & \\
+\end{longtable}
+
+Jasper is begonnen met de tool BWA voor de mapping van onze data. Kijk
+voor informatie hierover in het logboek van Jasper. Te vinden op onze
+github onder logbooks, JasperJonkerLogbooks:
+\href{https://github.com/RamonReilman/GenomicsTranscriptomics}{github}\\
+
+\#\#26-09-2024\\
+Ramon heeft de volgende trimmomatic settings gebruikt. Dit zijn de
+settings die uiteindelijk gebruikt voor de mapping:\\
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 16\tabcolsep) * \real{0.1111}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Run ID
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+LEADING
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+TRAILING
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+SLIDING WINDOW
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+MINLEN
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+AVGQUAL
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+HEADCROP
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+CROP
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+ILLUMINACLIP
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Data van & 34 & 34 & NONE & 40 & NONE & NONE & NONE & NONE \\
+project & & & & & & & & \\
+& & & & & & & & \\
+\end{longtable}
+
+Ik heb vandaag besteed aan mij inlezen over de tool SnpEff (versie
+5.2C), ik wil begrijpen hoe deze tool werkt, waarom we hem gebruiken en
+hoe we deze gaan inzetten op ons project. Ik heb de tool alvast op de
+schoolserver in ons project gedownload. Ik ga morgen verder met
+uitzoeken hoe de tool werkt en meer over de tool leren.
+
+\#\#27-09-2024\\
+Ik ben begonnen met het nalezen en aanvullen van mijn logboek. Daarna
+ben ik verder gegaan met het leren van SnpEff. De tool is correct
+gedownload op de server en werkt. Door Ramon is er een test data set
+gemaakt met output van BWA mapping, die ik kan gebruiken om een goede
+commandline op te stellen voor deze tool. Dit is handig om dit vooraf te
+doen zodat ik, wanneer we eraan toe zijn met de echte data, alleen de
+data hoef te veranderen waardoor het gehele groepsproces sneller gaat.
+Ik heb dit filmpje gekeken:
+\href{https://www.youtube.com/watch?v=-rmreyRAbkE&t=544s}{filmpje
+snpeff} en de officiële documentatie gelezen:
+\href{https://pcingola.github.io/SnpEff/snpeff/introduction/}{snpEff
+documentatie}\\
+
+Iris heeft picard op de echte data uitgevoerd om het hoge aantal
+duplicaten te verwijderen. Kijk hiervoor in
+\href{https://github.com/RamonReilman/GenomicsTranscriptomics}{Logboek
+Iris}\\
+
+\#\#29-09-2024\\
+Aan het testen gegaan met snpEff op een testdata set. Deze testdata set
+is door Ramon gemaakt en te vinden in:
+/students/2024-2025/Thema05/BlaasKanker/testingtools/test\_variant\_calling\\
+
+Test command 1:\\
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{java} \AttributeTok{{-}Xmx8g} \AttributeTok{{-}jar}\NormalTok{ /students/2024{-}2025/Thema05/BlaasKanker/tools/snpeff/snpEff/snpEff.jar eff }\DataTypeTok{\textbackslash{}}
+\NormalTok{mm39 /students/2024{-}2025/Thema05/BlaasKanker/testingtools/test\_variant\_calling/SRR14870694\_variants.vcf }\DataTypeTok{\textbackslash{}}
+\OperatorTok{\textgreater{}}\NormalTok{ /students/2024{-}2025/Thema05/BlaasKanker/testingtools/test\_variant\_calling/test\_output\_variants.vcf}
+\end{Highlighting}
+\end{Shaded}
+
+\href{\%5BNotes:\%5D(Notes:)\%7B.uri\%7D}{{[}Notes:\textbackslash\textbackslash{]}(Notes:)\{.uri\}}
+- Het command moet uitgevoerd worden vanuit de map waar de tool in
+staat.\\
+- Er moet een reference genome in het command worden meegenomen, deze
+reference genomes zitten in de database van de tool of kunnen ingevoegd
+worden. Ons reference genome van de muis is GRCm39.\\
+
+Bij het downloaden van de referencegenome is de volgende foutmelding
+gekomen:\\
+FATAL ERROR: Failed to download database from
+{[}\url{https://snpeff.blob.core.windows.net/databases/v5_2/snpEff_v5_2_mm39.zip},
+\url{https://snpeff.blob.core.windows.net/databases/v5_0/snpEff_v5_0_mm39.zip},
+\url{https://snpeff.blob.core.windows.net/databases/v5_1/snpEff_v5_1_mm39.zip}{]}\\
+
+Oplossing:\\
+Door te zoeken op internet ben ik een github forum tegengekomen die een
+mogelijke oplossing bied. Ik ga de volgende stappen uitvoeren vanaf deze
+\href{https://github.com/pcingola/SnpEff/issues/536}{github}\\
+De stappen beschreven door gebruiker `lukedow':\\
+
+\textbf{Problemsolving}\\
+I had the same issue with mm39, but was eventually able to build the db
+manually. I tried a few of the options in the snpEff documentation, but
+the one that ultimately worked was the .gtf approach.
+
+Most of what you need to know is in the documentation, but not always
+super clear. Here were the key points for me:
+
+Make sure you retrieve all of the required FASTA and GTF (and/or GFF)
+files from the same genome build, e.g.~from UCSC
+(\url{https://useast.ensembl.org/Mus_musculus/Info/Index}). Unzip them
+into a specific directory (snpEff/data/mm39/) so the script can find
+them, and rename the files:\\
+Mus\_musculus.GRCm39.dna.primary\_assembly.fa.gz: sequences.fa
+Mus\_musculus.GRCm39.cds.all.fa.gz: cds.fa
+Mus\_musculus.GRCm39.pep.all.fa.gz: protein.fa
+Mus\_musculus.GRCm39.112.gtf.gz: genes.gtf
+
+Modify the snpEff.config file to include the line: mm39.genome : Mouse
+
+Build the database: java -Xmx4g -jar snpEff.jar build -gtf22 -v mm39
+
+This should create and save the .bin files required for annotation into
+/snpEff/data/mm39/ Should be good to go!\\
+
+\#\#Vervolg logboek 29-09-2024\\
+Ik heb alle stappen exact zoals hierboven beschreven uitgevoerd. Daarna
+heb ik opnieuw onderstaand command uitgevoerd.\\
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{java} \AttributeTok{{-}Xmx8g} \AttributeTok{{-}jar}\NormalTok{ /students/2024{-}2025/Thema05/BlaasKanker/tools/snpeff/snpEff/snpEff.jar eff }\DataTypeTok{\textbackslash{}}
+\NormalTok{mm39 /students/2024{-}2025/Thema05/BlaasKanker/testingtools/test\_variant\_calling/SRR14870694\_variants.vcf }\DataTypeTok{\textbackslash{}}
+\OperatorTok{\textgreater{}}\NormalTok{ /students/2024{-}2025/Thema05/BlaasKanker/testingtools/test\_variant\_calling/test\_output\_variants.vcf}
+\end{Highlighting}
+\end{Shaded}
+
+Het command werkt er is een output gecreeërd van een enkel file. Ik ga
+nu het command zo aanpassen dat hij de hele map aan vcf files in 1 keer
+meeneemt.\\
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ls}\NormalTok{ /students/2024{-}2025/Thema05/BlaasKanker/testingtools/test\_variant\_calling/}\PreprocessorTok{*}\NormalTok{.vcf }\KeywordTok{|} \ExtensionTok{parallel} \AttributeTok{{-}j}\NormalTok{ 4 }\DataTypeTok{\textbackslash{}}
+\StringTok{"java {-}Xmx8g {-}jar /students/2024{-}2025/Thema05/BlaasKanker/tools/snpeff/snpEff/snpEff.jar eff mm39 \textgreater{} /students/2024{-}2025/Thema05/BlaasKanker/testingtools/test\_variant\_calling/test\_output\_variants/\{/.\}.vcf"}
+\end{Highlighting}
+\end{Shaded}
+
+Bovenstaande commandline werkt. Ik voer alle bestanden in vanuit 1 map
+en voer met de tool snpEff vervolgens de variant calling uit. In
+bovenstaand command gebruik ik alleen de optie `eff', deze optie
+annoteert alleen de varianten. Voor de volgende ronde voeg ik de
+volgende opties toe:\\
+
+\begin{itemize}
+\tightlist
+\item
+  Xmx8g -\textgreater{} stelt de maximale hoeveelheid geheugen in die
+  Java mag gebruiken.\\
+\item
+  eff -\textgreater{} voor het annoteren van de varianten\\
+\item
+  verbose (-v) -\textgreater{} Hiermee wordt een gedetailleerd
+  logbestand gemaakt die handig kan zijn voor foutopsporing\\
+\end{itemize}
+
+Het command ziet er dan alsvolgt uit:\\
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ls}\NormalTok{ /students/2024{-}2025/Thema05/BlaasKanker/testingtools/test\_variant\_calling/}\PreprocessorTok{*}\NormalTok{.vcf }\KeywordTok{|} \ExtensionTok{parallel} \AttributeTok{{-}j}\NormalTok{ 4 }\DataTypeTok{\textbackslash{}}
+\StringTok{"java {-}Xmx8g {-}jar /students/2024{-}2025/Thema05/BlaasKanker/tools/snpeff/snpEff/snpEff.jar ann {-}v {-}stats /students/2024{-}2025/Thema05/BlaasKanker/testingtools/test\_variant\_calling/test\_output\_variants/ex1.html mm39 \textgreater{} /students/2024{-}2025/Thema05/BlaasKanker/testingtools/test\_variant\_calling/test\_output\_variants/\{/.\}.vcf"}
+\end{Highlighting}
+\end{Shaded}
+
+Bovenstaand command werkt, echter is de output leeg van de testdata
+leeg. De reden hiervoor is op dit moment onbekend.\\
+
+\#\#01-10-2024\\
+We hebben besloten om tussen de stappen variant calling en variant
+annotation een filter stap toe te voegen. Dit doen we met de tool
+VcfFilter. Deze tool filtert de data dusdanig dat alleen de meest
+relevante data behouden wordt. Dit scheelt tijd omdat de hoeveelheid
+data aanzienlijk vermindert door de filterstap. Voor de uitvoering kan
+er gekeken worden in het logboek van Ramon Reilman. --\textgreater{}\\
+
+Ik ga de gefilterde data gebruiken voor de variant annotation. Ik
+gebruik het command zoals ik gister heb vastgesteld. Ik voeg hier alleen
+nog de optie -t 8 (8 threads) aan toe zodat er maximaal 8 cpu threads
+worden gebruikt. Hiermee reduceer ik de cpu belasting van de
+schoolserver. Ik heb dit eerst nog getest op de testdata. Tijdens het
+testen ben ik erachter gekomen dat de threads functie niet meer werkend
+is. Via dit bericht
+\href{https://github.com/pcingola/SnpEff/issues/429}{github issues} is
+te lezen dat het een bekend probleem is. Echter is de documentatie van
+snpEff nog niet aangepast. Ik ga nu gebruik maken van de parallel -j
+functie om de threads te verdelen. Ik gebruik parallel -j 8 om zo de
+workload op de schoolserver te verminderen.\\
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ls}\NormalTok{ /students/2024{-}2025/Thema05/BlaasKanker/outputs/variant\_calling\_unfiltered/}\PreprocessorTok{*}\NormalTok{.vcf }\KeywordTok{|} \ExtensionTok{parallel} \AttributeTok{{-}j}\NormalTok{ 8 }\DataTypeTok{\textbackslash{}}
+\StringTok{"java {-}Xmx8g {-}jar /students/2024{-}2025/Thema05/BlaasKanker/tools/snpeff/snpEff/snpEff.jar ann {-}v {-}stats /students/2024{-}2025/Thema05/BlaasKanker/outputs/variant\_annotation\_unfiltered/stats.html mm39 \textgreater{} /students/2024{-}2025/Thema05/BlaasKanker/outputs/variant\_annotation\_unfiltered/\{/.\}.vcf"}
+\end{Highlighting}
+\end{Shaded}
+
+Na het uitvoeren van bovenstaand command krijg ik de volgende
+foutmelding: WARNING!: Mitochondrion chromosome `MT' does not have a
+mitochondrion codon table (codon table = `Standard'). You should update
+the config file. Ik probeer uit te zoeken waar ik de tabel kan vinden om
+deze in het configuration file toe te voegen.\\
+
+Omdat ik niet precies weet waar het misgaat heb ik besloten de database
+rondom mm39 opnieuw te bouwen. Hiervoor volg ik deze instructie
+{[}github instructie{]}
+(\url{https://pcingola.github.io/SnpEff/snpeff/build_db/})\\
+Ik heb van deze link op het
+\href{https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001635.27/}{ncbi}
+de fasta sequence, gft en gff file gedownload. Deze heb ik in de
+volgende map gezet: ~
+/students/2024-2025/Thema05/BlaasKanker/tools/snpeff/snpEff/data/mm39.\\
+
+Na het opnieuw bouwen van de database en uitvoeren van de tool op onze
+data krijg ik nog steeds de foutmelding: Mitochondrion chromosome `MT'
+does not have a mitochondrion codon table (codon table = `Standard').\\
+
+Ik heb voor nu besloten om hulp te vragen bij de docenten, ook Ramon
+kijkt nog even mee.~
+
+Ramon heeft Lofreq uitgevoerd voor de variant calling. Te vinden op onze
+\href{https://github.com/RamonReilman/GenomicsTranscriptomics}{github}
+onder logbooks, RamonReilmanLogbooks:\\
+
+\#\#2-10-2024\\
+Ramon heeft laten zien dat hij door middel van nog 2 andere tools mijn
+tool snpEff bijna werkend heeft gekregen. Kijk voor de stappen die hij
+heeft ondernomen in zijn logboek: Te vinden op onze
+\href{https://github.com/RamonReilman/GenomicsTranscriptomics}{github}
+onder logbooks, RamonReilmanLogbooks:\\
+
+\#\#3-10-2024\\
+Ik heb afgelopen week feedback gekregen op mijn logboek van Ronald.
+Hierbij is gebleken dat ik alles veel duidelijker en uitgebreider moet
+verwoorden. Daarom neem ik hier vandaag de tijd voor om het hele logboek
+van vooraan tot en met nu volledig aan te vullen. Hierbij ga ik de hoe,
+wat en waarom toepassen om op deze manier zoveel mogelijk
+tijdsverantwoording te vangen.\\
+
+Ik ga onderzoeken of we de output vcf bestanden die uit de variant
+annotation komen ook kunnen filteren op impact van mutaties. Hiermee
+zouden we het lezen en interpreteren van de mutaties namelijk veel
+makkelijker maken. Ik ga kijken of hier tools voor zijn en en welke dat
+zijn. ~
+
+Er zijn in principe 2 tools die dit kunnen doen en dit zijn VEP (Variant
+effect predictor) en SnpSift. Omdat SnpSift samenwerkt met SnpEff is het
+in dit geval de meest gunstige tool om te gebruiken. SnpSift is een
+toolbox met heel veel verschillende opties. Ik ga onderzoeken welke
+opties we het beste kunnen gebruiken om een zo gunstig mogelijke
+uitkomst te genereren. Wanneer de meest optimale uitkomst hebben kunnen
+we hier makkelijker plotjes van maken voor ons wetenschappelijke
+artikel.
+
+\#\#04-10-2024\\
+Na overleg met de groep hebben we besloten om SnpSift te gaan gebruiken
+om de impact van de genen en de soort puntmutatie eruit te filteren.
+SnpSift heeft hier een filter functie voor met de opties IMPACT en
+FUNCLASS.\\
+In de IMPACT optie kunnen de volgende waarden meegegeven worden:\\
+- High\\
+- Moderate\\
+- Low\\
+- Modifier ~
+
+In de FUNCLASS optie kunnen de volgende waarden meegegeven worden:\\
+- None\\
+- Silent\\
+- Missense\\
+- Nonsense\\
+
+De impact wat de varianten van genen hebben kan betekenen dat het
+verloop van de ziekte, hoe erg het zich uit bijvoorbeeld, daarmee aan te
+duiden is.\\
+
+Wanneer we het over de modifier optie hebben, dan gaat het om modifier
+genes. Deze genen spelen een rol in de variabiliteit van de fenotypische
+expressie van de ziekte. In het geval van blaaskanker bij muizen, kunnen
+modifier-genen de groei, progressie en respons op behandeling van
+tumoren beïnvloeden. Deze genen kunnen varianten bevatten die de
+expressie van andere genen moduleren, wat leidt tot verschillen in
+tumorontwikkeling en -gedrag tussen individuen. Dit is dus een
+belangrijke optie om mee te geven, deze genen willen we wel meenemen in
+het onderzoek.\\
+
+Low impact genen (optie low impact) zijn meestal varianten die geen tot
+weinig impact hebben op de ziekte en het verloop hiervan. In
+\href{https://genomebiology.biomedcentral.com/articles/10.1186/s13059-017-1212-4\#Sec1}{dit
+artikel} is wel te lezen dat er nog veel onderzoek is te doen naar low
+impact genen omdat het wel de fenotypische expressie kan beïnvloeden.
+Echter is er nog zeer weinig bekend over wat nu de precieze impact is
+van low impact genes. Voor ons onderzoek lijkt het niet relevant te zijn
+om deze genen mee te nemen dus dat gaan we niet doen.\\
+
+High impact genes hebben zoals de naam al doet vermoeden een zeer grote
+impact op de ziekte en het verloop hiervan. Deze genen kunnen
+aanzienlijke veranderingen veroorzaken in eiwitten of de regulatie van
+de genen. Door deze veranderingen hebben ze een zeer groot fenotypisch
+effect hebben op de expressie en verloop van de ziekte. Deze optie wordt
+dus meegenomen in ons onderzoek.\\
+
+Tijdens het onderzoeken naar al deze achtergrondinformatie hebben we
+besloten de tool toch niet te gaan gebruiken. Daarom ga ik geen extra
+tijd besteden aan meer theoretische achtergrond zoeken.\\
+
+\#\#11-10-2024\\
+Ramon is vandaag nog met de plotjes bezig om te kijken of dit werkend te
+krijgen is. Jasper, Iris en ik hebben de logboeken tegen elkaar aan
+gelegd en alle belangrijke stappen overgenomen van elkaar. Ook heb ik
+nog het logboek aangevuld met informatie.
+
+\#\#16-10-2024\\
+Ik heb de lollipop plot van
+\href{https://github.com/RamonReilman/GenomicsTranscriptomics/tree/main/logbooks}{Ramon
+zijn logboek} overgenomen.\\
+\includegraphics{/homes/jwpostmus/Documents/Variants_on_Gstm3.png}
+
+\end{document}

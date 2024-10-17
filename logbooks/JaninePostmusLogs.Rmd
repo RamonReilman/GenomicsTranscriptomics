@@ -2,9 +2,11 @@
 title: "Logbook Janine Postmus"
 author: "Janine Postmus"
 date: "2024-09-10"
-output: html_document
-editor_options: 
-  markdown: 
+output:
+  html_document: default
+  pdf_document: default
+editor_options:
+  markdown:
     wrap: 72
 ---
 
@@ -583,4 +585,9 @@ gelegd en alle belangrijke stappen overgenomen van elkaar. Ook heb ik
 nog het logboek aangevuld met informatie. 
 
 ##16-10-2024\
+Ik heb de lollipop plot van [Ramon zijn logboek](https://github.com/RamonReilman/GenomicsTranscriptomics/tree/main/logbooks) overgenomen. \
+![Variants_on_Gstm](/homes/jwpostmus/Documents/Variants_on_Gstm3.png)\
+Hierin zijn de varianten op het gen Gstm3 op chromosoom 3 te zien. Dit gen is Glutathione S-transferase M3 en het is bekend dat dit gen [vaak voorkomt in kankercellen](https://www.genecards.org/cgi-bin/carddisp.pl?gene=GSTM3). Omdat ons onderzoek zich richt op blaaskanker is het dus logisch dat deze variant is gevonden. 
 
+## Zelfreflectie\
+Ik heb deze periode veel geleerd. Voornamelijk over hoe ik moet uitzoeken hoe bio-informatica tools werken. Het uitzoeken vind ik nog wel moeilijk, ik miste hierbij soms wel het stukje uitleg vanuit de docenten. Tegelijkertijd heb ik, omdat we zoveel zelf moesten uitzoeken, hier wel veel van geleerd. Ook al gaat het soms niet heel soepel nog. Ik ga de dingen die ik geleerd heb meenemen in het transcriptomics gedeelte en verder proberen te ontwikkelen in de komende tijd. Ik denk namelijk dat het wel belangrijk is om dit soort dingen goed onder de knie te hebben zodat ik het later in mijn werkveld goed en soepel kan toepassen. \
