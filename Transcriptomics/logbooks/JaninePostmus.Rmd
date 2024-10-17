@@ -23,30 +23,112 @@ Door middel van de tool [STAR](https://github.com/alexdobin/STAR) gaan we de gen
 
 ## DESeq2 \
 
-Door middel van de [tool](https://www.bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html) DESeq2 gaan we nu de varianten tegen elkaar aanleggen en voorbereiden voor de statistische verwerking. Omdat we nog nooit met deze tool gewerkt hebben maken we gebruik van testdata om het commando voor deze tool voor te bereiden en uiteindelijk uit te voeren. \ 
-
-```{bash, eval=FALSE}
-# Pad naar testdata
-/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/testData/All_gene_counts_RNAseq.csv 
-
-# DESeq2 installatie commandline
-BiocManager::install("DESeq2", force = TRUE)
-```
+Door middel van de [tool](https://www.bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html) DESeq2 gaan we nu de varianten tegen elkaar aanleggen en voorbereiden voor de statistische verwerking. Omdat we nog nooit met deze tool gewerkt hebben maken we gebruik van testdata om het commando voor deze tool voor te bereiden en uiteindelijk uit te voeren. Ik gebruik hiervoor de volgende [tutorial](https://www.youtube.com/watch?app=desktop&v=OzNzO8qwwp0), inclusief de dataset die hier gebruikt wordt.  \ 
 
 ```{r}
 # Inladen libraries
 library(DESeq2)
-#library(tidyverse)
+library(tidyverse)
+library(airway)
+```
+
+Dit script is niet van mij, deze heb ik overgenomen van [github repo](https://github.com/kpatel427/YouTubeTutorials/blob/main/getData.R)\
+```{r}
+# script to get data from airway package
+data(airway)
+airway
+
+sample_info <- as.data.frame(colData(airway))
+sample_info <- sample_info[,c(2,3)]
+sample_info$dex <- gsub('trt', 'treated', sample_info$dex)
+sample_info$dex <- gsub('untrt', 'untreated', sample_info$dex)
+names(sample_info) <- c('cellLine', 'dexamethasone')
+write.table(sample_info, file = "sample_info.csv", sep = ',', col.names = T, row.names = T, quote = F)
+
+countsData <- assay(airway)
+write.table(countsData, file = "counts_data.csv", sep = ',', col.names = T, row.names = T, quote = F)
+```
+
+Stap 1 is het voorbereiden van de data zodat er in stap 2 een deseq datast van gemaakt kan worden.\
+```{r}
+# Read in counts data
+
+counts_data <-read.csv('counts_data.csv') 
+head(counts_data)
 ```
 
 ```{r}
-# Inladen data
+# Read in sample file
+colData <- read.csv('sample_info.csv')
+head(colData)
+```
 
-data_counts <- read.csv2('/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/testData/All_gene_counts_RNAseq.csv')
+```{r}
+# Checking if row names in colData matches to column names in counts_data
+all(colnames(counts_data) %in% rownames(colData))
+
+# Checking if they are in the same order
+all(colnames(counts_data) == rownames(colData))
 
 ```
 
 
+Stap 2 is het maken van de deseq dataset.\
+```{r}
+# Design is de rij met de verschillende soorten data. Bijvoorbeeld treated/nontreated.
+dds <- DESeqDataSetFromMatrix(countData = counts_data,
+                              colData = colData,
+                              design = ~ dexamethasone)
+```
+
+
+```{r}
+# Prefiltering on low gene counts
+keep <- rowSums(counts(dds)) >= 10
+dds <- dds[keep,]
+
+```
+
+
+Factor level betekend dat we deseq moeten vertellen welke 2 dimensies we gaan vergelijken. Wanneer deze niet gekozen wordt gaat dit op alfabetische volgorde.
+```{r}
+# Setting factor level
+dds$dexamethasone <- relevel(dds$dexamethasone, ref = "untreated")
+```
+
+
+Stap 3 is het runnen van de deseq functie. De dingen die meegenomen worden worden uitgelegd in [deze video](https://www.youtube.com/watch?v=0b24mpzM_5M). Hier heb ik mijn informatie vandaan gehaald.\
+```{r}
+dds <- DESeq(dds)
+res <- results(dds)
+
+```
+
+```{r}
+# Getting summary for results
+summary(res)
+
+res0.01 <- results(dds, alpha = 0.01)
+summary(res0.01)
+```
+
+
+```{r}
+#Contrasts
+resultsNames(dds)
+
+# Example more contrasts: treated_4hrs, treated_8hrs, untreated
+# results(dds, contrast = c("dexamethasone", "treated_4hrs", "untreated"))
+```
+
+
+Visualisatie van de data
+```{r}
+#Scatter plot
+plotMA(res)
+```
+
+Ik heb de volledige tutorial gevolgd en uitgevoerd. Hierdoor ik weet nu welke parameters ik de tool deseq2 moet meegeven zodat deze gebruikt kan worden.\
 
 ## Statistische verwerking \
 
