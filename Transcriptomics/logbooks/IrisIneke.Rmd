@@ -1,0 +1,150 @@
+---
+title: "IrisIneke.Rmd"
+author: "Iris Ineke"
+date: "2024-10-17"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Zondag 13 oktober:
+Ik moet voor het plan van aanpak de samples uitzoeken. 
+De verschillende samples:
+
+- Baseline_RNAseq (4)
+- NonTreated_RNAseq (6)
+- Treated_RNAseq (6)
+
+- NSG_Baseline_000_RNAseq (5)
+- NSG_Non-Treatment_000_RNAseq (5)
+- NSG_Entinostat_000_RNAseq (5)
+
+- Baseline_TCRseq (6)
+- NonTreated_TCRseq (6)
+- Treated_TCRseq (6)
+
+Er zijn dus drie groepen:
+
+- RNAseq
+- NSG_RNAseq
+- TCRseq
+
+en elke groep bestaat uit:
+
+- Baseline
+- Non_treated
+- Treated
+
+De sample nummers van de TCRseq en de RNAseq zijn allebei in de 400, Dus ik vermoed dat ze twee sequence techieken op dezelfde samples hebben uitgevoerd. 
+
+Wat is het verschil tussen de TCRseq, RNAseq en NSG_RNAseq:
+
+- RNAseq: meet de genexpressie (onder bepaalde omstandigheden)
+- TCRseq: meet de reactie van het immuumsysteem (door te kijken naar de hoeveelheid T-celreceptors ( cellen die het antigenen herkennen))
+- NSG_RNAseq: NSG-muizen zijn muizen die een zwak immuumsysteem hebben en daardoor gebruikt worden om menselijke cellen in te enten (zonder dat het immuumsysteem van de muis ze afstoot).
+
+Wat is het verschil tussen de Baseline, Non_treated en Treated:
+
+- Baseline is voor de tumor
+- Non_treated is na de tumor zonder entinostat
+- Treated is na de tumor met entinostat
+
+
+
+quality control:
+welke tools gaan we gebruiken en waarom:
+- trimmomatic: om de lage kwaliteit reads van het sequencen eruit te halen. Waarom: Om foutieve conclusies door foutieve data later te voorkomen (als je data gebruikt die niet klopt, trek je uit die data ook conclusies die niet overeenkomen met de werkelijkheid).
+- fastqc: geeft een rapport met de kwaliteit van de data. Waarom: Hieruit kun je bepalen wat je eventueel wilt aanpassen met Trimmomatic.
+- multiqc: voegt alle fastqc rapporten van samples samen tot een rapport. Waarom: Zo kun je makkelijker de resultaten van fastqc van alle samples bekijken.
+
+
+
+! Presenteren:
+
+- samples met nsg enzo (tabel leveren aan Ramon)
+- quility control (bulletpoints: trimmomatic, fastqc, multiqc)
+
+
+
+
+
+
+
+## Maandag 14 oktober:
+Alles uitgeschreven voor de presentatie en het plan van aanpak:\
+
+Tabel van de samples (van de Transcriptomics):
+|                | **Baseline** | **Non_treated** | **Treated** |
+|----------------|--------------|-----------------|-------------|
+| **RNAseq**     |       4      |        6        |      6      |
+| **NSG_RNAseq** |       5      |        5        |      5      |
+| **TCRseq**     |       6      |        6        |      6      |
+
+**Samples**\
+Er zijn voor het transcriptomics gedeelte in totaal 49 samples. Deze samples bestaan uit drie groepen; RNAseq, NSG_RNAseq en TCRseq. En al deze groepen bestaan uit baseline, non_treated en treated. De RNAseq en de TCRseq zijn waarschijnlijk uitgevoerd op dezelfde samples, aangezien de identificatienummers overeenkomen met elkaar. De NSG_RNAseq zijn een andere soort samples. NSG staat in dit geval voor een soort muis die gekweekt wordt en vaak voor onderzoek wordt gebruikt. Het immuunsysteem van deze muis is namelijk zeer zwak of helemaal afwezig. Hierdoor is de NSG-muis perfect om menselijke cellen in te enten, omdat het immuunsysteem van de muis de cellen niet goed kan afbreken. Hierdoor kunnen ze in het onderzoek kijken welk effect de mutatie op menselijke cellen heeft zonder menselijke proefpersonen te hoeven gebruiken. Met de RNA-sequencing wordt er gekeken naar de genexpressie onder bepaalde omstandigheden. In dit geval dus zonder mutatie (baseline) met mutatie (non_treated) en met mutatie en medicatie (treated). De TCR-sequencing meet de reactie van het immuunsysteem door te kijken naar de hoeveelheid T-celreceptors (cellen die het antigen herkennen).
+
+
+**quality control**\
+We gaan Fastqc en Multiqc gebruiken om te bepalen wat we willen verbeteren aan de data. Dit doen we door middel van het rapport dat uit Multiqc komt (wat een samenvatting maakt van alle rapporten die uit Fastqc komen). Hierna gaan we Trimmomatic gebruiken om de lage kwaliteit reads van het sequencen eruit te halen. Dit doen we om foutieve conclusies door foutieve data later te voorkomen. Als je data gebruikt die niet klopt, trek je immers (uit die data) ook conclusies die niet overeenkomen met de werkelijkheid. Hierna voeren we nog een keer Fastqc en Multiqc uit om te kijken of Trimmomatic voldoende verbeterd heeft. Als er uit dit rapport blijkt dat de data nog niet genoeg is opgeschoond zullen we nog een keer Trimmomatic moeten gebruiken totdat we tevreden zijn.
+
+
+## woensdag 16 oktober
+## quality control:
+Voorbeelden van vorige week:
+fastqc:
+```{bash, eval=FALSE}
+fastqc /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/fastq/*  \
+  -o /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/fastqc
+```
+
+ 
+multiqc:
+```{bash, eval=FALSE}
+multiqc /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/fastqc/* 
+-o /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/multiqc
+```
+
+
+Uit het multiqc rapport blijkt dat 'Per Base Sequence Content', 'Per Sequence GC Content', 'Sequence Duplication Levels' verbeterd kunnen worden.
+
+
+
+
+
+
+
+trimmomatic (instellingen zijn op basis van multiqc 'Sequence Quality Histograms' plot):
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/SRR_Acc_List.txt | \
+  parallel 'TrimmomaticPE -threads 4 ' \
+                  '/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/fastq/{}_1.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/fastq/{}_2.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/trimmomatic/{}_paired.1.fastq ' \
+                  '/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/trimmomatic/{}_unpaired.1.fastq ' \
+                  '/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/trimmomatic/{}_paired.2.fastq ' \
+                  '/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/trimmomatic/{}_unpaired.2.fastq ' \
+                  'ILLUMINACLIP:/students/2024-2025/Thema05/BlaasKanker/tools/trim_adapters/TruSeq3-PE.fa:2:30:10 ' \
+                  'MINLEN:40' \
+                  'SLIDINGWINDOW:4:20' \
+                  'LEADING:25' \
+                  'TRAILING:25' \
+```
+
+
+
+fastqc op de getrimde data:
+```{bash, eval=FALSE}
+fastqc /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/trimmomatic/*  \
+  -o /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/fastqc_after_trim
+```
+
+! hier ben je
+multiqc op de getrimde data:
+```{bash, eval=FALSE}
+multiqc /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/fastqc_after_trim/* \
+-o /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/multiqc_after_trim
+```
+
