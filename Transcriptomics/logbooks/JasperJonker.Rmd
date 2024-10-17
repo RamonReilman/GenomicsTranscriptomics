@@ -1,0 +1,30 @@
+---
+title: "Logbook Jasper Jonker"
+author: "Jasper Jonker"
+date: "2024-16-10"
+output: html_document
+editor_options: 
+  markdown: 
+    wrap: sentence
+---
+
+## Visualization
+
+Ik ga alvast bezig om te kijken hoe we onze data van trimmotic zo dat we in 1 keer door kunnen gaan met alles want we hebben maar een korte tijd om het allemaal te laten zien \### Pathway Analysis We gaan zo ie zo wel Pathway analysis doen.
+In deze grafiek kunnen we gaan kijken welke gevolgen de varianten hebben later op in het gebied van de biologische processen.
+
+https://pathview.r-forge.r-project.org/pathview.pdf is een een pdf met alle informatie
+
+
+
+```{r, echo=FALSE}
+library(pathview)
+data(gse16873.d)
+pv.out <- pathview(gene.data = gse16873.d[, 1], pathway.id = "04110",
+ species = "hsa", out.suffix = "gse16873")
+```
+![](/homes/jjonker2/Documents/GenomicsTranscriptomics/Transcriptomics/logbooks/hsa04110.gse16873.png)
+```{r}
+
+
+```

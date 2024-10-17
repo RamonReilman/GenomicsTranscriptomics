@@ -20,8 +20,7 @@ if (!requireNamespace("trackViewer", quietly = TRUE)) { # Only needed if BiocMan
 library(trackViewer)
 ```
 
-
-## Logboek Jasper Jonker
+# Logboek Jasper Jonker
 
 Dit is het Logboek van Jasper Jonker voor het vak 2.1.2 Genomics & Transcriptomics.
 Met dit vak gaan we een paper opnieuw na doen of een andere onderzoeksvraag beantwoorden met de data die gegeven is bij de paper.
@@ -330,6 +329,18 @@ Iris heeft picard gebruikt om de duplicaten te verwijderen.
 Ze heeft het eerst op de testdata gedaan en later die dag op de echte data.
 Dit is te lezen in het logboek van Iris
 
+Hier is het stukje code wat gebruikt is voor picard
+
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+  parallel java -jar picard.jar MarkDuplicates \
+                '-I /students/2024-2025/Thema05/BlaasKanker/outputs/bwa_aln/mapping_output/sorted/{}_sorted.bam' \
+                '-O /students/2024-2025/Thema05/BlaasKanker/outputs/picard_dub/marked_duplicates/{}.marked_duplicates.bam' \
+                '-M /students/2024-2025/Thema05/BlaasKanker/outputs/picard_dub/metrics/{}.marked_dup_metrics.txt' \
+                '-REMOVE_DUPLICATES true' \
+                '-READ_NAME_REGEX null'
+```
+
 ## 29-10
 
 Janine is bezig geweest met snifeff en kan je daar verder lezen in janines logboek.
@@ -338,6 +349,17 @@ Daar heb ik bij geholpen maar vooral in Ramons logboek.
 ## 01-10
 
 lofreq uitgevoerd dat kan je allemaal lezen in het Logboek van Ramon.
+
+Hier is de code die hij daar heeft gebruikt.
+
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+    parallel "lofreq call \
+    -f /students/2024-2025/Thema05/BlaasKanker/outputs/bwa_aln/index/GCF_000001635.27_GRCm39_genomic.fna \
+    -o /students/2024-2025/Thema05/BlaasKanker/outputs/variant_calling_unfiltered/{}_variants.vcf \
+    --verbose \
+    /students/2024-2025/Thema05/BlaasKanker/outputs/picard_dub/marked_duplicates/{}.marked_duplicates.bam"
+```
 
 ## 03-10
 
@@ -369,7 +391,7 @@ parallel "vcfstats --vcf /students/2024-2025/Thema05/BlaasKanker/outputs/variant
     --title 'Number of variants on each chromosome({})'"
 ```
 
-Hier doen we het op de mutaiies die over blijven die een mutaies hebben die dan vervolgens kanker kunnen veroorzaken .
+Hier doen we het op de mutaiies die over blijven die een mutaies hebben die dan vervolgens kanker kunnen veroorzaken.
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
@@ -395,9 +417,15 @@ Hier kan je zien dat er op het chromosoom 7 de meeste zijn die kanker veroorzake
 Omdat het zoveel is gaan we later nog filteren op hoe erg de invloed is van de mutatie op het biologisch proces en pakken we de gene met een een groot gevolg.
 
 ## De rest
+
 Deze periode ben ik bezig geweest met mensen helpen bijvoorbeeld met de plots maken en alvast bezig geweest met het plan van aanpak voor het trimmonatic gedeelte.
 
-Hier heb dus de eerste plot die we hebben gemaakt die het laat zien hier heb ik beivoorbeeld aan mee geholpen
+GSA wordt niet meer gebruikt misschien nog in het trimmonatic gedeelte.
+Want we dachten dat we een verslag moesten schrijven maar dat is niet nodig alleen maar de de loliplot maken.
+
+Met deze loliplot willen we laten zien welke varianten er zijn, of ze op een intron liggen of op een exon liggen en uiteindelijk laten zien wat voor invloed ze hebben op hun processen.
+
+Hier heb dus de eerste plot die we hebben gemaakt die het laat zien hier heb ik bijvoorbeeld aan mee geholpen
 
 ```{r}
 vcf_data <- readVcfAsVRanges("/students/2024-2025/Thema05/BlaasKanker/outputs/variant_annotation_cancer_genes/SRR14870694.vcf", genome = "mm39")
@@ -406,6 +434,3 @@ gr <- GRanges("1", IRanges(74419628, 74419928))
 vcf_data$score <- vcf_data$AF * 100
 lolliplot(vcf_data, gr)
 ```
-
-
-
