@@ -365,7 +365,9 @@ on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="uri">http:
 </div>
 <div id="inleiding" class="section level2">
 <h2>inleiding</h2>
-<p>! inleiding schrijven</p>
+<p>In dit logboek zijn alle stappen beschreven die zijn uitgevoerd om
+van een dataset van een artikel over blaaskanker de variants te
+vinden.</p>
 </div>
 <div id="maandag-9-september" class="section level2">
 <h2>Maandag 9 september</h2>
@@ -705,8 +707,6 @@ bij versie 3.2.0): nieuwe folder maken in terminal: ‘picard’</p>
 <pre class="bash"><code>unzip picard.jar </code></pre>
 <p>de help van de tool:</p>
 <pre class="bash"><code>java -jar picard.jar -h</code></pre>
-<p>! unpaired eruit halen multi report voor betrouwbaardere output op
-aanraden van Ramon</p>
 <p>Omdat na de trimming de duplicatie levels goed zijn. Is Picard niet
 meer nodig. Dus nu gaan Ramon en ik samen inlezen over Trelka. Ramon
 heeft mij toegang gegeven tot de door hem gedownloade tool (wat dus een
@@ -777,8 +777,6 @@ zien:</p>
 </tr>
 </tbody>
 </table>
-<p>! uitzoeken documentatie, germline of die ander. tumor.bam hebben we
-ms niet</p>
 <p>De testdata goedmaken is niet gelukt, dus ik ga op de echte data
 verder.</p>
 <p>kijken of Whole exome sequencing invloed kan hebben op duplicaties.
@@ -860,7 +858,7 @@ van hetzelfde fragment komen).</p>
 <p>TAGGING_POLICY (niet nodig):<br />
 geeft de mogelijkheid de om te kiezen of je alle duplicaten wil markeren
 of alleen optische (fouten in sequencen).</p>
-<p>input: coördinaten of query gesorteerd. (!)</p>
+<p>input: coördinaten of query gesorteerd.</p>
 <p>READ_NAME_REGEX/OPTICAL_DUPLICATE_PIXEL_DISTANCE (niet nodig):<br />
 kijkt of de duplicaten door PCR of het sequence apparaat gemaakt zijn
 met ‘DontTag’.</p>
@@ -879,9 +877,10 @@ het identificeren van de duplicates en daarna remove_duplicate.</p>
       I=input.bam \
       O=marked_duplicates.bam \
       M=marked_dup_metrics.txt</code></pre>
-<p>De input komt van !Jasper van de mapping. Voor de ‘O’ een map maken
-waar de marked duplicates in kunnen. Voor de ‘M’ ook een map maken waar
-de statistieken in kunnen.</p>
+<p>De input komt van Jasper van de mapping. Zie <a href="https://github.com/RamonReilman/GenomicsTranscriptomics/blob/main/logbooks/JasperJonkerLogs.Rmd">Jasper
+zijn logboek</a> Voor de ‘O’ een map maken waar de marked duplicates in
+kunnen. Voor de ‘M’ ook een map maken waar de statistieken in
+kunnen.</p>
 <pre class="bash"><code>java -jar picard.jar MarkDuplicates \
       I=input.bam \
       O=marked_duplicates.bam \
@@ -1035,10 +1034,9 @@ FastP</a></p>
 <p>Ik betwijfel of FastP de tool is die we kunnen gebruiken voor een
 duplicaten check, aangezien de data die in FastP moet een R1 en een R2
 bestand is. En de data die we erin willen is een bam bestand.</p>
-<p>! Wat overblijft ws biologische duplicaten ? Ik weet niet meer wat
-hiermee moet tbh</p>
-<p>! kijken: zijn de statistieken in het artikel ook relevant voor ons ?
-Uit artikel: Statistical analyses were performed using GraphPad Prism,
+<p>Wat overblijft ws biologische duplicaten. Die willen we behouden.</p>
+<p>zijn de statistieken in het artikel ook relevant voor ons ? Uit
+artikel: Statistical analyses were performed using GraphPad Prism,
 version 8.0. Two-tailed t tests or Mann-Whitney U tests were used to
 compare 2 groups, while 3 or more groups were compared using 2-way ANOVA
 followed by either Tukey’s or Dunnett’s multiple-comparison test. A P
@@ -1058,7 +1056,7 @@ waar de snp op ligt - positie in basenparen waar de snp in het chromsoom
 ligt - p-waarde</p>
 <p>Uit de SNPeff tool komt een bestand met de snp id, het chromosoom en
 de positie waar de snp op ligt: (#CHROM POS ID REF ALT QUAL FILTER INFO)
-! Maar hoe we aan de P-waarde moeten komen nog even uitzoeken, want die
+Maar hoe we aan de P-waarde moeten komen nog even uitzoeken, want die
 staat ook niet in de info (waar hij soms wel schijnt te staan).</p>
 <p>Als we de dataset hebben kunnen we de voorbeeld code van de
 r-graph-gallary proberen:</p>
@@ -1096,7 +1094,7 @@ BiocManager::install(&quot;trackViewer&quot;)</code></pre>
 <h2>Zondag 6 oktober:</h2>
 <p>‘library(TxDb.Hsapiens.UCSC.hg19.knownGene)’ wordt gebruikt in het
 voorbeeld van de documentatie van trackviewer, maar die moeten wij
-aanpassen naar het genoom van de muis. (!genoom mens –&gt; muis)</p>
+aanpassen naar het genoom van de muis.</p>
 <p>Omdat we een file gebruiken ipv de library hebben we misschien de
 library: ‘rtracklayer’ nodig. (uit documentatie: Description Extensible
 framework for interacting with multiple genome browsers)</p>
@@ -1104,9 +1102,9 @@ framework for interacting with multiple genome browsers)</p>
 <div id="maandag-7-oktober" class="section level2">
 <h2>Maandag 7 oktober:</h2>
 <p>Er komt een foutmelding uit de code die aangeeft dat de
-tabixfiles(index) niet aanwezig zijn. Met behulp van Ramon zijn logboek
-die files gemaakt(!zie 1/10 van Ramon zijn logboek) Op het file die ik
-gebruik uitgevoerd:</p>
+tabixfiles(index) niet aanwezig zijn. Met behulp van <a href="https://github.com/RamonReilman/GenomicsTranscriptomics/blob/main/logbooks/RamonReilmanLogs.Rmd">Ramon
+zijn logboek</a> die files gemaakt. Op het file die ik gebruik
+uitgevoerd:</p>
 <pre class="bash"><code>bgzip /students/2024-2025/Thema05/BlaasKanker/outputs/cp_variant_annotation_cancer_genes/variant_annotation_cancer_genes/SRR14870694.vcf</code></pre>
 <p>Hij zegt iets met permissioin dennied terwijl ik de map heb
 aangemaakt en de rechten goed staan, dus we kijken er morgen samen even
@@ -1198,8 +1196,6 @@ vcf$score &lt;- vcf$AF * 100
 lolliplot(vcf, gr)</code></pre>
 <p>snpift extract fields op galaxy, fileds to extract invullen (onderin
 staan de extra opties die je erin kan stoppen, naast chrom pos enz.)</p>
-<p>! exon positie in plot doen: ! bed irange en grange ! irnage(begin),
-width(eind-start)</p>
 </div>
 <div id="oktober-2024" class="section level2">
 <h2>9 oktober 2024:</h2>
@@ -1245,111 +1241,9 @@ te halen.</p>
 <h2>Vrijdag 11 oktober:</h2>
 <p>We hebben vandaag de logboeken uitgewisseld met op welke data alles
 is uitgevoerd. Ook alle referenties toegevoegd. En logboek geknit naar
-html (voorheen steeds vergeten).</p>
-</div>
-<div id="zondag-13-oktober" class="section level2">
-<h2>Zondag 13 oktober:</h2>
-<p>Ik moet voor het plan van aanpak de samples uitzoeken. De
-verschillende samples:</p>
-<ul>
-<li><p>Baseline_RNAseq (4)</p></li>
-<li><p>NonTreated_RNAseq (6)</p></li>
-<li><p>Treated_RNAseq (6)</p></li>
-<li><p>NSG_Baseline_000_RNAseq (5)</p></li>
-<li><p>NSG_Non-Treatment_000_RNAseq (5)</p></li>
-<li><p>NSG_Entinostat_000_RNAseq (5)</p></li>
-<li><p>Baseline_TCRseq (6)</p></li>
-<li><p>NonTreated_TCRseq (6)</p></li>
-<li><p>Treated_TCRseq (6)</p></li>
-</ul>
-<p>Er zijn dus drie groepen:</p>
-<ul>
-<li>RNAseq</li>
-<li>NSG_RNAseq</li>
-<li>TCRseq</li>
-</ul>
-<p>en elke groep bestaat uit:</p>
-<ul>
-<li>Baseline</li>
-<li>Non_treated</li>
-<li>Treated</li>
-</ul>
-<p>De sample nummers van de TCRseq en de RNAseq zijn allebei in de 400,
-Dus ik vermoed dat ze twee sequence techieken op dezelfde samples hebben
-uitgevoerd.</p>
-<p>Wat is het verschil tussen de TCRseq, RNAseq en NSG_RNAseq:</p>
-<ul>
-<li>RNAseq: meet de genexpressie (onder bepaalde omstandigheden)</li>
-<li>TCRseq: meet de reactie van het immuumsysteem (door te kijken naar
-de hoeveelheid T-celreceptors ( cellen die het antigenen
-herkennen))</li>
-<li>NSG_RNAseq: NSG-muizen zijn muizen die een zwak immuumsysteem hebben
-en daardoor gebruikt worden om menselijke cellen in te enten (zonder dat
-het immuumsysteem van de muis ze afstoot).</li>
-</ul>
-<p>Wat is het verschil tussen de Baseline, Non_treated en Treated:</p>
-<ul>
-<li>Baseline is voor de tumor</li>
-<li>Non_treated is na de tumor zonder entinostat</li>
-<li>Treated is na de tumor met entinostat</li>
-</ul>
-<p>quality control: welke tools gaan we gebruiken en waarom: -
-trimmomatic: om de lage kwaliteit reads van het sequencen eruit te
-halen. Waarom: Om foutieve conclusies door foutieve data later te
-voorkomen (als je data gebruikt die niet klopt, trek je uit die data ook
-conclusies die niet overeenkomen met de werkelijkheid). - fastqc: geeft
-een rapport met de kwaliteit van de data. Waarom: Hieruit kun je bepalen
-wat je eventueel wilt aanpassen met Trimmomatic. - multiqc: voegt alle
-fastqc rapporten van samples samen tot een rapport. Waarom: Zo kun je
-makkelijker de resultaten van fastqc van alle samples bekijken.</p>
-<p>! Presenteren:</p>
-<ul>
-<li>samples met nsg enzo (tabel leveren aan Ramon)</li>
-<li>quility control (bulletpoints: trimmomatic, fastqc, multiqc)</li>
-</ul>
-<p>! Vragen dinsdag Ramon: - welke data heb je gedownload? vanaf de ncbi
-pagina ?</p>
-</div>
-<div id="maandag-14-oktober" class="section level2">
-<h2>Maandag 14 oktober:</h2>
-<p>Alles uitgeschreven voor de presentatie en het plan van aanpak:<br />
-</p>
-<p>Tabel van de samples (van de Transcriptomics): | |
-<strong>Baseline</strong> | <strong>Non_treated</strong> |
-<strong>Treated</strong> | |—————-|————–|—————–|————-| |
-<strong>RNAseq</strong> | 4 | 6 | 6 | | <strong>NSG_RNAseq</strong> | 5
-| 5 | 5 | | <strong>TCRseq</strong> | 6 | 6 | 6 |</p>
-<p><strong>Samples</strong><br />
-Er zijn voor het transcriptomics gedeelte in totaal 49 samples. Deze
-samples bestaan uit drie groepen; RNAseq, NSG_RNAseq en TCRseq. En al
-deze groepen bestaan uit baseline, non_treated en treated. De RNAseq en
-de TCRseq zijn waarschijnlijk uitgevoerd op dezelfde samples, aangezien
-de identificatienummers overeenkomen met elkaar. De NSG_RNAseq zijn een
-andere soort samples. NSG staat in dit geval voor een soort muis die
-gekweekt wordt en vaak voor onderzoek wordt gebruikt. Het immuunsysteem
-van deze muis is namelijk zeer zwak of helemaal afwezig. Hierdoor is de
-NSG-muis perfect om menselijke cellen in te enten, omdat het
-immuunsysteem van de muis de cellen niet goed kan afbreken. Hierdoor
-kunnen ze in het onderzoek kijken welk effect de mutatie op menselijke
-cellen heeft zonder menselijke proefpersonen te hoeven gebruiken. Met de
-RNA-sequencing wordt er gekeken naar de genexpressie onder bepaalde
-omstandigheden. In dit geval dus zonder mutatie (baseline) met mutatie
-(non_treated) en met mutatie en medicatie (treated). De TCR-sequencing
-meet de reactie van het immuunsysteem door te kijken naar de hoeveelheid
-T-celreceptors (cellen die het antigen herkennen).</p>
-<p><strong>quality control</strong><br />
-We gaan Fastqc en Multiqc gebruiken om te bepalen wat we willen
-verbeteren aan de data. Dit doen we door middel van het rapport dat uit
-Multiqc komt (wat een samenvatting maakt van alle rapporten die uit
-Fastqc komen). Hierna gaan we Trimmomatic gebruiken om de lage kwaliteit
-reads van het sequencen eruit te halen. Dit doen we om foutieve
-conclusies door foutieve data later te voorkomen. Als je data gebruikt
-die niet klopt, trek je immers (uit die data) ook conclusies die niet
-overeenkomen met de werkelijkheid. Hierna voeren we nog een keer Fastqc
-en Multiqc uit om te kijken of Trimmomatic voldoende verbeterd heeft.
-Als er uit dit rapport blijkt dat de data nog niet genoeg is opgeschoond
-zullen we nog een keer Trimmomatic moeten gebruiken totdat we tevreden
-zijn.</p>
+html (voorheen steeds vergeten). Ramon heeft de plot overgenomen van
+mij, omdat het mij niet is gelukt. Zie hiervoor <a href="https://github.com/RamonReilman/GenomicsTranscriptomics/blob/main/logbooks/RamonReilmanLogs.Rmd">Ramon
+zijn logboek</a>.</p>
 </div>
 
 
