@@ -8,6 +8,8 @@ editor_options:
     wrap: sentence
 ---
 
+BiocManager::install("trackViewer")
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(VariantAnnotation)
@@ -341,10 +343,18 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
                 '-READ_NAME_REGEX null'
 ```
 
-## 29-10
+## 30-10
 
-Janine is bezig geweest met snifeff en kan je daar verder lezen in janines logboek.
-Daar heb ik bij geholpen maar vooral in Ramons logboek.
+Ramon is bezig geweest met snifeff en kan je daar verder lezen in Ramon logboek.
+Daar heb ik bij geholpen maar,
+
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+    parallel "lofreq call \
+    -f /students/2024-2025/Thema05/BlaasKanker/outputs/bwa_aln/index/GCF_000001635.27_GRCm39_genomic.fna \
+    -o /students/2024-2025/Thema05/BlaasKanker/testingtools/test_variant_calling/{}_variants.vcf \
+    /students/2024-2025/Thema05/BlaasKanker/testingtools/picard_test/poging_1/{}.marked_duplicates.bam"
+```
 
 ## 01-10
 
@@ -364,6 +374,16 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 ## 03-10
 
 snpeff is uitgevoerd en is te lezen in het logbook van Ramon.
+
+hier is de code
+
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+    parallel -j 6 \
+    "java -Xmx8g -jar /students/2024-2025/Thema05/BlaasKanker/tools/snpeff/snpEff/snpEff.jar ann -v -stats \
+    /students/2024-2025/Thema05/BlaasKanker/outputs/variant_annotation/stats.html mm39 \
+    /students/2024-2025/Thema05/BlaasKanker/outputs/chromosome_remade_varients/{}_variants.vcf > /students/2024-2025/Thema05/BlaasKanker/outputs/variant_annotation/{}.vcf"
+```
 
 ## 04-10
 
@@ -424,13 +444,3 @@ GSA wordt niet meer gebruikt misschien nog in het trimmonatic gedeelte.
 Want we dachten dat we een verslag moesten schrijven maar dat is niet nodig alleen maar de de loliplot maken.
 
 Met deze loliplot willen we laten zien welke varianten er zijn, of ze op een intron liggen of op een exon liggen en uiteindelijk laten zien wat voor invloed ze hebben op hun processen.
-
-Hier heb dus de eerste plot die we hebben gemaakt die het laat zien hier heb ik bijvoorbeeld aan mee geholpen
-
-```{r}
-vcf_data <- readVcfAsVRanges("/students/2024-2025/Thema05/BlaasKanker/outputs/variant_annotation_cancer_genes/SRR14870694.vcf", genome = "mm39")
-
-gr <- GRanges("1", IRanges(74419628, 74419928))
-vcf_data$score <- vcf_data$AF * 100
-lolliplot(vcf_data, gr)
-```
