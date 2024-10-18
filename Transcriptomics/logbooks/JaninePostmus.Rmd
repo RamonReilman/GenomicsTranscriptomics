@@ -15,7 +15,7 @@ Ons [onderzoek](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE153650) ki
 
 ## Kwaliteitscontrole \
 
-We beginnen met de kwaliteitscontrole van de data. Hiervoor gebruiken we de tool FastQC en MultiQC. Deze stap voeren we uit omdat we willen beoordelen of onze data goed genoeg is om mee te werken. Wanneer dit niet het geval is, zullen we met behulp van de tool Trimmomatic, de data dusdanig trimmen dat deze wel goed genoeg is om te gebruiken. \
+We beginnen met de kwaliteitscontrole van de data. Hiervoor gebruiken we de tool FastQC en MultiQC. Deze stap voeren we uit omdat we willen beoordelen of onze data goed genoeg is om mee te werken. Wanneer dit niet het geval is, zullen we met behulp van de tool Trimmomatic, de data dusdanig trimmen dat deze wel goed genoeg is om te gebruiken. Iris heeft deze stap uitgevoerd daarom verwijs ik voor de gebruikte settings en commandlines naar het [logboek van Iris](https://github.com/RamonReilman/GenomicsTranscriptomics/tree/main/Transcriptomics/logbooks) \
 
 ## STAR (Spliced Transcripts Alignment to a Reference) \
 
