@@ -1,0 +1,20 @@
+## Quality controll
+### 18-10-2024
+
+De ruwe data is nu gedownload en uitgepakt, en we zullen eerst de kwaliteit moeten bepalen.
+
+```{bash, eval=FALSE}
+ls /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/fastq/ | \
+parallel "/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/bin/falco /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/fastq/{} -o /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control2/{}_fastqc_report"
+
+multiqc /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control2/* -o /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/temp_multiqc
+```
+
+Nu kijken naar de door Iris getrimde data
+```{bash, eval=FALSE}
+ls /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/trimmomatic2 | grep -i -E "*_paired*" | \
+parallel "/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/bin/falco /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/trimmomatic2/{} -o /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control2/trimmed2/{}_fastqc_report"
+
+
+```
+
