@@ -4,6 +4,7 @@ Finds the genes that user gives via file input in a vcf file.
 Author: Ramon Reilman
 Version: 1
 data: 08-10-2024
+
 """
 
 import sys
@@ -77,14 +78,18 @@ def process_input(args, wanted_genes):
     try:
         with open(args.input_file, 'r', encoding='utf-8') as input_file:
             for line in input_file:
+
                 if line.startswith("#"):
                     wanted_genes_lines += line
                 
+
                 line_split = line.split("\t")
                 for gene in wanted_genes:
                     if gene in line_split[-1].split("|"):
                         wanted_genes_lines += line
+
                         continue
+
 
         return wanted_genes_lines
     except FileNotFoundError:
