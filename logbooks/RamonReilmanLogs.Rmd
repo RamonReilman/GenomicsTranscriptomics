@@ -1017,7 +1017,7 @@ variants_info <- unique(list_variant_ranges[[gene]])
 SNPs <- start(variants_info)
 chromosome <- unique(snp_data$CHROM[snp_data$ANN....GENE == gene])
 
-height_map <- c("LOW" = 1, "MODIFIER" = 10, "MODERATE" = 5, "HIGH" = 15)
+height_map <- c("LOW" = 1, "MODIFIER" = 5, "MODERATE" = 10, "HIGH" = 15)
 sample.gr <- GRanges(chromosome, IRanges(SNPs, width = 1, names = paste0("", SNPs)))
 
 sample.gr$impact <- variants_info$impact
@@ -1034,7 +1034,7 @@ gr$height <- unit(3, "mm")
 
 
 yaxis <- c(0,5,10,15)
-names(yaxis) <- c("LOW", "MOD", "MODI", "HIGH")
+names(yaxis) <- c("LOW", "MODI", "MOD", "HIGH")
 lolliplot(sample.gr, gr, ylab = " ",
           xlab = "Chromosome position",
           yaxis = yaxis,)
@@ -1059,7 +1059,7 @@ Ik blijf voor deze opdracht dus het zelf gemaakte bed bestand gebruiken, ook al 
 Het is nog niet helemaal duidelijk om te zien wanneer een variant in een intron of exon ligt, dit zou ik graag nog met kleur aan willen geven. Dit kan ik zelf vinden aan de hand van de exon ranges in het BED bestand.
 
 ### Final Visualisation
-```{r}
+```{r, fig.cap="Varianten die liggen op het Gstm3 gen. In het bovenstaande figuur zie je de varianten die liggen op het Gstm3 gen. Elke loli is een variant, waarbij de kleur aangeeft of deze op een intron of exon ligt. De hoogte van de loli geeft weer hoe hoog de impact van de mutatie is op het gen."}
 exon_ranges <- ranges(list_exons[[gene]])
 
 exon_variants <- subsetByOverlaps(ranges(variants_info), exon_ranges)
@@ -1073,7 +1073,7 @@ legends <- list(labels=c("Intronic", "Exonic"),
                 color=c("gray80", "gray80")) ## legend labels
 
 yaxis <- c(0,5,10,15)
-names(yaxis) <- c("LOW", "MOD", "MODI", "HIGH")
+names(yaxis) <- c("LOW", "MODI", "MOD", "HIGH")
 names(gr) <- rep(paste("Exons of", gene), length(gr))
 lolliplot(sample.gr, gr, ylab = " ",
           xlab = "Chromosome position",
@@ -1088,3 +1088,7 @@ grid.text(paste("Variants on", gene ), x=.2, y=.98, just="top",
 grid.text(paste("On chromosome", chromosome ), x=.2, y=.93, just="top", 
           gp=gpar(cex=1))
 ```
+In het figuur hierboven wordt weergegeven waar varianten liggen op gen Gstm3, hier is zichtbaar dat er 2 SNPs liggen in een exon, en 1 in een intron. De 2 mutaties in de exonen hebben een moderate impact, dit houd in dat de mutatie er voor zorgt dat het codon vertaald wordt naar een ander aminozuur.
+
+Verder valt er weinig te zeggen over de mutaties. Als er nog meer tijd was geweest hadden we snpsift nog meer annotatie kunnen toevoegen aan de mutaties, om verder te kijken naar de impact en relevantie van de mutaties.
+Voor ons onderzoek is transcriptomics onderzoek meer relevant, dus willen we vanaf vandaag daar verder mee gaan.
