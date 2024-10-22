@@ -93,58 +93,76 @@ We gaan Fastqc en Multiqc gebruiken om te bepalen wat we willen verbeteren aan d
 
 ## woensdag 16 oktober
 ## quality control:
-Voorbeelden van vorige week:
-fastqc:
-```{bash, eval=FALSE}
-fastqc /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/fastq/*  \
-  -o /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/fastqc
-```
+FastQC en multiQC uitgevoerd op de data (duurt erg lang, rekening mee houden in planning).
 
- 
-multiqc:
-```{bash, eval=FALSE}
-multiqc /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/fastqc/* 
--o /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/multiqc
-```
+Uit het multiqc rapport blijkt dat 'Per Base Sequence Content', 'Per Sequence GC Content' en 'Sequence Duplication Levels' verbeterd kunnen worden.
 
 
-Uit het multiqc rapport blijkt dat 'Per Base Sequence Content', 'Per Sequence GC Content', 'Sequence Duplication Levels' verbeterd kunnen worden.
-
-
-
-
-
-
-
-trimmomatic (instellingen zijn op basis van multiqc 'Sequence Quality Histograms' plot):
+Trimmomatic uitgevoerd (instellingen zijn op basis van multiqc 'Sequence Quality Histograms' plot):
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/SRR_Acc_List.txt | \
-  parallel 'TrimmomaticPE -threads 4 ' \
+  parallel 'TrimmomaticPE -threads 8 ' \
                   '/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/fastq/{}_1.fastq' \
                   '/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/fastq/{}_2.fastq' \
-                  '/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/trimmomatic/{}_paired.1.fastq ' \
-                  '/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/trimmomatic/{}_unpaired.1.fastq ' \
-                  '/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/trimmomatic/{}_paired.2.fastq ' \
-                  '/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/trimmomatic/{}_unpaired.2.fastq ' \
+                  '/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/trimmomatic2/{}_paired.1.fastq ' \
+                  '/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/trimmomatic2/{}_unpaired.1.fastq ' \
+                  '/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/trimmomatic2/{}_paired.2.fastq ' \
+                  '/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/trimmomatic2/{}_unpaired.2.fastq ' \
                   'ILLUMINACLIP:/students/2024-2025/Thema05/BlaasKanker/tools/trim_adapters/TruSeq3-PE.fa:2:30:10 ' \
-                  'MINLEN:40' \
-                  'SLIDINGWINDOW:4:20' \
-                  'LEADING:25' \
-                  'TRAILING:25' \
+                  'LEADING:30' \
+                  'TRAILING:25'
 ```
 
-
-
-fastqc op de getrimde data:
+Weer fastqc en multiqc gerund. De unpaired moeten niet worden meegenomen in de analyse (dit zorgde namelijk voor een erg chaotisch multiqc rapport).
+En threads meegeven, zodat het niet 3 uur duurt.
 ```{bash, eval=FALSE}
-fastqc /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/trimmomatic/*  \
-  -o /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/fastqc_after_trim
+fastqc /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/trimmomatic2/*_paired.*  \
+  -o /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/fastqc_after_trim2.2 -t 12
 ```
 
-! hier ben je
-multiqc op de getrimde data:
+Trimmomatic met andere (strengere) settings gerund na overleg met de groep:
 ```{bash, eval=FALSE}
-multiqc /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/fastqc_after_trim/* \
--o /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/multiqc_after_trim
+cat /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/SRR_Acc_List.txt | \
+  parallel 'TrimmomaticPE -threads 10 ' \
+                  '/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/fastq/{}_1.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/fastq/{}_2.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/trimmomatic3/{}_paired.1.fastq ' \
+                  '/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/trimmomatic3/{}_unpaired.1.fastq ' \
+                  '/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/trimmomatic3/{}_paired.2.fastq ' \
+                  '/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/trimmomatic3/{}_unpaired.2.fastq ' \
+                  'ILLUMINACLIP:/students/2024-2025/Thema05/BlaasKanker/tools/trim_adapters/TruSeq3-PE.fa:2:30:10 ' \
+                  'LEADING:32' \
+                  'TRAILING:30'
 ```
+
+In plaats van het fastqc rapport 'fastp'(!klopt dat ?) gebruikt op aanraden van Ramon, omdat deze veel sneller gaat.
+```{bash, eval=FALSE}
+ls /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/trimmomatic3 | grep -i -E "*_paired*" | \
+parallel "/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/bin/falco /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/trimmomatic3/{} -o /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/fastqc_after_trim3/{}_fastqc_report"
+```
+Daar weer multiqc op gedaan.
+```{bash, eval=FALSE}
+multiqc /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/fastqc_after_trim3/* \
+-o /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/multiqc_after_trim3
+```
+
+De adapter ontent is erg hoog. Deze proberen te verminderen met headcrop (begin eraf halen).
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/SRR_Acc_List.txt | \
+  parallel 'TrimmomaticPE -threads 10 ' \
+                  '/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/fastq/{}_1.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/fastq/{}_2.fastq' \
+                  '/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/trimmomatic3/{}_paired.1.fastq ' \
+                  '/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/trimmomatic3/{}_unpaired.1.fastq ' \
+                  '/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/trimmomatic3/{}_paired.2.fastq ' \
+                  '/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/trimmomatic3/{}_unpaired.2.fastq ' \
+                  'ILLUMINACLIP:/students/2024-2025/Thema05/BlaasKanker/tools/trim_adapters/TruSeq3-PE.fa:2:30:10 ' \
+                  'HEADCROP:7' \
+                  'LEADING:32' \
+                  'TRAILING:30'
+```
+
+Na advies van Marcel te hebben gevraagd over het aantal adapter content die we hebben tot de conclusie gekomen dat we waarschijnlijk geen Trimmomatic hoeven te gebruiken (data is al goed genoeg). (!kijk nog even naar de bron)
+
+We zijn erachter gekomen dat in de NGS muizen geen menselijke cellen zitten. Dus ook deze mappen tegen het muis-ref-genoom (Wat wel heel gek is is dat in het artikel staat dat ze tegen het menselijke-ref-genoom hebben gemapt, is dit een fout ?).
 
