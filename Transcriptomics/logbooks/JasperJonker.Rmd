@@ -9,14 +9,13 @@ editor_options:
 ---
 
 ## Visualization
+
 Ik ga alvast bezig om te kijken hoe we onze data van trimmotic zo dat we in 1 keer door kunnen gaan met alles want we hebben maar een korte tijd om het allemaal te laten zien 
 ### Pathway Analysis 
 We gaan zo ie zo wel Pathway analysis doen.
 In deze grafiek kunnen we gaan kijken welke gevolgen de varianten hebben later op in het gebied van de biologische processen.
 
-16-10
-https://pathview.r-forge.r-project.org/pathview.pdf is een een pdf met alle informatie
-
+16-10 <https://pathview.r-forge.r-project.org/pathview.pdf> is een een pdf met alle informatie
 
 ```{r, echo=FALSE}
 library(pathview)
@@ -24,13 +23,19 @@ data(gse16873.d)
 pv.out <- pathview(gene.data = gse16873.d[, 1], pathway.id = "04110",
  species = "hsa", out.suffix = "gse16873")
 ```
+
 ![](/homes/jjonker2/Documents/GenomicsTranscriptomics/Transcriptomics/logbooks/hsa04110.gse16873.png)
+```{r}
+library(pathview)
+data(gse16873.d)
 
+```
 
-### Volcano plot 
+### Volcano plot
+
 17-10 
-#### manier 1
-Dit is 1 manier om het te doen. 
+#### manier 1 
+Dit is 1 manier om het te doen.
 
 ```{r}
 tmp <- readRDS("/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/testData/de_df_for_volcano.rds")
@@ -50,16 +55,19 @@ ggplot(data=de, aes(x=log2FoldChange, y=-log10(pvalue), col=diffexpressed, label
     geom_hline(yintercept=-log10(0.05), col="red") +
     scale_color_manual(values=c("blue", "black", "purple"))
 ```
+
 #### manier2
+
 ```{r}
-library(EnhancedVolcano)
 library(airway)
 library(magrittr)
 data('airway')
 airway$dex %<>% relevel('untrt')
 
 ens <- rownames(airway)
+```
 
+```{r}
 library(org.Hs.eg.db)
 symbols <- mapIds(org.Hs.eg.db, keys = ens,
     column = c('SYMBOL'), keytype = 'ENSEMBL')
@@ -69,20 +77,98 @@ rownames(airway) <- symbols
 keep <- !is.na(rownames(airway))
 airway <- airway[keep,]
 ```
-```{r}
-  library('DESeq2')
 
-  dds <- DESeqDataSet(airway, design = ~ cell + dex)
-  dds <- DESeq(dds, betaPrior=FALSE)
-  res <- results(dds,
-    contrast = c('dex','trt','untrt'))
-  res <- lfcShrink(dds,
-    contrast = c('dex','trt','untrt'), res=res, type = 'normal')
+```{r}
+library('DESeq2')
+
+dds <- DESeqDataSet(airway, design = ~ cell + dex)
+
+dds <- DESeq(dds, betaPrior=FALSE)
+
+res <- results(dds,
+contrast = c('dex','trt','untrt'))
+
+res <- lfcShrink(dds,
+contrast = c('dex','trt','untrt'), res=res, type = 'normal')
+
 ```
+
 ```{r}
   EnhancedVolcano(res,
     lab = rownames(res),
     x = 'log2FoldChange',
     y = 'pvalue')
 ```
+### Heatmap 
 
+
+
+
+###Clusterprofiling gsa
+
+
+http://yulab-smu.top/biomedical-knowledge-mining-book/enrichment-overview.html#gsea-algorithm 
+```{r}
+library("clusterProfiler")
+
+data(geneList, package="DOSE")
+head(geneList)
+```
+
+```{r}
+gene <- names(geneList)[abs(geneList) > 2]
+head(gene)
+```
+GO classification
+```{r}
+ggo <- groupGO(gene     = gene,
+               OrgDb    = org.Hs.eg.db,
+               ont      = "CC",
+               level    = 3,
+               readable = TRUE)
+
+head(ggo)
+```
+
+GO over-representation analysis
+
+Hier kan je zien dat bepaalde genen een over presentaie hebben omdat ze een p.dajust hebben kleiner dan 0.05 en qvaule kleiner dan 0,05 dat betekent dat de deze genen meer tot uiting komen dan verwacht wordt.
+https://www.youtube.com/watch?v=egO7Lt92gDY 
+```{r}
+ego <- enrichGO(gene          = gene,
+                universe      = names(geneList),
+                OrgDb         = org.Hs.eg.db,
+                ont           = "CC",
+                pAdjustMethod = "BH",
+                pvalueCutoff  = 0.01,
+                qvalueCutoff  = 0.05,
+        readable      = TRUE)
+head(ego)
+```
+
+GO Gene Set Enrichment Analysis
+
+
+https://www.youtube.com/watch?v=egO7Lt92gDY 
+https://www.youtube.com/watch?v=Yi4d7JIlAsM
+
+Dus je ziet hier GO:0000775 het meest interessant is door nes met een score van 0.6230073
+	
+
+```{r}
+ego3 <- gseGO(geneList     = geneList,
+              OrgDb        = org.Hs.eg.db,
+              ont          = "CC",
+              minGSSize    = 100,
+              maxGSSize    = 500,
+              pvalueCutoff = 0.05,
+              verbose      = FALSE)
+head(ego3)
+```
+
+```{r}
+p1 <- gseaplot(ego3, geneSetID = 1, by = "runningScore", title = ego3$Description[1])
+p2 <- gseaplot(ego3, geneSetID = 1, by = "preranked", title = ego3$Description[1])
+cowplot::plot_grid(p1, p2, ncol=1, labels=LETTERS[1:3])
+```
+https://yulab-smu.top/biomedical-knowledge-mining-book/enrichplot.html
