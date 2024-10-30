@@ -7,6 +7,163 @@ editor_options:
   markdown: 
     wrap: sentence
 ---
+## deseq 
+Hieronder staat code voor de verwerking van deseq:
+
+```{r}
+file.names <- list.files('/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/mapping/',
+                         pattern = '*_star_ReadsPerGene.out.tab')
+
+ 
+
+## Function for reading in files
+read_sample <- function(file.name) {
+  ## Extract the sample name for naming the column (retaining the 'SRR....' part)
+  sample.name <- strsplit(file.name, ".", fixed = TRUE)[[1]][1]
+  sample <- read.table(file.name, header = FALSE, sep="\t", 
+                       row.names = NULL, skip = 4)
+  ## Rename the count column
+  names(sample)[2] <- sample.name
+  ## Return a subset containing the transcript ID and sample name columns
+  return(sample[c(1, 2)])
+}
+
+ 
+
+```
+
+```{r}
+
+ 
+
+setwd('/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/mapping/')
+
+ 
+
+## Read the FIRST sample
+counts <- read_sample(file.names[1])
+
+ 
+
+## Read the remaining files and merge the contents
+for (file.name in file.names[2:length(file.names)]) {
+  sample <- read_sample(file.name)
+  counts <- merge(counts, sample, by = 1)
+}
+
+ 
+
+# Set the row names to the transcript IDs
+rownames(counts) <- counts$V1
+counts <- counts[-1]
+head(counts)
+```
+
+```{r}
+
+ 
+
+col_data <- read.csv("/students/2024-2025/Thema05/BlaasKanker/etc/DSEQ_verwerking(Sheet1).csv", sep = ";")
+rownames(col_data) <- col_data[,1]
+col_data
+```
+
+## Annot count_data
+Het annoteren van onze data zorgt ervoor dat de genen de NCBI naamgeving krijgen. Zo is het straks overzichtelijker om informatie te vinden over de genen.
+
+
+```{r}
+library(dplyr)
+library(tidyr)
+
+ 
+
+
+col_data <- col_data %>%
+    dplyr::group_by(strain, treatment) %>%
+    dplyr::mutate(r_num = row_number()) %>%
+    dplyr::ungroup() %>%
+    mutate(condition = paste0(strain, "_", treatment, "_r", r_num))
+head(col_data)
+
+ 
+
+```
+
+In de bestanden kon niks gevonden worden over de genen, maar zo is het wel duidelijker waar elke kolom voor staat.
+Dat moet nu nog toegepast worden in de counts df
+```{r}
+
+ 
+
+for (i in 1:nrow(col_data)) {
+  idx <- grep(col_data$Run[i], names(counts))
+  names(counts)[idx] <- col_data$condition[i]
+}
+head(counts)
+```
+Nu zijn de SRR* namen vervangen met waar ze voor staan en is de df duidelijker te lezen, om straks makkelijker de kolommen op te halen die horen bij elk mogelijke variant groepeer ik deze.
+
+ 
+
+```{r}
+print(colnames(counts))
+C57BL_Vehicle <- grep("C57BL/6_Vehicle", names(counts))
+C57BL_Entinostat <- grep("C57BL/6_Entinostat", names(counts))
+C57BL_Baseline <- grep("C57BL/6_Baseline", names(counts))
+
+ 
+
+nsg_Vehicle <- grep("NSG_Vehicle", names(counts))
+nsg_Entinostat <- grep("NSG_Entinostat", names(counts))
+nsg_Baseline <- grep("NSG_Baseline", names(counts))
+```
+Nu kunnen deze variabelen gebruikt worden om de juiste kolommen te selecteren.
+
+ 
+
+Dan kan dit nu samengevoegd worden met DESEQ, wat Janine heeft uitgezocht. Bekijk haar logboek voor meer informatie over de code.
+
+```{r}
+# Making deseqdataset with counts en coldata
+dds <- DESeqDataSetFromMatrix(countData = counts,
+                              colData = col_data,
+                              design = ~ 0 + source_name)
+head(dds)
+```
+
+ 
+
+```{r}
+# Prefiltering on low gene counts
+keep <- rowSums(counts(dds)) >= 10
+ddst <- dds[keep,]
+ 
+```
+
+ 
+
+```{r}
+
+ 
+
+# Setting factor level
+ 
+#dds$treatment <- relevel(dds$treatment, ref = "Baseline")
+ 
+ 
+dds$treatment <- factor(dds$treatment, levels = c("Baseline","Entinostat", "Vehicle"), )
+ 
+ 
+```
+
+ 
+
+```{r}
+# Running deseq
+dds <- DESeq(dds)
+res <- results(dds)
+```
 
 ## Visualization
 
