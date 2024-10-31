@@ -10,6 +10,8 @@ editor_options:
 ## deseq 
 Hieronder staat code voor de verwerking van deseq:
 
+Dit is van teams door ramon.
+
 ```{r}
 file.names <- list.files('/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/mapping/',
                          pattern = '*_star_ReadsPerGene.out.tab')
@@ -56,7 +58,7 @@ for (file.name in file.names[2:length(file.names)]) {
 # Set the row names to the transcript IDs
 rownames(counts) <- counts$V1
 counts <- counts[-1]
-head(counts)
+
 ```
 
 ```{r}
@@ -129,7 +131,7 @@ Dan kan dit nu samengevoegd worden met DESEQ, wat Janine heeft uitgezocht. Bekij
 dds <- DESeqDataSetFromMatrix(countData = counts,
                               colData = col_data,
                               design = ~ 0 + source_name)
-head(dds)
+head(dds$source_name)
 ```
 
  
@@ -144,17 +146,10 @@ ddst <- dds[keep,]
  
 
 ```{r}
-
- 
-
 # Setting factor level
- 
-#dds$treatment <- relevel(dds$treatment, ref = "Baseline")
- 
- 
+dds$treatment <- relevel(dds$treatment, ref = "Baseline")
 dds$treatment <- factor(dds$treatment, levels = c("Baseline","Entinostat", "Vehicle"), )
- 
- 
+dds$treatment
 ```
 
  
@@ -163,12 +158,31 @@ dds$treatment <- factor(dds$treatment, levels = c("Baseline","Entinostat", "Vehi
 # Running deseq
 dds <- DESeq(dds)
 res <- results(dds)
+
 ```
 
-## Visualization
+```{r}
+head(res)
+```
+
+Dit is goed maar niet wat ik wil gebruiken. Mu word er NSG_bladder tumor_Vehicle vs C57BL/6_bladder tumor_Baseline  tegenover elkaar gezet en moet ik noet doen. Ik moet de C57BL/6 met elkaar vergelijken. 
+In de quickstrart staat nog lfcShrink doen.
+
+
+
+```{r}
+lfc_entinostat <- lfcShrink(dds, coef="source_nameC57BL/6_bladder.tumor_Entinostat", type="apeglm")
+
+lfc_basline <- lfcShrink(dds, coef="source_nameC57BL/6_bladder tumor_Baseline", type="apeglm")
+
+```
+
+
+
+## Visualization oefen
 
 Ik ga alvast bezig om te kijken hoe we onze data van trimmotic zo dat we in 1 keer door kunnen gaan met alles want we hebben maar een korte tijd om het allemaal te laten zien 
-### Pathway Analysis 
+### Pathway Analysis oefen
 We gaan zo ie zo wel Pathway analysis doen.
 In deze grafiek kunnen we gaan kijken welke gevolgen de varianten hebben later op in het gebied van de biologische processen.
 
@@ -188,7 +202,7 @@ data(gse16873.d)
 
 ```
 
-### Volcano plot
+### Volcano plot oefen 
 
 17-10 
 #### manier 1 
@@ -204,6 +218,7 @@ de$delabel[de$diffexpressed != "NO"] <- de$gene_symbol[de$diffexpressed != "NO"]
 de$diffexpressed[de$log2FoldChange > 0.6 & de$pvalue < 0.05] <- "UP"
 # if log2Foldchange < -0.6 and pvalue < 0.05, set as "DOWN"
 de$diffexpressed[de$log2FoldChange < -0.6 & de$pvalue < 0.05] <- "DOWN"
+
 ggplot(data=de, aes(x=log2FoldChange, y=-log10(pvalue), col=diffexpressed, label=delabel)) + 
     geom_point() + 
     theme_minimal() +
@@ -245,23 +260,23 @@ dds <- DESeq(dds, betaPrior=FALSE)
 res <- results(dds,
 contrast = c('dex','trt','untrt'))
 
-res <- lfcShrink(dds,
+res_1 <- lfcShrink(dds,
 contrast = c('dex','trt','untrt'), res=res, type = 'normal')
 
 ```
 
 ```{r}
-  EnhancedVolcano(res,
-    lab = rownames(res),
+  EnhancedVolcano(res_1,
+    lab = rownames(res_1),
     x = 'log2FoldChange',
     y = 'pvalue')
 ```
-### Heatmap 
+### Heatmap oefen
 
 
 
 
-###Clusterprofiling gsa
+###Clusterprofiling gsa oefen 
 
 
 http://yulab-smu.top/biomedical-knowledge-mining-book/enrichment-overview.html#gsea-algorithm 
@@ -329,3 +344,67 @@ p2 <- gseaplot(ego3, geneSetID = 1, by = "preranked", title = ego3$Description[1
 cowplot::plot_grid(p1, p2, ncol=1, labels=LETTERS[1:3])
 ```
 https://yulab-smu.top/biomedical-knowledge-mining-book/enrichplot.html
+
+
+
+
+## Visualization
+###Clusterprofiling gsa
+
+```{r}
+head(res)
+```
+
+### Volcano 
+```{r}
+
+ EnhancedVolcano(res,
+    lab = rownames(res),
+    x = 'log2FoldChange',
+    y = 'pvalue',
+    title = "behandeld tegen onbehandeld",
+     pCutoff = 10e-16,
+    FCcutoff = 1.5,
+    pointSize = 3.0,
+    labSize = 6.0,)
+
+  
+```
+Hoogste 20 
+```{r}
+resultaat_oder <- res[order(res$padj), ]
+top20genen <- rownames(head(resultaat_oder, 20))
+EnhancedVolcano(res,
+                lab = rownames(res),
+                x = 'log2FoldChange',
+                y = 'padj',
+                selectLab = top20genen,
+                title = "behandeld tegen onbehandeld",
+                pCutoff = 1,
+                pointSize = 2.5,
+                labSize = 4
+                )
+```
+
+### MA 
+```{r}
+plotMA(res)
+```
+### pheatmap
+
+```{r}
+library(pheatmap)
+topgene <- head(order(res$padj), 20 )
+mat <- assay(dds)[topgene, ]
+
+pheatmap(mat, cluster_rows=TRUE, cluster_cols = TRUE)
+```
+
+### PCA
+
+```{r}
+rld <- rlog(dds)
+
+plotPCA(rld)
+```
+
