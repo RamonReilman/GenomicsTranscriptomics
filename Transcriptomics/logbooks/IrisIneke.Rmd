@@ -11,8 +11,8 @@ editor_options:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
-## Zondag 13 oktober:
+## Presentatie voorbereiden
+(Zondag 13 oktober)
 
 Ik moet voor het plan van aanpak de samples uitzoeken. De verschillende
 samples:
@@ -81,7 +81,7 @@ resultaten van fastqc van alle samples bekijken.
 -   samples met nsg enzo (tabel leveren aan Ramon)
 -   quility control (bulletpoints: trimmomatic, fastqc, multiqc)
 
-## Maandag 14 oktober:
+(Maandag 14 oktober)
 
 Alles uitgeschreven voor de presentatie en het plan van aanpak:\
 
@@ -131,10 +131,10 @@ Als er uit dit rapport blijkt dat de data nog niet genoeg is opgeschoond
 zullen we nog een keer Trimmomatic moeten gebruiken totdat we tevreden
 zijn.
 
-## woensdag 16 oktober
+ 
 
 ## quality control:
-
+(woensdag 16 oktober)
 FastQC en multiQC uitgevoerd op de data (duurt erg lang, rekening mee
 houden in planning).
 
@@ -220,11 +220,246 @@ cat /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/SRR_Acc_List.txt | \
 
 Na advies van Marcel te hebben gevraagd over het aantal adapter content
 die we hebben tot de conclusie gekomen dat we waarschijnlijk geen
-Trimmomatic hoeven te gebruiken (data is al goed genoeg). (!kijk nog
-even naar de bron)
+Trimmomatic hoeven te gebruiken (data is al goed genoeg). 
+(!kijk nog even naar de bron: https://pubmed.ncbi.nlm.nih.gov/33575617/)
 
 We zijn erachter gekomen dat in de NGS muizen geen menselijke cellen
-zitten. Dus ook deze mappen tegen het muis-ref-genoom (Wat wel heel gek
-is is dat in het artikel staat dat ze tegen het menselijke-ref-genoom
+zitten. Dus deze moeten we ook mappen tegen het muis-ref-genoom (Wat wel heel gek
+is is dat in het artikel staat dat ze alles tegen het menselijke-ref-genoom
 hebben gemapt, is dit een fout ?).\
 
+De mapping tegen het muis genoom ziet er beter uit, dus waarschijnlijk zit er een fout in het artikel.
+
+## Deseq
+(wo 30 oktober)
+De volgende code is van [Ramon](https://github.com/RamonReilman/GenomicsTranscriptomics/blob/main/Transcriptomics/logbooks/RamonReilman.Rmd) (van Teams):
+```{r}
+file.names <- list.files('/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/mapping/',
+                         pattern = '*_star_ReadsPerGene.out.tab')
+ 
+## Function for reading in files
+read_sample <- function(file.name) {
+  ## Extract the sample name for naming the column (retaining the 'SRR....' part)
+  sample.name <- strsplit(file.name, ".", fixed = TRUE)[[1]][1]
+  sample <- read.table(file.name, header = FALSE, sep="\t", 
+                       row.names = NULL, skip = 4)
+  ## Rename the count column
+  names(sample)[2] <- sample.name
+  ## Return a subset containing the transcript ID and sample name columns
+  return(sample[c(1, 2)])
+}
+ 
+```
+ 
+```{r}
+ 
+setwd('/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/mapping/')
+ 
+## Read the FIRST sample
+counts <- read_sample(file.names[1])
+ 
+## Read the remaining files and merge the contents
+for (file.name in file.names[2:length(file.names)]) {
+  sample <- read_sample(file.name)
+  counts <- merge(counts, sample, by = 1)
+}
+ 
+# Set the row names to the transcript IDs
+rownames(counts) <- counts$V1
+counts <- counts[-1]
+head(counts)
+```
+ 
+ 
+```{r}
+ 
+col_data <- read.csv("/students/2024-2025/Thema05/BlaasKanker/etc/DSEQ_verwerking(Sheet1).csv", sep = ";")
+rownames(col_data) <- col_data[,1]
+col_data
+```
+ 
+ 
+## Annot count_data
+Het annoteren van onze data zorgt ervoor dat de genen de NCBI naamgeving krijgen. Zo is het straks overzichtelijker om informatie te vinden over de genen.
+ 
+```{r}
+library(dplyr)
+library(tidyr)
+ 
+col_data <- col_data %>%
+    dplyr::group_by(strain, treatment) %>%
+    dplyr::mutate(r_num = row_number()) %>%
+    dplyr::ungroup() %>%
+    mutate(condition = paste0(strain, "_", treatment, "_r", r_num))
+head(col_data)
+ 
+```
+In de bestanden kon niks gevonden worden over de genen, maar zo is het wel duidelijker waar elke kolom voor staat.
+Dat moet nu nog toegepast worden in de counts df
+```{r}
+ 
+for (i in 1:nrow(col_data)) {
+  idx <- grep(file$Run[i], names(counts))
+  names(counts)[idx] <- col_data$condition[i]
+}
+head(counts)
+```
+Nu zijn de SRR* namen vervangen met waar ze voor staan en is de df duidelijker te lezen, om straks makkelijker de kolommen op te halen die horen bij elk mogelijke variant groepeer ik deze.
+ 
+```{r}
+print(colnames(counts))
+C57BL_Vehicle <- grep("C57BL/6_Vehicle", names(counts))
+C57BL_Entinostat <- grep("C57BL/6_Entinostat", names(counts))
+C57BL_Baseline <- grep("C57BL/6_Baseline", names(counts))
+ 
+nsg_Vehicle <- grep("NSG_Vehicle", names(counts))
+nsg_Entinostat <- grep("NSG_Entinostat", names(counts))
+nsg_Baseline <- grep("NSG_Baseline", names(counts))
+```
+Nu kunnen deze variabelen gebruikt worden om de juiste kolommen te selecteren.
+ 
+Dan kan dit nu samengevoegd worden met DESEQ, wat Janine heeft uitgezocht. Bekijk [Janine haar logboek](https://github.com/RamonReilman/GenomicsTranscriptomics/blob/main/Transcriptomics/logbooks/JaninePostmus.Rmd) voor meer informatie over de code.
+ 
+```{r}
+library(DESeq2)
+# Making deseqdataset with counts en coldata
+dds <- DESeqDataSetFromMatrix(countData = counts,
+                              colData = col_data,
+                              design = ~ 0 + source_name)
+head(dds)
+```
+ 
+```{r}
+# Prefiltering on low gene counts
+keep <- rowSums(counts(dds)) >= 10
+ddst <- dds[keep,]
+```
+ 
+```{r}
+ 
+# Setting factor level
+#dds$treatment <- relevel(dds$treatment, ref = "Baseline")
+
+dds$treatment <- factor(dds$treatment, levels = c("Baseline","Entinostat", "Vehicle"), )
+
+```
+ 
+```{r}
+# Running deseq
+dds <- DESeq(dds)
+res <- results(dds)
+```
+
+
+## MA plot
+Nu dit allemaal is uitgevoerd kunnen we verder met een MA plot te maken van nsg-baseline vs nsg-entinostat door gebruik te maken van de 'res' die is gemaakt.
+Hierbij heb ik een[tutorial](https://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html#ma-plot) gebruikt.
+```{r}
+# ylim zijn de limieten van de y-as
+plotMA(res, ylim=c(-2,2))
+```
+
+De plot bevat nog noise, dus we gaan de 'Log fold change shrinkage for visualization and ranking' uitvoeren van de tutorial.
+ 
+```{r}
+resultsNames(dds)
+```
+
+Bij coef wordt maar 1 input geaccepteerd, dus eerst de twee namen apart invullen van de situaties die we willen visualizeren:
+```{r, eval=FALSE}
+resLFC_Baseline <- lfcShrink(dds, coef="source_nameNSG_bladder.tumor_Baseline", type="apeglm")
+resLFC_Baseline
+```
+
+```{r eval=FALSE}
+resLFC_Entinostat <- lfcShrink(dds, coef="source_nameNSG_bladder.tumor_Entinostat", type="apeglm")
+resLFC_Entinostat
+```
+
+Maar nu is de vraag hoe we dit samen moeten voegen ? Er een vector van maken werkt niet.
+
+Ramon heeft een subset gemaakt gemaakt van de twee situaties, dit is handig om alleen de informatie van de situaties weer te geven in de plot:
+```{r dds_subset}
+dds_subset <- dds[, dds$source_name %in% c("NSG_bladder tumor_Entinostat", "NSG_bladder tumor_Baseline")]
+
+# re-run DEseq on the subset data
+dds_subset <- DESeqDataSet(dds_subset, design = ~ 0 + source_name)
+dds_subset <- DESeq(dds_subset)
+
+res_subset <- results(dds_subset)
+```
+Hiermee doorgaan:
+Plot van alleen de baseline en Entinostat:
+```{r plotMA_subset_before}
+# omdat 2 in log-termen hoog is daar de limit zetten
+plotMA(res_subset, ylim=c(-2,2))
+```
+Interpretatie plot: 
+x-as is de counts en de y-as is de log verandering. \
+Dus hoe verder op de x-as hoe meer counts van het gen is. En hoe verder op y-as hoe meer verschillend de expressie van het gen is. \
+De genen die significant verschillen in expressie zullen dus de blauwe bolletjes zijn aan de rechterkant van de plot.
+
+! Ramon heeft het probleem met de enkele input van lfcShrink opgeslost:
+```{r dds_nsg_subset}
+dds_nsg_subset <- dds[, c(nsg_Baseline,nsg_Entinostat)]
+ 
+dds_nsg_subset <- DESeqDataSet(dds_nsg_subset, design = ~ treatment)
+dds_nsg_subset$treatment <- relevel(dds_nsg_subset$treatment, ref = "Baseline")
+dds_nsg_subset <- DESeq(dds_nsg_subset)
+ 
+nsg_res <- results(dds_nsg_subset)
+```
+
+```{r resultsNames_subset}
+resultsNames(dds_nsg_subset)
+```
+Dit lost het probleem op dat uit de resultsNames() eerder alle situaties apart kwamen. Nu zijn ze verdeeld in de situaties die wij wel willen gebruiken (treatment_Entinostat_vs_Baseline) en die wij niet willen gebruiken (Intercept) voor deze plot. \
+Hierop kunnen we de lfcShrink wel goed uitvoeren:
+```{r lfcShrink_subset}
+resLFC_subset <- lfcShrink(dds_nsg_subset, coef="treatment_Entinostat_vs_Baseline", type="apeglm")
+resLFC_subset
+```
+Dan kan nu de plot opnieuw gemaakt worden van de lfcSchrink subset:
+```{r plotMA_resLFCsubset_after}
+# omdat 2 in log-termen hoog is daar de limit zetten
+plotMA(resLFC_subset, ylim=c(-2,2))
+```
+Dit is echt veel beter. Het is interessant om te kijken welke genen bij welke punten horen, dus we gaan proberen om de genen erbij te zetten. 
+Hiervoor is een [online artikel](https://www.r-bloggers.com/2016/01/repel-overlapping-text-labels-in-ggplot2/) gebruikt.
+```{r ggplot2_genen, fig.cap="MAplot van de log van de gen-expressie"}
+#help("plotMA")
+
+library(ggplot2)
+library(ggrepel)
+
+# data frame maken van resLFC_subset
+ressub_df <- as.data.frame(resLFC_subset)
+
+# voegt niewe kolom toe aan df met de genen 
+# (de rownames zijn dus blijkbaar de genen, dus deze neemt hij)
+ressub_df$gene <- rownames(ressub_df)
+
+# MAplot met ggplot2 maken:
+# x=baseMean : gemiddelde expressie op x-as
+# y=log2FoldChange " expressie log-2 verandering op de y-as
+ggplot(ressub_df, aes(x=baseMean, y=log2FoldChange)) +
+    # geom_point voegt punten toe aan de plot
+    # color = padj < 0.05 : kleurt alle punten met p-waarde hoger dan 0.05
+    # alpha=0.5 : zorgt ervoor dat de punten doorzichtig zijn (beter af te lezen bij overlap)
+    geom_point(aes(color = padj < 0.05), alpha=0.5) +
+    # scale_x_log10() : zorgt ervoor dat de as naar log aangepast wordt (zoals de input data)
+    scale_x_log10() +
+  
+    # de labels toevoegen aan de plot:
+    # padj < 0.05 & !is.na(padj)) : voegt alleen label toe als p-waarde significant is
+    # max.overlaps : minder maken voor leesbaarheid, maar laat dan niet meer alle genen zien
+    # size : is dit leesbaar genoeg ? (ben mn bril kwijt, dus kan t zoiezo niet zien)
+    geom_text_repel(data = subset(ressub_df, padj < 0.05 & !is.na(padj)),
+                    aes(label = gene), 
+                    size=1.2, 
+                    max.overlaps = 50) +
+    theme_minimal() +
+    labs(x = "Base Mean", y = "Log2 Fold Change")
+```
+In de bovenstaande plot zie je de maplot die we eerder ook hadden, maar dan in ggplot2. Ook zijn de genen toegevoegd. De padj < 0.05 staat voor de p-waarde. Alles wat kleiner dan 0.05 is statistisch significant en wordt verder gebruikt. Dus alleen alles met een p-waarde kleiner dan 0.05 wordt een gen bijgezet (en blauw gekleurd). \
+Zoals eerder vermeld is, zijn de punten rechts in de grafiek het interresants, omdat die genen significant verschillen in expressie.
