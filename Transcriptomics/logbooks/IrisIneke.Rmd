@@ -463,3 +463,7 @@ ggplot(ressub_df, aes(x=baseMean, y=log2FoldChange)) +
 ```
 In de bovenstaande plot zie je de maplot die we eerder ook hadden, maar dan in ggplot2. Ook zijn de genen toegevoegd. De padj < 0.05 staat voor de p-waarde. Alles wat kleiner dan 0.05 is statistisch significant en wordt verder gebruikt. Dus alleen alles met een p-waarde kleiner dan 0.05 wordt een gen bijgezet (en blauw gekleurd). \
 Zoals eerder vermeld is, zijn de punten rechts in de grafiek het interresants, omdat die genen significant verschillen in expressie.
+
+## Gen expressie vehicle vraag
+Uit Ramon zijn plot bleek dat bij de NSG muis de vehicle een hoge genexpressie had op het gene-Ces4a. Dit gen zorgt voor de afbraak van xenobiotische stoffen. Onze theorie is dat de stof die de vehicle toegedient heeft gekregen een xenobiotische stof is, waardoor de vehicle een hoge expressie heeft van gene-Ces4a.
+In [het artikel](https://pmc.ncbi.nlm.nih.gov/articles/PMC8363284/) staat de volgende zin: 'BBN963 cells were treated with DMSO or 1 μM entinostat for 72 hours in vitro.' Dit betekend dat de de stof waarschijnlijk DMSO is. Dit is een xenobiotische stof, dus dit kan de hoge genexpressie verklaren.
