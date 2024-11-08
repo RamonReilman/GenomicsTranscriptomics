@@ -7,11 +7,24 @@ editor_options:
   markdown: 
     wrap: sentence
 ---
-## deseq 
-Hieronder staat code voor de verwerking van deseq:
 
-Dit is van teams door ramon.
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache = TRUE)
+```
 
+# Inleiding
+In dit logboek kan je lezen hoe de visualisatie is uit gevoerd op de transtriptomics van het  vak 2.1.2 Genomics & Transcriptomics. In dit vak gingen we bezig met een onderzoek van [] en opnieuw doen en kijken welke conclusie wij eruit kunnen halen. Ik ga zelf bezig met het laten zien van de data. 
+```{r, echo=FALSE}
+library(DESeq2)
+library(dplyr)
+library(ggplot2)
+library(EnhancedVolcano)
+```
+
+## deseq
+Hieronder staat code voor de verwerking van deseq dit is meer ook voorbeeld over hoe je het moet gebruiken is dus van alle groepen van ons onderzoek. Dus tussen NSG (slecht imuumsysteem) muizen en C57BL/6 (goed imuumsyteem) muisen. Elke van deze drie groepen zijn weer onder verdeeld in 3 groepen. Verchele, basline en Entinostat. Ik ga het laten zien van C57BL/6 basline tegen C57BL/6 Entinostat.
+
+Dit stuke code is van Ramon 
 ```{r}
 file.names <- list.files('/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/mapping/',
                          pattern = '*_star_ReadsPerGene.out.tab')
@@ -29,8 +42,6 @@ read_sample <- function(file.name) {
   ## Return a subset containing the transcript ID and sample name columns
   return(sample[c(1, 2)])
 }
-
- 
 
 ```
 
@@ -67,46 +78,37 @@ counts <- counts[-1]
 
 col_data <- read.csv("/students/2024-2025/Thema05/BlaasKanker/etc/DSEQ_verwerking(Sheet1).csv", sep = ";")
 rownames(col_data) <- col_data[,1]
-col_data
+col_data$source_name
 ```
 
 ## Annot count_data
-Het annoteren van onze data zorgt ervoor dat de genen de NCBI naamgeving krijgen. Zo is het straks overzichtelijker om informatie te vinden over de genen.
 
+Het annoteren van onze data zorgt ervoor dat de genen de NCBI naamgeving krijgen.
+Zo is het straks overzichtelijker om informatie te vinden over de genen.
 
 ```{r}
 library(dplyr)
 library(tidyr)
-
- 
-
-
 col_data <- col_data %>%
     dplyr::group_by(strain, treatment) %>%
     dplyr::mutate(r_num = row_number()) %>%
     dplyr::ungroup() %>%
     mutate(condition = paste0(strain, "_", treatment, "_r", r_num))
 head(col_data)
-
- 
-
 ```
 
 In de bestanden kon niks gevonden worden over de genen, maar zo is het wel duidelijker waar elke kolom voor staat.
 Dat moet nu nog toegepast worden in de counts df
+
 ```{r}
-
- 
-
 for (i in 1:nrow(col_data)) {
   idx <- grep(col_data$Run[i], names(counts))
   names(counts)[idx] <- col_data$condition[i]
 }
 head(counts)
 ```
-Nu zijn de SRR* namen vervangen met waar ze voor staan en is de df duidelijker te lezen, om straks makkelijker de kolommen op te halen die horen bij elk mogelijke variant groepeer ik deze.
 
- 
+Nu zijn de SRR\* namen vervangen met waar ze voor staan en is de df duidelijker te lezen, om straks makkelijker de kolommen op te halen die horen bij elk mogelijke variant groepeer ik deze.
 
 ```{r}
 print(colnames(counts))
@@ -120,21 +122,18 @@ nsg_Vehicle <- grep("NSG_Vehicle", names(counts))
 nsg_Entinostat <- grep("NSG_Entinostat", names(counts))
 nsg_Baseline <- grep("NSG_Baseline", names(counts))
 ```
+
 Nu kunnen deze variabelen gebruikt worden om de juiste kolommen te selecteren.
 
- 
-
-Dan kan dit nu samengevoegd worden met DESEQ, wat Janine heeft uitgezocht. Bekijk haar logboek voor meer informatie over de code.
+Dan kan dit nu samengevoegd worden met DESEQ, wat Janine heeft uitgezocht.
+Bekijk haar logboek voor meer informatie over de code.
 
 ```{r}
-# Making deseqdataset with counts en coldata
 dds <- DESeqDataSetFromMatrix(countData = counts,
                               colData = col_data,
                               design = ~ 0 + source_name)
 head(dds$source_name)
 ```
-
- 
 
 ```{r}
 # Prefiltering on low gene counts
@@ -143,16 +142,12 @@ ddst <- dds[keep,]
  
 ```
 
- 
-
 ```{r}
 # Setting factor level
-dds$treatment <- relevel(dds$treatment, ref = "Baseline")
+#dds$treatment <- relevel(dds$treatment, ref = "Baseline")
 dds$treatment <- factor(dds$treatment, levels = c("Baseline","Entinostat", "Vehicle"), )
 dds$treatment
 ```
-
- 
 
 ```{r}
 # Running deseq
@@ -165,25 +160,31 @@ res <- results(dds)
 head(res)
 ```
 
-Dit is goed maar niet wat ik wil gebruiken. Mu word er NSG_bladder tumor_Vehicle vs C57BL/6_bladder tumor_Baseline  tegenover elkaar gezet en moet ik noet doen. Ik moet de C57BL/6 met elkaar vergelijken. 
-In de quickstrart staat nog lfcShrink doen.
-
-
+Dus dit is niet wat ik wou hebben. Nu is er vergelijking gedaan van NSG_bladder tumor_Vehicle tegen C57BL/6_bladder tumor_Baseline.
+Ik ga een subset maken van alle C57BL/6 baseline en C57BL/6 Entinostat maken. Hier door kan ik makkelijker alles maken zonder te bedenken of ik de juiste data gebruik. 
 
 ```{r}
-lfc_entinostat <- lfcShrink(dds, coef="source_nameC57BL/6_bladder.tumor_Entinostat", type="apeglm")
 
-lfc_basline <- lfcShrink(dds, coef="source_nameC57BL/6_bladder tumor_Baseline", type="apeglm")
+C57BL_subset <- dds[, c(C57BL_Entinostat,C57BL_Baseline)]
+
+C57BL_subset <- DESeqDataSet(C57BL_subset, design = ~ treatment)
+C57BL_subset$treatment <- relevel(C57BL_subset$treatment, ref = "Baseline")
+C57BL_subset <- DESeq(C57BL_subset)
+ 
+resultaat_C57BL <- results(C57BL_subset)
 
 ```
 
+```{r}
+head(resultaat_C57BL)
+```
 
 
 ## Visualization oefen
+Dus ik ga als eerst bezig met alles laten zien en mogelijke manieren om het te laten zien. Dit doe ik omdat het niet nodig is om met zijn vieren bezig te gaan met trimmen en we hebben niet alle tijd om alles te doen
 
-Ik ga alvast bezig om te kijken hoe we onze data van trimmotic zo dat we in 1 keer door kunnen gaan met alles want we hebben maar een korte tijd om het allemaal te laten zien 
-### Pathway Analysis oefen
-We gaan zo ie zo wel Pathway analysis doen.
+### Pathway Analysis 
+oefen We gaan zo ie zo wel Pathway analysis doen.
 In deze grafiek kunnen we gaan kijken welke gevolgen de varianten hebben later op in het gebied van de biologische processen.
 
 16-10 <https://pathview.r-forge.r-project.org/pathview.pdf> is een een pdf met alle informatie
@@ -196,17 +197,16 @@ pv.out <- pathview(gene.data = gse16873.d[, 1], pathway.id = "04110",
 ```
 
 ![](/homes/jjonker2/Documents/GenomicsTranscriptomics/Transcriptomics/logbooks/hsa04110.gse16873.png)
+
 ```{r}
 library(pathview)
 data(gse16873.d)
 
 ```
 
-### Volcano plot oefen 
+### Volcano plot oefen
 
-17-10 
-#### manier 1 
-Dit is 1 manier om het te doen.
+17-10 \#### manier 1 Dit is 1 manier om het te doen.
 
 ```{r}
 tmp <- readRDS("/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/testData/de_df_for_volcano.rds")
@@ -271,15 +271,13 @@ contrast = c('dex','trt','untrt'), res=res, type = 'normal')
     x = 'log2FoldChange',
     y = 'pvalue')
 ```
+
 ### Heatmap oefen
 
+###Clusterprofiling gsa oefen
 
+<http://yulab-smu.top/biomedical-knowledge-mining-book/enrichment-overview.html#gsea-algorithm>
 
-
-###Clusterprofiling gsa oefen 
-
-
-http://yulab-smu.top/biomedical-knowledge-mining-book/enrichment-overview.html#gsea-algorithm 
 ```{r}
 library("clusterProfiler")
 
@@ -291,7 +289,9 @@ head(geneList)
 gene <- names(geneList)[abs(geneList) > 2]
 head(gene)
 ```
+
 GO classification
+
 ```{r}
 ggo <- groupGO(gene     = gene,
                OrgDb    = org.Hs.eg.db,
@@ -305,7 +305,8 @@ head(ggo)
 GO over-representation analysis
 
 Hier kan je zien dat bepaalde genen een over presentaie hebben omdat ze een p.dajust hebben kleiner dan 0.05 en qvaule kleiner dan 0,05 dat betekent dat de deze genen meer tot uiting komen dan verwacht wordt.
-https://www.youtube.com/watch?v=egO7Lt92gDY 
+<https://www.youtube.com/watch?v=egO7Lt92gDY>
+
 ```{r}
 ego <- enrichGO(gene          = gene,
                 universe      = names(geneList),
@@ -320,12 +321,9 @@ head(ego)
 
 GO Gene Set Enrichment Analysis
 
+<https://www.youtube.com/watch?v=egO7Lt92gDY> <https://www.youtube.com/watch?v=Yi4d7JIlAsM>
 
-https://www.youtube.com/watch?v=egO7Lt92gDY 
-https://www.youtube.com/watch?v=Yi4d7JIlAsM
-
-Dus je ziet hier GO:0000775 het meest interessant is door nes met een score van 0.6230073
-	
+Dus je ziet hier <GO:0000775> het meest interessant is door nes met een score van 0.6230073
 
 ```{r}
 ego3 <- gseGO(geneList     = geneList,
@@ -343,19 +341,79 @@ p1 <- gseaplot(ego3, geneSetID = 1, by = "runningScore", title = ego3$Descriptio
 p2 <- gseaplot(ego3, geneSetID = 1, by = "preranked", title = ego3$Description[1])
 cowplot::plot_grid(p1, p2, ncol=1, labels=LETTERS[1:3])
 ```
-https://yulab-smu.top/biomedical-knowledge-mining-book/enrichplot.html
 
+<https://yulab-smu.top/biomedical-knowledge-mining-book/enrichplot.html>
 
+## Visualization C57BL ent tegen Basline
 
-
-## Visualization
 ###Clusterprofiling gsa
 
 ```{r}
-head(res)
+library(clusterProfiler)
+library(org.Mm.eg.db)
+library(ggplot2)
+library(enrichplot)
 ```
 
-### Volcano 
+```{r}
+head(resultaat_C57BL)
+```
+
+genlijst maken.
+
+```{r}
+resultaat_C57BL_2 <- resultaat_C57BL[!is.na(resultaat_C57BL$log2FoldChange),]
+gen_lijst <- resultaat_C57BL_2$log2FoldChange
+names(gen_lijst) <- gsub("gene-", "",row.names(resultaat_C57BL_2))
+
+gen_lijst <- sort(gen_lijst, decreasing = TRUE)
+gen_lijst
+```
+
+```{r}
+gsa_C57BL <- gseGO(geneList = gen_lijst,
+            keyType = "SYMBOL",
+            OrgDb = org.Mm.eg.db,
+            ont ="BP",
+            pvalueCutoff = 0.05,
+            verbose = T)
+
+```
+
+```{r}
+as.data.frame(gsa_C57BL)
+gsa_C57BL
+```
+
+```{r}
+dotplot(gsa_C57BL, split=".sign", showCategory = 5) + facet_grid(.~.sign)
+```
+
+```{r}
+edox <- setReadable(gsa_C57BL, 'org.Mm.eg.db', 'SYMBOL')
+cnetplot(edox,
+         node_label="category",
+         showCategory = c("keratinization", "regulation of water loss via skin"))
+cnetplot(edox,
+         node_label="gene",
+         showCategory = c("keratinization", "regulation of water loss via skin"))
+```
+
+```{r}
+cnetplot(edox,
+         node_label="category",
+         showCategory = c("myeloid leukocyte migration", "muscle contraction"))
+cnetplot(edox,
+         node_label="gene",
+         showCategory = c("myeloid leukocyte migration", "muscle contraction"))
+```
+
+```{r}
+gseaplot(gsa_C57BL, geneSetID = 1, by = "runningScore", title = gsa_C57BL$Description[1])
+```
+
+### Volcano
+
 ```{r}
 
  EnhancedVolcano(res,
@@ -370,7 +428,9 @@ head(res)
 
   
 ```
-Hoogste 20 
+
+Hoogste 20
+
 ```{r}
 resultaat_oder <- res[order(res$padj), ]
 top20genen <- rownames(head(resultaat_oder, 20))
@@ -386,25 +446,138 @@ EnhancedVolcano(res,
                 )
 ```
 
-### MA 
+nu van de goed
+
 ```{r}
-plotMA(res)
+
+EnhancedVolcano(resultaat_C57BL,
+    lab = rownames(resultaat_C57BL),
+    x = 'log2FoldChange',
+    y = 'pvalue',
+    title = "behandeld tegen onbehandeld C57BL ",
+     pCutoff = 0.05,
+    FCcutoff = 1.5,
+    pointSize = 3.0,
+    labSize = 6.0,
+    col=c('grey', 'grey', 'grey', 'blue'))
 ```
+
+### MA
+
+```{r}
+p3 <-plotMA(resultaat_C57BL)
+```
+
+```{r}
+lfcschrink_subset <- lfcShrink(C57BL_subset, coef="treatment_Entinostat_vs_Baseline", type="apeglm")
+p4 <-plotMA(lfcschrink_subset )
+```
+
+```{r}
+data_frame_resultaat_C57B <- as.data.frame(resultaat_C57BL)
+data_frame_resultaat_C57B <- data_frame_resultaat_C57B[!is.na(data_frame_resultaat_C57B$padj),]
+data_frame_resultaat_C57B$significant <- data_frame_resultaat_C57B$padj < 0.5
+
+ggplot(data_frame_resultaat_C57B,
+       aes(x=baseMean, y=log2FoldChange))+
+    geom_point(aes(color = significant), alpha = 0.4, size = 1.5)+
+    scale_x_log10()+
+    geom_hline(yintercept = 0, color = "blue", linetype = "dashed")+
+    labs(title = 'maplot',
+         x = 'gemidelde',
+         y = "log2fold")+
+    scale_color_manual(values = c("TRUE" = "red", "FALSE" = "black"))+
+    theme_minimal()
+
+```
+
 ### pheatmap
 
 ```{r}
 library(pheatmap)
-topgene <- head(order(res$padj), 20 )
-mat <- assay(dds)[topgene, ]
+topgene <- head(order(resultaat_C57BL$padj),20)
+#mat <- assay(dds)[topgene,]
+mat_2 <- assay(C57BL_subset)[topgene,]
+#pheatmap(mat, cluster_rows=TRUE, cluster_cols = TRUE)
+pheatmap(mat_2, cluster_rows=TRUE, cluster_cols = TRUE)
+```
 
-pheatmap(mat, cluster_rows=TRUE, cluster_cols = TRUE)
+```{r}
+heatplot(edox, foldChange=gen_lijst, showCategory=c("keratinization", "regulation of water loss via skin"))
 ```
 
 ### PCA
 
 ```{r}
 rld <- rlog(dds)
-
-plotPCA(rld)
+#DESeq2::plotPCA(res)
 ```
 
+```{r}
+vsd_C57BL <- vst(C57BL_subset,blind = FALSE)
+DESeq2::plotPCA(vsd_C57BL, intgroup = "condition")
+```
+
+### le boom
+
+```{r}
+library(enrichplot)
+edox2 <- pairwise_termsim(edox)
+treeplot(edox2)
+```
+
+## annotatie met biomart
+
+```{r}
+col_data <- col_data %>%
+    dplyr::group_by(strain, treatment) %>%
+    dplyr::mutate(r_num = row_number()) %>%
+    dplyr::ungroup() %>%
+    mutate(condition = paste0(strain, "_", treatment, "_r", r_num))
+head(col_data)
+
+```
+
+```{r}
+for (i in 1:nrow(col_data)) {
+  idx <- grep(col_data$Run[i], names(counts))
+  names(counts)[idx] <- col_data$condition[i]
+}
+head(counts)
+```
+
+```{r}
+counts$Ensembl <- mapIds(x = org.Mm.eg.db,
+                           keys=gsub("gene-", "",row.names(counts)),
+                           column="ENSEMBL",
+                           keytype="SYMBOL",
+                           multiVals="first")
+
+```
+
+```{r}
+library(biomaRt)
+ensembl=useMart("ENSEMBL_MART_ENSEMBL", host="https://www.ensembl.org")
+ensembl <- useMart("ensembl")
+mart.datasets <- listDatasets(ensembl)
+ensembl <- useDataset('mmusculus_gene_ensembl', mart = ensembl)
+filters <- listFilters(ensembl)
+attributes <- listAttributes(ensembl)
+attributes
+```
+
+```{r, results='hide'}
+# Set the 'attributes' values
+attrs.get <- c("ensembl_gene_id", "chromosome_name", 
+               "start_position","end_position", "description")
+
+# Perform a biomaRt query using 'getBM'
+#results <- getBM(attributes = attrs.get,
+                 #filters = "ensembl_gene_id",
+                 #values = counts$Ensembl[12:15], 
+                 #mart = ensembl, verbose = TRUE)
+
+#results$gene_length <- abs(results$end_position - results$start_position)
+
+#merge(x = counts, y = results, by.x = 'Ensembl', by.y = 'ensembl_gene_id')
+```
