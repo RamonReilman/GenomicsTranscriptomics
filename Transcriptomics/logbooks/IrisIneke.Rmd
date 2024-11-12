@@ -517,3 +517,10 @@ Onze dataset bevat teveel genen en de library connectie werkt niet, dus hebben w
 
 ! venndiagram van goed immuunsysteem tegen slecht immuunsysteem
 
+
+
+## Venn diagram:
+BRON: https://rpubs.com/Nishapaudel/DESeq2_sex_wise_dfs
+! Hoe gaan we genen ophalen en koppelen aan de twee muizen
+
+
