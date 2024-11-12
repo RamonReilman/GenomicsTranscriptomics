@@ -2,16 +2,20 @@
 title: "IrisIneke.Rmd"
 author: "Iris Ineke"
 date: "2024-10-17"
-output: html_document
-editor_options: 
-  markdown: 
+output:
+  pdf_document: default
+  html_document: default
+editor_options:
+  markdown:
     wrap: 72
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(cache = TRUE)
+# cache slaat code chunks op in files, zodra je de chunk niet veranderd gebruikt hij de opgeslagen versie van de vorige knit
+# knitten gaat sneller hierdoor, voert niet onnodig alles opnieuw uit
 ```
-## Presentatie voorbereiden
+## Presentatie (voorbereiden)
 (Zondag 13 oktober)
 
 Ik moet voor het plan van aanpak de samples uitzoeken. De verschillende
@@ -48,17 +52,17 @@ en elke groep bestaat uit:
 -   Treated
 
 De sample nummers van de TCRseq en de RNAseq zijn allebei in de 400, Dus
-ik vermoed dat ze twee sequence techieken op dezelfde samples hebben
+ik vermoed dat ze twee sequence technieken op dezelfde samples hebben
 uitgevoerd.
 
 Wat is het verschil tussen de TCRseq, RNAseq en NSG_RNAseq:
 
--   RNAseq: meet de genexpressie (onder bepaalde omstandigheden)
--   TCRseq: meet de reactie van het immuumsysteem (door te kijken naar
+-   RNAseq: meet de gen-expressie (onder bepaalde omstandigheden)
+-   TCRseq: meet de reactie van het immuunsysteem (door te kijken naar
     de hoeveelheid T-celreceptors ( cellen die het antigenen herkennen))
--   NSG_RNAseq: NSG-muizen zijn muizen die een zwak immuumsysteem hebben
+-   NSG_RNAseq: NSG-muizen zijn muizen die een zwak immuunsysteem hebben
     en daardoor gebruikt worden om menselijke cellen in te enten (zonder
-    dat het immuumsysteem van de muis ze afstoot).
+    dat het immuunsysteem van de muis ze afstoot).
 
 Wat is het verschil tussen de Baseline, Non_treated en Treated:
 
@@ -66,20 +70,17 @@ Wat is het verschil tussen de Baseline, Non_treated en Treated:
 -   Non_treated is na de tumor zonder entinostat
 -   Treated is na de tumor met entinostat
 
-quality control: welke tools gaan we gebruiken en waarom: - trimmomatic:
-om de lage kwaliteit reads van het sequencen eruit te halen. Waarom: Om
+quality control: welke tools gaan we gebruiken en waarom: - Trimmomatic:
+om de lage kwaliteit reads van het sequensen eruit te halen. Waarom: Om
 foutieve conclusies door foutieve data later te voorkomen (als je data
 gebruikt die niet klopt, trek je uit die data ook conclusies die niet
-overeenkomen met de werkelijkheid). - fastqc: geeft een rapport met de
+overeenkomen met de werkelijkheid). - Fastqc: geeft een rapport met de
 kwaliteit van de data. Waarom: Hieruit kun je bepalen wat je eventueel
-wilt aanpassen met Trimmomatic. - multiqc: voegt alle fastqc rapporten
+wilt aanpassen met Trimmomatic. - multiqc: voegt alle Fastqc rapporten
 van samples samen tot een rapport. Waarom: Zo kun je makkelijker de
-resultaten van fastqc van alle samples bekijken.
+resultaten van Fastqc van alle samples bekijken.
 
-! Presenteren:
 
--   samples met nsg enzo (tabel leveren aan Ramon)
--   quility control (bulletpoints: trimmomatic, fastqc, multiqc)
 
 (Maandag 14 oktober)
 
@@ -87,7 +88,6 @@ Alles uitgeschreven voor de presentatie en het plan van aanpak:\
 
 Tabel van de samples (van de Transcriptomics):\
 
-(!tabel doet raar met knitten)\
 
 
 |                | **Baseline** | **Non_treated** | **Treated** | 
@@ -111,7 +111,7 @@ NSG-muis perfect om menselijke cellen in te enten, omdat het
 immuunsysteem van de muis de cellen niet goed kan afbreken. Hierdoor
 kunnen ze in het onderzoek kijken welk effect de mutatie op menselijke
 cellen heeft zonder menselijke proefpersonen te hoeven gebruiken. Met de
-RNA-sequencing wordt er gekeken naar de genexpressie onder bepaalde
+RNA-sequencing wordt er gekeken naar de gen-expressie onder bepaalde
 omstandigheden. In dit geval dus zonder mutatie (baseline) met mutatie
 (non_treated) en met mutatie en medicatie (treated). De TCR-sequencing
 meet de reactie van het immuunsysteem door te kijken naar de hoeveelheid
@@ -122,7 +122,7 @@ We gaan Fastqc en Multiqc gebruiken om te bepalen wat we willen
 verbeteren aan de data. Dit doen we door middel van het rapport dat uit
 Multiqc komt (wat een samenvatting maakt van alle rapporten die uit
 Fastqc komen). Hierna gaan we Trimmomatic gebruiken om de lage kwaliteit
-reads van het sequencen eruit te halen. Dit doen we om foutieve
+reads van het sequensen eruit te halen. Dit doen we om foutieve
 conclusies door foutieve data later te voorkomen. Als je data gebruikt
 die niet klopt, trek je immers (uit die data) ook conclusies die niet
 overeenkomen met de werkelijkheid. Hierna voeren we nog een keer Fastqc
@@ -131,18 +131,19 @@ Als er uit dit rapport blijkt dat de data nog niet genoeg is opgeschoond
 zullen we nog een keer Trimmomatic moeten gebruiken totdat we tevreden
 zijn.
 
- 
+**BELANGRIJK:**\
+Later erachter gekomen dat ze in de NSG-muizen toch geen menselijke cellen hebben gestopt. Ze hebben enkel een slechter imuumsysteem.
 
-## quality control:
+## Quality control:
 (woensdag 16 oktober)
-FastQC en multiQC uitgevoerd op de data (duurt erg lang, rekening mee
+FastQC en MultiQC uitgevoerd op de data (duurt erg lang, rekening mee
 houden in planning).
 
-Uit het multiqc rapport blijkt dat 'Per Base Sequence Content', 'Per
+Uit het Multiqc rapport blijkt dat 'Per Base Sequence Content', 'Per
 Sequence GC Content' en 'Sequence Duplication Levels' verbeterd kunnen
 worden.
 
-Trimmomatic uitgevoerd (instellingen zijn op basis van multiqc 'Sequence
+Trimmomatic uitgevoerd (instellingen zijn op basis van Multiqc 'Sequence
 Quality Histograms' plot):
 
 ```{bash Trim1, eval=FALSE}
@@ -159,8 +160,8 @@ cat /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/SRR_Acc_List.txt | \
                   'TRAILING:25'
 ```
 
-Weer fastqc en multiqc gerund. De unpaired moeten niet worden meegenomen
-in de analyse (dit zorgde namelijk voor een erg chaotisch multiqc
+Weer Fastqc en Multiqc gerund. De unpaired moeten niet worden meegenomen
+in de analyse (dit zorgde namelijk voor een erg chaotisch Multiqc
 rapport). En threads meegeven, zodat het niet 3 uur duurt.
 
 ```{bash fastqc, eval=FALSE}
@@ -185,7 +186,7 @@ cat /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/SRR_Acc_List.txt | \
                   'TRAILING:30'
 ```
 
-In plaats van het fastqc rapport 'fastp' gebruikt op aanraden van Ramon,
+In plaats van het Fastqc rapport 'Fastp' gebruikt op aanraden van Ramon,
 omdat deze veel sneller gaat.
 
 ```{bash fastp, eval=FALSE}
@@ -193,14 +194,14 @@ ls /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_contro
 parallel "/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/bin/falco /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/trimmomatic3/{} -o /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/fastqc_after_trim3/{}_fastqc_report"
 ```
 
-Daar weer multiqc op gedaan.
+Daar weer Multiqc op gedaan.
 
 ```{bash multiqc, eval=FALSE}
 multiqc /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/fastqc_after_trim3/* \
 -o /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/multiqc_after_trim3
 ```
 
-De adapter ontent is erg hoog. Deze proberen te verminderen met headcrop
+De adapter content is erg hoog. Deze proberen te verminderen met headcrop
 (begin eraf halen).
 
 ```{bash trim_headcrop, eval=FALSE}
@@ -219,19 +220,18 @@ cat /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/SRR_Acc_List.txt | \
 ```
 
 Na advies van Marcel te hebben gevraagd over het aantal adapter content
-die we hebben tot de conclusie gekomen dat we waarschijnlijk geen
-Trimmomatic hoeven te gebruiken (data is al goed genoeg). 
-(!kijk nog even naar de bron: https://pubmed.ncbi.nlm.nih.gov/33575617/)
+die we hebben tot de conclusie gekomen dat we waarschijnlijk [geen Trimmomatic](https://pubmed.ncbi.nlm.nih.gov/33575617/) hoeven te gebruiken (data is al goed genoeg). 
 
-We zijn erachter gekomen dat in de NGS muizen geen menselijke cellen
-zitten. Dus deze moeten we ook mappen tegen het muis-ref-genoom (Wat wel heel gek
-is is dat in het artikel staat dat ze alles tegen het menselijke-ref-genoom
+## Mapping
+We zijn erachter gekomen dat in de NSG muizen geen menselijke cellen
+zitten. Dus deze moeten we ook mappen tegen het muis-referentie-genoom (Wat wel heel gek
+is is dat in het artikel staat dat ze alles tegen het menselijke-referentie-genoom
 hebben gemapt, is dit een fout ?).\
 
 De mapping tegen het muis genoom ziet er beter uit, dus waarschijnlijk zit er een fout in het artikel.
 
 ## Deseq
-(wo 30 oktober)
+(30/31 oktober)
 De volgende code is van [Ramon](https://github.com/RamonReilman/GenomicsTranscriptomics/blob/main/Transcriptomics/logbooks/RamonReilman.Rmd) (van Teams):
 ```{r}
 file.names <- list.files('/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/mapping/',
@@ -299,7 +299,7 @@ Dat moet nu nog toegepast worden in de counts df
 ```{r}
  
 for (i in 1:nrow(col_data)) {
-  idx <- grep(file$Run[i], names(counts))
+  idx <- grep(col_data$Run[i], names(counts))
   names(counts)[idx] <- col_data$condition[i]
 }
 head(counts)
@@ -365,22 +365,17 @@ De plot bevat nog noise, dus we gaan de 'Log fold change shrinkage for visualiza
 resultsNames(dds)
 ```
 
-Bij coef wordt maar 1 input geaccepteerd, dus eerst de twee namen apart invullen van de situaties die we willen visualizeren:
 ```{r, eval=FALSE}
 resLFC_Baseline <- lfcShrink(dds, coef="source_nameNSG_bladder.tumor_Baseline", type="apeglm")
 resLFC_Baseline
 ```
-
-```{r eval=FALSE}
-resLFC_Entinostat <- lfcShrink(dds, coef="source_nameNSG_bladder.tumor_Entinostat", type="apeglm")
-resLFC_Entinostat
-```
+Bij coef wordt maar 1 input geaccepteerd, dus eerst de twee namen apart invullen van de situaties die we willen visualiseren:
 
 Maar nu is de vraag hoe we dit samen moeten voegen ? Er een vector van maken werkt niet.
 
 Ramon heeft een subset gemaakt gemaakt van de twee situaties, dit is handig om alleen de informatie van de situaties weer te geven in de plot:
 ```{r dds_subset}
-dds_subset <- dds[, dds$source_name %in% c("NSG_bladder tumor_Entinostat", "NSG_bladder tumor_Baseline")]
+dds_subset <- dds[, dds$source_name %in% c("NSG_bladder tumor_Baseline", "NSG_bladder tumor_Entinostat")]
 
 # re-run DEseq on the subset data
 dds_subset <- DESeqDataSet(dds_subset, design = ~ 0 + source_name)
@@ -399,7 +394,7 @@ x-as is de counts en de y-as is de log verandering. \
 Dus hoe verder op de x-as hoe meer counts van het gen is. En hoe verder op y-as hoe meer verschillend de expressie van het gen is. \
 De genen die significant verschillen in expressie zullen dus de blauwe bolletjes zijn aan de rechterkant van de plot.
 
-! Ramon heeft het probleem met de enkele input van lfcShrink opgeslost:
+[Ramon](https://github.com/RamonReilman/GenomicsTranscriptomics/blob/main/Transcriptomics/logbooks/RamonReilman.Rmd) heeft het probleem met de enkele input van lfcShrink opgelost:
 ```{r dds_nsg_subset}
 dds_nsg_subset <- dds[, c(nsg_Baseline,nsg_Entinostat)]
  
@@ -426,6 +421,34 @@ plotMA(resLFC_subset, ylim=c(-2,2))
 ```
 Dit is echt veel beter. Het is interessant om te kijken welke genen bij welke punten horen, dus we gaan proberen om de genen erbij te zetten. 
 Hiervoor is een [online artikel](https://www.r-bloggers.com/2016/01/repel-overlapping-text-labels-in-ggplot2/) gebruikt.
+Eerst de plot in ggplot maken:
+```{r ggplot2}
+#help("plotMA")
+
+library(ggplot2)
+library(ggrepel)
+
+# data frame maken van resLFC_subset
+ressub_df <- as.data.frame(resLFC_subset)
+
+# voegt nieuwe kolom toe aan df met de genen 
+# (de rownames zijn dus blijkbaar de genen, dus deze neemt hij)
+ressub_df$gene <- rownames(ressub_df)
+
+# MAplot met ggplot2 maken:
+# x=baseMean : gemiddelde expressie op x-as
+# y=log2FoldChange " expressie log-2 verandering op de y-as
+ggplot(ressub_df, aes(x=baseMean, y=log2FoldChange)) +
+    # geom_point voegt punten toe aan de plot
+    # color = padj < 0.05 : kleurt alle punten met p-waarde hoger dan 0.05
+    # alpha=0.5 : zorgt ervoor dat de punten doorzichtig zijn (beter af te lezen bij overlap)
+    geom_point(aes(color = padj < 0.05), alpha=0.5) +
+    # scale_x_log10() : zorgt ervoor dat de as naar log aangepast wordt (zoals de input data)
+    scale_x_log10()
+  
+
+```
+Gen-namen erbij:
 ```{r ggplot2_genen, fig.cap="MAplot van de log van de gen-expressie"}
 #help("plotMA")
 
@@ -435,7 +458,7 @@ library(ggrepel)
 # data frame maken van resLFC_subset
 ressub_df <- as.data.frame(resLFC_subset)
 
-# voegt niewe kolom toe aan df met de genen 
+# voegt nieuwe kolom toe aan df met de genen 
 # (de rownames zijn dus blijkbaar de genen, dus deze neemt hij)
 ressub_df$gene <- rownames(ressub_df)
 
@@ -453,21 +476,44 @@ ggplot(ressub_df, aes(x=baseMean, y=log2FoldChange)) +
     # de labels toevoegen aan de plot:
     # padj < 0.05 & !is.na(padj)) : voegt alleen label toe als p-waarde significant is
     # max.overlaps : minder maken voor leesbaarheid, maar laat dan niet meer alle genen zien
-    # size : is dit leesbaar genoeg ? (ben mn bril kwijt, dus kan t zoiezo niet zien)
+    # size : is dit leesbaar genoeg ?
     geom_text_repel(data = subset(ressub_df, padj < 0.05 & !is.na(padj)),
                     aes(label = gene), 
                     size=1.2, 
-                    max.overlaps = 50) +
+                    max.overlaps = 30) +
     theme_minimal() +
     labs(x = "Base Mean", y = "Log2 Fold Change")
 ```
-In de bovenstaande plot zie je de maplot die we eerder ook hadden, maar dan in ggplot2. Ook zijn de genen toegevoegd. De padj < 0.05 staat voor de p-waarde. Alles wat kleiner dan 0.05 is statistisch significant en wordt verder gebruikt. Dus alleen alles met een p-waarde kleiner dan 0.05 wordt een gen bijgezet (en blauw gekleurd). \
-Zoals eerder vermeld is, zijn de punten rechts in de grafiek het interresants, omdat die genen significant verschillen in expressie.
-(! genen opzoeken, literatuuronderzoek)
+In de bovenstaande plot zie je de MAplot die we eerder ook hadden, maar dan in ggplot2. Ook zijn de genen toegevoegd. De padj < 0.05 staat voor de p-waarde. Alles wat kleiner dan 0.05 is statistisch significant en wordt verder gebruikt. Dus alleen alles met een p-waarde kleiner dan 0.05 wordt een gen bijgezet (en blauw gekleurd). \
+Zoals eerder vermeld is, zijn de blauwe punten rechts in de grafiek het interessants, omdat die genen significant verschillen in expressie.\
+
+
+'Gene-Eef 1 a 1' staat het meest rechts. Dus dit is een interessant gen. Wat is de functie van dit gen?\
+Dit gen helpt om aminozuur-gebonden tRNAs naar het ribosoom te brengen voor de eiwitsynthese. Als dit gen minder tot expressie komt, kan dat dus tot een verminderde eiwitsynthese leiden. Met een verminderde eiwitsynthese kan de celdeling langzamer gaan. Met een verminderde celdeling wordt schade minder snel gerepareerd. Ook werkt het immuunsysteem minder goed, aangezien er minder snel nieuwe cellen aangemaakt kunnen worden (zoals witte bloedcellen). \
+[Bron: Gene-Eef 1 a 1](https://www.ncbi.nlm.nih.gov/gene/1915)\
+
+Conclusie voor onze situatie:\
+In de plot is de NSG-Entinostat en de NSG-Baseline met elkaar vergeleken. De y-waarde is boven de 0, dus de genexpressie is hoger in de eerste situatie. Dat is in dit geval de baseline. Dus de gen-expressie is hoger bij de baseline dan bij de Entinostat (meer eiwitsynthese bij baseline). Dus de Entinostat zorgt er mogelijk voor dat dit gen minder tot expressie komt. Wat zou suggereren dat de Entinostat ervoor zorgt dat de eiwitsynthese verminderd en hiermee de celdeling vertraagd.\
+
+
+(Wat misschien interessant is: De isovorm (alfa 2) wordt geïdentificeerd als een auto-antigeen bij 66% van de patiënten met het Felty-syndroom. (Auto-antigen: antigen van je eigen lichaam dat je lichaam aanvalt, omdat het herkent wordt als vreemd). Dus de isovorm kan ook direct invloed hebben op het immuunsysteem.)
+
 
 ## Gen expressie vehicle vraag
-Uit Ramon zijn plot bleek dat bij de NSG muis de vehicle een hoge genexpressie had op het gene-Ces4a. Dit gen zorgt voor de afbraak van xenobiotische stoffen. Onze theorie is dat de stof die de vehicle toegedient heeft gekregen een xenobiotische stof is, waardoor de vehicle een hoge expressie heeft van gene-Ces4a.
-In [het artikel](https://pmc.ncbi.nlm.nih.gov/articles/PMC8363284/) staat de volgende zin: 'BBN963 cells were treated with DMSO or 1 μM entinostat for 72 hours in vitro.' Dit betekend dat de de stof waarschijnlijk DMSO is. Dit is een xenobiotische stof, dus dit kan de hoge genexpressie verklaren.
-(! BRON_DMSO_IS_XENOBIOTISCHE_STOF: https://pubmed.ncbi.nlm.nih.gov/17177172/)
+Uit Ramon zijn plot bleek dat bij de NSG muis de vehicle een hoge gen-expressie had op het gene-Ces4a. Dit gen zorgt voor de afbraak van xenobiotische stoffen. Onze theorie is dat de stof die de vehicle toegediend heeft gekregen een xenobiotische stof is, waardoor de vehicle een hoge expressie heeft van gene-Ces4a.
+In [het artikel](https://pmc.ncbi.nlm.nih.gov/articles/PMC8363284/) staat de volgende zin: 'BBN963 cells were treated with DMSO or 1 μM entinostat for 72 hours in vitro.' Dit betekend dat de de stof waarschijnlijk [DMSO](https://pubmed.ncbi.nlm.nih.gov/17177172/) is. Dit is een xenobiotische stof, dus dit kan de hoge gen-expressie verklaren.
 
+
+
+## Annotatie met biomart
+Geprobeerd met [Jasper](https://github.com/RamonReilman/GenomicsTranscriptomics/blob/main/Transcriptomics/logbooks/JasperJonker.Rmd) en [Ramon](https://github.com/RamonReilman/GenomicsTranscriptomics/blob/main/Transcriptomics/logbooks/RamonReilman.Rmd). 
+Onze dataset bevat teveel genen en de library connectie werkt niet, dus hebben we besloten om geen annotatie uit te voeren.
+
+
+## To do:
+! pathway analyse als tijd
+! alle code moet in elk logboek staan met referenties
+
+
+! venndiagram van goed immuunsysteem tegen slecht immuunsysteem
 
