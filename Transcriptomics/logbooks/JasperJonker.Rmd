@@ -13,7 +13,14 @@ knitr::opts_chunk$set(cache = TRUE)
 ```
 
 # Inleiding
-In dit logboek kan je lezen hoe de visualisatie is uit gevoerd op de transtriptomics van het  vak 2.1.2 Genomics & Transcriptomics. In dit vak gingen we bezig met een onderzoek van [] en opnieuw doen en kijken welke conclusie wij eruit kunnen halen. Ik ga zelf bezig met het laten zien van de data. 
+
+In dit logboek kan je lezen hoe de visualisatie is uit gevoerd op de transtriptomics van het vak 2.1.2 Genomics & Transcriptomics.
+In dit vak gingen we bezig met een onderzoek van [] en opnieuw doen en kijken welke conclusie wij eruit kunnen halen.
+Ik ga zelf bezig met het laten zien van de data.
+Eerst ga ik kijken wat we allemaal kunnen doen en daarna ga ik een vergelijking laten zien.
+
+Hier zie je de library's die ik heb gebruikt.
+
 ```{r, echo=FALSE}
 library(DESeq2)
 library(dplyr)
@@ -21,10 +28,16 @@ library(ggplot2)
 library(EnhancedVolcano)
 ```
 
-## deseq
-Hieronder staat code voor de verwerking van deseq dit is meer ook voorbeeld over hoe je het moet gebruiken is dus van alle groepen van ons onderzoek. Dus tussen NSG (slecht imuumsysteem) muizen en C57BL/6 (goed imuumsyteem) muisen. Elke van deze drie groepen zijn weer onder verdeeld in 3 groepen. Verchele, basline en Entinostat. Ik ga het laten zien van C57BL/6 basline tegen C57BL/6 Entinostat.
+## Deseq
 
-Dit stuke code is van Ramon 
+Hieronder staat code voor de verwerking van deseq dit is meer ook voorbeeld over hoe je het moet gebruiken is dus van alle groepen van ons onderzoek.
+Dus tussen NSG (slecht imuumsysteem) muizen en C57BL/6 (goed imuumsyteem) muisen.
+Elke van deze drie groepen zijn weer onder verdeeld in 3 groepen.
+Verchele, basline en Entinostat.
+Ik ga het laten zien van C57BL/6 basline tegen C57BL/6 Entinostat.
+
+Dit stuke code is van Ramon dus als je er meer uit leg over wilt hebben moet je in zijn logbook kijken.
+
 ```{r}
 file.names <- list.files('/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/mapping/',
                          pattern = '*_star_ReadsPerGene.out.tab')
@@ -81,7 +94,7 @@ rownames(col_data) <- col_data[,1]
 col_data$source_name
 ```
 
-## Annot count_data
+### Annot count_data
 
 Het annoteren van onze data zorgt ervoor dat de genen de NCBI naamgeving krijgen.
 Zo is het straks overzichtelijker om informatie te vinden over de genen.
@@ -160,8 +173,10 @@ res <- results(dds)
 head(res)
 ```
 
-Dus dit is niet wat ik wou hebben. Nu is er vergelijking gedaan van NSG_bladder tumor_Vehicle tegen C57BL/6_bladder tumor_Baseline.
-Ik ga een subset maken van alle C57BL/6 baseline en C57BL/6 Entinostat maken. Hier door kan ik makkelijker alles maken zonder te bedenken of ik de juiste data gebruik. 
+Dus dit is niet wat ik wou hebben of kan gebruiken voor mijn gedeelte.
+Nu is er vergelijking gedaan van NSG_bladder tumor_Vehicle tegen C57BL/6_bladder tumor_Baseline.
+Ik ga een subset maken van alle C57BL/6 baseline en C57BL/6 Entinostat maken.
+Deze twee situaties ga ik dus ui werken.
 
 ```{r}
 
@@ -179,15 +194,18 @@ resultaat_C57BL <- results(C57BL_subset)
 head(resultaat_C57BL)
 ```
 
-
 ## Visualization oefen
-Dus ik ga als eerst bezig met alles laten zien en mogelijke manieren om het te laten zien. Dit doe ik omdat het niet nodig is om met zijn vieren bezig te gaan met trimmen en we hebben niet alle tijd om alles te doen
 
-### Pathway Analysis 
-oefen We gaan zo ie zo wel Pathway analysis doen.
-In deze grafiek kunnen we gaan kijken welke gevolgen de varianten hebben later op in het gebied van de biologische processen.
+Dus ik ga als eerst bezig met alles laten zien en mogelijke manieren om het te laten zien.
+Dit doe ik omdat het niet nodig is om met zijn vieren bezig te gaan met trimmen en met deseq bezig te zijn.
+We hebben niet alle tijd dus moeten we slim bezig gaan met onze tijd.
 
-16-10 <https://pathview.r-forge.r-project.org/pathview.pdf> is een een pdf met alle informatie
+### Pathway Analysis
+
+Hier is een pathway analysis.
+Hier kan je dus zien als een gen word aangetast wat voor invloed het heeft op bepaalde biologische processen.
+
+<https://pathview.r-forge.r-project.org/pathview.pdf> is een een pdf met alle informatie
 
 ```{r, echo=FALSE}
 library(pathview)
@@ -198,15 +216,14 @@ pv.out <- pathview(gene.data = gse16873.d[, 1], pathway.id = "04110",
 
 ![](/homes/jjonker2/Documents/GenomicsTranscriptomics/Transcriptomics/logbooks/hsa04110.gse16873.png)
 
-```{r}
-library(pathview)
-data(gse16873.d)
-
-```
-
 ### Volcano plot oefen
 
-17-10 \#### manier 1 Dit is 1 manier om het te doen.
+Een volcano plot is handig om te gebruiken want daar in kan je zien hoe groot een verandering is op de x-as (de lof2FoldChange) en hoe significant een verandering is (p-value)
+
+#### Manier 1
+
+Dit is 1 manier om een volcano plot te maken.
+het opdeze manier word het hem denk ik niet het word hier nogal moeilijk gemaakt terwijl het makkelijker kan.
 
 ```{r}
 tmp <- readRDS("/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/testData/de_df_for_volcano.rds")
@@ -228,7 +245,10 @@ ggplot(data=de, aes(x=log2FoldChange, y=-log10(pvalue), col=diffexpressed, label
     scale_color_manual(values=c("blue", "black", "purple"))
 ```
 
-#### manier2
+#### Manier 2
+
+Hier zie je ook dat het met Deseq word gerund.
+Hier is het makkelijker om te laten zien en zie ook gelijk hoe de deseq werkt en hoe makkelijk je er data uit kan halen.
 
 ```{r}
 library(airway)
@@ -272,9 +292,7 @@ contrast = c('dex','trt','untrt'), res=res, type = 'normal')
     y = 'pvalue')
 ```
 
-### Heatmap oefen
-
-###Clusterprofiling gsa oefen
+### Clusterprofiling gsa oefen
 
 <http://yulab-smu.top/biomedical-knowledge-mining-book/enrichment-overview.html#gsea-algorithm>
 
@@ -346,7 +364,7 @@ cowplot::plot_grid(p1, p2, ncol=1, labels=LETTERS[1:3])
 
 ## Visualization C57BL ent tegen Basline
 
-###Clusterprofiling gsa
+### Clusterprofiling gsa
 
 ```{r}
 library(clusterProfiler)
@@ -414,6 +432,9 @@ gseaplot(gsa_C57BL, geneSetID = 1, by = "runningScore", title = gsa_C57BL$Descri
 
 ### Volcano
 
+Hier zie eerste een volcano plot van NSG_bladder tumor_Vehicle tegen C57BL/6_bladder tumor_Baseline.
+Dit had ik uit enthousaistme al gemaakt zonder te kijken wat er echt in de data stond.
+
 ```{r}
 
  EnhancedVolcano(res,
@@ -421,46 +442,52 @@ gseaplot(gsa_C57BL, geneSetID = 1, by = "runningScore", title = gsa_C57BL$Descri
     x = 'log2FoldChange',
     y = 'pvalue',
     title = "behandeld tegen onbehandeld",
-     pCutoff = 10e-16,
+     pCutoff = 0.05,
     FCcutoff = 1.5,
     pointSize = 3.0,
-    labSize = 6.0,)
+    labSize = 4.0,)
 
   
 ```
 
-Hoogste 20
+Hier zie je dus dat gene- Eno1b een grote invloed heeft maar een midere verandring heeft dan gen-Csn3.
+
+Hier onder kijk ik welke hier de hoogste p waarde hebben en zet ik die in de grsfiek het zijn de 20 hoogste genen.
 
 ```{r}
-resultaat_oder <- res[order(res$padj), ]
+resultaat_oder <- res[order(res$pvalue), ]
 top20genen <- rownames(head(resultaat_oder, 20))
 EnhancedVolcano(res,
                 lab = rownames(res),
                 x = 'log2FoldChange',
-                y = 'padj',
+                y = 'pvalue',
                 selectLab = top20genen,
                 title = "behandeld tegen onbehandeld",
-                pCutoff = 1,
+                pCutoff = 0.05,
                 pointSize = 2.5,
                 labSize = 4
                 )
 ```
 
-nu van de goed
+Hier kan je dus in 1 keer zien wat de stippen zijn met de hoogste p waarde en kan een makkelijker een conclusie trekken.
+
+Hier onder word de goeie vergelijking gedaan wat ik zou moeten uitwerken.
 
 ```{r}
-
 EnhancedVolcano(resultaat_C57BL,
     lab = rownames(resultaat_C57BL),
     x = 'log2FoldChange',
     y = 'pvalue',
     title = "behandeld tegen onbehandeld C57BL ",
-     pCutoff = 0.05,
+    pCutoff = 0.05,
     FCcutoff = 1.5,
-    pointSize = 3.0,
-    labSize = 6.0,
+    pointSize = 2.5,
+    labSize = 4.0,
     col=c('grey', 'grey', 'grey', 'blue'))
 ```
+
+Hier zie ze dus dat er een grote verandering is bij het gen Myh7 dus is interessant om te kijken.
+Dit geld ook voor Bard1 want die heeft een ergere invloed er op.
 
 ### MA
 
@@ -566,7 +593,7 @@ attributes <- listAttributes(ensembl)
 attributes
 ```
 
-```{r, results='hide'}
+```{r, include=FALSE}
 # Set the 'attributes' values
 attrs.get <- c("ensembl_gene_id", "chromosome_name", 
                "start_position","end_position", "description")
