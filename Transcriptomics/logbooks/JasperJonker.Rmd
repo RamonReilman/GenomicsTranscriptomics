@@ -2,9 +2,11 @@
 title: "Logbook Jasper Jonker"
 author: "Jasper Jonker"
 date: "2024-16-10"
-output: html_document
-editor_options: 
-  markdown: 
+output:
+  html_document: default
+  pdf_document: default
+editor_options:
+  markdown:
     wrap: sentence
 ---
 
@@ -21,14 +23,14 @@ Eerst ga ik kijken wat we allemaal kunnen doen en daarna ga ik een vergelijking 
 
 Hier zie je de library's die ik heb gebruikt.
 
-```{r, echo=FALSE}
+```{r, message=FALSE}
 library(DESeq2)
 library(dplyr)
 library(ggplot2)
 library(EnhancedVolcano)
 ```
 
-## Deseq
+# Deseq
 
 Hieronder staat code voor de verwerking van deseq dit is meer ook voorbeeld over hoe je het moet gebruiken is dus van alle groepen van ons onderzoek.
 Dus tussen NSG (slecht imuumsysteem) muizen en C57BL/6 (goed imuumsyteem) muisen.
@@ -38,7 +40,7 @@ Ik ga het laten zien van C57BL/6 basline tegen C57BL/6 Entinostat.
 
 Dit stuke code is van Ramon dus als je er meer uit leg over wilt hebben moet je in zijn logbook kijken.
 
-```{r}
+```{r, message=FALSE}
 file.names <- list.files('/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/mapping/',
                          pattern = '*_star_ReadsPerGene.out.tab')
 
@@ -58,7 +60,7 @@ read_sample <- function(file.name) {
 
 ```
 
-```{r}
+```{r, message=FALSE}
 
  
 
@@ -85,7 +87,7 @@ counts <- counts[-1]
 
 ```
 
-```{r}
+```{r, message=FALSE}
 
  
 
@@ -99,7 +101,7 @@ col_data$source_name
 Het annoteren van onze data zorgt ervoor dat de genen de NCBI naamgeving krijgen.
 Zo is het straks overzichtelijker om informatie te vinden over de genen.
 
-```{r}
+```{r, message=FALSE}
 library(dplyr)
 library(tidyr)
 col_data <- col_data %>%
@@ -113,7 +115,7 @@ head(col_data)
 In de bestanden kon niks gevonden worden over de genen, maar zo is het wel duidelijker waar elke kolom voor staat.
 Dat moet nu nog toegepast worden in de counts df
 
-```{r}
+```{r,message=FALSE}
 for (i in 1:nrow(col_data)) {
   idx <- grep(col_data$Run[i], names(counts))
   names(counts)[idx] <- col_data$condition[i]
@@ -123,7 +125,7 @@ head(counts)
 
 Nu zijn de SRR\* namen vervangen met waar ze voor staan en is de df duidelijker te lezen, om straks makkelijker de kolommen op te halen die horen bij elk mogelijke variant groepeer ik deze.
 
-```{r}
+```{r, message=FALSE}
 print(colnames(counts))
 C57BL_Vehicle <- grep("C57BL/6_Vehicle", names(counts))
 C57BL_Entinostat <- grep("C57BL/6_Entinostat", names(counts))
@@ -141,35 +143,35 @@ Nu kunnen deze variabelen gebruikt worden om de juiste kolommen te selecteren.
 Dan kan dit nu samengevoegd worden met DESEQ, wat Janine heeft uitgezocht.
 Bekijk haar logboek voor meer informatie over de code.
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 dds <- DESeqDataSetFromMatrix(countData = counts,
                               colData = col_data,
                               design = ~ 0 + source_name)
 head(dds$source_name)
 ```
 
-```{r}
+```{r, message=FALSE}
 # Prefiltering on low gene counts
 keep <- rowSums(counts(dds)) >= 10
 ddst <- dds[keep,]
  
 ```
 
-```{r}
+```{r, message=FALSE}
 # Setting factor level
 #dds$treatment <- relevel(dds$treatment, ref = "Baseline")
 dds$treatment <- factor(dds$treatment, levels = c("Baseline","Entinostat", "Vehicle"), )
 dds$treatment
 ```
 
-```{r}
+```{r, message=FALSE}
 # Running deseq
 dds <- DESeq(dds)
 res <- results(dds)
 
 ```
 
-```{r}
+```{r, message=FALSE}
 head(res)
 ```
 
@@ -178,7 +180,7 @@ Nu is er vergelijking gedaan van NSG_bladder tumor_Vehicle tegen C57BL/6_bladder
 Ik ga een subset maken van alle C57BL/6 baseline en C57BL/6 Entinostat maken.
 Deze twee situaties ga ik dus ui werken.
 
-```{r}
+```{r, message=FALSE}
 
 C57BL_subset <- dds[, c(C57BL_Entinostat,C57BL_Baseline)]
 
@@ -190,24 +192,24 @@ resultaat_C57BL <- results(C57BL_subset)
 
 ```
 
-```{r}
+```{r,message=FALSE}
 head(resultaat_C57BL)
 ```
 
-## Visualization oefen
+# Visualization oefen
 
 Dus ik ga als eerst bezig met alles laten zien en mogelijke manieren om het te laten zien.
 Dit doe ik omdat het niet nodig is om met zijn vieren bezig te gaan met trimmen en met deseq bezig te zijn.
 We hebben niet alle tijd dus moeten we slim bezig gaan met onze tijd.
 
-### Pathway Analysis
+## Pathway Analysis
 
 Hier is een pathway analysis.
 Hier kan je dus zien als een gen word aangetast wat voor invloed het heeft op bepaalde biologische processen.
 
 <https://pathview.r-forge.r-project.org/pathview.pdf> is een een pdf met alle informatie
 
-```{r, echo=FALSE}
+```{r, message=FALSE}
 library(pathview)
 data(gse16873.d)
 pv.out <- pathview(gene.data = gse16873.d[, 1], pathway.id = "04110",
@@ -216,16 +218,16 @@ pv.out <- pathview(gene.data = gse16873.d[, 1], pathway.id = "04110",
 
 ![](/homes/jjonker2/Documents/GenomicsTranscriptomics/Transcriptomics/logbooks/hsa04110.gse16873.png)
 
-### Volcano plot oefen
+## Volcano plot oefen
 
 Een volcano plot is handig om te gebruiken want daar in kan je zien hoe groot een verandering is op de x-as (de lof2FoldChange) en hoe significant een verandering is (p-value)
 
-#### Manier 1
+### Manier 1
 
 Dit is 1 manier om een volcano plot te maken.
 het opdeze manier word het hem denk ik niet het word hier nogal moeilijk gemaakt terwijl het makkelijker kan.
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 tmp <- readRDS("/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/testData/de_df_for_volcano.rds")
 de <- tmp[complete.cases(tmp), ]
 de$delabel <- NA
@@ -245,12 +247,12 @@ ggplot(data=de, aes(x=log2FoldChange, y=-log10(pvalue), col=diffexpressed, label
     scale_color_manual(values=c("blue", "black", "purple"))
 ```
 
-#### Manier 2
+### Manier 2
 
 Hier zie je ook dat het met Deseq word gerund.
 Hier is het makkelijker om te laten zien en zie ook gelijk hoe de deseq werkt en hoe makkelijk je er data uit kan halen.
 
-```{r}
+```{r, message=FALSE}
 library(airway)
 library(magrittr)
 data('airway')
@@ -259,7 +261,7 @@ airway$dex %<>% relevel('untrt')
 ens <- rownames(airway)
 ```
 
-```{r}
+```{r, message=FALSE}
 library(org.Hs.eg.db)
 symbols <- mapIds(org.Hs.eg.db, keys = ens,
     column = c('SYMBOL'), keytype = 'ENSEMBL')
@@ -270,7 +272,7 @@ keep <- !is.na(rownames(airway))
 airway <- airway[keep,]
 ```
 
-```{r}
+```{r, message=FALSE ,warning=FALSE}
 library('DESeq2')
 
 dds <- DESeqDataSet(airway, design = ~ cell + dex)
@@ -285,32 +287,32 @@ contrast = c('dex','trt','untrt'), res=res, type = 'normal')
 
 ```
 
-```{r}
+```{r, message=FALSE}
   EnhancedVolcano(res_1,
     lab = rownames(res_1),
     x = 'log2FoldChange',
     y = 'pvalue')
 ```
 
-### Clusterprofiling gsa oefen
+## Clusterprofiling gsa oefen
 
 <http://yulab-smu.top/biomedical-knowledge-mining-book/enrichment-overview.html#gsea-algorithm>
 
-```{r}
+```{r, message=FALSE}
 library("clusterProfiler")
 
 data(geneList, package="DOSE")
 head(geneList)
 ```
 
-```{r}
+```{r, message=FALSE}
 gene <- names(geneList)[abs(geneList) > 2]
 head(gene)
 ```
 
 GO classification
 
-```{r}
+```{r, message=FALSE}
 ggo <- groupGO(gene     = gene,
                OrgDb    = org.Hs.eg.db,
                ont      = "CC",
@@ -325,7 +327,7 @@ GO over-representation analysis
 Hier kan je zien dat bepaalde genen een over presentaie hebben omdat ze een p.dajust hebben kleiner dan 0.05 en qvaule kleiner dan 0,05 dat betekent dat de deze genen meer tot uiting komen dan verwacht wordt.
 <https://www.youtube.com/watch?v=egO7Lt92gDY>
 
-```{r}
+```{r, message=FALSE}
 ego <- enrichGO(gene          = gene,
                 universe      = names(geneList),
                 OrgDb         = org.Hs.eg.db,
@@ -343,7 +345,7 @@ GO Gene Set Enrichment Analysis
 
 Dus je ziet hier <GO:0000775> het meest interessant is door nes met een score van 0.6230073
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 ego3 <- gseGO(geneList     = geneList,
               OrgDb        = org.Hs.eg.db,
               ont          = "CC",
@@ -354,7 +356,7 @@ ego3 <- gseGO(geneList     = geneList,
 head(ego3)
 ```
 
-```{r}
+```{r, message=FALSE}
 p1 <- gseaplot(ego3, geneSetID = 1, by = "runningScore", title = ego3$Description[1])
 p2 <- gseaplot(ego3, geneSetID = 1, by = "preranked", title = ego3$Description[1])
 cowplot::plot_grid(p1, p2, ncol=1, labels=LETTERS[1:3])
@@ -362,80 +364,117 @@ cowplot::plot_grid(p1, p2, ncol=1, labels=LETTERS[1:3])
 
 <https://yulab-smu.top/biomedical-knowledge-mining-book/enrichplot.html>
 
-## Visualization C57BL ent tegen Basline
+# Visualization C57BL ent tegen Basline
 
-### Clusterprofiling gsa
+## Clusterprofiling gsa
 
-```{r}
+Hier ga ik de resultaten laten zien van de enrichment result.
+Je kan het op veel mogelijk laten zien dus laten we maar eerst even de resultaten maken.
+Hier onder zie je een aantal librarys die ik ga gebruiken bij de visualsatie van de plotjes.
+
+```{r, message=FALSE}
 library(clusterProfiler)
 library(org.Mm.eg.db)
 library(ggplot2)
 library(enrichplot)
 ```
 
-```{r}
+Voor de enrichment result heb je de deseq nodig van je data.
+Hieronder zie nog wel even snel de deseq voor treatment Entinostat vs Baseline in de C57BL/6 muizen soort.
+
+```{r, message=FALSE}
 head(resultaat_C57BL)
 ```
 
-genlijst maken.
+Maar eerst moeten wij een genlijst maken want die heeft gseGO nodig om de enrichment russults te doen.
+De genlijst maken we met behulp van de deseq.
+Tijdens het maken van de genlijst halen we de NA resultaten van de log2FoldChange er uit.
+Hier onder zie je de code die er voor gebruikt word.
+We sorteren het gelijk op volgorde van hoog naar laag.
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 resultaat_C57BL_2 <- resultaat_C57BL[!is.na(resultaat_C57BL$log2FoldChange),]
 gen_lijst <- resultaat_C57BL_2$log2FoldChange
 names(gen_lijst) <- gsub("gene-", "",row.names(resultaat_C57BL_2))
 
 gen_lijst <- sort(gen_lijst, decreasing = TRUE)
-gen_lijst
+head(gen_lijst)
 ```
 
-```{r}
+Hier zie je een genlijst met genen met een log2FoldChange van hoog naar laag gesorteerd.
+
+Met de genlijst doen we nu een gseGo met een cutofvalue van 0.05 dat is normaal de p cut of waarde en niet te vergeten dat we de muis gebruik Dus Mm en niet Hs gebruiken.
+
+```{r, message=FALSE, warning=FALSE}
 gsa_C57BL <- gseGO(geneList = gen_lijst,
             keyType = "SYMBOL",
             OrgDb = org.Mm.eg.db,
             ont ="BP",
             pvalueCutoff = 0.05,
             verbose = T)
-
+head(as.data.frame(gsa_C57BL))
 ```
 
-```{r}
-as.data.frame(gsa_C57BL)
-gsa_C57BL
+Hier zie je dus een Description met daar aan gekoppelde values die we geaan gebruiken.
+
+Maar eerst even laten zien waar alles een beetje bij hoort
+
+```{r, message=FALSE}
+boompie <- pairwise_termsim(gsa_C57BL)
+treeplot(boompie)
 ```
 
-```{r}
+Hier maken we een dotplot waar je kan zien van 5 Description of ze worden onderdrukt of juist meer tot uiting komen met de setSize en de generatio.
+
+```{r, message=FALSE}
 dotplot(gsa_C57BL, split=".sign", showCategory = 5) + facet_grid(.~.sign)
 ```
 
-```{r}
-edox <- setReadable(gsa_C57BL, 'org.Mm.eg.db', 'SYMBOL')
-cnetplot(edox,
+Hier zie je dus dat keratinization onderukt word en de genen er voor veel voorkomen en zie je ook dat striated muscle contraction meer tot uiting komt.
+
+Hier onder laat ik zien welke gene er overeen komen tussen keratinization en regulation of water loss via skin
+
+```{r, message=FALSE, warning=FALSE}
+cnetplot(gsa_C57BL,
          node_label="category",
          showCategory = c("keratinization", "regulation of water loss via skin"))
-cnetplot(edox,
+cnetplot(gsa_C57BL,
          node_label="gene",
          showCategory = c("keratinization", "regulation of water loss via skin"))
 ```
 
-```{r}
-cnetplot(edox,
+Hier uit kan je concluderen dat die genen misschien minder tot uiting komt.
+
+hier onder laat ik dan zien de overeen komsten van myeloid leukocyte migration muscle contraction
+
+```{r, message=FALSE, warning=FALSE}
+cnetplot(gsa_C57BL,
          node_label="category",
          showCategory = c("myeloid leukocyte migration", "muscle contraction"))
-cnetplot(edox,
+cnetplot(gsa_C57BL,
          node_label="gene",
          showCategory = c("myeloid leukocyte migration", "muscle contraction"))
 ```
 
-```{r}
-gseaplot(gsa_C57BL, geneSetID = 1, by = "runningScore", title = gsa_C57BL$Description[1])
+Hier uit kan je concluderen dat die genen misschien meer tot uiting komt.
+
+Hier maak ik een plot gsa van de bovenste 3 disciptions.
+
+```{r, message=FALSE}
+gseaplot2(gsa_C57BL, geneSetID = 1:3, subplots = 1:2)
 ```
 
-### Volcano
+In deze plot kan je zien waar de genen begeven in de genlijst en waar de es zich begeeft.
+De ES begeeft zich op het meest hoogste punt of , net als in dit geval het laagst getal.
+Hier kan je dus zien dat keratinization de grooste afwijking heeft van de drie.
+De lijntjes er onder geven aan waar de genen zich begeven in de genlijst dus links boven in de genlijst en em rechts onder in de genlijst die gesorteerd is op log2FoldChange.
+
+## Volcano
 
 Hier zie eerste een volcano plot van NSG_bladder tumor_Vehicle tegen C57BL/6_bladder tumor_Baseline.
 Dit had ik uit enthousaistme al gemaakt zonder te kijken wat er echt in de data stond.
 
-```{r}
+```{r, message=FALSE}
 
  EnhancedVolcano(res,
     lab = rownames(res),
@@ -454,7 +493,7 @@ Hier zie je dus dat gene- Eno1b een grote invloed heeft maar een midere verandri
 
 Hier onder kijk ik welke hier de hoogste p waarde hebben en zet ik die in de grsfiek het zijn de 20 hoogste genen.
 
-```{r}
+```{r, message=FALSE}
 resultaat_oder <- res[order(res$pvalue), ]
 top20genen <- rownames(head(resultaat_oder, 20))
 EnhancedVolcano(res,
@@ -473,7 +512,7 @@ Hier kan je dus in 1 keer zien wat de stippen zijn met de hoogste p waarde en ka
 
 Hier onder word de goeie vergelijking gedaan wat ik zou moeten uitwerken.
 
-```{r}
+```{r, message=FALSE}
 EnhancedVolcano(resultaat_C57BL,
     lab = rownames(resultaat_C57BL),
     x = 'log2FoldChange',
@@ -483,24 +522,34 @@ EnhancedVolcano(resultaat_C57BL,
     FCcutoff = 1.5,
     pointSize = 2.5,
     labSize = 4.0,
-    col=c('grey', 'grey', 'grey', 'blue'))
+    col=c('black', 'black', 'black', 'orange'))
 ```
 
 Hier zie ze dus dat er een grote verandering is bij het gen Myh7 dus is interessant om te kijken.
 Dit geld ook voor Bard1 want die heeft een ergere invloed er op.
 
-### MA
+## MA
 
-```{r}
+Hier ga ik en MA plot maken zodat je dan kan zien de gemiddelde expressie niveaus tegen over de de expressie van de genen tussen de twee situaties.
+
+```{r, message=FALSE}
 p3 <-plotMA(resultaat_C57BL)
 ```
 
-```{r}
+Deze plot ziet er nog al raar uit dus ik ga even kijken wat er anders kan
+
+Ik ben er achter gekomen dat de data eerst moet Shrinken zodat je consistent een betere uitput krijgt
+
+```{r, message=FALSE}
 lfcschrink_subset <- lfcShrink(C57BL_subset, coef="treatment_Entinostat_vs_Baseline", type="apeglm")
 p4 <-plotMA(lfcschrink_subset )
 ```
 
-```{r}
+Dit ziet er beter uit en kan je concluderen dat er best wel een groot verschil tussen de genen die tot uiting komen bij de verschillende omstandigheden.
+
+Ik ga hier nog proberen om het mooier te laten zien met ggplot
+
+```{r, message=FALSE}
 data_frame_resultaat_C57B <- as.data.frame(resultaat_C57BL)
 data_frame_resultaat_C57B <- data_frame_resultaat_C57B[!is.na(data_frame_resultaat_C57B$padj),]
 data_frame_resultaat_C57B$significant <- data_frame_resultaat_C57B$padj < 0.5
@@ -518,9 +567,13 @@ ggplot(data_frame_resultaat_C57B,
 
 ```
 
-### pheatmap
+Het verschil is er niet echt en het is naar mijn idee ook wel minder duidelijk omdat het nu lijkt dat er best wel weinig niet anders is maar bij de MA plot functie juist wel te zien is.
 
-```{r}
+## pheatmap
+
+Hier ga ik een heat map maken
+
+```{r, message=FALSE}
 library(pheatmap)
 topgene <- head(order(resultaat_C57BL$padj),20)
 #mat <- assay(dds)[topgene,]
@@ -529,33 +582,33 @@ mat_2 <- assay(C57BL_subset)[topgene,]
 pheatmap(mat_2, cluster_rows=TRUE, cluster_cols = TRUE)
 ```
 
-```{r}
-heatplot(edox, foldChange=gen_lijst, showCategory=c("keratinization", "regulation of water loss via skin"))
+Deze vind ik nog al leijk ik ga eerst even kijken naar een andere.
+
+Ik heb een andere manier gevonden.
+
+In de Heatpolt kan je ook makkelijk de Disciption meegeven die je graag zou willen zien dus laat ik hier weer keratinization en regulation of water loss via skin.
+
+```{r, message=FALSE}
+heatplot(gsa_C57BL, foldChange=gen_lijst, showCategory=c("keratinization", "regulation of water loss via skin" ))
 ```
 
-### PCA
+Hier kan je dus bij elk gen de invloed op de gegevn Disciption.
+In dit geval alle maal negatieve \### PCA
 
-```{r}
-rld <- rlog(dds)
-#DESeq2::plotPCA(res)
-```
+Hier maak ik een pca plot om te kijken of onze data een beetje goed verdeeld is
 
-```{r}
+```{r, message=FALSE}
 vsd_C57BL <- vst(C57BL_subset,blind = FALSE)
 DESeq2::plotPCA(vsd_C57BL, intgroup = "condition")
 ```
 
-### le boom
+Op eerste oog opslag lijkt het goed todat je bedenkt dat er van de basline er maar 4 zijn en van de entinostat er 6 zijn hier door is het gemiddelde van de entinostat een stuk meer naar het midden is dan de basline.
 
-```{r}
-library(enrichplot)
-edox2 <- pairwise_termsim(edox)
-treeplot(edox2)
-```
+# annotatie met biomart
 
-## annotatie met biomart
+Wij wouden gaan anoteren om dat het ons interessant lijkt maar na overleg met de docenten hebben we besloten om het niet te doen ook omdat het niet werkte dus met de code uit de meegegeven turtorial laat ik wel staan maar doen we niks meer mee.\
 
-```{r}
+```{r, message=FALSE}
 col_data <- col_data %>%
     dplyr::group_by(strain, treatment) %>%
     dplyr::mutate(r_num = row_number()) %>%
@@ -565,7 +618,7 @@ head(col_data)
 
 ```
 
-```{r}
+```{r, message=FALSE}
 for (i in 1:nrow(col_data)) {
   idx <- grep(col_data$Run[i], names(counts))
   names(counts)[idx] <- col_data$condition[i]
@@ -573,7 +626,7 @@ for (i in 1:nrow(col_data)) {
 head(counts)
 ```
 
-```{r}
+```{r, message=FALSE}
 counts$Ensembl <- mapIds(x = org.Mm.eg.db,
                            keys=gsub("gene-", "",row.names(counts)),
                            column="ENSEMBL",
@@ -582,7 +635,7 @@ counts$Ensembl <- mapIds(x = org.Mm.eg.db,
 
 ```
 
-```{r}
+```{r, message=FALSE}
 library(biomaRt)
 ensembl=useMart("ENSEMBL_MART_ENSEMBL", host="https://www.ensembl.org")
 ensembl <- useMart("ensembl")
@@ -590,21 +643,21 @@ mart.datasets <- listDatasets(ensembl)
 ensembl <- useDataset('mmusculus_gene_ensembl', mart = ensembl)
 filters <- listFilters(ensembl)
 attributes <- listAttributes(ensembl)
-attributes
+
 ```
 
-```{r, include=FALSE}
+```{r, eval = FALSE}
 # Set the 'attributes' values
 attrs.get <- c("ensembl_gene_id", "chromosome_name", 
                "start_position","end_position", "description")
 
-# Perform a biomaRt query using 'getBM'
-#results <- getBM(attributes = attrs.get,
-                 #filters = "ensembl_gene_id",
-                 #values = counts$Ensembl[12:15], 
-                 #mart = ensembl, verbose = TRUE)
+Perform a biomaRt query using 'getBM'
+results <- getBM(attributes = attrs.get,
+                 filters = "ensembl_gene_id",
+                 values = counts$Ensembl[12:15], 
+                 mart = ensembl, verbose = TRUE)
 
-#results$gene_length <- abs(results$end_position - results$start_position)
+results$gene_length <- abs(results$end_position - results$start_position)
 
-#merge(x = counts, y = results, by.x = 'Ensembl', by.y = 'ensembl_gene_id')
+merge(x = counts, y = results, by.x = 'Ensembl', by.y = 'ensembl_gene_id')
 ```
