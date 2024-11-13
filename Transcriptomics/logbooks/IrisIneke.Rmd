@@ -227,12 +227,48 @@ We zijn erachter gekomen dat in de NSG muizen geen menselijke cellen
 zitten. Dus deze moeten we ook mappen tegen het muis-referentie-genoom (Wat wel heel gek
 is is dat in het artikel staat dat ze alles tegen het menselijke-referentie-genoom
 hebben gemapt, is dit een fout ?).\
+Code van [Ramon](https://github.com/RamonReilman/GenomicsTranscriptomics/blob/main/Transcriptomics/logbooks/RamonReilman.Rmd)
+```{bash, eval=FALSE}
+
+gffread -E /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/ref_genes/ncbi_dataset/data/GCF_000001405.40/genomic.gff -T -o  /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/ref_genes/ncbi_dataset/data/GCF_000001405.40/genomic.gtf
+
+```
+
+```{bash, eval=FALSE}
+STAR --runThreadN 4 --runMode genomeGenerate --genomeDir /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/star/index_GRCh38 --genomeFastaFiles /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/ref_genes/ncbi_dataset/data/GCF_000001405.40/GCF_000001405.40_GRCh38.p14_genomic.fna --sjdbGTFfile /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/ref_genes/ncbi_dataset/data/GCF_000001405.40/genomic.gtf --sjdbOverhang 75
+```
+
+
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/nsg_mouse_SRR.txt | \
+    parallel 'STAR --runThreadN 6 ' \
+        '--genomeDir /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/star/index_GRCh38/ ' \
+        '--readFilesIn /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/fastq/{}_1.fastq /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/fastq/{}_2.fastq ' \
+        '--outSAMtype BAM SortedByCoordinate ' \
+        '--quantMode GeneCounts ' \
+        '--genomeLoad LoadAndRemove' \
+        '--limitBAMsortRAM 2000000000 ' \
+        '--outFileNamePrefix /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/mapping/{}_star_'
+```
+
+
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/nsg_mouse_SRR.txt | \
+    parallel 'STAR --runThreadN 6 ' \
+        '--genomeDir /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/star/index_GRCm39/ ' \
+        '--readFilesIn /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/fastq/{}_1.fastq /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/fastq/{}_2.fastq ' \
+        '--outSAMtype BAM SortedByCoordinate ' \
+        '--quantMode GeneCounts ' \
+        '--genomeLoad LoadAndRemove' \
+        '--limitBAMsortRAM 2000000000 ' \
+        '--outFileNamePrefix /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/mapping/{}_mm39_star_'
+```
 
 De mapping tegen het muis genoom ziet er beter uit, dus waarschijnlijk zit er een fout in het artikel.
 
 ## Deseq
 (30/31 oktober)
-De volgende code is van [Ramon](https://github.com/RamonReilman/GenomicsTranscriptomics/blob/main/Transcriptomics/logbooks/RamonReilman.Rmd) (van Teams):
+De volgende code is van [Ramon](https://github.com/RamonReilman/GenomicsTranscriptomics/blob/main/Transcriptomics/logbooks/RamonReilman.Rmd) (Zie ook Teams):
 ```{r}
 file.names <- list.files('/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/mapping/',
                          pattern = '*_star_ReadsPerGene.out.tab')
@@ -248,11 +284,9 @@ read_sample <- function(file.name) {
   ## Return a subset containing the transcript ID and sample name columns
   return(sample[c(1, 2)])
 }
- 
 ```
  
 ```{r}
- 
 setwd('/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/mapping/')
  
 ## Read the FIRST sample
@@ -272,7 +306,6 @@ head(counts)
  
  
 ```{r}
- 
 col_data <- read.csv("/students/2024-2025/Thema05/BlaasKanker/etc/DSEQ_verwerking(Sheet1).csv", sep = ";")
 rownames(col_data) <- col_data[,1]
 col_data
@@ -292,12 +325,10 @@ col_data <- col_data %>%
     dplyr::ungroup() %>%
     mutate(condition = paste0(strain, "_", treatment, "_r", r_num))
 head(col_data)
- 
 ```
 In de bestanden kon niks gevonden worden over de genen, maar zo is het wel duidelijker waar elke kolom voor staat.
 Dat moet nu nog toegepast worden in de counts df
 ```{r}
- 
 for (i in 1:nrow(col_data)) {
   idx <- grep(col_data$Run[i], names(counts))
   names(counts)[idx] <- col_data$condition[i]
@@ -336,12 +367,10 @@ ddst <- dds[keep,]
 ```
  
 ```{r}
- 
 # Setting factor level
 #dds$treatment <- relevel(dds$treatment, ref = "Baseline")
 
 dds$treatment <- factor(dds$treatment, levels = c("Baseline","Entinostat", "Vehicle"), )
-
 ```
  
 ```{r}
@@ -349,7 +378,12 @@ dds$treatment <- factor(dds$treatment, levels = c("Baseline","Entinostat", "Vehi
 dds <- DESeq(dds)
 res <- results(dds)
 ```
-
+## PCA
+[Ramon](https://github.com/RamonReilman/GenomicsTranscriptomics/blob/main/Transcriptomics/logbooks/RamonReilman.Rmd) heeft PCA uitgevoerd op alle groepen:
+```{r, fig.cap="Principal component analyse (PCA) die de variantie van gen expressie weergeeft. Elk punt representeerd 1 sample kleurgecodeerd per groep."}
+vsd <- vst(dds, blind=FALSE)
+plotPCA(vsd, intgroup=c("strain", "treatment"))
+```
 
 ## MA plot
 Nu dit allemaal is uitgevoerd kunnen we verder met een MA plot te maken van nsg-baseline vs nsg-entinostat door gebruik te maken van de 'res' die is gemaakt.
@@ -373,7 +407,7 @@ Bij coef wordt maar 1 input geaccepteerd, dus eerst de twee namen apart invullen
 
 Maar nu is de vraag hoe we dit samen moeten voegen ? Er een vector van maken werkt niet.
 
-Ramon heeft een subset gemaakt gemaakt van de twee situaties, dit is handig om alleen de informatie van de situaties weer te geven in de plot:
+[Ramon](https://github.com/RamonReilman/GenomicsTranscriptomics/blob/main/Transcriptomics/logbooks/RamonReilman.Rmd) heeft een subset gemaakt gemaakt van de twee situaties, dit is handig om alleen de informatie van de situaties weer te geven in de plot:
 ```{r dds_subset}
 dds_subset <- dds[, dds$source_name %in% c("NSG_bladder tumor_Baseline", "NSG_bladder tumor_Entinostat")]
 
@@ -500,7 +534,7 @@ In de plot is de NSG-Entinostat en de NSG-Baseline met elkaar vergeleken. De y-w
 
 
 ## Gen expressie vehicle vraag
-Uit Ramon zijn plot bleek dat bij de NSG muis de vehicle een hoge gen-expressie had op het gene-Ces4a. Dit gen zorgt voor de afbraak van xenobiotische stoffen. Onze theorie is dat de stof die de vehicle toegediend heeft gekregen een xenobiotische stof is, waardoor de vehicle een hoge expressie heeft van gene-Ces4a.
+Uit [Ramon](https://github.com/RamonReilman/GenomicsTranscriptomics/blob/main/Transcriptomics/logbooks/RamonReilman.Rmd) zijn plot bleek dat bij de NSG muis de vehicle een hoge gen-expressie had op het gene-Ces4a. Dit gen zorgt voor de afbraak van xenobiotische stoffen. Onze theorie is dat de stof die de vehicle toegediend heeft gekregen een xenobiotische stof is, waardoor de vehicle een hoge expressie heeft van gene-Ces4a.
 In [het artikel](https://pmc.ncbi.nlm.nih.gov/articles/PMC8363284/) staat de volgende zin: 'BBN963 cells were treated with DMSO or 1 μM entinostat for 72 hours in vitro.' Dit betekend dat de de stof waarschijnlijk [DMSO](https://pubmed.ncbi.nlm.nih.gov/17177172/) is. Dit is een xenobiotische stof, dus dit kan de hoge gen-expressie verklaren.
 
 
