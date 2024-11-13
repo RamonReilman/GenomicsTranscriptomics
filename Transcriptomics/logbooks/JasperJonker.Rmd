@@ -465,7 +465,7 @@ gseaplot2(gsa_C57BL, geneSetID = 1:3, subplots = 1:2)
 ```
 
 In deze plot kan je zien waar de genen zich begeven in de genlijst en waar de es zich begeeft.
-De ES begeeft zich op het meest hoogste punt of , net als in dit geval het laagste getal.
+De ES begeeft zich op het meest hoogste punt of net als in dit geval het laagste getal.
 Hier kan je dus zien dat keratinization de grootste afwijking heeft van de drie.
 De lijntjes eronder geven aan waar de genen zich begeven in de genlijst. Dus linksboven in de genlijst en rechtsonder in de genlijst die gesorteerd is op log2FoldChange.
 
@@ -489,9 +489,9 @@ Dit had ik uit enthousiasme al gemaakt zonder te kijken wat er echt in de data s
   
 ```
 
-Hier zie je dus dat gene- Eno1b een grote invloed heeft maar een midere verandring heeft dan gen-Csn3.
+Hier zie je dus dat gene- Eno1b een grote invloed heeft, maar een mindere verandering heeft dan gen-Csn3.
 
-Hieronder kijk ik welke hier de hoogste p waarde hebben en zet ik die in de grsfiek het zijn de 20 hoogste genen.
+Hieronder kijk ik welke hier de hoogste p-waarde hebben en zet ik die in de grafiek. Ik neem de 20 hoogste genen.
 
 ```{r, message=FALSE}
 resultaat_oder <- res[order(res$pvalue), ]
@@ -508,9 +508,9 @@ EnhancedVolcano(res,
                 )
 ```
 
-Hier kan je dus in 1 keer zien wat de stippen zijn met de hoogste p waarde en kan een makkelijker een conclusie trekken.
+Hier kan je dus in 1 keer zien wat de stippen zijn met de hoogste p-waarde en kan je makkelijker een conclusie trekken.
 
-Hier onder word de goeie vergelijking gedaan wat ik zou moeten uitwerken.
+Hieronder wordt de goede vergelijking gedaan. Dit zou ik moeten uitwerken.
 
 ```{r, message=FALSE}
 EnhancedVolcano(resultaat_C57BL,
@@ -525,29 +525,29 @@ EnhancedVolcano(resultaat_C57BL,
     col=c('black', 'black', 'black', 'orange'))
 ```
 
-Hier zie ze dus dat er een grote verandering is bij het gen Myh7 dus is interessant om te kijken.
-Dit geld ook voor Bard1 want die heeft een ergere invloed er op.
+Hier zie je dus dat er een grote verandering is bij het gen Myh7, dus is deze interessant om te bekijken.
+Dit geldt ook voor Bard1, want die heeft een hogere invloed erop.
 
 ## MA
 
-Hier ga ik en MA plot maken zodat je dan kan zien de gemiddelde expressie niveaus tegen over de de expressie van de genen tussen de twee situaties.
+Hier ga ik en MA plot maken, zodat je dan kan zien wat de gemiddelde expressie niveaus zijn tegenover de expressie van de genen tussen de twee situaties.
 
 ```{r, message=FALSE}
 p3 <-plotMA(resultaat_C57BL)
 ```
 
-Deze plot ziet er nog al raar uit dus ik ga even kijken wat er anders kan
+Deze plot ziet er nogal raar uit dus ik ga even kijken wat er anders kan.
 
-Ik ben er achter gekomen dat de data eerst moet Shrinken zodat je consistent een betere uitput krijgt
+Ik ben erachter gekomen dat je de data eerst moet Shrinken, zodat je consistent een betere uitput krijgt.
 
 ```{r, message=FALSE}
 lfcschrink_subset <- lfcShrink(C57BL_subset, coef="treatment_Entinostat_vs_Baseline", type="apeglm")
 p4 <-plotMA(lfcschrink_subset )
 ```
 
-Dit ziet er beter uit en kan je concluderen dat er best wel een groot verschil tussen de genen die tot uiting komen bij de verschillende omstandigheden.
+Dit ziet er beter uit en nu kan je concluderen dat er best wel een groot verschil is tussen de genen die tot uiting komen bij de verschillende omstandigheden.
 
-Ik ga hier nog proberen om het mooier te laten zien met ggplot
+Ik ga hier nog proberen om het mooier te laten zien met ggplot.
 
 ```{r, message=FALSE}
 data_frame_resultaat_C57B <- as.data.frame(resultaat_C57BL)
@@ -567,11 +567,11 @@ ggplot(data_frame_resultaat_C57B,
 
 ```
 
-Het verschil is er niet echt en het is naar mijn idee ook wel minder duidelijk omdat het nu lijkt dat er best wel weinig niet anders is maar bij de MA plot functie juist wel te zien is.
+Het verschil is er niet echt en het is naar mijn idee ook wel minder duidelijk. Want nu lijkt het alsof er best wel weinig niet anders is maar bij de MA plot functie juist wel te zien is.
 
 ## pheatmap
 
-Hier ga ik een heat map maken
+Hier ga ik een heat map maken.
 
 ```{r, message=FALSE}
 library(pheatmap)
@@ -582,31 +582,31 @@ mat_2 <- assay(C57BL_subset)[topgene,]
 pheatmap(mat_2, cluster_rows=TRUE, cluster_cols = TRUE)
 ```
 
-Deze vind ik nog al leijk ik ga eerst even kijken naar een andere.
+Deze vind ik nog al lelijk. Ik ga eerst even kijken naar een andere.
 
 Ik heb een andere manier gevonden.
 
-In de Heatpolt kan je ook makkelijk de Disciption meegeven die je graag zou willen zien dus laat ik hier weer keratinization en regulation of water loss via skin.
+In de Heatpolt kan je ook makkelijk de Disciption meegeven die je graag zou willen zien, dus laat ik hier weer keratinization en regulation of water loss via skin zien.
 
 ```{r, message=FALSE}
 heatplot(gsa_C57BL, foldChange=gen_lijst, showCategory=c("keratinization", "regulation of water loss via skin" ))
 ```
 
-Hier kan je dus bij elk gen de invloed op de gegevn Disciption.
-In dit geval alle maal negatieve \### PCA
+Hier kan je dus bij elk gen de invloed op de gegeven Disciption zien.
+In dit geval allemaal negatieve \### PCA
 
-Hier maak ik een pca plot om te kijken of onze data een beetje goed verdeeld is
+Hier maak ik een pca plot om te kijken of onze data een beetje goed verdeeld is.
 
 ```{r, message=FALSE}
 vsd_C57BL <- vst(C57BL_subset,blind = FALSE)
 DESeq2::plotPCA(vsd_C57BL, intgroup = "condition")
 ```
 
-Op eerste oog opslag lijkt het goed todat je bedenkt dat er van de basline er maar 4 zijn en van de entinostat er 6 zijn hier door is het gemiddelde van de entinostat een stuk meer naar het midden is dan de basline.
+Bij de eerste oogopslag lijkt het goed, todat je je bedenkt dat er van de Baseline maar 4 zijn en van de entinostat 6. Hierdoor is het gemiddelde van de entinostat een stuk meer naar het midden dan van de Baseline.
 
-# annotatie met biomart
+# Annotatie met biomart
 
-Wij wouden gaan anoteren om dat het ons interessant lijkt maar na overleg met de docenten hebben we besloten om het niet te doen ook omdat het niet werkte dus met de code uit de meegegeven turtorial laat ik wel staan maar doen we niks meer mee.\
+Wij wouden gaan annoteren, omdat het ons interessant leek, maar na overleg met de docenten hebben we besloten om het niet te doen. Ook omdat het niet werkte, dus de code uit de meegegeven tutorial laat ik wel staan, maar we doen er niks meer mee.\
 
 ```{r, message=FALSE}
 col_data <- col_data %>%
