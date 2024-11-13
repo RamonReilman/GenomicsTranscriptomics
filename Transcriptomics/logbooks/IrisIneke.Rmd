@@ -3,8 +3,8 @@ title: "IrisIneke.Rmd"
 author: "Iris Ineke"
 date: "2024-10-17"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 editor_options:
   markdown:
     wrap: 72
@@ -510,17 +510,393 @@ Geprobeerd met [Jasper](https://github.com/RamonReilman/GenomicsTranscriptomics/
 Onze dataset bevat teveel genen en de library connectie werkt niet, dus hebben we besloten om geen annotatie uit te voeren.
 
 
-## To do:
-! pathway analyse als tijd
+
+## Venn diagram eerste poging, klopt niet helemaal:
+[Bron voor venndiagram](https://rpubs.com/Nishapaudel/DESeq2_sex_wise_dfs)
+```{r}
+head(counts)
+```
+
+
+Namen elke kolom:
+```{r}
+library(DESeq2)
+
+print(colnames(counts))
+```
+```{r}
+dim(counts)
+```
+Verdelen in C57BL6-muis en NSG-muis (er wordt een genen-count per kolom aangemaakt).
+```{r}
+desired_columns_C57BL6 <- c("C57BL/6_Vehicle_r1", "C57BL/6_Vehicle_r2", "C57BL/6_Vehicle_r3", "C57BL/6_Vehicle_r4", "C57BL/6_Vehicle_r5", "C57BL/6_Vehicle_r6", "C57BL/6_Baseline_r1", "C57BL/6_Baseline_r2",  "C57BL/6_Baseline_r3", "C57BL/6_Baseline_r4", "C57BL/6_Entinostat_r1", "C57BL/6_Entinostat_r2", "C57BL/6_Entinostat_r3", "C57BL/6_Entinostat_r4",  "C57BL/6_Entinostat_r5", "C57BL/6_Entinostat_r6")
+
+# Rearrange the columns based on the desired order
+data_rearranged_C57BL6 <- counts[, desired_columns_C57BL6]
+```
+
+```{r}
+head(data_rearranged_C57BL6)
+```
+Nu voor de NSG-muis:
+```{r}
+desired_columns_NSG <- c( "NSG_Vehicle_r1", "NSG_Vehicle_r2", "NSG_Vehicle_r3", "NSG_Vehicle_r4", "NSG_Vehicle_r5", "NSG_Baseline_r1", "NSG_Baseline_r2", "NSG_Baseline_r3", "NSG_Baseline_r4", "NSG_Baseline_r5", "NSG_Entinostat_r1", "NSG_Entinostat_r2", "NSG_Entinostat_r3", "NSG_Entinostat_r4", "NSG_Entinostat_r5")
+
+# Rearrange the columns based on the desired order
+data_rearranged_NSG <- counts[, desired_columns_NSG]
+```
+
+```{r}
+head(data_rearranged_NSG)
+```
+
+
+Condities per muis toevoegen:
+```{r}
+sampleinfo_NSG <- data.frame(
+  row.names = colnames(data_rearranged_NSG),
+  condition = c("Vehicle", "Vehicle", "Vehicle", "Vehicle", "Vehicle", 
+                "Baseline", "Baseline", "Baseline", "Baseline", "Baseline", 
+                "Entinostat", "Entinostat", "Entinostat", "Entinostat", "Entinostat")
+)
+```
+
+```{r}
+sampleinfo_C57BL6 <- data.frame(
+  row.names = colnames(data_rearranged_C57BL6),
+  condition = c("Vehicle", "Vehicle", "Vehicle", "Vehicle", "Vehicle", "Vehicle",
+                "Baseline", "Baseline", "Baseline", "Baseline", 
+                "Entinostat", "Entinostat", "Entinostat", "Entinostat", "Entinostat", "Entinostat")
+)
+```
+
+
+Analyse van maken:
+```{r}
+dds_NSG <- DESeqDataSetFromMatrix(countData = data_rearranged_NSG, colData = sampleinfo_NSG, design = ~ condition)
+dds_NSG <- DESeq(dds_NSG)
+res_NSG <- results(dds_NSG)
+```
+```{r}
+dds_C57BL6 <- DESeqDataSetFromMatrix(countData = data_rearranged_C57BL6, colData = sampleinfo_C57BL6, design = ~ condition)
+dds_C57BL6 <- DESeq(dds_C57BL6)
+res_C57BL6 <- results(dds_C57BL6)
+```
+
+
+Belangrijke genen eruit halen:
+```{r}
+# !is.na, is nodig omdat R anders zeurt over na waardes
+upregulated_C57BL6 <- rownames(res_C57BL6[!is.na(res_C57BL6$log2FoldChange) & res_C57BL6$log2FoldChange > 0 & !is.na(res_C57BL6$padj) & res_C57BL6$padj <= 0.05, ])
+upregulated_NSG <- rownames(res_NSG[!is.na(res_NSG$log2FoldChange) & res_NSG$log2FoldChange > 0 & !is.na(res_NSG$padj) & res_NSG$padj <= 0.05, ])
+
+```
+
+
+Package installeren:
+```{r, eval=FALSE}
+# install.packages("VennDiagram")
+```
+```{r}
+library(VennDiagram)
+```
+
+Venn diagram maken:
+```{r}
+venn.plot <- draw.pairwise.venn(
+  area1 = length(upregulated_C57BL6),
+  area2 = length(upregulated_NSG),
+  cross.area = length(intersect(upregulated_C57BL6, upregulated_NSG)),
+  category = c("C57BL6", "NSG"),
+  fill = c("blue", "red")
+)
+```
+
+Laten zien diagram:
+```{r}
+grid.newpage()
+grid.draw(venn.plot)
+```
+
+Dit gaat niet helemaal goed. Diagram nodig van elke treatment apart van soort 1 tegen soort 2.
+De code is steeds hetzelfde, maar dan met de juiste treatment (entinostat, vehicle, baseline).
+
+## Venndiagram entinostat:
+Verdelen in C57BL6-muis en NSG-muis voor alleen de entinostat groep (er wordt een genen-count per kolom aangemaakt).
+```{r}
+desired_columns_C57BL6_entinostat <- c("C57BL/6_Entinostat_r1", "C57BL/6_Entinostat_r2", "C57BL/6_Entinostat_r3", "C57BL/6_Entinostat_r4", "C57BL/6_Entinostat_r5", "C57BL/6_Entinostat_r6")
+
+# Rearrange the columns based on the desired order
+data_rearranged_C57BL6_entinostat <- counts[, desired_columns_C57BL6_entinostat]
+```
+
+```{r}
+head(data_rearranged_C57BL6_entinostat)
+```
+Echt heel raar, maar hij geeft van elke kolom alles 2 keer. Met exact dezelfde cijfers en namen.
+```{r test_dubbele_kolomnamen}
+# zijn er dubbele kolomnamen ?
+any(duplicated(colnames(counts)))
+
+#en zijn de namen goed ingevoerd ?
+all(desired_columns_C57BL6_entinostat %in% colnames(counts))
+```
+Maar uit de tests komen dat er geen dubbele kolomnamen zijn en dat de namen die ik heb ingevoerd kloppen ?
+
+
+```{r tweede_test_dubbele_kolomnamen}
+print(colnames(data_rearranged_C57BL6_entinostat))
+```
+En de kolomnamen kloppen ook, dus ik neem aan dat het een fout is in het weergeven (Bij alle andere gaat het wel goed).
+
+Bij de NSG gaat het wel goed:
+```{r}
+desired_columns_NSG_entinostat <- c("NSG_Entinostat_r1", "NSG_Entinostat_r2", "NSG_Entinostat_r3", "NSG_Entinostat_r4", "NSG_Entinostat_r5")
+
+# Rearrange the columns based on the desired order
+data_rearranged_NSG_entinostat <- counts[, desired_columns_NSG_entinostat]
+```
+
+```{r}
+head(data_rearranged_NSG_entinostat)
+```
+Dus voor nu aannemen dat het visueel foutje is.
+
+Condities per muis toevoegen:
+```{r}
+sampleinfo_NSG_entinostat <- data.frame(
+  row.names = colnames(data_rearranged_NSG_entinostat),
+  condition = c("Entinostat", "Entinostat", "Entinostat", "Entinostat", "Entinostat")
+  )
+```
+
+
+```{r}
+sampleinfo_C57BL6_entinostat <- data.frame(
+  row.names = colnames(data_rearranged_C57BL6_entinostat),
+  condition = c("Entinostat", "Entinostat", "Entinostat", "Entinostat", "Entinostat", "Entinostat")
+  )
+```
+
+
+Analyse van maken:
+```{r}
+# design is 1, omdat alles Entinostat is
+dds_NSG_entinostat <- DESeqDataSetFromMatrix(countData = data_rearranged_NSG_entinostat, colData = sampleinfo_NSG_entinostat, design = ~ 1)
+dds_NSG_entinostat <- DESeq(dds_NSG_entinostat)
+res_NSG_entinostat <- results(dds_NSG_entinostat)
+```
+
+```{r}
+dds_C57BL6_entinostat <- DESeqDataSetFromMatrix(countData = data_rearranged_C57BL6_entinostat, colData = sampleinfo_C57BL6_entinostat, design = ~ 1)
+dds_C57BL6_entinostat <- DESeq(dds_C57BL6_entinostat)
+res_C57BL6_entinostat <- results(dds_C57BL6_entinostat)
+```
+
+
+Belangrijke genen eruit halen:
+```{r}
+# !is.na, is nodig omdat R anders zeurt over na waardes
+upregulated_C57BL6_entinostat <- rownames(res_C57BL6_entinostat[!is.na(res_C57BL6_entinostat$log2FoldChange) & res_C57BL6_entinostat$log2FoldChange > 0 & !is.na(res_C57BL6_entinostat$padj) & res_C57BL6_entinostat$padj <= 0.05, ])
+upregulated_NSG_entinostat <- rownames(res_NSG_entinostat[!is.na(res_NSG_entinostat$log2FoldChange) & res_NSG_entinostat$log2FoldChange > 0 & !is.na(res_NSG_entinostat$padj) & res_NSG_entinostat$padj <= 0.05, ])
+
+```
+
+
+Venn diagram maken:
+```{r}
+library(VennDiagram)
+
+venn.plot_entinostat <- draw.pairwise.venn(
+  area1 = length(upregulated_C57BL6_entinostat),
+  area2 = length(upregulated_NSG_entinostat),
+  cross.area = length(intersect(upregulated_C57BL6_entinostat, upregulated_NSG_entinostat)),
+  category = c("C57BL6", "NSG"),
+  fill = c("blue", "red")
+)
+```
+
+Laten zien diagram:
+```{r entinostat, fig.cap="venndiagram van NSG-entinostat tegen C57BL6-Entinostat"}
+grid.newpage()
+grid.draw(venn.plot_entinostat)
+```
+In de venndiagrammen zie je de upregulated genen weergegeven van de Entinostat groepen. De genen die in de overlap staan, zijn significant upregulated in beide muizen, terwijl de genen in de aparte delen van de Venn-cirkel alleen in één van de twee muizen significant upregulated zijn.
+
+## Venndiagram Vehicle:
+Verdelen in C57BL6-muis en NSG-muis voor alleen de entinostat groep (er wordt een genen-count per kolom aangemaakt).
+```{r}
+desired_columns_C57BL6_vehicle <- c("C57BL/6_Vehicle_r1", "C57BL/6_Vehicle_r2", "C57BL/6_Vehicle_r3", "C57BL/6_Vehicle_r4", "C57BL/6_Vehicle_r5", "C57BL/6_Vehicle_r6")
+
+# Rearrange the columns based on the desired order
+data_rearranged_C57BL6_vehicle <- counts[, desired_columns_C57BL6_vehicle]
+```
+
+```{r}
+head(data_rearranged_C57BL6_vehicle)
+```
+
+De NSG-muis:
+```{r}
+desired_columns_NSG_vehicle <- c( "NSG_Vehicle_r1", "NSG_Vehicle_r2", "NSG_Vehicle_r3", "NSG_Vehicle_r4", "NSG_Vehicle_r5")
+
+# Rearrange the columns based on the desired order
+data_rearranged_NSG_vehicle <- counts[, desired_columns_NSG_vehicle]
+```
+
+```{r}
+head(data_rearranged_NSG_vehicle)
+```
+
+
+Condities per muis toevoegen:
+```{r}
+sampleinfo_NSG_vehicle <- data.frame(
+  row.names = colnames(data_rearranged_NSG_vehicle),
+  condition = c("Vehicle", "Vehicle", "Vehicle", "Vehicle", "Vehicle")
+  )
+```
+
+
+```{r}
+sampleinfo_C57BL6_vehicle <- data.frame(
+  row.names = colnames(data_rearranged_C57BL6_vehicle),
+  condition = c("Vehicle", "Vehicle", "Vehicle", "Vehicle", "Vehicle", "Vehicle")
+  )
+```
+
+
+Analyse van maken:
+```{r}
+# design is 1, omdat alles Entinostat is
+dds_NSG_vehicle <- DESeqDataSetFromMatrix(countData = data_rearranged_NSG_vehicle, colData = sampleinfo_NSG_vehicle, design = ~ 1)
+dds_NSG_vehicle <- DESeq(dds_NSG_vehicle)
+res_NSG_vehicle <- results(dds_NSG_vehicle)
+```
+
+```{r}
+dds_C57BL6_vehicle <- DESeqDataSetFromMatrix(countData = data_rearranged_C57BL6_vehicle, colData = sampleinfo_C57BL6_vehicle, design = ~ 1)
+dds_C57BL6_vehicle <- DESeq(dds_C57BL6_vehicle)
+res_C57BL6_vehicle <- results(dds_C57BL6_vehicle)
+```
+
+Belangrijke genen eruit halen:
+```{r}
+# !is.na, is nodig omdat R anders zeurt over na waardes
+upregulated_C57BL6_vehicle <- rownames(res_C57BL6_vehicle[!is.na(res_C57BL6_vehicle$log2FoldChange) & res_C57BL6_vehicle$log2FoldChange > 0 & !is.na(res_C57BL6_vehicle$padj) & res_C57BL6_vehicle$padj <= 0.05, ])
+upregulated_NSG_vehicle <- rownames(res_NSG_vehicle[!is.na(res_NSG_vehicle$log2FoldChange) & res_NSG_vehicle$log2FoldChange > 0 & !is.na(res_NSG_vehicle$padj) & res_NSG_vehicle$padj <= 0.05, ])
+
+```
+
+
+Venn diagram maken:
+```{r}
+library(VennDiagram)
+
+venn.plot_vehicle <- draw.pairwise.venn(
+  area1 = length(upregulated_C57BL6_vehicle),
+  area2 = length(upregulated_NSG_vehicle),
+  cross.area = length(intersect(upregulated_C57BL6_vehicle, upregulated_NSG_vehicle)),
+  category = c("C57BL6", "NSG"),
+  fill = c("blue", "red")
+)
+```
+
+Laten zien diagram:
+```{r vehicle, fig.cap="venndiagram van NSG-Vehicle tegen C57BL6-Vehicle"}
+grid.newpage()
+grid.draw(venn.plot_vehicle)
+```
+In de venndiagrammen zie je de upregulated genen weergegeven van de Vehicle groepen. De genen die in de overlap staan, zijn significant upregulated in beide muizen, terwijl de genen in de aparte delen van de Venn-cirkel alleen in één van de twee muizen significant upregulated zijn.
+
+## Venndiagram Baseline:
+Verdelen in C57BL6-muis en NSG-muis voor alleen de entinostat groep (er wordt een genen-count per kolom aangemaakt).
+```{r}
+desired_columns_C57BL6_baseline <- c("C57BL/6_Baseline_r1", "C57BL/6_Baseline_r2",  "C57BL/6_Baseline_r3", "C57BL/6_Baseline_r4")
+
+# Rearrange the columns based on the desired order
+data_rearranged_C57BL6_baseline <- counts[, desired_columns_C57BL6_baseline]
+```
+
+```{r}
+head(data_rearranged_C57BL6_baseline)
+```
+
+
+De NSG-muis:
+```{r}
+desired_columns_NSG_baseline <- c("NSG_Baseline_r1", "NSG_Baseline_r2", "NSG_Baseline_r3", "NSG_Baseline_r4", "NSG_Baseline_r5")
+
+
+# Rearrange the columns based on the desired order
+data_rearranged_NSG_baseline <- counts[, desired_columns_NSG_baseline]
+```
+
+```{r}
+head(data_rearranged_NSG_baseline)
+```
+
+Condities per muis toevoegen:
+```{r}
+sampleinfo_NSG_baseline <- data.frame(
+  row.names = colnames(data_rearranged_NSG_baseline),
+  condition = c("Baseline", "Baseline", "Baseline", "Baseline", "Baseline")
+  )
+```
+
+
+```{r}
+sampleinfo_C57BL6_baseline <- data.frame(
+  row.names = colnames(data_rearranged_C57BL6_baseline),
+  condition = c("Baseline", "Baseline", "Baseline", "Baseline")
+  )
+```
+
+
+Analyse van maken:
+```{r}
+# design is 1, omdat alles Baseline is
+dds_NSG_baseline <- DESeqDataSetFromMatrix(countData = data_rearranged_NSG_baseline, colData = sampleinfo_NSG_baseline, design = ~ 1)
+dds_NSG_baseline <- DESeq(dds_NSG_baseline)
+res_NSG_baseline <- results(dds_NSG_baseline)
+```
+
+```{r}
+dds_C57BL6_baseline <- DESeqDataSetFromMatrix(countData = data_rearranged_C57BL6_baseline, colData = sampleinfo_C57BL6_baseline, design = ~ 1)
+dds_C57BL6_baseline <- DESeq(dds_C57BL6_baseline)
+res_C57BL6_baseline <- results(dds_C57BL6_baseline)
+```
+
+Belangrijke genen eruit halen:
+```{r}
+# !is.na, is nodig omdat R anders zeurt over na waardes
+upregulated_C57BL6_baseline <- rownames(res_C57BL6_baseline[!is.na(res_C57BL6_baseline$log2FoldChange) & res_C57BL6_baseline$log2FoldChange > 0 & !is.na(res_C57BL6_baseline$padj) & res_C57BL6_baseline$padj <= 0.05, ])
+upregulated_NSG_baseline <- rownames(res_NSG_baseline[!is.na(res_NSG_baseline$log2FoldChange) & res_NSG_baseline$log2FoldChange > 0 & !is.na(res_NSG_baseline$padj) & res_NSG_baseline$padj <= 0.05, ])
+
+```
+
+
+Venn diagram maken:
+```{r}
+library(VennDiagram)
+
+venn.plot_baseline <- draw.pairwise.venn(
+  area1 = length(upregulated_C57BL6_baseline),
+  area2 = length(upregulated_NSG_baseline),
+  cross.area = length(intersect(upregulated_C57BL6_baseline, upregulated_NSG_baseline)),
+  category = c("C57BL6", "NSG"),
+  fill = c("blue", "red")
+)
+```
+
+Laten zien diagram:
+```{r baseline, fig.cap="venndiagram van NSG-Baseline tegen C57BL6-Baseline"}
+grid.newpage()
+grid.draw(venn.plot_baseline)
+```
+In de venndiagrammen zie je de upregulated genen weergegeven van de Baseline groepen. De genen die in de overlap staan, zijn significant upregulated in beide muizen, terwijl de genen in de aparte delen van de Venn-cirkel alleen in één van de twee muizen significant upregulated zijn.
+
+## Vergelijken venndiagrammen:
+Er is de meeste overlap bij vehicle(16739) en baseline(16542)(Entinostat heeft een overlap van 15457). Waarin de vehicle(16739) de meeste overlap heeft.
+
 ! alle code moet in elk logboek staan met referenties
-
-
-! venndiagram van goed immuunsysteem tegen slecht immuunsysteem
-
-
-
-## Venn diagram:
-BRON: https://rpubs.com/Nishapaudel/DESeq2_sex_wise_dfs
-! Hoe gaan we genen ophalen en koppelen aan de twee muizen
-
-
