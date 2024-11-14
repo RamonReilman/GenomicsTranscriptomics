@@ -132,7 +132,7 @@ zullen we nog een keer Trimmomatic moeten gebruiken totdat we tevreden
 zijn.
 
 **BELANGRIJK:**\
-Later erachter gekomen dat ze in de NSG-muizen toch geen menselijke cellen hebben gestopt. Ze hebben enkel een slechter imuumsysteem.
+Later erachter gekomen dat ze in de NSG-muizen toch geen menselijke cellen hebben gestopt. Ze hebben enkel een slechter immuunsysteem.
 
 ## Quality control:
 (woensdag 16 oktober)
@@ -521,7 +521,7 @@ Dit gen helpt om aminozuur-gebonden tRNAs naar het ribosoom te brengen voor de e
 [Bron: Gene-Eef 1 a 1](https://www.ncbi.nlm.nih.gov/gene/1915)\
 
 Conclusie voor onze situatie:\
-In de plot is de NSG-Entinostat en de NSG-Baseline met elkaar vergeleken. De y-waarde is boven de 0, dus de genexpressie is hoger in de eerste situatie. Dat is in dit geval de baseline. Dus de gen-expressie is hoger bij de baseline dan bij de Entinostat (meer eiwitsynthese bij baseline). Dus de Entinostat zorgt er mogelijk voor dat dit gen minder tot expressie komt. Wat zou suggereren dat de Entinostat ervoor zorgt dat de eiwitsynthese verminderd en hiermee de celdeling vertraagd.\
+In de plot is de NSG-Entinostat en de NSG-Baseline met elkaar vergeleken. De y-waarde is boven de 0, dus de gen-expressie is hoger in de eerste situatie. Dat is in dit geval de baseline. Dus de gen-expressie is hoger bij de baseline dan bij de Entinostat (meer eiwitsynthese bij baseline). Dus de Entinostat zorgt er mogelijk voor dat dit gen minder tot expressie komt. Wat zou suggereren dat de Entinostat ervoor zorgt dat de eiwitsynthese verminderd en hiermee de celdeling vertraagd.\
 
 
 (Wat misschien interessant is: De isovorm (alfa 2) wordt geïdentificeerd als een auto-antigeen bij 66% van de patiënten met het Felty-syndroom. (Auto-antigen: antigen van je eigen lichaam dat je lichaam aanvalt, omdat het herkent wordt als vreemd). Dus de isovorm kan ook direct invloed hebben op het immuunsysteem.)
@@ -669,13 +669,13 @@ any(duplicated(colnames(counts)))
 #en zijn de namen goed ingevoerd ?
 all(desired_columns_C57BL6_entinostat %in% colnames(counts))
 ```
-Maar uit de tests komen dat er geen dubbele kolomnamen zijn en dat de namen die ik heb ingevoerd kloppen ?
+Maar uit de tests komen dat er geen dubbele kolom namen zijn en dat de namen die ik heb ingevoerd kloppen ?
 
 
 ```{r tweede_test_dubbele_kolomnamen}
 print(colnames(data_rearranged_C57BL6_entinostat))
 ```
-En de kolomnamen kloppen ook, dus ik neem aan dat het een fout is in het weergeven (Bij alle andere gaat het wel goed).
+En de kolom namen kloppen ook, dus ik neem aan dat het een fout is in het weergeven (Bij alle andere gaat het wel goed).
 
 Bij de NSG gaat het wel goed:
 ```{r}
@@ -752,7 +752,7 @@ grid.draw(venn.plot_entinostat)
 In de venndiagrammen zie je de upregulated genen weergegeven van de Entinostat groepen. De genen die in de overlap staan, zijn significant upregulated in beide muizen, terwijl de genen in de aparte delen van de Venn-cirkel alleen in één van de twee muizen significant upregulated zijn.
 
 ## Venndiagram Vehicle:
-Verdelen in C57BL6-muis en NSG-muis voor alleen de entinostat groep (er wordt een genen-count per kolom aangemaakt).
+Verdelen in C57BL6-muis en NSG-muis voor alleen de vehicle groep (er wordt een genen-count per kolom aangemaakt).
 ```{r}
 desired_columns_C57BL6_vehicle <- c("C57BL/6_Vehicle_r1", "C57BL/6_Vehicle_r2", "C57BL/6_Vehicle_r3", "C57BL/6_Vehicle_r4", "C57BL/6_Vehicle_r5", "C57BL/6_Vehicle_r6")
 
@@ -838,7 +838,7 @@ grid.draw(venn.plot_vehicle)
 In de venndiagrammen zie je de upregulated genen weergegeven van de Vehicle groepen. De genen die in de overlap staan, zijn significant upregulated in beide muizen, terwijl de genen in de aparte delen van de Venn-cirkel alleen in één van de twee muizen significant upregulated zijn.
 
 ## Venndiagram Baseline:
-Verdelen in C57BL6-muis en NSG-muis voor alleen de entinostat groep (er wordt een genen-count per kolom aangemaakt).
+Verdelen in C57BL6-muis en NSG-muis voor alleen de baseline groep (er wordt een genen-count per kolom aangemaakt).
 ```{r}
 desired_columns_C57BL6_baseline <- c("C57BL/6_Baseline_r1", "C57BL/6_Baseline_r2",  "C57BL/6_Baseline_r3", "C57BL/6_Baseline_r4")
 
@@ -941,13 +941,13 @@ EnhancedVolcano(resLFC_subset,
                 labSize = 2)
 ```
 X-as:\
-Log2 fold change laat zien hoe groot het verschil van genexpressie is tussen de baseline en entinostat.\
-Alles aan de rechterkant: de genexpressie is hoger bij baseline dan bij entinostat.\
-Alles aan de linkerkant: de genexpressie is hoger bij de entinostat dan bij baseline.\
+Log2 fold change laat zien hoe groot het verschil van gen-expressie is tussen de baseline en entinostat.\
+Alles aan de rechterkant: de gen-expressie is hoger bij baseline dan bij entinostat.\
+Alles aan de linkerkant: de gen-expressie is hoger bij de entinostat dan bij baseline.\
 Y-as:\
--Log10(p-waarde) laat zien hoe hoog de significantie is in het verschil tussen de genexpressie (hoe hoger hoe meer significantie).
+-Log10(p-waarde) laat zien hoe hoog de significantie is in het verschil tussen de gen-expressie (hoe hoger hoe meer significantie).
 
 Het lijkt me dus interessant om te kijken naar de linkerkant. Want ik wil kijken welke genen entinostat mogelijk tot een hogere expressie brengt. (Baseline is totdat de tumor een bepaalde grootte heeft. Entinostat is als na die grootte entinostat is gegeven).
-De meest interresante (hoog expressie verschil en hoge significantie) is gene-Gm46987, maar daar kan ik niet veel over vinden. Welke ook interresant is, is gene-Dcstamp. Dit gen reguleert Dendritische cellen(soort witte bloedcellen). En zorgt er dus voor dat het immuunsysteem weet welke cellen deze moet aanvallen (en ook zichzelf niet aanvalt). Dat de expressie van dit gen hoger is nadat de tumor groter is en behandeld wordt met entinostat is dus een goed teken. Het kan dus betekenen dat entinostat ervoor zorgt dat de gen-expressie van dit gen hoger wordt. Maar het kan ook betekenen dat de tumor eerst nog te klein was(bij de baseline) om de gen-expressie van dit gen te verhogen. Je zou hiervoor eigenlijk naar het verschil van de gen-expressie moeten kijken van de vehicle(niet behandeld na bepaalde grootte tumor) en de entinostat. Dan kan je beter onderzoeken of de expressie van dit gen hoger wordt door de entinostat of meer door de groeiende tumor.
+De meest interessante (hoog expressie verschil en hoge significantie) is gene-Gm46987, maar daar kan ik niet veel over vinden. Welke ook interessant is, is gene-Dcstamp. Dit gen reguleert Dendritische cellen(soort witte bloedcellen). En zorgt er dus voor dat het immuunsysteem weet welke cellen deze moet aanvallen (en ook zichzelf niet aanvalt). Dat de expressie van dit gen hoger is nadat de tumor groter is en behandeld wordt met entinostat is dus een goed teken. Het kan dus betekenen dat entinostat ervoor zorgt dat de gen-expressie van dit gen hoger wordt. Maar het kan ook betekenen dat de tumor eerst nog te klein was(bij de baseline) om de gen-expressie van dit gen te verhogen. Je zou hiervoor eigenlijk naar het verschil van de gen-expressie moeten kijken van de vehicle(niet behandeld na bepaalde grootte tumor) en de entinostat. Dan kan je beter onderzoeken of de expressie van dit gen hoger wordt door de entinostat of meer door de groeiende tumor. Want als dit zo is, dan kan entinostat een goede impact hebben als behandeling op de tumor.
 
 [Bron gene-Dcstamp](https://www.uniprot.org/uniprotkb/Q9H295/entry)

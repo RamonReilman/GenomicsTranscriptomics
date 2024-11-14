@@ -481,7 +481,7 @@ zullen we nog een keer Trimmomatic moeten gebruiken totdat we tevreden
 zijn.</p>
 <p><strong>BELANGRIJK:</strong><br />
 Later erachter gekomen dat ze in de NSG-muizen toch geen menselijke
-cellen hebben gestopt. Ze hebben enkel een slechter imuumsysteem.</p>
+cellen hebben gestopt. Ze hebben enkel een slechter immuunsysteem.</p>
 </div>
 <div id="quality-control" class="section level2">
 <h2>Quality control:</h2>
@@ -1222,7 +1222,7 @@ aangemaakt kunnen worden (zoals witte bloedcellen).<br />
 </p>
 <p>Conclusie voor onze situatie:<br />
 In de plot is de NSG-Entinostat en de NSG-Baseline met elkaar
-vergeleken. De y-waarde is boven de 0, dus de genexpressie is hoger in
+vergeleken. De y-waarde is boven de 0, dus de gen-expressie is hoger in
 de eerste situatie. Dat is in dit geval de baseline. Dus de
 gen-expressie is hoger bij de baseline dan bij de Entinostat (meer
 eiwitsynthese bij baseline). Dus de Entinostat zorgt er mogelijk voor
@@ -1550,12 +1550,12 @@ any(duplicated(colnames(counts)))</code></pre>
 <pre class="r"><code>#en zijn de namen goed ingevoerd ?
 all(desired_columns_C57BL6_entinostat %in% colnames(counts))</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<p>Maar uit de tests komen dat er geen dubbele kolomnamen zijn en dat de
-namen die ik heb ingevoerd kloppen ?</p>
+<p>Maar uit de tests komen dat er geen dubbele kolom namen zijn en dat
+de namen die ik heb ingevoerd kloppen ?</p>
 <pre class="r"><code>print(colnames(data_rearranged_C57BL6_entinostat))</code></pre>
 <pre><code>## [1] &quot;C57BL/6_Entinostat_r1&quot; &quot;C57BL/6_Entinostat_r2&quot; &quot;C57BL/6_Entinostat_r3&quot;
 ## [4] &quot;C57BL/6_Entinostat_r4&quot; &quot;C57BL/6_Entinostat_r5&quot; &quot;C57BL/6_Entinostat_r6&quot;</code></pre>
-<p>En de kolomnamen kloppen ook, dus ik neem aan dat het een fout is in
+<p>En de kolom namen kloppen ook, dus ik neem aan dat het een fout is in
 het weergeven (Bij alle andere gaat het wel goed).</p>
 <p>Bij de NSG gaat het wel goed:</p>
 <pre class="r"><code>desired_columns_NSG_entinostat &lt;- c(&quot;NSG_Entinostat_r1&quot;, &quot;NSG_Entinostat_r2&quot;, &quot;NSG_Entinostat_r3&quot;, &quot;NSG_Entinostat_r4&quot;, &quot;NSG_Entinostat_r5&quot;)
@@ -1643,8 +1643,8 @@ zijn.</p>
 </div>
 <div id="venndiagram-vehicle" class="section level2">
 <h2>Venndiagram Vehicle:</h2>
-<p>Verdelen in C57BL6-muis en NSG-muis voor alleen de entinostat groep
-(er wordt een genen-count per kolom aangemaakt).</p>
+<p>Verdelen in C57BL6-muis en NSG-muis voor alleen de vehicle groep (er
+wordt een genen-count per kolom aangemaakt).</p>
 <pre class="r"><code>desired_columns_C57BL6_vehicle &lt;- c(&quot;C57BL/6_Vehicle_r1&quot;, &quot;C57BL/6_Vehicle_r2&quot;, &quot;C57BL/6_Vehicle_r3&quot;, &quot;C57BL/6_Vehicle_r4&quot;, &quot;C57BL/6_Vehicle_r5&quot;, &quot;C57BL/6_Vehicle_r6&quot;)
 
 # Rearrange the columns based on the desired order
@@ -1749,8 +1749,8 @@ zijn.</p>
 </div>
 <div id="venndiagram-baseline" class="section level2">
 <h2>Venndiagram Baseline:</h2>
-<p>Verdelen in C57BL6-muis en NSG-muis voor alleen de entinostat groep
-(er wordt een genen-count per kolom aangemaakt).</p>
+<p>Verdelen in C57BL6-muis en NSG-muis voor alleen de baseline groep (er
+wordt een genen-count per kolom aangemaakt).</p>
 <pre class="r"><code>desired_columns_C57BL6_baseline &lt;- c(&quot;C57BL/6_Baseline_r1&quot;, &quot;C57BL/6_Baseline_r2&quot;,  &quot;C57BL/6_Baseline_r3&quot;, &quot;C57BL/6_Baseline_r4&quot;)
 
 # Rearrange the columns based on the desired order
@@ -1876,22 +1876,22 @@ Volcano plot van Baseline en entinostat
 </p>
 </div>
 <p>X-as:<br />
-Log2 fold change laat zien hoe groot het verschil van genexpressie is
+Log2 fold change laat zien hoe groot het verschil van gen-expressie is
 tussen de baseline en entinostat.<br />
-Alles aan de rechterkant: de genexpressie is hoger bij baseline dan bij
+Alles aan de rechterkant: de gen-expressie is hoger bij baseline dan bij
 entinostat.<br />
-Alles aan de linkerkant: de genexpressie is hoger bij de entinostat dan
+Alles aan de linkerkant: de gen-expressie is hoger bij de entinostat dan
 bij baseline.<br />
 Y-as:<br />
 -Log10(p-waarde) laat zien hoe hoog de significantie is in het verschil
-tussen de genexpressie (hoe hoger hoe meer significantie).</p>
+tussen de gen-expressie (hoe hoger hoe meer significantie).</p>
 <p>Het lijkt me dus interessant om te kijken naar de linkerkant. Want ik
 wil kijken welke genen entinostat mogelijk tot een hogere expressie
 brengt. (Baseline is totdat de tumor een bepaalde grootte heeft.
 Entinostat is als na die grootte entinostat is gegeven). De meest
-interresante (hoog expressie verschil en hoge significantie) is
+interessante (hoog expressie verschil en hoge significantie) is
 gene-Gm46987, maar daar kan ik niet veel over vinden. Welke ook
-interresant is, is gene-Dcstamp. Dit gen reguleert Dendritische
+interessant is, is gene-Dcstamp. Dit gen reguleert Dendritische
 cellen(soort witte bloedcellen). En zorgt er dus voor dat het
 immuunsysteem weet welke cellen deze moet aanvallen (en ook zichzelf
 niet aanvalt). Dat de expressie van dit gen hoger is nadat de tumor
@@ -1903,7 +1903,8 @@ verhogen. Je zou hiervoor eigenlijk naar het verschil van de
 gen-expressie moeten kijken van de vehicle(niet behandeld na bepaalde
 grootte tumor) en de entinostat. Dan kan je beter onderzoeken of de
 expressie van dit gen hoger wordt door de entinostat of meer door de
-groeiende tumor.</p>
+groeiende tumor. Want als dit zo is, dan kan entinostat een goede impact
+hebben als behandeling op de tumor.</p>
 <p><a href="https://www.uniprot.org/uniprotkb/Q9H295/entry">Bron
 gene-Dcstamp</a></p>
 </div>
