@@ -3,57 +3,106 @@ title: "Logbook Jasper Jonker"
 author: "Jasper Jonker"
 date: "2024-09-10"
 output: html_document
+editor_options: 
+  markdown: 
+    wrap: sentence
 ---
+
+BiocManager::install("trackViewer")
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(VariantAnnotation)
+library(BiocManager)
+library(GenomicRanges)
+library(dplyr)
+if (!requireNamespace("trackViewer", quietly = TRUE)) { # Only needed if BiocManager is not installed
+  BiocManager::install("trackViewer")
+}
+library(trackViewer)
 ```
 
-## Logboek Jasper Jonker
-Dit is het Logboek van Jasper Jonker voor het vak 2.1.2 Genomics & Transcriptomics. Met dit vak gaan we een paper opnieuw na doen of een andere onderzoeksvraag beantwoorden met de data die gegeven is bij de paper.
+# Logboek Jasper Jonker
 
-## 09-09 
+Dit is het Logboek van Jasper Jonker voor het vak 2.1.2 Genomics & Transcriptomics.
+Met dit vak gaan we een paper opnieuw na doen of een andere onderzoeksvraag beantwoorden met de data die gegeven is bij de paper.
 
-We starten het onderzoek. We moeten eerst een paper vinden of verslag met genoeg meetwaarde heeft met meerde meetwaarde onder de zelfde omstandigheden. We doen het onderzoek met vier mensen dus hebben besloten om ieder 1 uit te kiezen. Om zeker te weten dat er 1 tussen zit die vol doet aan alle eizen die gesteld worden en we van alle onderzoeken kunnen verkleinen naar maar vier. Daar uit is het voor ons dan makkelijker uitkiezen.
+Als er wordt gezegd dat het in een ander logboek staat moet je gaan kijken op de Github pagina van ons
 
-## 10-09 
+## 09-09
 
-Ik heb er gekozen voor het volgende onderzoek https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE153650 . Het is een onderzoek dat gaat over het bestrijden van blaaskanker met behulp van specifiek soort eiwitten. Omdat er hedendaags nog heel veel mensen dood aan gaan en ook de behandeling die ze nu gebruiken, dus chemotherapie, niet altijd even goed aan slaat. Dit onderzoek wordt eerst op muizen getest. Nu nog wachten op goedkeuring van de docenten. 
+We starten het onderzoek.
+We moeten eerst een paper vinden of verslag met genoeg meetwaarde heeft met meerde meetwaarde onder de zelfde omstandigheden.
+We doen het onderzoek met vier mensen dus hebben besloten om ieder 1 uit te kiezen.
+Om zeker te weten dat er 1 tussen zit die vol doet aan alle eizen die gesteld worden en we van alle onderzoeken kunnen verkleinen naar maar vier.
+Daar uit is het voor ons dan makkelijker uitkiezen.
+
+## 10-09
+
+Ik heb er gekozen voor het volgende onderzoek <https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE153650> .
+Het is een onderzoek dat gaat over het bestrijden van blaaskanker met behulp van specifiek soort eiwitten.
+Omdat er hedendaags nog heel veel mensen dood aan gaan en ook de behandeling die ze nu gebruiken, dus chemotherapie, niet altijd even goed aan slaat.
+Dit onderzoek wordt eerst op muizen getest.
+Nu nog wachten op goedkeuring van de docenten.
 
 ## 11-09
 
-Na goedkeuring is mijn tekst gekozen om mee verder te gaan in dit project. Nu gaan we bezig met het plan van aanpak. IK ga bezig met de workflow.
+Na goedkeuring is mijn tekst gekozen om mee verder te gaan in dit project.
+Nu gaan we bezig met het plan van aanpak.
+IK ga bezig met de workflow.
 
 ## 13-09 & 14-09
 
-Bezig met de worklfow en gekeken wat we uiteindelijk gaan doen. We hebben besloten om de het onderzoek na te bootsen maar ook een beetje te verbreden. We gaan ook kijken wat de mutatie van de kanker en wat voor gevolg het heeft op biologische processen verder in het lichaam. Dat lijkt ons leuker om te doen dan het onderzoek precies na te doen.
+Bezig met de worklfow en gekeken wat we uiteindelijk gaan doen.
+We hebben besloten om de het onderzoek na te bootsen maar ook een beetje te verbreden.
+We gaan ook kijken wat de mutatie van de kanker en wat voor gevolg het heeft op biologische processen verder in het lichaam.
+Dat lijkt ons leuker om te doen dan het onderzoek precies na te doen.
 
 ## 16-09
 
-Het plan van aanpak gepresenteerd. We hebben ook gelijk gekozen om met het nieuwste muizen gen te gaan vergelijken. Dit omdat dat gen het nieuwst is en ook het meest van bekentst is. Misschien komen er hier door ook op een andere conclusie dan als we het met het oude gen gingen vergelijken.  We hebben ook een taak verdeling gemaakt. Ik ga bezig met bwa omdat het mij iets moeilijks lijkt en ik mezelf wil uitdagen. BWA wordt ook veel gebruikt in de bioinformatica  dus is zoiezo handig om te weten hoe het werkt. BWA is een alining tool tegen over een refence genoom. Wat belankrijk is in veel onderzoeken omdat je dan kan weten of je data ook wel overeen komt met het organisme waar je onderzoek van doet. 
+Het plan van aanpak gepresenteerd.
+We hebben ook gelijk gekozen om met het nieuwste muizen gen te gaan vergelijken.
+Dit omdat dat gen het nieuwst is en ook het meest van bekentst is.
+Misschien komen er hier door ook op een andere conclusie dan als we het met het oude gen gingen vergelijken.
+We hebben ook een taak verdeling gemaakt.
+Ik ga bezig met bwa omdat het mij iets moeilijks lijkt en ik mezelf wil uitdagen.
+BWA wordt ook veel gebruikt in de bioinformatica dus is zoiezo handig om te weten hoe het werkt.
+BWA is een alining tool tegen over een refence genoom.
+Wat belankrijk is in veel onderzoeken omdat je dan kan weten of je data ook wel overeen komt met het organisme waar je onderzoek van doet.
 
 ## 17-09
 
-Ik ga vandaag eerst testdata maken in een oefen Folder die later weer wordt verwijderd. We maken test data omdat die data kleiner is dan de normale data en daarom makkelijker te gebruiken is in onze tools zodat het niet te lang duurt. We hebben maar een bepaalde tijd en als we telkens moeten wachten op dat de tools klaar zijn en het fout kan gaan op het laatste moment fout kan gaan gooi je veel belangrijke tijd over. Dit doen we even allemaal en doen het met 10000 reads omdat het ons groot genoeg lijkt. We doen het allemaal omdat het in andere onderzoeken ook gebruikt kunnen worden.
+Ik ga vandaag eerst testdata maken in een oefen Folder die later weer wordt verwijderd.
+We maken test data omdat die data kleiner is dan de normale data en daarom makkelijker te gebruiken is in onze tools zodat het niet te lang duurt.
+We hebben maar een bepaalde tijd en als we telkens moeten wachten op dat de tools klaar zijn en het fout kan gaan op het laatste moment fout kan gaan gooi je veel belangrijke tijd over.
+Dit doen we even allemaal en doen het met 10000 reads omdat het ons groot genoeg lijkt.
+We doen het allemaal omdat het in andere onderzoeken ook gebruikt kunnen worden.
+
 ```{bash, eval=FALSE}
 find /students/2024-2025/Thema05/BlaasKanker/fastq/ -name "*.fastq" | \
     parallel "seqkit sample -p 0.1 {} | seqkit head -n 10000 > /students/2024-2025/Thema05/BlaasKanker/oefenengroep/testdataJasper/{/}"
 ```
 
-Hier ga ik ook een Fastqc maken van de oefendata zodat we dat ook allemaal even weten. Want later moeten we Fastqc bestanden maken van de data om te kijken of het na het trimmen de data naar wens is met niet te veel duplicaten bijvoorbeeld en of de data wel van goede kwaliteit is.
+Hier ga ik ook een Fastqc maken van de oefendata zodat we dat ook allemaal even weten.
+Want later moeten we Fastqc bestanden maken van de data om te kijken of het na het trimmen de data naar wens is met niet te veel duplicaten bijvoorbeeld en of de data wel van goede kwaliteit is.
+
 ```{bash, eval=FALSE}
 fastqc /students/2024-2025/Thema05/BlaasKanker/oefenengroep/testdataJasper/* \
     -o /students/2024-2025/Thema05/BlaasKanker/oefenengroep/FastqcJasper/
 ```
+
 Dit doe we ook voor multiqc.
+
 ```{bash, eval=FALSE}
 multiqc /students/2024-2025/Thema05/BlaasKanker/oefenengroep/FastqcJasper/* -o /students/2024-2025/Thema05/BlaasKanker/oefenengroep/multiqcJasper/
 ```
 
-## 18 -09 
+## 18 -09
 
-Vandaag ga ik bezig met BWA terwijl andere bezig zijn met het trimmen hier door werken we alvast een beetje voor uit en kunnen we, als we klaar zijn met trimmen kunnen we in 1 keer door. Ik doe het eerst simpel en in een testingtools map zodat het duidelijk is voor iedreen die het dan leest en ik het ook goed kan uitleggen.
-``` {bash, eval= FALSE}
+Vandaag ga ik bezig met BWA terwijl andere bezig zijn met het trimmen hier door werken we alvast een beetje voor uit en kunnen we, als we klaar zijn met trimmen kunnen we in 1 keer door.
+Ik doe het eerst simpel en in een testingtools map zodat het duidelijk is voor iedreen die het dan leest en ik het ook goed kan uitleggen.
+
+```{bash, eval= FALSE}
 # hier maken er de van de refence genome een index file zodat de tool sneller gaat. 
 bwa index /students/2024-2025/Thema05/BlaasKanker/realreferenceGenome/ncbi_dataset/data/GCF_000001635.27/GCF_000001635.27_GRCm39_genomic.fna
 # hier strten we het mappen en noemen het output.sam op de teastdata 
@@ -65,13 +114,20 @@ samtools sort -o output.sorted.bam outputtest.bam
 
 samtools index output.sorted.bam
 ```
-Voor deze tool te begrijpen heb ik de volgende turbotaal gebruikt om  het te begrijpen en uiteindelijk te kunnen toe passen op onze eige data : https://www.youtube.com/watch?v=1wcFavYt6uU 
- 
-## 20-09 
-Bezig geweest met trimmiotic, er is na het trimmen kwaliteit om laag gegaan en dat is niet logisch. Onze ongetrimde data was zo ie zo al super goed dus we hebben ook gelezen of ze het al getrimmed hebben geüpload maar we kunnen er niks over vinden. Dus we gaan eerst nog verder kijken naar wat handig is om te doen. Kijken of we het op een bepaalde manierwel kunnen trimmen of we het op de ongetrimmde data gewoon verder gaan en dan kijken het het wel gaat.
+
+Voor deze tool te begrijpen heb ik de volgende turbotaal gebruikt om het te begrijpen en uiteindelijk te kunnen toe passen op onze eige data : <https://www.youtube.com/watch?v=1wcFavYt6uU>
+
+## 20-09
+
+Bezig geweest met trimmiotic, er is na het trimmen kwaliteit om laag gegaan en dat is niet logisch.
+Onze ongetrimde data was zo ie zo al super goed dus we hebben ook gelezen of ze het al getrimmed hebben geüpload maar we kunnen er niks over vinden.
+Dus we gaan eerst nog verder kijken naar wat handig is om te doen.
+Kijken of we het op een bepaalde manierwel kunnen trimmen of we het op de ongetrimmde data gewoon verder gaan en dan kijken het het wel gaat.
 
 ## 22-09
+
 Ik ga van daag even puzzelen met trimomatic de onderste code heb ik van iris.
+
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
   parallel 'TrimmomaticPE -threads 4' \
@@ -85,13 +141,20 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
                   'SLIDINGWINDOW:4:20' \
                   'MINLEN:40'
 ```
-Mijn terminal doet raar. Mijn webpagina sluit telkens af en is super sloom dus het gaat niet helemaal lekker. Ik ga eerst wel veder met lezen wat we allemaal kunnen doen met trimmen zodat onze data wel goed er uit komt
 
-We kunnen het proberen met traling toe te passen. Dit verwijderd de laatste paar basen verwijderd worden totdat een totdat er een kwaliteit gevonden is die gewenst is.
-Hetzelfde geld voor leading. Maar dat is dan bij de eerste paar basen met te lage kwaliteit. 
-Min len kunnen we ook gebruiken. Die halen de sequencies er uit die te klein zijn bij een bepaalde lengte.
+Mijn terminal doet raar.
+Mijn webpagina sluit telkens af en is super sloom dus het gaat niet helemaal lekker.
+Ik ga eerst wel veder met lezen wat we allemaal kunnen doen met trimmen zodat onze data wel goed er uit komt
+
+We kunnen het proberen met traling toe te passen.
+Dit verwijderd de laatste paar basen verwijderd worden totdat een totdat er een kwaliteit gevonden is die gewenst is.
+Hetzelfde geld voor leading.
+Maar dat is dan bij de eerste paar basen met te lage kwaliteit.
+Min len kunnen we ook gebruiken.
+Die halen de sequencies er uit die te klein zijn bij een bepaalde lengte.
 
 Ik ga het eerst probren met traling
+
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
   parallel 'TrimmomaticPE -threads 4' \
@@ -110,12 +173,17 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 Mijn laptop doet vervelend ik probeer dat eerst even op te lossen en ga anders later nog verder om te kijken wat betere setting zijn om toe te passen als het nodig is
 
 ## 23-09
-bwa werkt nu echt op de test data, maar moet even wachten op het trimmen van de data want we zitten te twijfelen wat we moeten gaan trimmen. Dit gaan we even met de docent over hebben.
-In de tussen tijd gaan we verder met Strelka. Dit is een tool die variantie kan vinden in de mapping. Hier mee kunnen we kijken waar de mutaties zitten in het gen en kunnen we later kijken wat voor invloed het heeft op de eiwitten later in het biologisch proces.
 
-Hier gaan we bezig op de echte data die nog niet getrimde is zodat we zeker weten dat het het doet als het op de getrimde data gaan doen. Hier staat als het ware het zelde als op dag 18-09 maar dan met het pad waar alles is en waar alles moet staan  en alles parallel.      
+bwa werkt nu echt op de test data, maar moet even wachten op het trimmen van de data want we zitten te twijfelen wat we moeten gaan trimmen.
+Dit gaan we even met de docent over hebben.
+In de tussen tijd gaan we verder met Strelka.
+Dit is een tool die variantie kan vinden in de mapping.
+Hier mee kunnen we kijken waar de mutaties zitten in het gen en kunnen we later kijken wat voor invloed het heeft op de eiwitten later in het biologisch proces.
 
-``` {bash, eval=FALSE}
+Hier gaan we bezig op de echte data die nog niet getrimde is zodat we zeker weten dat het het doet als het op de getrimde data gaan doen.
+Hier staat als het ware het zelde als op dag 18-09 maar dan met het pad waar alles is en waar alles moet staan en alles parallel.
+
+```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
     parallel 'bwa mem -t 8 /students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/index/GCF_000001635.27_GRCm39_genomic.fna /students/2024-2025/Thema05/BlaasKanker/outputs/fastq/{}_1.fastq /students/2024-2025/Thema05/BlaasKanker/outputs/fastq/{}_2.fastq > /students/2024-2025/Thema05/BlaasKanker/testingtools/BWA_test_vol/output/{}_aln.sam' | \
     'samtools view -b /students/2024-2025/Thema05/BlaasKanker/testingtools/BWA_test_vol/output/{}.sam > {}.bam'
@@ -130,17 +198,21 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
     parallel 'samtools sort -o /students/2024-2025/Thema05/BlaasKanker/testingtools/BWA_test_vol/output/aln_sorted/{}_sorted.bam /students/2024-2025/Thema05/BlaasKanker/testingtools/BWA_test_vol/output/aln_bam/{}.bam'
 ```
+
 Door problemen met de laptop ga ik morgen verder met de laatste stap
 
 ## 24-09
-``` {bash, eval=FALSE}
+
+```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
     parallel 'samtools index -M /students/2024-2025/Thema05/BlaasKanker/testingtools/BWA_test_vol/output/aln_sorted/{}_sorted.bam'
 ```
-Het werkt zoals het zou moeten en nu even wachten op het trimmen. Hier hebben we no twijfels over wat we moeten doen met de duplicaten en gaan we dan op
-25-09 gaan we het mappen op de echte getrimmde data. 
+
+Het werkt zoals het zou moeten en nu even wachten op het trimmen.
+Hier hebben we no twijfels over wat we moeten doen met de duplicaten en gaan we dan op 25-09 gaan we het mappen op de echte getrimmde data.
 
 Nu ga ik verder met trimomatic dus kopieeer het van boven weer.Deze is de basic dan en evena aangepast zodat ik de rest niet in de weg zit.
+
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
   parallel 'TrimmomaticPE -threads 8' \
@@ -161,13 +233,15 @@ fastqc /students/2024-2025/Thema05/BlaasKanker/testingtools/trim_jasper/paired/*
     -o /students/2024-2025/Thema05/BlaasKanker/testingtools/trim_jasper/FASTqc/
 ```
 
-IK maak ook hier eeb multiqc
+IK maak ook hier een multiqc
+
 ```{bash, eval=FALSE}
 multiqc /students/2024-2025/Thema05/BlaasKanker/testingtools/trim_jasper/FASTqc/* -o /students/2024-2025/Thema05/BlaasKanker/testingtools/trim_jasper/MUL/
 ```
 
 Het is verkeerd gegaan alles is leeg dus ik doe het nu opnieuw.
 Ik had een spelfout gemaakt in de trimomatic dus dat is gefikst
+
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
   parallel 'TrimmomaticPE -threads 8' \
@@ -182,11 +256,15 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 ```
 
 ## 25-09
-Vandaag gaan we mappen op de echte data. we hebben er voor gekozen om uiteindelijk niet te trimmen maar de duplicaten er uit te halen door bwa of beter te laten aan vinken. We hebben besloten om niet te trimmen omdat de data goed genoeg is voor dat we trimmen en na het trimmen de kwaliteit achter uit gaat en er gaat best veel data weg die we nog kunnen gebruiken.
 
-Uit Ramons github heb ik -M -R '@RG\\tID:{}\\tSM:{}\\tPL:illumina\\tLB:lib1 gehaald. Dit zorgt ervoor dat bwa de duplicaten high light als het ware en dat is nodig voor picard om het te doen
+Vandaag gaan we mappen op de echte data.
+we hebben er voor gekozen om uiteindelijk niet te trimmen maar de duplicaten er uit te halen door bwa of beter te laten aan vinken.
+We hebben besloten om niet te trimmen omdat de data goed genoeg is voor dat we trimmen en na het trimmen de kwaliteit achter uit gaat en er gaat best veel data weg die we nog kunnen gebruiken.
 
-``` {bash, eval=FALSE}
+Uit Ramons github heb ik -M -R '@RG\\tID:{}\\tSM:{}\\tPL:illumina\\tLB:lib1 gehaald.
+Dit zorgt ervoor dat bwa de duplicaten high light als het ware en dat is nodig voor pidcard om het te doen
+
+```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
   parallel -j 20 "bwa mem -t 15 -M -R '@RG\\tID:{}\\tSM:{}\\tPL:illumina\\tLB:lib1' \
     /students/2024-2025/Thema05/BlaasKanker/outputs/bwa_aln/index/GCF_000001635.27_GRCm39_genomic.fna \
@@ -195,10 +273,11 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 ```
 
 ## 26-09
-Na controle van de data ga ik vandaag mappen.
-Ik was de laaste stappen vergeten toe te voegen maar het werkt nu als het goed is
 
-``` {bash, eval=FALSE}
+Na controle van de data ga ik vandaag mappen.
+Ik was de laatste stappen vergeten toe te voegen maar het werkt nu als het goed is
+
+```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
   parallel "samtools view -b /students/2024-2025/Thema05/BlaasKanker/outputs/bwa_aln/mapping_output/{}.sam > {}.bam"\
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
@@ -207,7 +286,9 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
   parallel -j 6 "samtools index /students/2024-2025/Thema05/BlaasKanker/outputs/bwa_aln/mapping_output/sorted/{}_sorted.bam"
 ```
 
-oefen data maken voor iris voor twee bestanden. Zodat zij verder kan werken en het niet perse op echte data het moet proberen
+oefen data maken voor iris voor twee bestanden.
+Zodat zij verder kan werken en het niet perse op echte data het moet proberen
+
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
   parallel -j 20 "bwa mem -t 15 -M -R '@RG\\tID:{}\\tSM:{}\\tPL:illumina\\tLB:lib1' \
@@ -220,10 +301,16 @@ samtools sort -o /students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/
 
 samtools index /students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/outputtest.sorted.bam
 ```
-## 27-09 
-ik heb de data nu goed gemaakt was blijkbaar niet geod gegaan waarschijnlijk door de slechte servers. Want ik kreeg geen fout meldingen of wat dan ook  
 
-Ik ga nu weer nieuwe testdata maken van alle testdata. zodat iris er mee bezig kan. Die heeft mijn data nodig om haar tool te kunnen gebruiken.
+## 27-09
+
+ik heb de data nu goed gemaakt was blijkbaar niet goed gegaan waarschijnlijk door de slechte servers.
+Want ik kreeg geen fout meldingen of wat dan ook
+
+Ik ga nu weer nieuwe testdata maken van alle testdata.
+zodat iris er mee bezig kan.
+Die heeft mijn data nodig om haar tool te kunnen gebruiken.
+
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
   parallel -j 20 "bwa mem -t 20 -M -R '@RG\\tID:{}\\tSM:{}\\tPL:illumina\\tLB:lib1' \
@@ -237,18 +324,85 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
   parallel -j 6 "samtools index /students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/output_sorted_bam/{}_sorted.bam"
 ```
+
 Dat is gelukt dus we kunnen weer verder.
 
-## 04-10
-Ik ga GSEA bekijken en downloaden. GSEA is een tool waar je mee kan kijken of vooraf gedefinieerde set genen significant, overeenstemde verschillen heeft onder 2 verschillende biologische processen. Hier mee kunnen we kijken wat voor invloed de mutaties hebben. We gaan het nu nog niet gebruiken. Dat komt omdat we nu nog niet weten wat de bedoeling is met de eind bestanden die we hebben gemaakt. 
+Iris heeft picard gebruikt om de duplicaten te verwijderen.
+Ze heeft het eerst op de testdata gedaan en later die dag op de echte data.
+Dit is te lezen in het logboek van Iris
 
-Nu ga ik dus bezig met vcfstats. Dit om de vcf bestanden te laten zien.
+Hier is het stukje code wat gebruikt is voor picard
+
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+  parallel java -jar picard.jar MarkDuplicates \
+                '-I /students/2024-2025/Thema05/BlaasKanker/outputs/bwa_aln/mapping_output/sorted/{}_sorted.bam' \
+                '-O /students/2024-2025/Thema05/BlaasKanker/outputs/picard_dub/marked_duplicates/{}.marked_duplicates.bam' \
+                '-M /students/2024-2025/Thema05/BlaasKanker/outputs/picard_dub/metrics/{}.marked_dup_metrics.txt' \
+                '-REMOVE_DUPLICATES true' \
+                '-READ_NAME_REGEX null'
+```
+
+## 30-10
+
+Ramon is bezig geweest met snifeff en kan je daar verder lezen in Ramon logboek.
+Daar heb ik bij geholpen maar,
+
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+    parallel "lofreq call \
+    -f /students/2024-2025/Thema05/BlaasKanker/outputs/bwa_aln/index/GCF_000001635.27_GRCm39_genomic.fna \
+    -o /students/2024-2025/Thema05/BlaasKanker/testingtools/test_variant_calling/{}_variants.vcf \
+    /students/2024-2025/Thema05/BlaasKanker/testingtools/picard_test/poging_1/{}.marked_duplicates.bam"
+```
+
+## 01-10
+
+lofreq uitgevoerd dat kan je allemaal lezen in het Logboek van Ramon.
+
+Hier is de code die hij daar heeft gebruikt.
+
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+    parallel "lofreq call \
+    -f /students/2024-2025/Thema05/BlaasKanker/outputs/bwa_aln/index/GCF_000001635.27_GRCm39_genomic.fna \
+    -o /students/2024-2025/Thema05/BlaasKanker/outputs/variant_calling_unfiltered/{}_variants.vcf \
+    --verbose \
+    /students/2024-2025/Thema05/BlaasKanker/outputs/picard_dub/marked_duplicates/{}.marked_duplicates.bam"
+```
+
+## 03-10
+
+snpeff is uitgevoerd en is te lezen in het logbook van Ramon.
+
+hier is de code
+
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+    parallel -j 6 \
+    "java -Xmx8g -jar /students/2024-2025/Thema05/BlaasKanker/tools/snpeff/snpEff/snpEff.jar ann -v -stats \
+    /students/2024-2025/Thema05/BlaasKanker/outputs/variant_annotation/stats.html mm39 \
+    /students/2024-2025/Thema05/BlaasKanker/outputs/chromosome_remade_varients/{}_variants.vcf > /students/2024-2025/Thema05/BlaasKanker/outputs/variant_annotation/{}.vcf"
+```
+
+## 04-10
+
+Ik ga GSEA bekijken en downloaden.
+GSEA is een tool waar je mee kan kijken of vooraf gedefinieerde set genen significant, overeenstemde verschillen heeft onder 2 verschillende biologische processen.
+Hier mee kunnen we kijken wat voor invloed de mutaties hebben.
+We gaan het nu nog niet gebruiken.
+Dat komt omdat we nu nog niet weten wat de bedoeling is met de eind bestanden die we hebben gemaakt.
+
+Nu ga ik dus bezig met vcfstats.
+Dit om de vcf bestanden te laten zien.
 
 ```{bash, eval=FALSE}
 # om vcfstats te downloaden
 pip install -U vcfstats
 ```
-Hier onder is het command voor op de data gelijk op een oefen pagina op alle sequences 
+
+Hier onder is het command voor op de data gelijk op een oefen pagina op alle sequences
+
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 parallel "vcfstats --vcf /students/2024-2025/Thema05/BlaasKanker/outputs/variant_ann_sorted/{}_sorted.vcf\
@@ -256,7 +410,9 @@ parallel "vcfstats --vcf /students/2024-2025/Thema05/BlaasKanker/outputs/variant
     --formula 'COUNT(1) ~ CONTIG' \
     --title 'Number of variants on each chromosome({})'"
 ```
-Hier doen we het op de mutaiies die over blijven die een mutaies hebben die dan vervolgens kanker kunnen veroorzaken .
+
+Hier doen we het op de mutaiies die over blijven die een mutaies hebben die dan vervolgens kanker kunnen veroorzaken.
+
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 parallel "vcfstats --vcf /students/2024-2025/Thema05/BlaasKanker/outputs/variant_annotation_cancer_genes/{}.vcf\
@@ -264,7 +420,9 @@ parallel "vcfstats --vcf /students/2024-2025/Thema05/BlaasKanker/outputs/variant
     --formula 'COUNT(1) ~ CONTIG' \
     --title 'Number of variants on each chromosome(kanker)({})'"
 ```
-Hier onder zie je de twee figueren van hetzelde sample maar de linker zijn alle varianten en de rechter zijn alle varianten die kanker veroorzaken.
+
+Hier onder zie je de twee figuren van hetzelfde sample maar de linker zijn alle varianten en de rechter zijn alle varianten die kanker veroorzaken.
+
 ```{r echo=FALSE}
 library(cowplot)
 library(ggplot2)
@@ -275,7 +433,14 @@ p2 <- ggdraw() + draw_image("/students/2024-2025/Thema05/BlaasKanker/testingtool
 plot_grid(p1, p2)
 ```
 
-Hier kan je zien dat er op het chromosoom 7 de meeste zijn die kanker veroorzaken. Omdat het zoveel is gaan we later nog filteren op hoe erg de invloed is van de mutatie op het biologisch proces en pakken we de gene met een een groot gevolg. 
+Hier kan je zien dat er op het chromosoom 7 de meeste zijn die kanker veroorzaken.
+Omdat het zoveel is gaan we later nog filteren op hoe erg de invloed is van de mutatie op het biologisch proces en pakken we de gene met een een groot gevolg.
 
- 
+## De rest
 
+Deze periode ben ik bezig geweest met mensen helpen bijvoorbeeld met de plots maken en alvast bezig geweest met het plan van aanpak voor het trimmonatic gedeelte.
+
+GSA wordt niet meer gebruikt misschien nog in het trimmonatic gedeelte.
+Want we dachten dat we een verslag moesten schrijven maar dat is niet nodig alleen maar de de loliplot maken.
+
+Met deze loliplot willen we laten zien welke varianten er zijn, of ze op een intron liggen of op een exon liggen en uiteindelijk laten zien wat voor invloed ze hebben op hun processen.
