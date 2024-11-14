@@ -378,12 +378,6 @@ dds$treatment <- factor(dds$treatment, levels = c("Baseline","Entinostat", "Vehi
 dds <- DESeq(dds)
 res <- results(dds)
 ```
-## PCA
-[Ramon](https://github.com/RamonReilman/GenomicsTranscriptomics/blob/main/Transcriptomics/logbooks/RamonReilman.Rmd) heeft PCA uitgevoerd op alle groepen:
-```{r, fig.cap="Principal component analyse (PCA) die de variantie van gen expressie weergeeft. Elk punt representeerd 1 sample kleurgecodeerd per groep."}
-vsd <- vst(dds, blind=FALSE)
-plotPCA(vsd, intgroup=c("strain", "treatment"))
-```
 
 ## MA plot
 Nu dit allemaal is uitgevoerd kunnen we verder met een MA plot te maken van nsg-baseline vs nsg-entinostat door gebruik te maken van de 'res' die is gemaakt.
@@ -933,4 +927,27 @@ In de venndiagrammen zie je de upregulated genen weergegeven van de Baseline gro
 ## Vergelijken venndiagrammen:
 Er is de meeste overlap bij vehicle(16739) en baseline(16542)(Entinostat heeft een overlap van 15457). Waarin de vehicle(16739) de meeste overlap heeft.
 
-! alle code moet in elk logboek staan met referenties
+## Volcano plot
+Van de baseline en entinostat:
+```{r}
+library(EnhancedVolcano)
+```
+
+```{r fig.cap="Volcano plot van Baseline en entinostat"}
+EnhancedVolcano(resLFC_subset,
+                lab = rownames(resLFC_subset),
+                x = 'log2FoldChange',
+                y = 'pvalue',
+                labSize = 2)
+```
+X-as:\
+Log2 fold change laat zien hoe groot het verschil van genexpressie is tussen de baseline en entinostat.\
+Alles aan de rechterkant: de genexpressie is hoger bij baseline dan bij entinostat.\
+Alles aan de linkerkant: de genexpressie is hoger bij de entinostat dan bij baseline.\
+Y-as:\
+-Log10(p-waarde) laat zien hoe hoog de significantie is in het verschil tussen de genexpressie (hoe hoger hoe meer significantie).
+
+Het lijkt me dus interessant om te kijken naar de linkerkant. Want ik wil kijken welke genen entinostat mogelijk tot een hogere expressie brengt. (Baseline is totdat de tumor een bepaalde grootte heeft. Entinostat is als na die grootte entinostat is gegeven).
+De meest interresante (hoog expressie verschil en hoge significantie) is gene-Gm46987, maar daar kan ik niet veel over vinden. Welke ook interresant is, is gene-Dcstamp. Dit gen reguleert Dendritische cellen(soort witte bloedcellen). En zorgt er dus voor dat het immuunsysteem weet welke cellen deze moet aanvallen (en ook zichzelf niet aanvalt). Dat de expressie van dit gen hoger is nadat de tumor groter is en behandeld wordt met entinostat is dus een goed teken. Het kan dus betekenen dat entinostat ervoor zorgt dat de gen-expressie van dit gen hoger wordt. Maar het kan ook betekenen dat de tumor eerst nog te klein was(bij de baseline) om de gen-expressie van dit gen te verhogen. Je zou hiervoor eigenlijk naar het verschil van de gen-expressie moeten kijken van de vehicle(niet behandeld na bepaalde grootte tumor) en de entinostat. Dan kan je beter onderzoeken of de expressie van dit gen hoger wordt door de entinostat of meer door de groeiende tumor.
+
+[Bron gene-Dcstamp](https://www.uniprot.org/uniprotkb/Q9H295/entry)
