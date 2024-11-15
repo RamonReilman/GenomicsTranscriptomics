@@ -6,12 +6,22 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
+# Inladen libraries
+library(DESeq2)
+library(tidyverse)
+library(airway)
+library(ggplot2)
+library(pheatmap)
+library(ggplotify)
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Introductie 
 
 Ons [onderzoek](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE153650) kijkt naar de behandeling van entinostat op blaaskanker. Het onderzoek is uitgevoerd op de Muis Musculus, oftewel de huismuis. We gaan kijken naar de rna sequenties, hier halen we de varianten uit en vervolgens kijken we naar de verschillen in varianten tussen de gezonde muis, de zieke muis en een referentiegenoom. In ons [plan van aanpak]() staat beschreven met welke tools we dit gaan doen. \
+
+**Sidenote** \
+Ik heb afgelopen periode veel pech pech gehad qua lichamelijke gezondheid, ik wil daarom meegeven dat dit logboek lang niet aan mijn eigen standaard voldoet. Ik heb mijn best gedaan om zoveel mogelijk dingen uit te voeren, hier heb ik niet zoveel moeite mee. Echter is de interpretatie van de verschillende plots niet goed, ik heb hier heel veel moeite mee, maar het lukt mij nu niet om me hier voldoende in te verdiepen. Wanneer dit niet aan de beoordelingsstandaarden voldoet, stel ik voor dat ik een verslag mag schrijven over de verschillende plotjes, wanneer je ze gebruikt en waarom je ze gebruikt. Dit zou dan als herkansing gelden.
 
 ## Kwaliteitscontrole 
 
@@ -21,7 +31,7 @@ We beginnen met de kwaliteitscontrole van de data. Hiervoor gebruiken we de tool
 
 Door middel van de tool [STAR](https://github.com/alexdobin/STAR) gaan we de genexpressies kwantificeren. Het referentiegenoom moet worden geindexed door middel van STAR. Ik ga hieronder een command opstellen en deze in samenwerking met Marcel starten. Omdat het een vrij lang proces is starten we dit op vrijdag zodat Ramon zaterdag verder kan met STAR. \
 
-```{bash, eval=FALSE}
+```{bash, eval=FALSE, include=FALSE}
 #Losse commandline chunks
 #--runThreadN(4)
 #--runMode()
@@ -37,20 +47,13 @@ Commandline
 
 De indexing zelf is goed gegaan, echter was er verwarring over de inhoud van het index referentie genoom. Hierop heeft Ramon de indexing opnieuw uitgevoerd en daarna is STAR uitgevoerd door Ramon Reijlman, kijk voor de uitovering van beide stappen in het [logboek van Ramon](https://github.com/RamonReilman/GenomicsTranscriptomics/blob/main/Transcriptomics/logbooks/RamonReilman.Rmd) \
 
-##DESeq2 oefening
+## DESeq2 oefening
 
-Door middel van de [tool](https://www.bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html) DESeq2 gaan we nu de varianten tegen elkaar aanleggen en voorbereiden voor de statistische verwerking. Omdat we nog nooit met deze tool gewerkt hebben maken we gebruik van testdata om het commando voor deze tool voor te bereiden en uiteindelijk uit te voeren. Ik gebruik hiervoor de volgende [tutorial](https://www.youtube.com/watch?app=desktop&v=OzNzO8qwwp0), inclusief de dataset die hier gebruikt wordt.  \ 
+Door middel van de tool [DESeq2](https://www.bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html) gaan we nu de varianten tegen elkaar aanleggen en voorbereiden voor de statistische verwerking. Omdat we nog nooit met deze tool gewerkt hebben maken we gebruik van testdata om het commando voor deze tool voor te bereiden en uiteindelijk uit te voeren. Ik gebruik hiervoor de volgende [tutorial](https://www.youtube.com/watch?app=desktop&v=OzNzO8qwwp0), inclusief de dataset die hier gebruikt wordt.  \ 
 
-```{r}
-# Inladen libraries
-library(DESeq2)
-library(tidyverse)
-library(airway)
-library(ggplot2)
-```
 
 Dit script is niet van mij, deze heb ik overgenomen van [github repo](https://github.com/kpatel427/YouTubeTutorials/blob/main/getData.R)\
-```{r, eval=FALSE}
+```{r, eval=FALSE, include=FALSE}
 # script to get data from airway package
 data(airway)
 airway
@@ -67,20 +70,20 @@ write.table(countsData, file = "counts_data.csv", sep = ',', col.names = T, row.
 ```
 
 Stap 1 is het voorbereiden van de data zodat er in stap 2 een deseq datast van gemaakt kan worden.\
-```{r, eval=FALSE}
+```{r, eval=FALSE, include=FALSE}
 # Read in counts data
 
 counts_data <-read.csv('counts_data.csv') 
 head(counts_data)
 ```
 
-```{r, eval=FALSE}
+```{r, eval=FALSE, include=FALSE}
 # Read in sample file
 colData <- read.csv('sample_info.csv')
 head(colData)
 ```
 
-```{r, eval=FALSE}
+```{r, eval=FALSE, include=FALSE}
 # Checking if row names in colData matches to column names in counts_data
 all(colnames(counts_data) %in% rownames(colData))
 
@@ -91,7 +94,7 @@ all(colnames(counts_data) == rownames(colData))
 
 
 Stap 2 is het maken van de deseq dataset.\
-```{r, eval=FALSE}
+```{r, eval=FALSE, include=FALSE}
 # Design is de rij met de verschillende soorten data. Bijvoorbeeld treated/nontreated.
 ddst <- DESeqDataSetFromMatrix(countData = counts_data,
                               colData = colData,
@@ -99,29 +102,29 @@ ddst <- DESeqDataSetFromMatrix(countData = counts_data,
 ```
 
 
-```{r, eval=FALSE}
+```{r, eval=FALSE, include=FALSE}
 # Prefiltering on low gene counts
-keep <- rowSums(counts(dds)) >= 10
-ddst <- dds[keep,]
+keep <- rowSums(counts(ddst)) >= 10
+ddst <- ddst[keep,]
 
 ```
 
 
 Factor level betekend dat we deseq moeten vertellen welke 2 dimensies we gaan vergelijken. Wanneer deze niet gekozen wordt gaat dit op alfabetische volgorde.
-```{r, eval=FALSE}
+```{r, eval=FALSE, include=FALSE}
 # Setting factor level
-dds$dexamethasone <- relevel(dds$dexamethasone, ref = "untreated")
+dds$dexamethasone <- relevel(ddst$dexamethasone, ref = "untreated")
 ```
 
 
 Stap 3 is het runnen van de deseq functie. De dingen die meegenomen worden worden uitgelegd in [deze video](https://www.youtube.com/watch?v=0b24mpzM_5M). Hier heb ik mijn informatie vandaan gehaald.\
-```{r, eval=FALSE}
+```{r, eval=FALSE, include=FALSE}
 dds <- DESeq(dds)
 res <- results(dds)
 
 ```
 
-```{r, eval=FALSE}
+```{r, eval=FALSE, include=FALSE}
 # Getting summary for results
 summary(res)
 
@@ -130,7 +133,7 @@ summary(res0.01)
 ```
 
 
-```{r, eval=FALSE}
+```{r, eval=FALSE, include=FALSE}
 #Contrasts
 resultsNames(dds)
 
@@ -140,17 +143,17 @@ resultsNames(dds)
 
 
 Visualisatie van de data
-```{r, eval=FALSE}
+```{r, eval=FALSE, include=FALSE}
 #Scatter plot
 plotMA(res)
 ```
 
 Ik heb de volledige tutorial gevolgd en uitgevoerd. Hierdoor ik weet nu welke parameters ik de tool deseq2 moet meegeven zodat deze gebruikt kan worden.\ 
 
-##Deseq
+## Deseq
 Voor ons project moet deseq uitgevoerd worden op de data die vanuit STAR komt. Onderstaande code is voor het laden van de files is geschreven door Ramon Reijlman. \
 
-```{r, eval=FALSE, echo=FALSE}
+```{r, include=FALSE}
 file.names <- list.files('/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/mapping/',
                          pattern = '*_star_ReadsPerGene.out.tab')
 ## Function for reading in files
@@ -166,7 +169,7 @@ read_sample <- function(file.name) {
 }
 ```
 
-```{r, eval=FALSE, echo=FALSE}
+```{r, include=FALSE}
 setwd('/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/mapping/')
 ## Read the FIRST sample
 counts <- read_sample(file.names[1])
@@ -183,7 +186,7 @@ head(counts)
 
 
 
-```{r, eval=FALSE, echo=FALSE}
+```{r, include=FALSE}
 # Read in sample file
 
 Col_data <- read.csv2("/homes/jwpostmus/Documents/DESEQ_verwerking.csv") 
@@ -199,7 +202,7 @@ all(colnames(counts) %in% rownames(Col_data))
 all(colnames(counts) == rownames(Col_data))
 ```
 
-```{r, eval=FALSE, echo=FALSE}
+```{r, include=FALSE}
 # Making deseqdataset with counts en coldata
 dds <- DESeqDataSetFromMatrix(countData = counts,
                               colData = Col_data,
@@ -208,7 +211,7 @@ head(dds)
 ```
 
 
-```{r, eval=FALSE, echo=FALSE}
+```{r, include=FALSE}
 # Prefiltering on low gene counts
 keep <- rowSums(counts(dds)) >= 10
 ddst <- dds[keep,]
@@ -217,7 +220,7 @@ ddst <- dds[keep,]
 
 
 Factor level betekend dat we deseq moeten vertellen welke 2 dimensies we gaan vergelijken. Wanneer deze niet gekozen wordt gaat dit op alfabetische volgorde.
-```{r, eval=FALSE, echo=FALSE}
+```{r, include=FALSE}
 # Setting factor level
 
 #dds$treatment <- relevel(dds$treatment, ref = "Baseline")
@@ -228,7 +231,7 @@ dds$treatment <- factor(dds$treatment, levels = c("Baseline","Entinostat"), )
 
 ```
 
-```{r, eval=FALSE, echo=FALSE}
+```{r, include=FALSE}
 # Running deseq
 dds <- DESeq(dds)
 res <- results(dds)
@@ -241,7 +244,7 @@ Omdat ik een foutmelding krijg hieronder een stuk debugging code. De foutmelding
   as replicates was deprecated in v1.20 and no longer supported since v1.22. \
   Dit wijst erop dat het aantal samples en condities niet goed is. Om DESEq2 goed te laten runnen heb ik meer samples dan condities nodig. Hieronder ga ik mijn data controleren op de sample en conditie informatie.\
   
-```{r, eval=FALSE, echo=FALSE}
+```{r, eval=FALSE, include=FALSE}
 # Samenvatting van dds
 summary(dds)
 
@@ -254,7 +257,7 @@ table(dds$treatment)
 
 Het probleem bleek te liggen het maken van de deseqdataset. Hierbij moest het design niet [Design = ~ Run] zijn maar [design = ~ 0 + source_name]. Hiermee wordt de goede kolom geselecteerd zodat deseq goed uitgevoerd kan worden. \
 
-```{r, eval=FALSE, echo=FALSE}
+```{r, eval=FALSE, include=FALSE}
 # Getting summary for results
 summary(res)
 
@@ -264,7 +267,7 @@ summary(res0.01)
 
 
 
-```{r, eval=FALSE, echo=FALSE}
+```{r, eval=FALSE, include=FALSE}
 # Contrasts
 #resultsNames(dds)
 
@@ -273,21 +276,19 @@ summary(res0.01)
 # Results
 res <-results(dds, contrast = c("source_name", "C57BL/6_bladder tumor_Baseline", "C57BL/6_bladder tumor_Entinostat"))
 
-res
-
 ```
 
 
 Visualisatie dmv vulcano plot\
-```{r, eval=FALSE, echo=FALSE}
+```{r, eval=FALSE, include=TRUE}
 #Scatter plot
 plotMA(res)
 ```
 
-##Deseq gebruikt voor de eindverwerking\
+## Deseq gebruikt voor de eindverwerking\
 Omdat Ramon nog een aantal foutjes heeft ontdekt in de voorgaande code met deseq heeft hij de code her en der aangepast. Deze is hieronder te vinden, deze code wordt gebruikt om de statistische verwerking uit te voeren. \
 
-```{r}
+```{r, include=FALSE}
 file.names <- list.files('/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/mapping/',
                          pattern = '*_star_ReadsPerGene.out.tab')
  
@@ -306,7 +307,7 @@ read_sample <- function(file.name) {
 ```
  
  
-```{r}
+```{r, include=FALSE}
  
 setwd('/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/mapping/')
  
@@ -326,7 +327,7 @@ head(counts)
 ```
  
  
-```{r}
+```{r, include=FALSE}
  
 col_data <- read.csv("/students/2024-2025/Thema05/BlaasKanker/etc/DSEQ_verwerking(Sheet1).csv", sep = ";")
 rownames(col_data) <- col_data[,1]
@@ -337,7 +338,7 @@ col_data
 ## Annot count_data
 Het annoteren van onze data zorgt ervoor dat de genen de NCBI naamgeving krijgen. Zo is het straks overzichtelijker om informatie te vinden over de genen.
  
-```{r}
+```{r, include=FALSE}
 library(dplyr)
 library(tidyr)
  
@@ -351,7 +352,7 @@ head(col_data)
 ```
 In de bestanden kon niks gevonden worden over de genen, maar zo is het wel duidelijker waar elke kolom voor staat.
 Dat moet nu nog toegepast worden in de counts df
-```{r}
+```{r, include=FALSE}
  
 for (i in 1:nrow(col_data)) {
   idx <- grep(col_data$Run[i], names(counts))
@@ -361,7 +362,7 @@ head(counts)
 ```
 Nu zijn de SRR* namen vervangen met waar ze voor staan en is de df duidelijker te lezen, om straks makkelijker de kolommen op te halen die horen bij elk mogelijke variant groepeer ik deze.
  
-```{r}
+```{r, include=FALSE}
 print(colnames(counts))
 C57BL_Vehicle <- grep("C57BL/6_Vehicle", names(counts))
 C57BL_Entinostat <- grep("C57BL/6_Entinostat", names(counts))
@@ -373,9 +374,9 @@ nsg_Baseline <- grep("NSG_Baseline", names(counts))
 ```
 Nu kunnen deze variabelen gebruikt worden om de juiste kolommen te selecteren.
  
-Dan kan dit nu samengevoegd worden met DESEQ, wat Janine heeft uitgezocht. Bekijk haar logboek voor meer informatie over de code.
+Dan kan dit nu samengevoegd worden met mijn code.
  
-```{r}
+```{r, include=FALSE}
 # Making deseqdataset with counts en coldata
 dds <- DESeqDataSetFromMatrix(countData = counts,
                               colData = col_data,
@@ -383,13 +384,13 @@ dds <- DESeqDataSetFromMatrix(countData = counts,
 head(dds)
 ```
  
-```{r}
+```{r, include=FALSE}
 # Prefiltering on low gene counts
 keep <- rowSums(counts(dds)) >= 10
 ddst <- dds[keep,]
 ```
  
-```{r}
+```{r, include=FALSE}
  
 # Setting factor level
 #dds$treatment <- relevel(dds$treatment, ref = "Baseline")
@@ -398,17 +399,17 @@ dds$treatment <- factor(dds$treatment, levels = c("Baseline","Entinostat", "Vehi
 
 ```
  
-```{r}
+```{r, include=FALSE}
 # Running deseq
 dds <- DESeq(dds)
 res <- results(dds)
 ```
 
-##Statistische verwerking 
+## Statistische verwerking 
 Samen met Jasper ga ik de data visualiseren van de muis met een goed immuunsysteem, hierbij ga ik de baseline tegenover entinostat behandeling toepassen. \
 Hiervoor ga ik een nieuwe deseq dataset maken met alleen de gegevens van de C57BL/6 muis met baseline en entinostat.\
 
-```{r}
+```{r, include=FALSE}
 # Hier selecteer ik de data vanuit de deseqdata set
 dds_healthymouse_subset <- dds[, c(C57BL_Baseline, C57BL_Entinostat)]
 
@@ -426,7 +427,7 @@ head(mouse_res)
 ```
 Om te kijken naar de differential gene analysis zijn we allemaal bezig met visuele weergaven van de data door middel van grafieken en plotjes. Ramon en Iris kijken naar de muis met een slecht immuunsysteem (NSG muis), Jasper en ik kijken naar de muis met een goed immuunsysteem namelijk de C57BL/6 muis. Jasper heeft een vulcano plot gemaakt, hiervoor verwijs ik door naar zijn logboek. Ik ga beginnen met een principale componenten analyse (PCA) en ga daarna een MA plot maken. \
 
-```{r}
+```{r pca_plot, include=TRUE}
 # Eerst variance stabilizing transformation toepassen
 vsd <- vst(dds_healthymouse_subset, blind = FALSE, nsub = 1000, fitType = "parametric")
 
@@ -451,16 +452,35 @@ ggplot(pcaData, aes(PC1, PC2, color = condition)) +
     labs(title = "Baseline vs Entinostat") +
     labs(subtitle = "Muis met gezond immuunsysteem")
 ```
+Conclusie pca ... \
 
 
-Ik ga nu een MA plot maken. Jasper heeft deze ook al gemaakt maar is niet zeker of hij het goed gedaan heeft. Daarom ga ik deze ook maken zodat we deze met elkaar kunnen vergelijken. \
+Ik ga nu een MA plot maken. Deze toon de log2-fold changes (M-waarden), tegenover de gemiddelde genexpressie (A-waaren). Hierdoor kunnen de genen met significante veranderingen in expressie worden geïdentificeerd. \
 
-```{r}
+```{r ma_plot, include=TRUE}
+plotMA(mouse_res,
+       ylim = c(-2, 2))
+```
+De ma plot suggereert dat, terwijl de meeste genen geen significante veranderingen in expressie vertonen, er enkele genen zijn (aangegeven in blauw) die wel tot expressie worden gebracht. De genen met hoge log2foldchange (zowel positief als negatief) kunnen bijzonder interessant zijn voor verder onderzoek, aangezien ze mogelijk een cruciale rol spelen in de behandeling met entinostat.\
+
+
+Ik ga nu een heatmap maken en dit toont de genexpressiesniveaus van verschillende monsters. Het visualiseert patronen van genexpressie en clustering van monsters. \
+
+```{r, eval=TRUE, include=TRUE}
+heatmap <- pheatmap(assay(vst(dds_healthymouse_subset)), cluster_rows = TRUE, cluster_cols = TRUE)
+#heatmap omzetten naar ggplot object omdat de map onleesbaar is
+
+ggplot_object <- as.ggplot(heatmap)
+
+#plot mooi maken met ggplot2
+
+ggplot_object + 
+  ggtitle("Heatmap van Genexpressie") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        plot.title = element_text(hjust = 0.5, size = 14, face = "bold"))
 
 ```
+De heatmap toont een duidelijk onderscheid in genexpressiepatronen tussen de Entinostat-behandelde en Baseline muizen, met  expressieverschillen die suggereren dat entinostat bepaalde genen kan beïnvloeden. Ik heb veel moeite met de verdere interpretatie van de heatmap. Ik vind het moeilijk om de grafiek te interpreteren en te lezen. Ik laat hem er wel instaan omdat het wel een belangrijke visualisatie is van ons project. 
 
-
-##Interpretatie resultaten
-
-##Conclusie en discussie
 
