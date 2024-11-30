@@ -1,0 +1,52 @@
+STAR version=2.7.10b
+STAR compilation time,server,dir=2023-02-25T23:25:17+00:00 <place not set in Debian package>
+##### Command Line:
+/usr/lib/rna-star/bin/STAR-avx2 --runThreadN 4 --runMode genomeGenerate --genomeDir /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/star/index_GRCh38 --genomeFastaFiles /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/ref_genes/ncbi_dataset/data/GCF_000001405.40/GCF_000001405.40_GRCh38.p14_genomic.fna --sjdbGTFfile /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/ref_genes/ncbi_dataset/data/GCF_000001405.40/genomic.gtf --sjdbOverhang 75
+##### Initial USER parameters from Command Line:
+###### All USER parameters from Command Line:
+runThreadN                    4     ~RE-DEFINED
+runMode                       genomeGenerate        ~RE-DEFINED
+genomeDir                     /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/star/index_GRCh38     ~RE-DEFINED
+genomeFastaFiles              /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/ref_genes/ncbi_dataset/data/GCF_000001405.40/GCF_000001405.40_GRCh38.p14_genomic.fna        ~RE-DEFINED
+sjdbGTFfile                   /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/ref_genes/ncbi_dataset/data/GCF_000001405.40/genomic.gtf     ~RE-DEFINED
+sjdbOverhang                  75     ~RE-DEFINED
+##### Finished reading parameters from all sources
+
+##### Final user re-defined parameters-----------------:
+runMode                           genomeGenerate   
+runThreadN                        4
+genomeDir                         /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/star/index_GRCh38
+genomeFastaFiles                  /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/ref_genes/ncbi_dataset/data/GCF_000001405.40/GCF_000001405.40_GRCh38.p14_genomic.fna   
+sjdbGTFfile                       /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/ref_genes/ncbi_dataset/data/GCF_000001405.40/genomic.gtf
+sjdbOverhang                      75
+
+-------------------------------
+##### Final effective command line:
+/usr/lib/rna-star/bin/STAR-avx2   --runMode genomeGenerate      --runThreadN 4   --genomeDir /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/star/index_GRCh38   --genomeFastaFiles /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/ref_genes/ncbi_dataset/data/GCF_000001405.40/GCF_000001405.40_GRCh38.p14_genomic.fna      --sjdbGTFfile /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/ref_genes/ncbi_dataset/data/GCF_000001405.40/genomic.gtf   --sjdbOverhang 75
+----------------------------------------
+
+Number of fastq files for each mate = 1
+ParametersSolo: --soloCellFilterType CellRanger2.2 filtering parameters:  3000 0.99 10
+Finished loading and checking parameters
+--genomeDir directory exists and will be overwritten: /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/star/index_GRCh38/
+!!!!! WARNING: Could not move Log.out file from ./Log.out into /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/star/index_GRCh38/Log.out. Will keep ./Log.out
+
+Oct 25 13:58:27 ... starting to generate Genome files
+/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/ref_genes/ncbi_dataset/data/GCF_000001405.40/GCF_000001405.40_GRCh38.p14_genomic.fna : chr # 0  "NC_000001.11" chrStart: 0
+/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/ref_genes/ncbi_dataset/data/GCF_000001405.40/GCF_000001405.40_GRCh38.p14_genomic.fna : chr # 1  "NT_187361.1" chrStart: 249036800
+/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/ref_genes/ncbi_dataset/data/GCF_000001405.40/GCF_000001405.40_GRCh38.p14_genomic.fna : chr # 2  "NT_187362.1" chrStart: 249298944
+/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/ref_genes/ncbi_dataset/data/GCF_000001405.40/GCF_000001405.40_GRCh38.p14_genomic.fna : chr # 3  "NT_187363.1" chrStart: 249561088
+/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/ref_genes/ncbi_dataset/data/GCF_000001405.40/GCF_000001405.40_GRCh38.p14_genomic.fna : chr # 4  "NT_187364.1" chrStart: 249823232
+/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/ref_genes/ncbi_dataset/data/GCF_000001405.40/GCF_000001405.40_GRCh38.p14_genomic.fna : chr # 5  "NT_187365.1" chrStart: 250085376
+/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/ref_genes/ncbi_dataset/data/GCF_000001405.40/GCF_000001405.40_GRCh38.p14_genomic.fna : chr # 6  "NT_187366.1" chrStart: 250347520
+/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/ref_genes/ncbi_dataset/data/GCF_000001405.40/GCF_000001405.40_GRCh38.p14_genomic.fna : chr # 7  "NT_187367.1" chrStart: 250609664
+/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/ref_genes/ncbi_dataset/data/GCF_000001405.40/GCF_000001405.40_GRCh38.p14_genomic.fna : chr # 8  "NT_187368.1" chrStart: 250871808
+/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/ref_genes/ncbi_dataset/data/GCF_000001405.40/GCF_000001405.40_GRCh38.p14_genomic.fna : chr # 9  "NT_187369.1" chrStart: 251133952
+/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/ref_genes/ncbi_dataset/data/GCF_000001405.40/GCF_000001405.40_GRCh38.p14_genomic.fna : chr # 10  "NC_000002.12" chrStart: 251396096
+/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/ref_genes/ncbi_dataset/data/GCF_000001405.40/GCF_000001405.40_GRCh38.p14_genomic.fna : chr # 11  "NT_187370.1" chrStart: 493617152
+/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/ref_genes/ncbi_dataset/data/GCF_000001405.40/GCF_000001405.40_GRCh38.p14_genomic.fna : chr # 12  "NT_187371.1" chrStart: 493879296
+/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/ref_genes/ncbi_dataset/data/GCF_000001405.40/GCF_000001405.40_GRCh38.p14_genomic.fna : chr # 13  "NC_000003.12" chrStart: 494141440
+/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/ref_genes/ncbi_dataset/data/GCF_000001405.40/GCF_000001405.40_GRCh38.p14_genomic.fna : chr # 14  "NT_167215.1" chrStart: 692584448
+/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/ref_genes/ncbi_dataset/data/GCF_000001405.40/GCF_000001405.40_GRCh38.p14_genomic.fna : chr # 15  "NC_000004.12" chrStart: 692846592
+/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/ref_genes/ncbi_dataset/data/GCF_000001405.40/GCF_000001405.40_GRCh38.p14_genomic.fna : chr # 16  "NT_113793.3" chrStart: 883163136
+/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/ref_genes/ncbi_dataset/data/GCF_000001405.40/GCF_000001405.40_GRCh38.p14_genomic.fna : chr # 17  "NC_000005.10" chrStart: 883425280
