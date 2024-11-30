@@ -8,7 +8,32 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(message = FALSE)
+knitr::opts_chunk$set(message = FALSE, cache = TRUE)
+```
+
+## Inleiding
+### 13-11-2024
+In dit logboek staat de verwerking van een transcriptomnics onderzoek.
+Het onderzoek bekijkt de impact van entinostat op de genexpressie tussen 2 verschillende soorten muizen.
+
+De R chunk hieronder laad de gebruikte libraries in
+
+```{r, echo=FALSE}
+library(DESeq2)
+library(dplyr)
+library(ggplot2)
+library(EnhancedVolcano)
+library(pheatmap)
+library(pathview)
+# Load the AnnotationDbi interface library
+library(AnnotationDbi)
+# Load the Bioconductor installation library (contains 'biocLite()')
+library(BiocInstaller)
+library(org.Mm.eg.db)
+
+library(clusterProfiler)
+library(enrichplot)
+
 ```
 
 ## Quality controll
@@ -29,13 +54,15 @@ ls /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_contro
 parallel "/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/bin/falco /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/trimmomatic2/{} -o /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control2/trimmed2/{}_fastqc_report"
 
 ```
+Uiteindelijk is het gebleken dankzij Marcel dat de data niet getrimd hoeft te worden.
+STAR doet dit zelf al.
 
 ## Mapping
 ### 19-10-2024
 blabla mapping uitleg
 
 We hebben 2 soorten cellen, muis en menselijk. De helft van onze samples hebben een muis cellen en de andere helft menselijke cellen.
-We gaan eerst de mapping doen tegen de muiscellen, die is geindexed (zie janine)
+We gaan eerst de mapping doen tegen de muis cellen, die is geindexed door [Janine](https://github.com/RamonReilman/GenomicsTranscriptomics/blob/main/Transcriptomics/logbooks/JaninePostmus.Rmd)
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/mouse_cell_SRR.txt | \
@@ -48,7 +75,7 @@ cat /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/mouse_cell_SRR.txt |
         '--limitBAMsortRAM 2000000000 ' \
         '--outFileNamePrefix /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/mapping/{}_star_'
 ```
-
+Nu is de helft met de muis cellen gemapped tegen een muis referentie genoom.
 Na het mappen moet er gekeken worden of het mappen gelukt is:
 
 ```{bash, eval=FALSE}
@@ -57,7 +84,7 @@ multiqc --filename \
   /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/mapping/
 
 ```
-
+Hiervan zijn de resultaten goed, de mapping is succesvol.
 
 ```{r}
 file.names <- list.files('/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/mapping/',
@@ -76,7 +103,7 @@ read_sample <- function(file.name) {
 }
 
 ```
-
+Hieruit blijkt dat er alleen maar missing genes gevonden zijn.
 
 ```{r}
 
@@ -106,19 +133,20 @@ blastn -query /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/tem
 
 ```
 
-wel muis cellen, github issue
-
+Het blijken wel muis cellen te zijn. Een github issue geeft aan dat we wel een gtf bestand nodig hebben bij het indexen, niet een gff bestand zoals Marcel dat aangaf.
+Met het volgende command kan een gtf bestand gegenereerd worden.
 ```{bash, eval=FALSE}
 gffread -E /students/2024-2025/Thema05/BlaasKanker/tools/testGenome/ncbi_dataset/data/GCF_000001635.27/genomic.gff -T -o  /students/2024-2025/Thema05/BlaasKanker/tools/testGenome/ncbi_dataset/data/GCF_000001635.27/genomic.gtf
 
 
 ```
 
-
+Opnieuw een index genereren met een gtf bestand nu.
 ```{bash, eval=FALSE}
 STAR --runThreadN 4 --runMode genomeGenerate --genomeDir /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/star/index_GRCm39 --genomeFastaFiles /students/2024-2025/Thema05/BlaasKanker/tools/testGenome/ncbi_dataset/data/GCF_000001635.27/GCF_000001635.27_GRCm39_genomic.fna --sjdbGTFfile /students/2024-2025/Thema05/BlaasKanker/tools/testGenome/ncbi_dataset/data/GCF_000001635.27/genomic.gtf --sjdbOverhang 75
 ```
 
+Opnieuw de mapping uitvoeren met het juiste referentie genoom.
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/mouse_cell_SRR.txt | \
     parallel 'STAR --runThreadN 6 ' \
@@ -131,33 +159,33 @@ cat /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/mouse_cell_SRR.txt |
         '--outFileNamePrefix /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/mapping/{}_star_'
 ```
 
-
+Bepalen of de kwaliteit van de mapping goed is.
 ```{bash, eval=FALSE}
 multiqc --filename \
   /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/sum_mapping/STAR-mapping2.html \
   /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/mapping/
 
 ```
-voer ook nog even een blast uit op een nsg muis, om te kijken of hier menselijke cellen in zitten. SRR12129031
-
+voer ook nog even een blast uit op een nsg muis, om te kijken of hier menselijke cellen in zitten.
 
 ```{bash, eval=FALSE}
 blastn -query /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/temp_fasta/SRR12129031_1.fasta -db nt -outfmt 6 -max_target_seqs 1 -num_threads 10 -out  /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/blastn/results_nsg.out
 
 ```
-NSG muizen bevatten wel menselijke cellen, dus die moet ook met star een index krijgen
-
+NSG muizen bevatten mogelijk wel menselijke cellen, dus die moet ook met star een index krijgen
+Genereer een gtf bestand voor het menselijke referentie genoom.
 ```{bash, eval=FALSE}
 
 gffread -E /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/ref_genes/ncbi_dataset/data/GCF_000001405.40/genomic.gff -T -o  /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/ref_genes/ncbi_dataset/data/GCF_000001405.40/genomic.gtf
 
 ```
 
+Maak een index voor STAR van het menselijke referentie genoom.
 ```{bash, eval=FALSE}
 STAR --runThreadN 4 --runMode genomeGenerate --genomeDir /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/star/index_GRCh38 --genomeFastaFiles /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/ref_genes/ncbi_dataset/data/GCF_000001405.40/GCF_000001405.40_GRCh38.p14_genomic.fna --sjdbGTFfile /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/ref_genes/ncbi_dataset/data/GCF_000001405.40/genomic.gtf --sjdbOverhang 75
 ```
 
-
+Mappen van de NSG muis tegen een menselijke referentie genoom.
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/nsg_mouse_SRR.txt | \
     parallel 'STAR --runThreadN 6 ' \
@@ -169,7 +197,8 @@ cat /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/nsg_mouse_SRR.txt | 
         '--limitBAMsortRAM 2000000000 ' \
         '--outFileNamePrefix /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/mapping/{}_star_'
 ```
-
+Het mappen hiervan is niet goed gegaan, het is gebleken dat de NSG muis geen menselijke cellen heeft.
+Deze bestanden zijn opnieuw gemapped tegen het muis genoom.
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/nsg_mouse_SRR.txt | \
@@ -186,12 +215,11 @@ cat /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/nsg_mouse_SRR.txt | 
 
 ## Deseq
 #### 28-10
-Deseq werkt niet helemaal bij Janine omdat de rownames en colnames niet helemaal overeen komen. Tussen het info bestand en de count df
+Deseq werkt niet helemaal bij Jannie omdat de rownames en colnames niet helemaal overeen komen. Tussen het info bestand en de count df
 ```{r}
 
 col_data <- read.csv("/students/2024-2025/Thema05/BlaasKanker/etc/DSEQ_verwerking(Sheet1).csv", sep = ";")
 rownames(col_data) <- col_data[,1]
-col_data
 ```
 
 
@@ -200,9 +228,6 @@ col_data
 Het annoteren van onze data zorgt ervoor dat de genen de NCBI naamgeving krijgen. Zo is het straks overzichtelijker om informatie te vinden over de genen.
 
 ```{r}
-library(dplyr)
-library(DESeq2)
-
 
 col_data <- col_data %>%
     dplyr::group_by(strain, treatment) %>%
@@ -227,12 +252,7 @@ Nu moeten we nog de namen van de genen veranderen naar iets wat meer leesbaar is
 Dit moet handmatig gedaan worden omdat de GEO annot data niet genoeg info bevat.
 
 ```{r}
-# Load the AnnotationDbi interface library
-library(AnnotationDbi)
-# Load the Bioconductor installation library (contains 'biocLite()')
-library(BiocInstaller)
 
-library(org.Mm.eg.db)
 
 counts$Ensembl <- mapIds(x = org.Mm.eg.db,
                            keys=gsub("gene-", "",row.names(counts)),
@@ -266,6 +286,7 @@ result <- getBM(attributes = attrs.get,
                  values = counts$Ensembl[non_na], 
                  mart = ensembl)
 ```
+Dit werkt niet, en dus zal ik het zo laten.
 
 ```{r}
 C57BL_Vehicle <- grep("C57BL/6_Vehicle", names(counts))
@@ -278,7 +299,7 @@ nsg_Baseline <- grep("NSG_Baseline", names(counts))
 ```
 Nu kunnen deze variabelen gebruikt worden om de juiste kolommen te selecteren.
 
-Dan kan dit nu samengevoegd worden met DESEQ, wat Janine heeft uitgezocht. Bekijk haar logboek voor meer informatie over de code.
+Dan kan dit nu samengevoegd worden met DESEQ, wat Jannie heeft uitgezocht. Bekijk haar logboek voor meer informatie over de code.
 
 ```{r}
 # Making deseqdataset with counts en coldata
@@ -330,7 +351,6 @@ Wat opvallend is in deze plot is dat C57BL/6:Entinostat als groep ver gescheiden
 
 Ook blijkt de entinostat niet veel invloed te hebben op de genexpressie bij de NSG groep, hoewel hier wel iets wat minder variantie zichtbaar is tussen de samples in de groep. 
 
-
 ## Impact entinostat op nsg muis
 #### 31-10-2024
 In de literatuur staat dat entinostat immuun gerelateerde genen tot expressie zou moeten brengen.
@@ -353,6 +373,8 @@ head(dds_nsg_subset)
 
 Nu hebben we de resultaten van het vergelijken tussen de 3 groepen in de NSG muis.
 Ik ga eerst kijken naar het verschil tussen de baseline en vehicle. Zo kunnen we zien of het hebben van de blaaskanker de genexpressie ook veranderd
+
+
 ### Baseline vs Vehicle
 ```{r}
 res_baseline_vehicle_nsg <- results(dds_nsg_subset, contrast = c("treatment", "Baseline", "Vehicle"))
@@ -360,10 +382,8 @@ summary(res_baseline_vehicle_nsg)
 ```
 Hier is zichtbaar dat met een p-waarde van 0.1 er een up regulatie is van 8.1% en een down regulatie van 9.6%.
 
-Ik ga met behulp van een vulcanoplot kijken naar welke genen statistisch signicant veranderd zijn van expressie.
+Ik ga met behulp van een vulcanoplot kijken naar welke genen statistisch significant veranderd zijn van expressie.
 ```{r}
-library(EnhancedVolcano)
-
 deseq.volcano <- function(res, datasetName, v1, v2) {
   return(EnhancedVolcano(res, x = 'log2FoldChange', y = 'padj',
                          lab=rownames(res),
@@ -389,11 +409,7 @@ Wat zichtbaar is in deze grafiek is dat er maar weinig genen zijn met een statis
 1 van de genen is wel opvallend, deze valt ver buiten de andere 7 genen, met een log fold change van meer dan 20.
 Dit gen, Ces4a, produceert een eiwit genaamd "Carboxylesterase 4A". Dit eiwit is betrokken bij hydrolyse en transesterificatie (omestering) van xenbioticum (zoals drugs) en andere synthetische drugs. Maar kan ook reageren op bindingen die in het lichaam voorkomen, zoals esters, thioesters en amides. Ik ga een GSEA uitvoeren om te bepalen welke pathways hier bij betrokken zijn om mogelijk uit te kunnen vinden waarom dit gen zo verhoogd is.
 
-```{r}
-library(clusterProfiler)
-library(enrichplot)
-library(org.Mm.eg.db)
-```
+
 
 ```{r}
 nsg_res_baseline_vehicle_rmNa <- res_baseline_vehicle_nsg[!is.na(res_baseline_vehicle_nsg$log2FoldChange),]
@@ -408,16 +424,17 @@ gsea_res_nsg_baseline_vehicle <- gseGO(geneList = gene_list,
                   ont = "BP",
                   pvalueCutoff = 0.05,
                   verbose = T)
-head(gsea_res_nsg_baseline_vehicle)
 top_go_terms <- head(gsea_res_nsg_baseline_vehicle[order(gsea_res_nsg_baseline_vehicle$p.adjust), ], 10)
-print(top_go_terms)
 
 ```
 
 ```{r, fig.cap="Deze grafiek geeft de resultaten van een Gene Set Enrichment Analysis (GSEA) op NSG muis model, waarin geactiveerde (links) en onderdrukte (rechts) biologische pathways worden getoond van de vehicle groep in vergelijking met de baseline. Op de y-as staan de pathways weergegeven. De x-as toont de genratio, ofwel het aandeel genen binnen deze pathway die tot differentieel tot expressie komt. De grote van het punt geeft weer wat het aantal betrokken genen is, de kleur geeft statistische significantie weer."}
 dotplot(gsea_res_nsg_baseline_vehicle, split=".sign", showCategory = 5) + facet_grid(.~.sign)
 ```
-Er is niet bekend welke vehicle gebruikt is, dus kunnen we onmogelijk zeggen waarom wnt signaling en ribosome biogenese wel aangetast zijn. Maar dit zou mogelijk kunnen aan de gebruikte vehicle treatment.
+De entinostat wordt opgelost in een stof genaamd dimethyl sulfoxide (DMSO), deze stof wordt dus gebruikt bij de vehicle groep.
+Als het blijkt dat bij de andere muis geen upregulatie is bij WNT sigaling, kan het zijn dat DMSO toch wel een impact kan hebben bij muizen met een slechter immuunsysteem.
+Ook is er zichtbaar dat de processen die te maken hebben met het centrale dogma down regulated zijn. Zowel het maken van ribosomen, translatie en zijn downregulated.
+Dit kan betekenen dat de cel mogelijk 
 
 ### Baseline vs Entinostat
 #### 02-11-2024
@@ -430,12 +447,14 @@ We zien hier dat er bij een entinostat treatment een up regulatie is van 4% en e
 
 Met een vulcano plot kan je weergeven hoe de logfold change is van een gen, maar ook de p-waarde hiervan.
 ```{r, fig.cap="Deze grafiek geeft de relatie van statistische significantie (-log10 aagepaste p-waarde) en de log fold change (LFC) voor elk gen weer. De expressieniveaus tussen de baseline en entinostat groep worden vergeleken. Elk punt representeert een gen. Genen met een significante verandering van expressie (P-waarde <= 0.05 en LFC >= 2) worden weergegeven met een rode kleur. Genen met een statistische kleine verandering van expressie (P-waarde <= 0.05 en LFC < 2) worden weergegeven als blauwe punten. Niet statistisch significant genen worden in grijs weergegeven. De belangrijkste genen zijn gelabeled met de gennamen"}
-res_baseline_entinostat_nsg_lfc <- lfcShrink(dds_nsg_subset, contrast = c("treatment", "Baseline", "Entinostat"),
+res_baseline_entinostat_nsg_lfc <- lfcShrink(dds_nsg_subset, contrast = c("treatment", "Baseline", "Vehicle"),
                                           res = res_baseline_entinostat_nsg, type = "ashr")
 deseq.volcano(res = res_baseline_entinostat_nsg_lfc, datasetName = "NSG mouse", v1 = "Baseline", v2 = "Entinostat")
 ```
-
-
+Wat duidelijk zichtbaar is is dat er toch wel een groter aantal genen statistisch significant beïnvloed zijn dan bij de baseline vehicle vergelijking.
+Er zijn een aantal genen met een significante upregulation, maar ook een aantal met een significante downregulation.
+Ces4a is niet zichtbaar in deze vergelijking, wat betekend dat deze een hele kleine fold change heeft (< 2) of niet statistisch significant is (p > 0.05).
+Om verder te kijken in welke pathways deze genen voorkomen ga ik een GSEA uitvoeren.
 
 
 ```{r}
@@ -452,10 +471,37 @@ gsea_res_nsg_baseline_entinostat <- gseGO(geneList = gene_list,
                   ont = "BP",
                   pvalueCutoff = 0.05,
                   verbose = T)
-head(gsea_res_nsg_baseline_entinostat)
 ```
 
 
 ```{r, fig.cap="Deze grafiek geeft de resultaten van een Gene Set Enrichment Analysis (GSEA) op NSG muis model, waarin geactiveerde (links) en onderdrukte (rechts) biologische pathways worden getoond van de entinostat groep in vergelijking met de baseline. Op de y-as staan de pathways weergegeven. De x-as toont de genratio, ofwel het aandeel genen binnen deze pathway die tot differentieel tot expressie komt. De grote van het punt geeft weer wat het aantal betrokken genen is, de kleur geeft statistische significantie weer."}
 dotplot(gsea_res_nsg_baseline_entinostat, split=".sign", showCategory = 5) + facet_grid(.~.sign)
 ```
+Wat zichtbaar is uit deze grafiek is dat een aantal processen die te maken hebben met het centrale dogma en de expressie van eiwitten weer onderdrukt wordt. Deze keer is de p-waarde wel een stuk hoger, behalve bij translatie, wat wel iets meer onzekerheid geeft over die resultaten.
+Wel is er duidelijk zichtbaar dat het immuunsysteem wel beïnvloed wordt door entinostat. De processen die gaan over het maken en beschermen van de huid is zeker gestimuleerd. Deze processen zijn niet zichtbaar bij de vehicle groep, en zullen dus waarschijnlijk gestimuleerd worden door entinostat.
+De rest van het immuunsysteem van de NSG muis is niet goed werkend, mogelijk zijn andere immuunsystemen meer gestimuleerd bij de andere muis soort.
+
+#### 13-11-2024
+Om verder te kijken naar de pathways kan er ook gekeken worden naar kegg GSEA, zo kan er later ook een pathway weergegeven worden.
+
+
+```{r}
+deseq.degs.logfc <- subset(res_baseline_entinostat_nsg, padj < 0.05, select = log2FoldChange)
+pathview(gene.data=deseq.degs.logfc,
+         pathway.id="04620", # Skin
+         species="mmu"     # Organism key
+)
+
+```
+
+## 30-11-2024
+Het resultaat wat hier uitkomt is een afbeelding van een pathway waarbij alle genen groen zijn, en dus een hogere logfold change hebben.
+Ik verwacht dat dit incorrect is, maar weet niet zeker hoe ik dit op zou moeten lossen.
+
+In de logboeken van Jannie en Jasper staat de verwerking van de andere muizen soort, graag had ik nog willen kijken naar de verschillen hiertussen. Maar ik wil deze module afsluiten, dus ik heb besloten dit niet te doen.
+
+De resultaten die zichtbaar zijn bij de NSG muis lijken erop te wijzen dat er zeker wel meer genen een upregulatie krijgen wanneer ze entinostat krijgen, ook in vergelijking met de controle groep.
+Bij het geven van de entinostat krijgt de muis een upregulatie in de genen die betrokken zijn bij huid ontwikkeling, wat mogelijk zou kunnen komen doordat de rest van het immuunsysteem minder goed werkend is.
+Zowel bij de controle groep als de entinostat is er een downregulatie bij genen die betrokken zijn bij translatie, dit zou dus mogelijk kunnen komen doordat DMSO gebruikt is om entinostat in op te lossen, wat mogelijk een negatieve impact kan hebben in de cellen van de muizen m.b.t. translatie.
+
+
