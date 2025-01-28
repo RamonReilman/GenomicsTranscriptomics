@@ -18,10 +18,6 @@ if (!requireNamespace("trackViewer", quietly = TRUE)) { # Only needed if BiocMan
   BiocManager::install("trackViewer")
 }
 library(trackViewer)
-install.packages(c("base64enc", "digest", "glue", "highr", "htmltools", "jsonlite", 
-                   "knitr", "magrittr", "mime", "rmarkdown", "stringi", "stringr", 
-                   "xfun", "yaml"))
-# 
 ```
 
 # Logboek Jasper Jonker
@@ -110,6 +106,7 @@ Hier kunnen we makkelijk zijn hoe goed de data is en van gode kwaliteit is.
 
 Vandaag ga ik bezig met BWA terwijl andere bezig zijn met het trimmen hier door werken we alvast een beetje voor uit en kunnen we, als we klaar zijn met trimmen kunnen we in 1 keer door.
 Ik doe het eerst simpel en in een testing tools map zodat het duidelijk is voor iedereen die het dan leest en ik het ook goed kan uitleggen.
+We gebruiken de versie 0.7.17-r1188 in de paper gebruiken ze version 0.7.4. Dus dit kan verschil opleveren. 
 
 ```{bash, eval= FALSE}
 # hier maken er de van de refence genome een index file zodat de tool sneller gaat. 
@@ -266,8 +263,8 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 ```
 
 Hier heb je mijn resultaten
-[mijn fastqc](../planVanAanpak/my_firtsfasqc.png)
-[mijn mutiqc](../planVanAanpak/my_multiqc.png)
+![mijn fastqc](../planVanAanpak/my_firtsfasqc.png)
+![mijn mutiqc](../planVanAanpak/my_multiqc.png)
 hier zie je dat de data over het algemeen goed is behalve Sequence Length Distribution maar dat gebeurt al snel en kan je niet veel doen. 
 ## 25-09
 
@@ -458,95 +455,160 @@ GSA wordt niet meer gebruikt misschien nog in het trimmonatic gedeelte.
 Want we dachten dat we een verslag moesten schrijven maar dat is niet nodig alleen maar de de loliplot maken.
 
 Met deze loliplot willen we laten zien welke varianten er zijn, of ze op een intron liggen of op een exon liggen en uiteindelijk laten zien wat voor invloed ze hebben op hun processen.
+
+Hier voor laat ik eerst de bestanden in die ik nodig ga hebbem
 ```{r}
 snp_data <- read.csv2("/students/2024-2025/Thema05/BlaasKanker/outputs/vcf_ann_snpSift/SRR14870694.vcf.tabular", sep = "\t", na.strings = "unkown")
 
+bed_file <- read.table("/students/2024-2025/Thema05/BlaasKanker/etc/filtered_bed.bed")
+names(bed_file) <- c("chromosome", "exon_start", "exon_end", "gene_name")
+
 ```
 
+Nu ga ik granges maken dat is belangrijke  basis voor [Genomische locatie](https://bioconductor.org/packages/devel/bioc/vignettes/GenomicRanges/inst/doc/GenomicRangesIntroduction.html)
+Wat hier wordt gedaan is elk object de exone regio's van een specifiek gen bevat en elke de start- en eindposities van de exonen te bepalen
+```{r}
+list_granges <- list()
+bed_splitted = split(bed_file, bed_file$gene_name)
+for (gene in names(bed_splitted)){
+        ranges <- IRanges(start = bed_splitted[[gene]]$exon_start,
+                      end = bed_splitted[[gene]]$exon_end,
+                      names = bed_splitted[[gene]]$gene_name)
+    
+    granges = GRanges(seqnames = bed_splitted[[gene]]$chromosome,
+                      ranges = ranges)
+    mcols(granges)$gene_name = gene
+    list_granges[[gene]] <- granges
+}
+list_granges <- GRangesList(list_granges)
+list_granges
+```
+
+voor genetische varianten die zijn geannoteerd in een VCF-bestand
 
 ```{r}
-list_variant_ranges = list()
+list_variant_ranges <- list()
 
-for (gene_vcf in unique(snp_data$ANN....GENE))
-{
+# Doorloop alle unieke genen
+for (gene_vcf in unique(snp_data$ANN....GENE)) {
     
-    vcf_range <- IRanges(start = snp_data$POS[snp_data$ANN....GENE == gene_vcf],
-                    end = snp_data$POS[snp_data$ANN....GENE == gene_vcf],
-                    names = gene_vcf,
-                    impact = snp_data$ANN....IMPACT[snp_data$ANN....GENE == gene_vcf])
-    vcf_grange <- GRanges(seqnames = unique(snp_data$CHROM[snp_data$ANN....GENE == gene_vcf]),
-                      ranges = vcf_range)
+    # Selecteer de posities en impact voor het huidige gen
+    gene_data <- snp_data[snp_data$ANN....GENE == gene_vcf, ]
+    
+    # Maak de IRanges voor de SNP's
+    vcf_range <- IRanges(
+        start = gene_data$POS,
+        end = gene_data$POS,
+        names = gene_vcf,
+        impact = gene_data$ANN....IMPACT
+    )
+    
+    # Maak het GRanges object voor de SNP's
+    vcf_grange <- GRanges(
+        seqnames = unique(gene_data$CHROM),  # Chromosoom is voor elke variant hetzelfde
+        ranges = vcf_range
+    )
+    
+    # Voeg het GRanges object toe aan de lijst
     list_variant_ranges[[gene_vcf]] <- vcf_grange
-    
 }
+
+# Zet de lijst om naar een GRangesList object
 list_variant_ranges <- GRangesList(list_variant_ranges)
+
+# Toon het resultaat
+list_variant_ranges
+
 ```
+
+Dit blok maakt een lijst van genen die zowel in je VCF-gegevens (snp_data$ANN....GENE) als in de bed_splitted lijst voorkomen.
 
 ```{r}
-gene_variants = list()
-count = 1
-for (gene in unique(snp_data$ANN....GENE)){
-    if (!is.null(bed_splitted[[gene]]))
-    {
-        gene_variants[[count]] <- gene
-        count = count + 1
-    }
-
-}
-
-
+gene_variants <- unique(snp_data$ANN....GENE[snp_data$ANN....GENE %in% names(bed_splitted)])
+gene_variants
 ```
 
+Dit blok maakt een lijst van GRanges objecten, waarbij elke entry een GRanges object is voor de exons van een specifiek gen.
 ```{r}
 list_exons <- list()
 
 for (gene in unique(snp_data$ANN....GENE)){
+    if (gene %in% names(bed_splitted)) {
         ranges <- IRanges(start = bed_splitted[[gene]]$exon_start,
-                      end = bed_splitted[[gene]]$exon_end,
-                      names = bed_splitted[[gene]]$gene_name)
-        if (!is.null(ranges))
-        {
-            granges = GRanges(seqnames = bed_splitted[[gene]]$chromosome,
-                              ranges = ranges)
-            list_exons[[gene]] <- granges
-        }
-    
-
+                          end = bed_splitted[[gene]]$exon_end,
+                          names = bed_splitted[[gene]]$gene_name)
+        
+        granges <- GRanges(seqnames = bed_splitted[[gene]]$chromosome,
+                           ranges = ranges)
+        
+        list_exons[[gene]] <- granges
+    }
 }
 
-list_exons <- GRangesList(list_granges)
+list_exons <- GRangesList(list_exons)
 
 ```
 
 
+Hier maak ik een loliplot 
+```{r}
 
-```{r, fig.cap="Varianten die liggen op het Gstm3 gen. In het bovenstaande figuur zie je de varianten die liggen op het Gstm3 gen. Elke loli is een variant, waarbij de kleur aangeeft of deze op een intron of exon ligt. De hoogte van de loli geeft weer hoe hoog de impact van de mutatie is op het gen."}
-exon_ranges <- ranges(list_exons[[gene]])
+# Selecteer het eerste gen uit gene_variants
+gene <- gene_variants[[1]]
 
-exon_variants <- subsetByOverlaps(ranges(variants_info), exon_ranges)
+# Verkrijg de exons posities (start en end)
+exon_end <- end(list_exons[[gene]])
+exon_start <- start(list_exons[[gene]])
+exon_length <- exon_end - exon_start
 
-exon_index <- which(ranges(variants_info) %in% exon_variants)
+# Verkrijg de variant informatie voor dit gen
+variant_info <- list_variant_ranges[[gene]]
+SNPs <- start(variant_info)
+chromosome <- unique(snp_data$CHROM[snp_data$ANN....GENE == gene])
 
-sample.gr$color[exon_index] <- "#B22222"
+# Maak een hoogte-kaart voor de variant impact
+height_map <- c("LOW" = 1, "MODIFIER" = 5, "MODERATE" = 10, "HIGH" = 15)
 
-legends <- list(labels=c("Intronic", "Exonic"), 
-                fill=c("#0118F9", "#B22222"), 
-                color=c("gray80", "gray80")) ## legend labels
+# Maak GRanges voor de SNPs met impact scores
+sample_gr <- GRanges(
+  seqnames = chromosome,
+  ranges = IRanges(start = SNPs, width = 1),
+  names = paste0("SNP_", SNPs)
+)
+sample_gr$impact <- variant_info$impact
 
-yaxis <- c(0,5,10,15)
-names(yaxis) <- c("LOW", "MODI", "MOD", "HIGH")
-names(gr) <- rep(paste("Exons of", gene), length(gr))
-lolliplot(sample.gr, gr, ylab = " ",
-          xlab = "Chromosome position",
-          yaxis = yaxis,
-          legend = legends)
+# Zorg ervoor dat de impact wordt omgezet naar een score
+sample_gr$score <- height_map[as.character(sample_gr$impact)]
+sample_gr$score[is.na(sample_gr$score)] <- 0  # Zet ongeldige waarden om naar 0
+sample_gr$color <- "#0118F9"  # Blauw voor de SNPs
 
+# Maak GRanges voor de exons van het gen
+gr_exons <- GRanges(
+  seqnames = chromosome,
+  ranges = IRanges(start = exon_start, end = exon_end)
+)
+gr_exons$fill <- "#FF8833"  # Oranje voor de exons
+gr_exons$height <- unit(3, "mm")
 
-grid.text("Mutation impact", x=.1, y=.7, just="bottom", 
-          gp=gpar(cex=1))
-grid.text(paste("Variants on", gene ), x=.2, y=.98, just="top", 
-          gp=gpar(cex=1.5, fontface="bold"))
-grid.text(paste("On chromosome", chromosome ), x=.2, y=.93, just="top", 
-          gp=gpar(cex=1))
+# Instellen van de y-as voor impact niveaus
+yaxis <- c(0, 5, 10, 15)
+names(yaxis) <- c("LOW", "MODIFIER", "MODERATE", "HIGH")
+
+# Genereer de lollipop plot
+lolliplot(
+  sample_gr, gr_exons, 
+  ylab = "Impact level", 
+  xlab = "Chromosome position", 
+  yaxis = yaxis
+)
+
+# Voeg tekst toe aan de plot
+grid.text("Mutation impact", x = 0.1, y = 0.62, just = "bottom", gp = gpar(cex = 1))
+grid.text(paste("Variants on", gene), x = 0.5, y = 0.98, just = "top", gp = gpar(cex = 1.5, fontface = "bold"))
+grid.text(paste("On chromosome", chromosome), x = 0.5, y = 0.93, just = "top", gp = gpar(cex = 1))
+
 ```
 
+Hier zie je dat Tmeff2 een aantal varianten heeft in en buiten en exon. Dit kan gevolgen hebben op het uiteindelijk eiwit waar Tmeff2 voor codeert.
+
+Als we meer tijd hadden gehad zouden we dit kunnen verder kijken wat voor geveolge het heeft op het uiteindelijke biologische procces. 
