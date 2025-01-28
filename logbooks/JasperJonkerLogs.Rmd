@@ -8,8 +8,6 @@ editor_options:
     wrap: sentence
 ---
 
-BiocManager::install("trackViewer")
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(VariantAnnotation)
@@ -27,7 +25,7 @@ library(trackViewer)
 Dit is het Logboek van Jasper Jonker voor het vak 2.1.2 Genomics & Transcriptomics.
 Met dit vak gaan we een paper opnieuw na doen of een andere onderzoeksvraag beantwoorden met de data die gegeven is bij de paper.
 
-Als er wordt gezegd dat het in een ander logboek staat moet je gaan kijken op de Github pagina van ons
+Als er wordt gezegd dat het in een ander logboek staat moet je gaan kijken op de Github pagina van ons naar het vraagde logbook.
 
 ## 09-09
 
@@ -39,7 +37,7 @@ Daar uit is het voor ons dan makkelijker uitkiezen.
 
 ## 10-09
 
-Ik heb er gekozen voor het volgende onderzoek <https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE153650> .
+Ik heb er gekozen voor het volgende onderzoek [Entinostat induces antitumor immune responses through immune editing of tumor neoantigens](https://pubmed.ncbi.nlm.nih.gov/34396985/).
 Het is een onderzoek dat gaat over het bestrijden van blaaskanker met behulp van specifiek soort eiwitten.
 Omdat er hedendaags nog heel veel mensen dood aan gaan en ook de behandeling die ze nu gebruiken, dus chemotherapie, niet altijd even goed aan slaat.
 Dit onderzoek wordt eerst op muizen getest.
@@ -54,6 +52,7 @@ IK ga bezig met de workflow.
 ## 13-09 & 14-09
 
 Bezig met de worklfow en gekeken wat we uiteindelijk gaan doen.
+![worflow.png](../planVanAanpak/FlowchartWorkflow.png)
 We hebben besloten om de het onderzoek na te bootsen maar ook een beetje te verbreden.
 We gaan ook kijken wat de mutatie van de kanker en wat voor gevolg het heeft op biologische processen verder in het lichaam.
 Dat lijkt ons leuker om te doen dan het onderzoek precies na te doen.
@@ -115,7 +114,7 @@ samtools sort -o output.sorted.bam outputtest.bam
 samtools index output.sorted.bam
 ```
 
-Voor deze tool te begrijpen heb ik de volgende turbotaal gebruikt om het te begrijpen en uiteindelijk te kunnen toe passen op onze eige data : <https://www.youtube.com/watch?v=1wcFavYt6uU>
+Voor deze tool te begrijpen heb ik de volgende turtorial gebruikt om het te begrijpen en uiteindelijk te kunnen toe passen op onze eige data : [How I perform Genome Mapping using BWA](https://www.youtube.com/watch?v=1wcFavYt6uU)
 
 ## 20-09
 
