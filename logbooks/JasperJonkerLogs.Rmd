@@ -25,21 +25,21 @@ library(trackViewer)
 Dit is het Logboek van Jasper Jonker voor het vak 2.1.2 Genomics & Transcriptomics.
 Met dit vak gaan we een paper opnieuw na doen of een andere onderzoeksvraag beantwoorden met de data die gegeven is bij de paper.
 
-Als er wordt gezegd dat het in een ander logboek staat moet je gaan kijken op de Github pagina van ons naar het vraagde logbook.
+Als er wordt gezegd dat het in een ander logboek staat moet je gaan kijken op de Github pagina van ons naar het gevraagde logboek.
 
 ## 09-09
 
 We starten het onderzoek.
-We moeten eerst een paper vinden of verslag met genoeg meetwaarde heeft met meerde meetwaarde onder de zelfde omstandigheden.
-We doen het onderzoek met vier mensen dus hebben besloten om ieder 1 uit te kiezen.
-Om zeker te weten dat er 1 tussen zit die vol doet aan alle eizen die gesteld worden en we van alle onderzoeken kunnen verkleinen naar maar vier.
-Daar uit is het voor ons dan makkelijker uitkiezen.
+We moeten eerst een paper vinden of verslag die genoeg meetwaarde heeft; met meerde meetwaarde onder de zelfde omstandigheden.
+We doen het onderzoek met vier mensen dus hebben besloten om ieder 1 onderzoek uit te kiezen.
+Om zeker te weten dat er 1 tussen zit die voldoet aan alle eisen die gesteld worden. En we kunnen alle onderzoeken zo verkleinen naar maar vier.
+Daaruit is het voor ons dan makkelijker uitkiezen.
 
 ## 10-09
 
-Ik heb er gekozen voor het volgende onderzoek [Entinostat induces antitumor immune responses through immune editing of tumor neoantigens](https://pubmed.ncbi.nlm.nih.gov/34396985/).
-Het is een onderzoek dat gaat over het bestrijden van blaaskanker met behulp van specifiek soort eiwitten.
-Omdat er hedendaags nog heel veel mensen dood aan gaan en ook de behandeling die ze nu gebruiken, dus chemotherapie, niet altijd even goed aan slaat.
+Ik heb voor het volgende onderzoek gekozen: [Entinostat induces antitumor immune responses through immune editing of tumor neoantigens](https://pubmed.ncbi.nlm.nih.gov/34396985/).
+Het is een onderzoek dat gaat over het bestrijden van blaaskanker met behulp van specifiek soorten eiwitten.
+Omdat er hedendaags nog heel veel mensen dood aan gaan en ook de behandeling die ze nu gebruiken, chemotherapie, niet altijd even goed aanslaat.
 Dit onderzoek wordt eerst op muizen getest.
 Nu nog wachten op goedkeuring van de docenten.
 
@@ -51,21 +51,21 @@ IK ga bezig met de workflow.
 
 ## 13-09 & 14-09
 
-Bezig met de worklfow en gekeken wat we uiteindelijk gaan doen.
+Bezig met de workflow en gekeken wat we uiteindelijk gaan doen.
 ![worflow.png](../planVanAanpak/FlowchartWorkflow.png)
-We hebben besloten om de het onderzoek na te bootsen maar ook een beetje te verbreden.
-We gaan ook kijken wat de mutatie van de kanker en wat voor gevolg het heeft op biologische processen verder in het lichaam.
+We hebben besloten om het onderzoek na te bootsen maar ook een beetje te verbreden.
+We gaan ook kijken naar wat de mutatie van de kanker zijn en wat voor gevolg het heeft op biologische processen verder in het lichaam.
 Dat lijkt ons leuker om te doen dan het onderzoek precies na te doen.
 
 ## 16-09
 
 Het plan van aanpak gepresenteerd. In het onderzoek gebruiken ze [Genome assembly MGSCv37](https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001635.18/) referentie genoom. 
-We hebben un overleg met elkaar er voor gekozen om de nieuwste te gaan gebruiken.Dat is dus [Genome assembly GRCm39](https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001635.27/)
-Dit omdat dat gen het nieuwst is en ook het meest van bekendst is.
-Hierdoor kan je een nieuwe ontdekking krijgen door dat er misschien fouten waren in het oude genoom en die nu kunnen verdwenen zijn.
+We hebben na overleg met elkaar ervoor gekozen om de nieuwste te gaan gebruiken. Dat is dus [Genome assembly GRCm39](https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001635.27/)
+Dit omdat dat gen het nieuwst is en ook het bekendst is.
+Hierdoor kan je een nieuwe ontdekking krijgen doordat er misschien fouten waren in het oude genoom en die nu verdwenen kunnen  zijn.
 We hebben ook een taak verdeling gemaakt.
 Ik ga bezig met bwa omdat het mij iets moeilijks lijkt en ik mezelf wil uitdagen.
-BWA wordt ook veel gebruikt in de bioinformatica dus is zo ie zo handig om te weten hoe het werkt.
+BWA wordt ook veel gebruikt in de bio-informatica dus het is sowieso handig om te weten hoe het werkt.
 BWA vergelijkt de korte DNA- of RNA-sequenties die door een sequencer zijn gegenereerd (bijv. Illumina-reads) met een bekende referentie genoom. Het bepaalt waar die reads het beste passen in de genoom sequentie.
 BWA wordt vaak gebruikt in genomische studies, waaronder:
 
@@ -78,7 +78,7 @@ BWA wordt vaak gebruikt in genomische studies, waaronder:
 
 Ik ga vandaag eerst testdata maken in een oefen Folder die later weer wordt verwijderd.
 We maken test data omdat die data kleiner is dan de normale data en daarom makkelijker te gebruiken is in onze tools zodat het niet te lang duurt.
-We hebben maar een bepaalde tijd en als we telkens moeten wachten op dat de tools klaar zijn en het fout kan gaan op het laatste moment fout kan gaan gooi je veel belangrijke tijd over.
+We hebben maar een bepaalde tijd en als we telkens moeten wachten op dat de tools klaar zijn en het fout kan gaan op het laatste moment, houdt je op deze manier veel belangrijke tijd over.
 Dit doen we even allemaal en doen het met 10000 reads omdat het ons groot genoeg lijkt.
 We doen het allemaal omdat het in andere onderzoeken ook gebruikt kunnen worden.
 
@@ -88,7 +88,7 @@ find /students/2024-2025/Thema05/BlaasKanker/fastq/ -name "*.fastq" | \
 ```
 
 Hier ga ik ook een Fastqc maken van de oefendata zodat we dat ook allemaal even weten.
-Want later moeten we Fastqc bestanden maken van de data om te kijken of het na het trimmen de data naar wens is met niet te veel duplicaten bijvoorbeeld en of de data wel van goede kwaliteit is.
+Want later moeten we Fastqc bestanden maken van de data om te kijken of de data na het trimmen naar wens is met niet te veel duplicaten bijvoorbeeld en of de data wel van goede kwaliteit is.
 
 ```{bash, eval=FALSE}
 fastqc /students/2024-2025/Thema05/BlaasKanker/oefenengroep/testdataJasper/* \
@@ -101,12 +101,12 @@ Dit doe we ook voor multiqc.
 multiqc /students/2024-2025/Thema05/BlaasKanker/oefenengroep/FastqcJasper/* -o /students/2024-2025/Thema05/BlaasKanker/oefenengroep/multiqcJasper/
 ```
 
-Hier kunnen we makkelijk zijn hoe goed de data is en van gode kwaliteit is. 
+Hier kunnen we makkelijk zien hoe goed de data is en of het van goede kwaliteit is. 
 ## 18 -09
 
-Vandaag ga ik bezig met BWA terwijl andere bezig zijn met het trimmen hier door werken we alvast een beetje voor uit en kunnen we, als we klaar zijn met trimmen kunnen we in 1 keer door.
+Vandaag ga ik bezig met BWA terwijl anderen bezig zijn met het trimmen. Hierdoor werken we alvast een beetje vooruit en kunnen we, als we klaar zijn met trimmen, in 1 keer door.
 Ik doe het eerst simpel en in een testing tools map zodat het duidelijk is voor iedereen die het dan leest en ik het ook goed kan uitleggen.
-We gebruiken de versie 0.7.17-r1188 in de paper gebruiken ze version 0.7.4. Dus dit kan verschil opleveren. 
+We gebruiken de versie 0.7.17-r1188. In de paper gebruiken ze version 0.7.4. Dus dit kan verschil opleveren. 
 
 ```{bash, eval= FALSE}
 # hier maken er de van de refence genome een index file zodat de tool sneller gaat. 
@@ -115,25 +115,25 @@ bwa index /students/2024-2025/Thema05/BlaasKanker/realreferenceGenome/ncbi_datas
 bwa mem -t 8  SRR14870694_1.fastq SRR14870694_2.fastq > outputtest.sam
 # hier veranderen we het sam file naar een bam file omdat het minder ruimte in neemt
 samtools view -b outputtest.sam > output.bam 
-# Nu gaan we sorteren op coordinaten 
+# Nu gaan we sorteren op coördinaten 
 samtools sort -o output.sorted.bam outputtest.bam 
 
 samtools index output.sorted.bam
 ```
 
-Voor deze tool te begrijpen heb ik de volgende turtorial gebruikt om het te begrijpen en uiteindelijk te kunnen toe passen op onze eige data : [How I perform Genome Mapping using BWA](https://www.youtube.com/watch?v=1wcFavYt6uU)
+Voor deze tool te begrijpen heb ik de volgende tutorial gebruikt om het te begrijpen en uiteindelijk te kunnen toepassen op onze eigen data : [How I perform Genome Mapping using BWA](https://www.youtube.com/watch?v=1wcFavYt6uU)
 
 ## 20-09
 
-Bezig geweest met trimmiotic, er is na het trimmen kwaliteit om laag gegaan en dat is niet logisch.
+Bezig geweest met trimmomatic; er is na het trimmen kwaliteit omlaag gegaan en dat is niet logisch.
 
-Onze ongetrimde data was zo ie zo al super goed dus we hebben ook gelezen of ze het al getrimd hebben geüpload maar we kunnen er niks over vinden.
+Onze ongetrimde data was sowieso al super goed dus we hebben ook gelezen of ze het al getrimd hebben geüpload maar we kunnen er niks over vinden.
 Dus we gaan eerst nog verder kijken naar wat handig is om te doen.
-Kijken of we het op een bepaalde manier wel kunnen trimmen of we het op de ongetrimmde data gewoon verder gaan en dan kijken het het wel gaat.
+Kijken of we het op een bepaalde manier wel kunnen trimmen of dat we het op de ongetrimmde data gewoon verder gaan en dan kijken we of het zo gaat.
 
 ## 22-09
 
-Ik ga van daag even puzzelen met trimomatic de onderste code heb ik van iris.
+Ik ga vandaag even puzzelen met trimomatic, de onderste code heb ik van iris.
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
@@ -151,16 +151,16 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 
 Mijn terminal doet raar.
 Mijn webpagina sluit telkens af en is super sloom dus het gaat niet helemaal lekker.
-Ik ga eerst wel veder met lezen wat we allemaal kunnen doen met trimmen zodat onze data wel goed er uit komt
+Ik ga eerst wel verder met lezen wat we allemaal kunnen doen met trimmen zodat onze data er wel goed uitkomt.
 
-We kunnen het proberen met traling toe te passen.
-Dit verwijderd de laatste paar basen verwijderd worden totdat een totdat er een kwaliteit gevonden is die gewenst is.
-Hetzelfde geld voor leading.
+We kunnen het proberen door trailing toe te passen.
+Dit verwijderd de laatste paar basen totdat er een kwaliteit gevonden is die gewenst is.
+Hetzelfde geldt voor leading.
 Maar dat is dan bij de eerste paar basen met te lage kwaliteit.
 Min len kunnen we ook gebruiken.
-Die halen de sequencies er uit die te klein zijn bij een bepaalde lengte.
+Die halen de sequenties er uit die te klein zijn bij een bepaalde lengte.
 
-Ik ga het eerst probren met traling
+Ik ga het eerst proberen met trailing
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
@@ -177,18 +177,18 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
                   'TRALLING:20'
 ```
 
-Mijn laptop doet vervelend ik probeer dat eerst even op te lossen en ga anders later nog verder om te kijken wat betere setting zijn om toe te passen als het nodig is
+Mijn laptop doet vervelend ik probeer dat eerst even op te lossen en ga anders later nog verder om te kijken wat betere settings zijn om toe te passen als het nodig is
 
 ## 23-09
 
 bwa werkt nu echt op de test data, maar moet even wachten op het trimmen van de data want we zitten te twijfelen wat we moeten gaan trimmen.
 Dit gaan we even met de docent over hebben.
-In de tussen tijd gaan we verder met Strelka.
+In de tussentijd gaan we verder met Strelka.
 Dit is een tool die variantie kan vinden in de mapping.
 Hier mee kunnen we kijken waar de mutaties zitten in het gen en kunnen we later kijken wat voor invloed het heeft op de eiwitten later in het biologisch proces.
 
 Hier gaan we bezig op de echte data die nog niet getrimde is zodat we zeker weten dat het het doet als het op de getrimde data gaan doen.
-Hier staat als het ware het zelde als op dag 18-09 maar dan met het pad waar alles is en waar alles moet staan en alles parallel.
+Hier staat als het ware hetzelde als op dag 18-09 maar dan met het pad waar alles is en waar alles moet staan en alles parallel.
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
@@ -218,7 +218,7 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 Het werkt zoals het zou moeten en nu even wachten op het trimmen.
 Hier hebben we nog twijfels over wat we moeten doen met de duplicaten en gaan we dan op 25-09 gaan we het mappen op de echte getrimmde data.
 
-Nu ga ik verder met trimomatic dus kopieeer het van boven weer.Deze is de basic dan en word aangepast zodat ik de rest niet in de weg zit.
+Nu ga ik verder met trimomatic dus kopieer het van boven weer. Deze is de basic dan en word aangepast zodat ik de rest niet in de weg zit.
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
@@ -240,14 +240,14 @@ fastqc /students/2024-2025/Thema05/BlaasKanker/testingtools/trim_jasper/paired/*
     -o /students/2024-2025/Thema05/BlaasKanker/testingtools/trim_jasper/FASTqc/
 ```
 
-IK maak ook hier een multiqc
+Ik maak ook hier een multiqc
 
 ```{bash, eval=FALSE}
 multiqc /students/2024-2025/Thema05/BlaasKanker/testingtools/trim_jasper/FASTqc/* -o /students/2024-2025/Thema05/BlaasKanker/testingtools/trim_jasper/MUL/
 ```
 
 Het is verkeerd gegaan alles is leeg dus ik doe het nu opnieuw.
-Ik had een spelfout gemaakt in de trimomatic dus dat is gefikst
+Ik had een spelfout gemaakt in de trimmomatic dus dat is gefikst
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
@@ -269,11 +269,11 @@ hier zie je dat de data over het algemeen goed is behalve Sequence Length Distri
 ## 25-09
 
 Vandaag gaan we mappen op de echte data.
-we hebben er voor gekozen om uiteindelijk niet te trimmen maar de duplicaten er uit te halen door bwa of beter te laten aan vinken.
+we hebben er voor gekozen om uiteindelijk niet te trimmen maar de duplicaten eruit te halen door bwa of beter te laten aan vinken.
 We hebben besloten om niet te trimmen omdat de data goed genoeg is voor dat we trimmen en na het trimmen de kwaliteit achter uit gaat en er gaat best veel data weg die we nog kunnen gebruiken.
 
-Uit Ramons github heb ik -M -R '@RG\\tID:{}\\tSM:{}\\tPL:illumina\\tLB:lib1 gehaald.
-Dit zorgt ervoor dat bwa de duplicaten high light als het ware en dat is nodig voor pidcard om het te doen
+Uit Ramons github heb ik `-M -R '@RG\\tID:{}\\tSM:{}\\tPL:illumina\\tLB:lib1` gehaald.
+Dit zorgt ervoor dat bwa de duplicaten highlight als het ware en dat is nodig voor picard om het te doen
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
@@ -357,7 +357,7 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 
 ## 30-10
 
-Ramon is bezig geweest met snifeff met mijn hulp en kan je daar verder lezen in Ramon logboek. Dit omdat we vooral in het lokaal aanwezig waren toen dit werd besproken tussen ons. Hierdoor vonden we het onnodig om in aparte logbooken bezig te gaan. 
+Ramon is bezig geweest met snifeff met mijn hulp en kan je daar verder lezen in Ramon logboek. Dit omdat we vooral in het lokaal aanwezig waren toen dit werd besproken tussen ons. Hierdoor vonden we het onnodig om in aparte logboeken bezig te gaan. 
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
@@ -400,7 +400,7 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 
 Ik ga GSEA bekijken en downloaden.
 GSEA is een tool waar je mee kan kijken of vooraf gedefinieerde set genen significant, overeenstemde verschillen heeft onder 2 verschillende biologische processen.
-Hier mee kunnen we kijken wat voor invloed de mutaties hebben.
+Hiermee kunnen we kijken wat voor invloed de mutaties hebben.
 We gaan het nu nog niet gebruiken.
 Dat komt omdat we nu nog niet weten wat de bedoeling is met de eind bestanden die we hebben gemaakt.
 
@@ -412,7 +412,7 @@ Dit om de vcf bestanden te laten zien.
 pip install -U vcfstats
 ```
 
-Hier onder is het command voor op de data gelijk op een oefen pagina op alle sequences
+Hieronder is het command voor op de data gelijk op een oefen pagina op alle sequenties
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
@@ -422,7 +422,7 @@ parallel "vcfstats --vcf /students/2024-2025/Thema05/BlaasKanker/outputs/variant
     --title 'Number of variants on each chromosome({})'"
 ```
 
-Hier doen we het op de mutaiies die over blijven die een mutaies hebben die dan vervolgens kanker kunnen veroorzaken.
+Hier doen we het op de mutaties die overblijven die een mutaties hebben die dan vervolgens kanker kunnen veroorzaken.
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
@@ -432,7 +432,7 @@ parallel "vcfstats --vcf /students/2024-2025/Thema05/BlaasKanker/outputs/variant
     --title 'Number of variants on each chromosome(kanker)({})'"
 ```
 
-Hier onder zie je de twee figuren van hetzelfde sample maar de linker zijn alle varianten en de rechter zijn alle varianten die kanker veroorzaken.
+Hieronder zie je de twee figuren van hetzelfde sample. De linker zijn alle varianten en de rechter zijn alle varianten die kanker veroorzaken.
 
 ```{r echo=FALSE}
 library(cowplot)
@@ -445,18 +445,18 @@ plot_grid(p1, p2)
 ```
 
 Hier kan je zien dat er op het chromosoom 7 de meeste zijn die kanker veroorzaken.
-Omdat het zoveel is gaan we later nog filteren op hoe erg de invloed is van de mutatie op het biologisch proces en pakken we de gene met een een groot gevolg.
+Omdat het zoveel is gaan we later nog filteren op hoe erg de invloed is van de mutatie op het biologisch proces en pakken we de genen met een groot gevolg.
 
 ## De rest
 
-Deze periode ben ik bezig geweest met mensen helpen bijvoorbeeld met de plots maken en alvast bezig geweest met het plan van aanpak voor het trimmonatic gedeelte.
+Deze periode ben ik bezig geweest met mensen helpen bijvoorbeeld met de plots maken en alvast bezig geweest met het plan van aanpak voor het trimmomatic gedeelte.
 
-GSA wordt niet meer gebruikt misschien nog in het trimmonatic gedeelte.
-Want we dachten dat we een verslag moesten schrijven maar dat is niet nodig alleen maar de de loliplot maken.
+GSA wordt niet meer gebruikt misschien nog in het trimmomatic gedeelte.
+Want we dachten dat we een verslag moesten schrijven maar dat is niet nodig, alleen maar de loliplot maken.
 
 Met deze loliplot willen we laten zien welke varianten er zijn, of ze op een intron liggen of op een exon liggen en uiteindelijk laten zien wat voor invloed ze hebben op hun processen.
 
-Hier voor laat ik eerst de bestanden in die ik nodig ga hebbem
+Hiervoor laat ik eerst de bestanden in die ik nodig ga hebben
 ```{r}
 snp_data <- read.csv2("/students/2024-2025/Thema05/BlaasKanker/outputs/vcf_ann_snpSift/SRR14870694.vcf.tabular", sep = "\t", na.strings = "unkown")
 
@@ -466,7 +466,7 @@ names(bed_file) <- c("chromosome", "exon_start", "exon_end", "gene_name")
 ```
 
 Nu ga ik granges maken dat is belangrijke  basis voor [Genomische locatie](https://bioconductor.org/packages/devel/bioc/vignettes/GenomicRanges/inst/doc/GenomicRangesIntroduction.html)
-Wat hier wordt gedaan is elk object de exone regio's van een specifiek gen bevat en elke de start- en eindposities van de exonen te bepalen
+Wat hier wordt gedaan is elk object de exonen regio's van een specifiek gen bevat en elke de start- en eindposities van de exonen te bepalen
 ```{r}
 list_granges <- list()
 bed_splitted = split(bed_file, bed_file$gene_name)
@@ -609,6 +609,6 @@ grid.text(paste("On chromosome", chromosome), x = 0.5, y = 0.93, just = "top", g
 
 ```
 
-Hier zie je dat Tmeff2 een aantal varianten heeft in en buiten en exon. Dit kan gevolgen hebben op het uiteindelijk eiwit waar Tmeff2 voor codeert.
+Hier zie je dat Tmeff2 een aantal varianten heeft in en buiten een exon. Dit kan gevolgen hebben op het uiteindelijk eiwit waar Tmeff2 voor codeert.
 
-Als we meer tijd hadden gehad zouden we dit kunnen verder kijken wat voor geveolge het heeft op het uiteindelijke biologische procces. 
+Als we meer tijd hadden gehad zouden we dit kunnen verder kijken wat voor gevolgen het heeft op het uiteindelijke biologische proces. 
