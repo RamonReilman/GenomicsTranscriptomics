@@ -18,6 +18,10 @@ if (!requireNamespace("trackViewer", quietly = TRUE)) { # Only needed if BiocMan
   BiocManager::install("trackViewer")
 }
 library(trackViewer)
+install.packages(c("base64enc", "digest", "glue", "highr", "htmltools", "jsonlite", 
+                   "knitr", "magrittr", "mime", "rmarkdown", "stringi", "stringr", 
+                   "xfun", "yaml"))
+# 
 ```
 
 # Logboek Jasper Jonker
@@ -59,15 +63,20 @@ Dat lijkt ons leuker om te doen dan het onderzoek precies na te doen.
 
 ## 16-09
 
-Het plan van aanpak gepresenteerd.
-We hebben ook gelijk gekozen om met het nieuwste muizen gen te gaan vergelijken.
-Dit omdat dat gen het nieuwst is en ook het meest van bekentst is.
-Misschien komen er hier door ook op een andere conclusie dan als we het met het oude gen gingen vergelijken.
+Het plan van aanpak gepresenteerd. In het onderzoek gebruiken ze [Genome assembly MGSCv37](https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001635.18/) referentie genoom. 
+We hebben un overleg met elkaar er voor gekozen om de nieuwste te gaan gebruiken.Dat is dus [Genome assembly GRCm39](https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001635.27/)
+Dit omdat dat gen het nieuwst is en ook het meest van bekendst is.
+Hierdoor kan je een nieuwe ontdekking krijgen door dat er misschien fouten waren in het oude genoom en die nu kunnen verdwenen zijn.
 We hebben ook een taak verdeling gemaakt.
 Ik ga bezig met bwa omdat het mij iets moeilijks lijkt en ik mezelf wil uitdagen.
-BWA wordt ook veel gebruikt in de bioinformatica dus is zoiezo handig om te weten hoe het werkt.
-BWA is een alining tool tegen over een refence genoom.
-Wat belankrijk is in veel onderzoeken omdat je dan kan weten of je data ook wel overeen komt met het organisme waar je onderzoek van doet.
+BWA wordt ook veel gebruikt in de bioinformatica dus is zo ie zo handig om te weten hoe het werkt.
+BWA vergelijkt de korte DNA- of RNA-sequenties die door een sequencer zijn gegenereerd (bijv. Illumina-reads) met een bekende referentie genoom. Het bepaalt waar die reads het beste passen in de genoom sequentie.
+BWA wordt vaak gebruikt in genomische studies, waaronder:
+
+    Variantdetectie: SNP's, indels en andere genetische variaties.
+    Mutatieanalyse: Bij kankeronderzoek of erfelijke ziektes.
+    Metagenomics: Het identificeren van micro-organismen in complexe monsters.
+    Transcriptomics: Het analyseren van RNA-gegevens (bijvoorbeeld splice-varianten).
 
 ## 17-09
 
@@ -96,15 +105,16 @@ Dit doe we ook voor multiqc.
 multiqc /students/2024-2025/Thema05/BlaasKanker/oefenengroep/FastqcJasper/* -o /students/2024-2025/Thema05/BlaasKanker/oefenengroep/multiqcJasper/
 ```
 
+Hier kunnen we makkelijk zijn hoe goed de data is en van gode kwaliteit is. 
 ## 18 -09
 
 Vandaag ga ik bezig met BWA terwijl andere bezig zijn met het trimmen hier door werken we alvast een beetje voor uit en kunnen we, als we klaar zijn met trimmen kunnen we in 1 keer door.
-Ik doe het eerst simpel en in een testingtools map zodat het duidelijk is voor iedreen die het dan leest en ik het ook goed kan uitleggen.
+Ik doe het eerst simpel en in een testing tools map zodat het duidelijk is voor iedereen die het dan leest en ik het ook goed kan uitleggen.
 
 ```{bash, eval= FALSE}
 # hier maken er de van de refence genome een index file zodat de tool sneller gaat. 
 bwa index /students/2024-2025/Thema05/BlaasKanker/realreferenceGenome/ncbi_dataset/data/GCF_000001635.27/GCF_000001635.27_GRCm39_genomic.fna
-# hier strten we het mappen en noemen het output.sam op de teastdata 
+# hier starten we het mappen en noemen het output.sam op de teastdata 
 bwa mem -t 8  SRR14870694_1.fastq SRR14870694_2.fastq > outputtest.sam
 # hier veranderen we het sam file naar een bam file omdat het minder ruimte in neemt
 samtools view -b outputtest.sam > output.bam 
@@ -119,9 +129,10 @@ Voor deze tool te begrijpen heb ik de volgende turtorial gebruikt om het te begr
 ## 20-09
 
 Bezig geweest met trimmiotic, er is na het trimmen kwaliteit om laag gegaan en dat is niet logisch.
-Onze ongetrimde data was zo ie zo al super goed dus we hebben ook gelezen of ze het al getrimmed hebben geüpload maar we kunnen er niks over vinden.
+
+Onze ongetrimde data was zo ie zo al super goed dus we hebben ook gelezen of ze het al getrimd hebben geüpload maar we kunnen er niks over vinden.
 Dus we gaan eerst nog verder kijken naar wat handig is om te doen.
-Kijken of we het op een bepaalde manierwel kunnen trimmen of we het op de ongetrimmde data gewoon verder gaan en dan kijken het het wel gaat.
+Kijken of we het op een bepaalde manier wel kunnen trimmen of we het op de ongetrimmde data gewoon verder gaan en dan kijken het het wel gaat.
 
 ## 22-09
 
@@ -208,9 +219,9 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 ```
 
 Het werkt zoals het zou moeten en nu even wachten op het trimmen.
-Hier hebben we no twijfels over wat we moeten doen met de duplicaten en gaan we dan op 25-09 gaan we het mappen op de echte getrimmde data.
+Hier hebben we nog twijfels over wat we moeten doen met de duplicaten en gaan we dan op 25-09 gaan we het mappen op de echte getrimmde data.
 
-Nu ga ik verder met trimomatic dus kopieeer het van boven weer.Deze is de basic dan en evena aangepast zodat ik de rest niet in de weg zit.
+Nu ga ik verder met trimomatic dus kopieeer het van boven weer.Deze is de basic dan en word aangepast zodat ik de rest niet in de weg zit.
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
@@ -254,6 +265,10 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
                   'MINLEN:40' \
 ```
 
+Hier heb je mijn resultaten
+[mijn fastqc](../planVanAanpak/my_firtsfasqc.png)
+[mijn mutiqc](../planVanAanpak/my_multiqc.png)
+hier zie je dat de data over het algemeen goed is behalve Sequence Length Distribution maar dat gebeurt al snel en kan je niet veel doen. 
 ## 25-09
 
 Vandaag gaan we mappen op de echte data.
@@ -303,12 +318,13 @@ samtools index /students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/ou
 
 ## 27-09
 
-ik heb de data nu goed gemaakt was blijkbaar niet goed gegaan waarschijnlijk door de slechte servers.
+Ik heb de data nu goed gemaakt was blijkbaar niet goed gegaan waarschijnlijk door de slechte servers.
 Want ik kreeg geen fout meldingen of wat dan ook
 
 Ik ga nu weer nieuwe testdata maken van alle testdata.
 zodat iris er mee bezig kan.
-Die heeft mijn data nodig om haar tool te kunnen gebruiken.
+Die heeft mijn data nodig om haar tool, Picard, te kunnen gebruiken.
+Picard is een tool die nodig is om duplicaten te markeren.
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
@@ -327,10 +343,10 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 Dat is gelukt dus we kunnen weer verder.
 
 Iris heeft picard gebruikt om de duplicaten te verwijderen.
-Ze heeft het eerst op de testdata gedaan en later die dag op de echte data.
+Ze heeft het eerst op de test data gedaan en later die dag op de echte data.
 Dit is te lezen in het logboek van Iris
 
-Hier is het stukje code wat gebruikt is voor picard
+Hier is het stukje code wat gebruikt is voor Picard
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
@@ -344,8 +360,7 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 
 ## 30-10
 
-Ramon is bezig geweest met snifeff en kan je daar verder lezen in Ramon logboek.
-Daar heb ik bij geholpen maar,
+Ramon is bezig geweest met snifeff met mijn hulp en kan je daar verder lezen in Ramon logboek. Dit omdat we vooral in het lokaal aanwezig waren toen dit werd besproken tussen ons. Hierdoor vonden we het onnodig om in aparte logbooken bezig te gaan. 
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
@@ -443,3 +458,95 @@ GSA wordt niet meer gebruikt misschien nog in het trimmonatic gedeelte.
 Want we dachten dat we een verslag moesten schrijven maar dat is niet nodig alleen maar de de loliplot maken.
 
 Met deze loliplot willen we laten zien welke varianten er zijn, of ze op een intron liggen of op een exon liggen en uiteindelijk laten zien wat voor invloed ze hebben op hun processen.
+```{r}
+snp_data <- read.csv2("/students/2024-2025/Thema05/BlaasKanker/outputs/vcf_ann_snpSift/SRR14870694.vcf.tabular", sep = "\t", na.strings = "unkown")
+
+```
+
+
+```{r}
+list_variant_ranges = list()
+
+for (gene_vcf in unique(snp_data$ANN....GENE))
+{
+    
+    vcf_range <- IRanges(start = snp_data$POS[snp_data$ANN....GENE == gene_vcf],
+                    end = snp_data$POS[snp_data$ANN....GENE == gene_vcf],
+                    names = gene_vcf,
+                    impact = snp_data$ANN....IMPACT[snp_data$ANN....GENE == gene_vcf])
+    vcf_grange <- GRanges(seqnames = unique(snp_data$CHROM[snp_data$ANN....GENE == gene_vcf]),
+                      ranges = vcf_range)
+    list_variant_ranges[[gene_vcf]] <- vcf_grange
+    
+}
+list_variant_ranges <- GRangesList(list_variant_ranges)
+```
+
+```{r}
+gene_variants = list()
+count = 1
+for (gene in unique(snp_data$ANN....GENE)){
+    if (!is.null(bed_splitted[[gene]]))
+    {
+        gene_variants[[count]] <- gene
+        count = count + 1
+    }
+
+}
+
+
+```
+
+```{r}
+list_exons <- list()
+
+for (gene in unique(snp_data$ANN....GENE)){
+        ranges <- IRanges(start = bed_splitted[[gene]]$exon_start,
+                      end = bed_splitted[[gene]]$exon_end,
+                      names = bed_splitted[[gene]]$gene_name)
+        if (!is.null(ranges))
+        {
+            granges = GRanges(seqnames = bed_splitted[[gene]]$chromosome,
+                              ranges = ranges)
+            list_exons[[gene]] <- granges
+        }
+    
+
+}
+
+list_exons <- GRangesList(list_granges)
+
+```
+
+
+
+```{r, fig.cap="Varianten die liggen op het Gstm3 gen. In het bovenstaande figuur zie je de varianten die liggen op het Gstm3 gen. Elke loli is een variant, waarbij de kleur aangeeft of deze op een intron of exon ligt. De hoogte van de loli geeft weer hoe hoog de impact van de mutatie is op het gen."}
+exon_ranges <- ranges(list_exons[[gene]])
+
+exon_variants <- subsetByOverlaps(ranges(variants_info), exon_ranges)
+
+exon_index <- which(ranges(variants_info) %in% exon_variants)
+
+sample.gr$color[exon_index] <- "#B22222"
+
+legends <- list(labels=c("Intronic", "Exonic"), 
+                fill=c("#0118F9", "#B22222"), 
+                color=c("gray80", "gray80")) ## legend labels
+
+yaxis <- c(0,5,10,15)
+names(yaxis) <- c("LOW", "MODI", "MOD", "HIGH")
+names(gr) <- rep(paste("Exons of", gene), length(gr))
+lolliplot(sample.gr, gr, ylab = " ",
+          xlab = "Chromosome position",
+          yaxis = yaxis,
+          legend = legends)
+
+
+grid.text("Mutation impact", x=.1, y=.7, just="bottom", 
+          gp=gpar(cex=1))
+grid.text(paste("Variants on", gene ), x=.2, y=.98, just="top", 
+          gp=gpar(cex=1.5, fontface="bold"))
+grid.text(paste("On chromosome", chromosome ), x=.2, y=.93, just="top", 
+          gp=gpar(cex=1))
+```
+
