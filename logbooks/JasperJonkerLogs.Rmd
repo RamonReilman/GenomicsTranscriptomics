@@ -135,6 +135,8 @@ Kijken of we het op een bepaalde manier wel kunnen trimmen of dat we het op de o
 
 Ik ga vandaag even puzzelen met trimomatic, de onderste code heb ik van iris.
 
+Wij gebruiken TrimmomaticPE versie 0.39
+
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
   parallel 'TrimmomaticPE -threads 4' \
@@ -612,3 +614,60 @@ grid.text(paste("On chromosome", chromosome), x = 0.5, y = 0.93, just = "top", g
 Hier zie je dat Tmeff2 een aantal varianten heeft in en buiten een exon. Dit kan gevolgen hebben op het uiteindelijk eiwit waar Tmeff2 voor codeert.
 
 Als we meer tijd hadden gehad zouden we dit kunnen verder kijken wat voor gevolgen het heeft op het uiteindelijke biologische proces. 
+
+Ik ga kijken naar alternatieven voor bwa. bwa word vaak gebruikt bij variant analyse omdat hij beter wekt met indels, robuust is en ondersteund veel varianten(ik dedoel hier meer SNPs, indels en structurele varianten). En heeft BWA-MEM is goed voor lange reads.
+
+Een andere is bowtie2. Bowtie2 is hier niet de juiste voor dit onderzoek, want werkt niet goed met indels, maar kan wel gebruikt worden. Bowtie2 word gebruikt voor uitlijnen van korte sequenties tegen het referentie genoom. Maar hij is super snel dus altijd handig om weten hoe het werkt. 
+
+Je moet zelf een index maken voor bowtie2 en dat doe je op de volgende manier.
+```{bash, eval=FALSE}
+bowtie2-build /students/2024-2025/Thema05/BlaasKanker/outputs/bwa_aln/index/GCF_000001635.27_GRCm39_genomic.fna \
+/students/2024-2025/Thema05/BlaasKanker/outputs/bwa_aln/GCF_000001635.27_GRCm39_genomic
+
+```
+
+Daarna kan je het bowtie2 gebruiken op de volgende manier. 
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+  parallel -j 20 "bowtie2 -p 15 --very-sensitive -x \
+    /students/2024-2025/Thema05/BlaasKanker/outputs/bwa_aln/GCF_000001635.27_GRCm39_genomic \
+    -1 /students/2024-2025/Thema05/BlaasKanker/testdata/{}_1.fastq \
+    -2 /students/2024-2025/Thema05/BlaasKanker/testdata/{}_2.fastq \
+    -S /students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/{}.sam"
+```
+je rkijgt vervolgens dit te zien 
+500000 reads; of these:
+  500000 (100.00%) were paired; of these:
+    11868 (2.37%) aligned concordantly 0 times
+    331498 (66.30%) aligned concordantly exactly 1 time
+    156634 (31.33%) aligned concordantly >1 times
+    11868 pairs aligned concordantly 0 times; of these:
+      5031 (42.39%) aligned discordantly 1 time
+    6837 pairs aligned 0 times concordantly or discordantly; of these:
+      13674 mates make up the pairs; of these:
+        4639 (33.93%) aligned 0 times
+        3733 (27.30%) aligned exactly 1 time
+        5302 (38.77%) aligned >1 times
+
+Het grootste deel van je data (66.3%) heeft zich correct uitgelijnd op het genoom (exact 1 keer). 
+
+Ongeveer 31.3% van de reads is meer dan één keer uitgelijnd, wat wijst op mogelijke repetitieve regio's of ambiguïteit in de data.
+
+Ongeveer 2.4% van de reads kon helemaal niet worden uitgelijnd, wat normaal is, maar de hoeveelheid kan worden vergeleken met andere runs om te zien of dit binnen de verwachte normen valt.
+
+De discordante uitlijningen (42.39%) kunnen wijzen op interessante structuren of variaties, maar zouden verder moeten worden onderzocht.
+
+Hierna moet je nog wel bezig met samtools. 
+
+```{bash, eval=FALSE}
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+  parallel -j 20 "samtools view -b /students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/{}.sam > /students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/{}.bam"
+
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+  parallel -j 20 "samtools sort -o /students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/sorted_bam/{}.sorted.bam /students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/{}.bam"
+
+cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
+  parallel -j 20  "samtools index /students/2024-2025/Thema05/BlaasKanker/testingtools/bwatesten/sorted_bam/{}.sorted.bam"
+
+```
+
