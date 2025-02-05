@@ -2,7 +2,12 @@
 .Rhistory
 .RData
 .Ruserdata
+
 ../Transcriptomics/logbooks/JasperJonker_cache/
 ../Transcriptomics/logbooks/JasperJonker_files/
+
+
+Transcriptomics/logbooks/RamonReilman_cache/
+Transcriptomics/logbooks/RamonReilman_files/
 
 src/python/.venv
