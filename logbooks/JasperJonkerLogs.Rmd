@@ -671,3 +671,4 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 
 ```
 
+Dus bowtie2 is een handige tool om te kunnen gebruiken. Ik vond de statistiek in de terminal te voorschijn komt ook erg prettig dan weet je het ook og je het goed doet. Het is alleen niet handig voor dit onderzoek maar wel handig als je het snel nodig hebt. 
