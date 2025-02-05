@@ -10,6 +10,10 @@ editor_options:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+
 library(VariantAnnotation)
 library(BiocManager)
 library(GenomicRanges)
@@ -626,7 +630,8 @@ bowtie2-build /students/2024-2025/Thema05/BlaasKanker/outputs/bwa_aln/index/GCF_
 
 ```
 
-Daarna kan je het bowtie2 gebruiken op de volgende manier. 
+Daarna kan je het bowtie2 gebruiken op de volgende manier. Ik doe het op test data omdat ik niet iets wil verpesten of veranderen voor de andere mensen die hier mee bezig zijn of nog moeten gaan. 
+
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
   parallel -j 20 "bowtie2 -p 15 --very-sensitive -x \
@@ -657,7 +662,7 @@ Ongeveer 2.4% van de reads kon helemaal niet worden uitgelijnd, wat normaal is, 
 
 De discordante uitlijningen (42.39%) kunnen wijzen op interessante structuren of variaties, maar zouden verder moeten worden onderzocht.
 
-Hierna moet je nog wel bezig met samtools. 
+Hierna moet je nog wel bezig met samtools. Zodat je in verdere tools kan gebruiken.
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
@@ -671,3 +676,8 @@ cat /students/2024-2025/Thema05/BlaasKanker/SRR_Acc_List.txt | \
 
 ```
 
+Dus bowtie2 is een handige tool om te kunnen gebruiken. Ik vond de statistiek in de terminal te voorschijn komt ook erg prettig dan weet je het ook og je het goed doet. Het is alleen niet handig voor dit onderzoek maar wel handig als je het snel nodig hebt. 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 0eebccac79c462bd530bb885d2c6ebe07678dc2d
