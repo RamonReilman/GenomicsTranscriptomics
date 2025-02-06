@@ -15,7 +15,9 @@ knitr::opts_chunk$set(cache = TRUE)
 # cache slaat code chunks op in files, zodra je de chunk niet veranderd gebruikt hij de opgeslagen versie van de vorige knit
 # knitten gaat sneller hierdoor, voert niet onnodig alles opnieuw uit
 ```
+
 ## Presentatie (voorbereiden)
+
 (Zondag 13 oktober)
 
 Ik moet voor het plan van aanpak de samples uitzoeken. De verschillende
@@ -80,23 +82,17 @@ wilt aanpassen met Trimmomatic. - multiqc: voegt alle Fastqc rapporten
 van samples samen tot een rapport. Waarom: Zo kun je makkelijker de
 resultaten van Fastqc van alle samples bekijken.
 
-
-
 (Maandag 14 oktober)
 
 Alles uitgeschreven voor de presentatie en het plan van aanpak:\
 
 Tabel van de samples (van de Transcriptomics):\
 
-
-
-|                | **Baseline** | **Non_treated** | **Treated** | 
-|----------------|--------------|-----------------|-------------| 
-| **RNAseq**     |       4      |        6        |      6      | 
-| **NSG_RNAseq** |       5      |        5        |      5      | 
-| **TCRseq**     |       6      |        6        |      6      | 
-
-
+|                | **Baseline** | **Non_treated** | **Treated** |
+|----------------|--------------|-----------------|-------------|
+| **RNAseq**     | 4            | 6               | 6           |
+| **NSG_RNAseq** | 5            | 5               | 5           |
+| **TCRseq**     | 6            | 6               | 6           |
 
 **Samples**\
 Er zijn voor het transcriptomics gedeelte in totaal 49 samples. Deze
@@ -132,12 +128,13 @@ zullen we nog een keer Trimmomatic moeten gebruiken totdat we tevreden
 zijn.
 
 **BELANGRIJK:**\
-Later erachter gekomen dat ze in de NSG-muizen toch geen menselijke cellen hebben gestopt. Ze hebben enkel een slechter immuunsysteem.
+Later erachter gekomen dat ze in de NSG-muizen toch geen menselijke
+cellen hebben gestopt. Ze hebben enkel een slechter immuunsysteem.
 
 ## Quality control:
-(woensdag 16 oktober)
-FastQC en MultiQC uitgevoerd op de data (duurt erg lang, rekening mee
-houden in planning).
+
+(woensdag 16 oktober) FastQC en MultiQC uitgevoerd op de data (duurt erg
+lang, rekening mee houden in planning).
 
 Uit het Multiqc rapport blijkt dat 'Per Base Sequence Content', 'Per
 Sequence GC Content' en 'Sequence Duplication Levels' verbeterd kunnen
@@ -201,8 +198,8 @@ multiqc /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_c
 -o /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/quality_control/multiqc_after_trim3
 ```
 
-De adapter content is erg hoog. Deze proberen te verminderen met headcrop
-(begin eraf halen).
+De adapter content is erg hoog. Deze proberen te verminderen met
+headcrop (begin eraf halen).
 
 ```{bash trim_headcrop, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/SRR_Acc_List.txt | \
@@ -220,14 +217,19 @@ cat /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/SRR_Acc_List.txt | \
 ```
 
 Na advies van Marcel te hebben gevraagd over het aantal adapter content
-die we hebben tot de conclusie gekomen dat we waarschijnlijk [geen Trimmomatic](https://pubmed.ncbi.nlm.nih.gov/33575617/) hoeven te gebruiken (data is al goed genoeg). 
+die we hebben tot de conclusie gekomen dat we waarschijnlijk [geen
+Trimmomatic](https://pubmed.ncbi.nlm.nih.gov/33575617/) hoeven te
+gebruiken (data is al goed genoeg).
 
 ## Mapping
+
 We zijn erachter gekomen dat in de NSG muizen geen menselijke cellen
-zitten. Dus deze moeten we ook mappen tegen het muis-referentie-genoom (Wat wel heel gek
-is is dat in het artikel staat dat ze alles tegen het menselijke-referentie-genoom
-hebben gemapt, is dit een fout ?).\
-Code van [Ramon](https://github.com/RamonReilman/GenomicsTranscriptomics/blob/main/Transcriptomics/logbooks/RamonReilman.Rmd)
+zitten. Dus deze moeten we ook mappen tegen het muis-referentie-genoom
+(Wat wel heel gek is is dat in het artikel staat dat ze alles tegen het
+menselijke-referentie-genoom hebben gemapt, is dit een fout ?).\
+Code van
+[Ramon](https://github.com/RamonReilman/GenomicsTranscriptomics/blob/main/Transcriptomics/logbooks/RamonReilman.Rmd)
+
 ```{bash, eval=FALSE}
 
 gffread -E /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/ref_genes/ncbi_dataset/data/GCF_000001405.40/genomic.gff -T -o  /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/ref_genes/ncbi_dataset/data/GCF_000001405.40/genomic.gtf
@@ -237,7 +239,6 @@ gffread -E /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/ref_gen
 ```{bash, eval=FALSE}
 STAR --runThreadN 4 --runMode genomeGenerate --genomeDir /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/star/index_GRCh38 --genomeFastaFiles /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/ref_genes/ncbi_dataset/data/GCF_000001405.40/GCF_000001405.40_GRCh38.p14_genomic.fna --sjdbGTFfile /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/tools/ref_genes/ncbi_dataset/data/GCF_000001405.40/genomic.gtf --sjdbOverhang 75
 ```
-
 
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/nsg_mouse_SRR.txt | \
@@ -251,7 +252,6 @@ cat /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/nsg_mouse_SRR.txt | 
         '--outFileNamePrefix /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/mapping/{}_star_'
 ```
 
-
 ```{bash, eval=FALSE}
 cat /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/nsg_mouse_SRR.txt | \
     parallel 'STAR --runThreadN 6 ' \
@@ -264,11 +264,15 @@ cat /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/nsg_mouse_SRR.txt | 
         '--outFileNamePrefix /students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/mapping/{}_mm39_star_'
 ```
 
-De mapping tegen het muis genoom ziet er beter uit, dus waarschijnlijk zit er een fout in het artikel.
+De mapping tegen het muis genoom ziet er beter uit, dus waarschijnlijk
+zit er een fout in het artikel.
 
 ## Deseq
-(30/31 oktober)
-De volgende code is van [Ramon](https://github.com/RamonReilman/GenomicsTranscriptomics/blob/main/Transcriptomics/logbooks/RamonReilman.Rmd) (Zie ook Teams):
+
+(30/31 oktober) De volgende code is van
+[Ramon](https://github.com/RamonReilman/GenomicsTranscriptomics/blob/main/Transcriptomics/logbooks/RamonReilman.Rmd)
+(Zie ook Teams):
+
 ```{r}
 file.names <- list.files('/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/mapping/',
                          pattern = '*_star_ReadsPerGene.out.tab')
@@ -285,7 +289,7 @@ read_sample <- function(file.name) {
   return(sample[c(1, 2)])
 }
 ```
- 
+
 ```{r}
 setwd('/students/2024-2025/Thema05/BlaasKanker/Transcriptomics/output/mapping/')
  
@@ -303,18 +307,19 @@ rownames(counts) <- counts$V1
 counts <- counts[-1]
 head(counts)
 ```
- 
- 
+
 ```{r}
 col_data <- read.csv("/students/2024-2025/Thema05/BlaasKanker/etc/DSEQ_verwerking(Sheet1).csv", sep = ";")
 rownames(col_data) <- col_data[,1]
 col_data
 ```
- 
- 
+
 ## Annot count_data
-Het annoteren van onze data zorgt ervoor dat de genen de NCBI naamgeving krijgen. Zo is het straks overzichtelijker om informatie te vinden over de genen.
- 
+
+Het annoteren van onze data zorgt ervoor dat de genen de NCBI naamgeving
+krijgen. Zo is het straks overzichtelijker om informatie te vinden over
+de genen.
+
 ```{r}
 library(dplyr)
 library(tidyr)
@@ -326,8 +331,11 @@ col_data <- col_data %>%
     mutate(condition = paste0(strain, "_", treatment, "_r", r_num))
 head(col_data)
 ```
-In de bestanden kon niks gevonden worden over de genen, maar zo is het wel duidelijker waar elke kolom voor staat.
-Dat moet nu nog toegepast worden in de counts df
+
+In de bestanden kon niks gevonden worden over de genen, maar zo is het
+wel duidelijker waar elke kolom voor staat. Dat moet nu nog toegepast
+worden in de counts df
+
 ```{r}
 for (i in 1:nrow(col_data)) {
   idx <- grep(col_data$Run[i], names(counts))
@@ -335,8 +343,11 @@ for (i in 1:nrow(col_data)) {
 }
 head(counts)
 ```
-Nu zijn de SRR* namen vervangen met waar ze voor staan en is de df duidelijker te lezen, om straks makkelijker de kolommen op te halen die horen bij elk mogelijke variant groepeer ik deze.
- 
+
+Nu zijn de SRR\* namen vervangen met waar ze voor staan en is de df
+duidelijker te lezen, om straks makkelijker de kolommen op te halen die
+horen bij elk mogelijke variant groepeer ik deze.
+
 ```{r}
 print(colnames(counts))
 C57BL_Vehicle <- grep("C57BL/6_Vehicle", names(counts))
@@ -347,10 +358,15 @@ nsg_Vehicle <- grep("NSG_Vehicle", names(counts))
 nsg_Entinostat <- grep("NSG_Entinostat", names(counts))
 nsg_Baseline <- grep("NSG_Baseline", names(counts))
 ```
-Nu kunnen deze variabelen gebruikt worden om de juiste kolommen te selecteren.
- 
-Dan kan dit nu samengevoegd worden met DESEQ, wat Janine heeft uitgezocht. Bekijk [Janine haar logboek](https://github.com/RamonReilman/GenomicsTranscriptomics/blob/main/Transcriptomics/logbooks/JaninePostmus.Rmd) voor meer informatie over de code.
- 
+
+Nu kunnen deze variabelen gebruikt worden om de juiste kolommen te
+selecteren.
+
+Dan kan dit nu samengevoegd worden met DESEQ, wat Janine heeft
+uitgezocht. Bekijk [Janine haar
+logboek](https://github.com/RamonReilman/GenomicsTranscriptomics/blob/main/Transcriptomics/logbooks/JaninePostmus.Rmd)
+voor meer informatie over de code.
+
 ```{r}
 library(DESeq2)
 # Making deseqdataset with counts en coldata
@@ -359,20 +375,20 @@ dds <- DESeqDataSetFromMatrix(countData = counts,
                               design = ~ 0 + source_name)
 head(dds)
 ```
- 
+
 ```{r}
 # Prefiltering on low gene counts
 keep <- rowSums(counts(dds)) >= 10
 ddst <- dds[keep,]
 ```
- 
+
 ```{r}
 # Setting factor level
 #dds$treatment <- relevel(dds$treatment, ref = "Baseline")
 
 dds$treatment <- factor(dds$treatment, levels = c("Baseline","Entinostat", "Vehicle"), )
 ```
- 
+
 ```{r}
 # Running deseq
 dds <- DESeq(dds)
@@ -380,15 +396,21 @@ res <- results(dds)
 ```
 
 ## MA plot
-Nu dit allemaal is uitgevoerd kunnen we verder met een MA plot te maken van nsg-baseline vs nsg-entinostat door gebruik te maken van de 'res' die is gemaakt.
-Hierbij heb ik een[tutorial](https://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html#ma-plot) gebruikt.
+
+Nu dit allemaal is uitgevoerd kunnen we verder met een MA plot te maken
+van nsg-baseline vs nsg-entinostat door gebruik te maken van de 'res'
+die is gemaakt. Hierbij heb ik
+een[tutorial](https://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html#ma-plot)
+gebruikt.
+
 ```{r}
 # ylim zijn de limieten van de y-as
 plotMA(res, ylim=c(-2,2))
 ```
 
-De plot bevat nog noise, dus we gaan de 'Log fold change shrinkage for visualization and ranking' uitvoeren van de tutorial.
- 
+De plot bevat nog noise, dus we gaan de 'Log fold change shrinkage for
+visualization and ranking' uitvoeren van de tutorial.
+
 ```{r}
 resultsNames(dds)
 ```
@@ -397,11 +419,17 @@ resultsNames(dds)
 resLFC_Baseline <- lfcShrink(dds, coef="source_nameNSG_bladder.tumor_Baseline", type="apeglm")
 resLFC_Baseline
 ```
-Bij coef wordt maar 1 input geaccepteerd, dus eerst de twee namen apart invullen van de situaties die we willen visualiseren:
 
-Maar nu is de vraag hoe we dit samen moeten voegen ? Er een vector van maken werkt niet.
+Bij coef wordt maar 1 input geaccepteerd, dus eerst de twee namen apart
+invullen van de situaties die we willen visualiseren:
 
-[Ramon](https://github.com/RamonReilman/GenomicsTranscriptomics/blob/main/Transcriptomics/logbooks/RamonReilman.Rmd) heeft een subset gemaakt gemaakt van de twee situaties, dit is handig om alleen de informatie van de situaties weer te geven in de plot:
+Maar nu is de vraag hoe we dit samen moeten voegen ? Er een vector van
+maken werkt niet.
+
+[Ramon](https://github.com/RamonReilman/GenomicsTranscriptomics/blob/main/Transcriptomics/logbooks/RamonReilman.Rmd)
+heeft een subset gemaakt gemaakt van de twee situaties, dit is handig om
+alleen de informatie van de situaties weer te geven in de plot:
+
 ```{r dds_subset}
 dds_subset <- dds[, dds$source_name %in% c("NSG_bladder tumor_Baseline", "NSG_bladder tumor_Entinostat")]
 
@@ -411,18 +439,23 @@ dds_subset <- DESeq(dds_subset)
 
 res_subset <- results(dds_subset)
 ```
-Hiermee doorgaan:
-Plot van alleen de baseline en Entinostat:
+
+Hiermee doorgaan: Plot van alleen de baseline en Entinostat:
+
 ```{r plotMA_subset_before}
 # omdat 2 in log-termen hoog is daar de limit zetten
 plotMA(res_subset, ylim=c(-2,2))
 ```
-Interpretatie plot: 
-x-as is de counts en de y-as is de log verandering. \
-Dus hoe verder op de x-as hoe meer counts van het gen is. En hoe verder op y-as hoe meer verschillend de expressie van het gen is. \
-De genen die significant verschillen in expressie zullen dus de blauwe bolletjes zijn aan de rechterkant van de plot.
 
-[Ramon](https://github.com/RamonReilman/GenomicsTranscriptomics/blob/main/Transcriptomics/logbooks/RamonReilman.Rmd) heeft het probleem met de enkele input van lfcShrink opgelost:
+Interpretatie plot: x-as is de counts en de y-as is de log verandering.\
+Dus hoe verder op de x-as hoe meer counts van het gen is. En hoe verder
+op y-as hoe meer verschillend de expressie van het gen is.\
+De genen die significant verschillen in expressie zullen dus de blauwe
+bolletjes zijn aan de rechterkant van de plot.
+
+[Ramon](https://github.com/RamonReilman/GenomicsTranscriptomics/blob/main/Transcriptomics/logbooks/RamonReilman.Rmd)
+heeft het probleem met de enkele input van lfcShrink opgelost:
+
 ```{r dds_nsg_subset}
 dds_nsg_subset <- dds[, c(nsg_Baseline,nsg_Entinostat)]
  
@@ -436,20 +469,31 @@ nsg_res <- results(dds_nsg_subset)
 ```{r resultsNames_subset}
 resultsNames(dds_nsg_subset)
 ```
-Dit lost het probleem op dat uit de resultsNames() eerder alle situaties apart kwamen. Nu zijn ze verdeeld in de situaties die wij wel willen gebruiken (treatment_Entinostat_vs_Baseline) en die wij niet willen gebruiken (Intercept) voor deze plot. \
+
+Dit lost het probleem op dat uit de resultsNames() eerder alle situaties
+apart kwamen. Nu zijn ze verdeeld in de situaties die wij wel willen
+gebruiken (treatment_Entinostat_vs_Baseline) en die wij niet willen
+gebruiken (Intercept) voor deze plot.\
 Hierop kunnen we de lfcShrink wel goed uitvoeren:
+
 ```{r lfcShrink_subset}
 resLFC_subset <- lfcShrink(dds_nsg_subset, coef="treatment_Entinostat_vs_Baseline", type="apeglm")
 resLFC_subset
 ```
+
 Dan kan nu de plot opnieuw gemaakt worden van de lfcSchrink subset:
+
 ```{r plotMA_resLFCsubset_after}
 # omdat 2 in log-termen hoog is daar de limit zetten
 plotMA(resLFC_subset, ylim=c(-2,2))
 ```
-Dit is echt veel beter. Het is interessant om te kijken welke genen bij welke punten horen, dus we gaan proberen om de genen erbij te zetten. 
-Hiervoor is een [online artikel](https://www.r-bloggers.com/2016/01/repel-overlapping-text-labels-in-ggplot2/) gebruikt.
-Eerst de plot in ggplot maken:
+
+Dit is echt veel beter. Het is interessant om te kijken welke genen bij
+welke punten horen, dus we gaan proberen om de genen erbij te zetten.
+Hiervoor is een [online
+artikel](https://www.r-bloggers.com/2016/01/repel-overlapping-text-labels-in-ggplot2/)
+gebruikt. Eerst de plot in ggplot maken:
+
 ```{r ggplot2}
 #help("plotMA")
 
@@ -476,7 +520,9 @@ ggplot(ressub_df, aes(x=baseMean, y=log2FoldChange)) +
   
 
 ```
+
 Gen-namen erbij:
+
 ```{r ggplot2_genen, fig.cap="MAplot van de log van de gen-expressie"}
 #help("plotMA")
 
@@ -512,50 +558,90 @@ ggplot(ressub_df, aes(x=baseMean, y=log2FoldChange)) +
     theme_minimal() +
     labs(x = "Base Mean", y = "Log2 Fold Change")
 ```
-In de bovenstaande plot zie je de MAplot die we eerder ook hadden, maar dan in ggplot2. Ook zijn de genen toegevoegd. De padj < 0.05 staat voor de p-waarde. Alles wat kleiner dan 0.05 is statistisch significant en wordt verder gebruikt. Dus alleen alles met een p-waarde kleiner dan 0.05 wordt een gen bijgezet (en blauw gekleurd). \
-Zoals eerder vermeld is, zijn de blauwe punten rechts in de grafiek het interessants, omdat die genen significant verschillen in expressie.\
 
+In de bovenstaande plot zie je de MAplot die we eerder ook hadden, maar
+dan in ggplot2. Ook zijn de genen toegevoegd. De padj \< 0.05 staat voor
+de p-waarde. Alles wat kleiner dan 0.05 is statistisch significant en
+wordt verder gebruikt. Dus alleen alles met een p-waarde kleiner dan
+0.05 wordt een gen bijgezet (en blauw gekleurd).\
+Zoals eerder vermeld is, zijn de blauwe punten rechts in de grafiek het
+interessants, omdat die genen significant verschillen in expressie.\
 
-'Gene-Eef 1 a 1' staat het meest rechts. Dus dit is een interessant gen. Wat is de functie van dit gen?\
-Dit gen helpt om aminozuur-gebonden tRNAs naar het ribosoom te brengen voor de eiwitsynthese. Als dit gen minder tot expressie komt, kan dat dus tot een verminderde eiwitsynthese leiden. Met een verminderde eiwitsynthese kan de celdeling langzamer gaan. Met een verminderde celdeling wordt schade minder snel gerepareerd. Ook werkt het immuunsysteem minder goed, aangezien er minder snel nieuwe cellen aangemaakt kunnen worden (zoals witte bloedcellen). \
+'Gene-Eef 1 a 1' staat het meest rechts. Dus dit is een interessant gen.
+Wat is de functie van dit gen?\
+Dit gen helpt om aminozuur-gebonden tRNAs naar het ribosoom te brengen
+voor de eiwitsynthese. Als dit gen minder tot expressie komt, kan dat
+dus tot een verminderde eiwitsynthese leiden. Met een verminderde
+eiwitsynthese kan de celdeling langzamer gaan. Met een verminderde
+celdeling wordt schade minder snel gerepareerd. Ook werkt het
+immuunsysteem minder goed, aangezien er minder snel nieuwe cellen
+aangemaakt kunnen worden (zoals witte bloedcellen).\
 [Bron: Gene-Eef 1 a 1](https://www.ncbi.nlm.nih.gov/gene/1915)\
 
 Conclusie voor onze situatie:\
-In de plot is de NSG-Entinostat en de NSG-Baseline met elkaar vergeleken. De y-waarde is boven de 0, dus de gen-expressie is hoger in de eerste situatie. Dat is in dit geval de baseline. Dus de gen-expressie is hoger bij de baseline dan bij de Entinostat (meer eiwitsynthese bij baseline). Dus de Entinostat zorgt er mogelijk voor dat dit gen minder tot expressie komt. Wat zou suggereren dat de Entinostat ervoor zorgt dat de eiwitsynthese verminderd en hiermee de celdeling vertraagd.\
+In de plot is de NSG-Entinostat en de NSG-Baseline met elkaar
+vergeleken. De y-waarde is boven de 0, dus de gen-expressie is hoger in
+de eerste situatie. Dat is in dit geval de baseline. Dus de
+gen-expressie is hoger bij de baseline dan bij de Entinostat (meer
+eiwitsynthese bij baseline). Dus de Entinostat zorgt er mogelijk voor
+dat dit gen minder tot expressie komt. Wat zou suggereren dat de
+Entinostat ervoor zorgt dat de eiwitsynthese verminderd en hiermee de
+celdeling vertraagd.\
 
-
-(Wat misschien interessant is: De isovorm (alfa 2) wordt geïdentificeerd als een auto-antigeen bij 66% van de patiënten met het Felty-syndroom. (Auto-antigen: antigen van je eigen lichaam dat je lichaam aanvalt, omdat het herkent wordt als vreemd). Dus de isovorm kan ook direct invloed hebben op het immuunsysteem.)
-
+(Wat misschien interessant is: De isovorm (alfa 2) wordt geïdentificeerd
+als een auto-antigeen bij 66% van de patiënten met het Felty-syndroom.
+(Auto-antigen: antigen van je eigen lichaam dat je lichaam aanvalt,
+omdat het herkent wordt als vreemd). Dus de isovorm kan ook direct
+invloed hebben op het immuunsysteem.)
 
 ## Gen expressie vehicle vraag
-Uit [Ramon](https://github.com/RamonReilman/GenomicsTranscriptomics/blob/main/Transcriptomics/logbooks/RamonReilman.Rmd) zijn plot bleek dat bij de NSG muis de vehicle een hoge gen-expressie had op het gene-Ces4a. Dit gen zorgt voor de afbraak van xenobiotische stoffen. Onze theorie is dat de stof die de vehicle toegediend heeft gekregen een xenobiotische stof is, waardoor de vehicle een hoge expressie heeft van gene-Ces4a.
-In [het artikel](https://pmc.ncbi.nlm.nih.gov/articles/PMC8363284/) staat de volgende zin: 'BBN963 cells were treated with DMSO or 1 μM entinostat for 72 hours in vitro.' Dit betekend dat de de stof waarschijnlijk [DMSO](https://pubmed.ncbi.nlm.nih.gov/17177172/) is. Dit is een xenobiotische stof, dus dit kan de hoge gen-expressie verklaren.
 
-
+Uit
+[Ramon](https://github.com/RamonReilman/GenomicsTranscriptomics/blob/main/Transcriptomics/logbooks/RamonReilman.Rmd)
+zijn plot bleek dat bij de NSG muis de vehicle een hoge gen-expressie
+had op het gene-Ces4a. Dit gen zorgt voor de afbraak van xenobiotische
+stoffen. Onze theorie is dat de stof die de vehicle toegediend heeft
+gekregen een xenobiotische stof is, waardoor de vehicle een hoge
+expressie heeft van gene-Ces4a. In [het
+artikel](https://pmc.ncbi.nlm.nih.gov/articles/PMC8363284/) staat de
+volgende zin: 'BBN963 cells were treated with DMSO or 1 μM entinostat
+for 72 hours in vitro.' Dit betekend dat de de stof waarschijnlijk
+[DMSO](https://pubmed.ncbi.nlm.nih.gov/17177172/) is. Dit is een
+xenobiotische stof, dus dit kan de hoge gen-expressie verklaren.
 
 ## Annotatie met biomart
-Geprobeerd met [Jasper](https://github.com/RamonReilman/GenomicsTranscriptomics/blob/main/Transcriptomics/logbooks/JasperJonker.Rmd) en [Ramon](https://github.com/RamonReilman/GenomicsTranscriptomics/blob/main/Transcriptomics/logbooks/RamonReilman.Rmd). 
-Onze dataset bevat teveel genen en de library connectie werkt niet, dus hebben we besloten om geen annotatie uit te voeren.
 
-
+Geprobeerd met
+[Jasper](https://github.com/RamonReilman/GenomicsTranscriptomics/blob/main/Transcriptomics/logbooks/JasperJonker.Rmd)
+en
+[Ramon](https://github.com/RamonReilman/GenomicsTranscriptomics/blob/main/Transcriptomics/logbooks/RamonReilman.Rmd).
+Onze dataset bevat teveel genen en de library connectie werkt niet, dus
+hebben we besloten om geen annotatie uit te voeren.
 
 ## Venn diagram eerste poging, klopt niet helemaal:
-[Bron voor venndiagram](https://rpubs.com/Nishapaudel/DESeq2_sex_wise_dfs)
+
+[Bron voor
+venndiagram](https://rpubs.com/Nishapaudel/DESeq2_sex_wise_dfs)
+
 ```{r}
 head(counts)
 ```
 
-
 Namen elke kolom:
+
 ```{r}
 library(DESeq2)
 
 print(colnames(counts))
 ```
+
 ```{r}
 dim(counts)
 ```
-Verdelen in C57BL6-muis en NSG-muis (er wordt een genen-count per kolom aangemaakt).
+
+Verdelen in C57BL6-muis en NSG-muis (er wordt een genen-count per kolom
+aangemaakt).
+
 ```{r}
 desired_columns_C57BL6 <- c("C57BL/6_Vehicle_r1", "C57BL/6_Vehicle_r2", "C57BL/6_Vehicle_r3", "C57BL/6_Vehicle_r4", "C57BL/6_Vehicle_r5", "C57BL/6_Vehicle_r6", "C57BL/6_Baseline_r1", "C57BL/6_Baseline_r2",  "C57BL/6_Baseline_r3", "C57BL/6_Baseline_r4", "C57BL/6_Entinostat_r1", "C57BL/6_Entinostat_r2", "C57BL/6_Entinostat_r3", "C57BL/6_Entinostat_r4",  "C57BL/6_Entinostat_r5", "C57BL/6_Entinostat_r6")
 
@@ -566,7 +652,9 @@ data_rearranged_C57BL6 <- counts[, desired_columns_C57BL6]
 ```{r}
 head(data_rearranged_C57BL6)
 ```
+
 Nu voor de NSG-muis:
+
 ```{r}
 desired_columns_NSG <- c( "NSG_Vehicle_r1", "NSG_Vehicle_r2", "NSG_Vehicle_r3", "NSG_Vehicle_r4", "NSG_Vehicle_r5", "NSG_Baseline_r1", "NSG_Baseline_r2", "NSG_Baseline_r3", "NSG_Baseline_r4", "NSG_Baseline_r5", "NSG_Entinostat_r1", "NSG_Entinostat_r2", "NSG_Entinostat_r3", "NSG_Entinostat_r4", "NSG_Entinostat_r5")
 
@@ -578,8 +666,8 @@ data_rearranged_NSG <- counts[, desired_columns_NSG]
 head(data_rearranged_NSG)
 ```
 
-
 Condities per muis toevoegen:
+
 ```{r}
 sampleinfo_NSG <- data.frame(
   row.names = colnames(data_rearranged_NSG),
@@ -598,21 +686,22 @@ sampleinfo_C57BL6 <- data.frame(
 )
 ```
 
-
 Analyse van maken:
+
 ```{r}
 dds_NSG <- DESeqDataSetFromMatrix(countData = data_rearranged_NSG, colData = sampleinfo_NSG, design = ~ condition)
 dds_NSG <- DESeq(dds_NSG)
 res_NSG <- results(dds_NSG)
 ```
+
 ```{r}
 dds_C57BL6 <- DESeqDataSetFromMatrix(countData = data_rearranged_C57BL6, colData = sampleinfo_C57BL6, design = ~ condition)
 dds_C57BL6 <- DESeq(dds_C57BL6)
 res_C57BL6 <- results(dds_C57BL6)
 ```
 
-
 Belangrijke genen eruit halen:
+
 ```{r}
 # !is.na, is nodig omdat R anders zeurt over na waardes
 upregulated_C57BL6 <- rownames(res_C57BL6[!is.na(res_C57BL6$log2FoldChange) & res_C57BL6$log2FoldChange > 0 & !is.na(res_C57BL6$padj) & res_C57BL6$padj <= 0.05, ])
@@ -620,16 +709,18 @@ upregulated_NSG <- rownames(res_NSG[!is.na(res_NSG$log2FoldChange) & res_NSG$log
 
 ```
 
-
 Package installeren:
+
 ```{r, eval=FALSE}
 # install.packages("VennDiagram")
 ```
+
 ```{r}
 library(VennDiagram)
 ```
 
 Venn diagram maken:
+
 ```{r}
 venn.plot <- draw.pairwise.venn(
   area1 = length(upregulated_C57BL6),
@@ -641,16 +732,21 @@ venn.plot <- draw.pairwise.venn(
 ```
 
 Laten zien diagram:
+
 ```{r}
 grid.newpage()
 grid.draw(venn.plot)
 ```
 
-Dit gaat niet helemaal goed. Diagram nodig van elke treatment apart van soort 1 tegen soort 2.
-De code is steeds hetzelfde, maar dan met de juiste treatment (entinostat, vehicle, baseline).
+Dit gaat niet helemaal goed. Diagram nodig van elke treatment apart van
+soort 1 tegen soort 2. De code is steeds hetzelfde, maar dan met de
+juiste treatment (entinostat, vehicle, baseline).
 
 ## Venndiagram entinostat:
-Verdelen in C57BL6-muis en NSG-muis voor alleen de entinostat groep (er wordt een genen-count per kolom aangemaakt).
+
+Verdelen in C57BL6-muis en NSG-muis voor alleen de entinostat groep (er
+wordt een genen-count per kolom aangemaakt).
+
 ```{r}
 desired_columns_C57BL6_entinostat <- c("C57BL/6_Entinostat_r1", "C57BL/6_Entinostat_r2", "C57BL/6_Entinostat_r3", "C57BL/6_Entinostat_r4", "C57BL/6_Entinostat_r5", "C57BL/6_Entinostat_r6")
 
@@ -661,7 +757,10 @@ data_rearranged_C57BL6_entinostat <- counts[, desired_columns_C57BL6_entinostat]
 ```{r}
 head(data_rearranged_C57BL6_entinostat)
 ```
-Echt heel raar, maar hij geeft van elke kolom alles 2 keer. Met exact dezelfde cijfers en namen.
+
+Echt heel raar, maar hij geeft van elke kolom alles 2 keer. Met exact
+dezelfde cijfers en namen.
+
 ```{r test_dubbele_kolomnamen}
 # zijn er dubbele kolomnamen ?
 any(duplicated(colnames(counts)))
@@ -669,15 +768,19 @@ any(duplicated(colnames(counts)))
 #en zijn de namen goed ingevoerd ?
 all(desired_columns_C57BL6_entinostat %in% colnames(counts))
 ```
-Maar uit de tests komen dat er geen dubbele kolom namen zijn en dat de namen die ik heb ingevoerd kloppen ?
 
+Maar uit de tests komen dat er geen dubbele kolom namen zijn en dat de
+namen die ik heb ingevoerd kloppen ?
 
 ```{r tweede_test_dubbele_kolomnamen}
 print(colnames(data_rearranged_C57BL6_entinostat))
 ```
-En de kolom namen kloppen ook, dus ik neem aan dat het een fout is in het weergeven (Bij alle andere gaat het wel goed).
+
+En de kolom namen kloppen ook, dus ik neem aan dat het een fout is in
+het weergeven (Bij alle andere gaat het wel goed).
 
 Bij de NSG gaat het wel goed:
+
 ```{r}
 desired_columns_NSG_entinostat <- c("NSG_Entinostat_r1", "NSG_Entinostat_r2", "NSG_Entinostat_r3", "NSG_Entinostat_r4", "NSG_Entinostat_r5")
 
@@ -688,16 +791,17 @@ data_rearranged_NSG_entinostat <- counts[, desired_columns_NSG_entinostat]
 ```{r}
 head(data_rearranged_NSG_entinostat)
 ```
+
 Dus voor nu aannemen dat het visueel foutje is.
 
 Condities per muis toevoegen:
+
 ```{r}
 sampleinfo_NSG_entinostat <- data.frame(
   row.names = colnames(data_rearranged_NSG_entinostat),
   condition = c("Entinostat", "Entinostat", "Entinostat", "Entinostat", "Entinostat")
   )
 ```
-
 
 ```{r}
 sampleinfo_C57BL6_entinostat <- data.frame(
@@ -706,8 +810,8 @@ sampleinfo_C57BL6_entinostat <- data.frame(
   )
 ```
 
-
 Analyse van maken:
+
 ```{r}
 # design is 1, omdat alles Entinostat is
 dds_NSG_entinostat <- DESeqDataSetFromMatrix(countData = data_rearranged_NSG_entinostat, colData = sampleinfo_NSG_entinostat, design = ~ 1)
@@ -721,8 +825,8 @@ dds_C57BL6_entinostat <- DESeq(dds_C57BL6_entinostat)
 res_C57BL6_entinostat <- results(dds_C57BL6_entinostat)
 ```
 
-
 Belangrijke genen eruit halen:
+
 ```{r}
 # !is.na, is nodig omdat R anders zeurt over na waardes
 upregulated_C57BL6_entinostat <- rownames(res_C57BL6_entinostat[!is.na(res_C57BL6_entinostat$log2FoldChange) & res_C57BL6_entinostat$log2FoldChange > 0 & !is.na(res_C57BL6_entinostat$padj) & res_C57BL6_entinostat$padj <= 0.05, ])
@@ -730,8 +834,8 @@ upregulated_NSG_entinostat <- rownames(res_NSG_entinostat[!is.na(res_NSG_entinos
 
 ```
 
-
 Venn diagram maken:
+
 ```{r}
 library(VennDiagram)
 
@@ -745,14 +849,23 @@ venn.plot_entinostat <- draw.pairwise.venn(
 ```
 
 Laten zien diagram:
+
 ```{r entinostat, fig.cap="venndiagram van NSG-entinostat tegen C57BL6-Entinostat"}
 grid.newpage()
 grid.draw(venn.plot_entinostat)
 ```
-In de venndiagrammen zie je de upregulated genen weergegeven van de Entinostat groepen. De genen die in de overlap staan, zijn significant upregulated in beide muizen, terwijl de genen in de aparte delen van de Venn-cirkel alleen in één van de twee muizen significant upregulated zijn.
+
+In de venndiagrammen zie je de upregulated genen weergegeven van de
+Entinostat groepen. De genen die in de overlap staan, zijn significant
+upregulated in beide muizen, terwijl de genen in de aparte delen van de
+Venn-cirkel alleen in één van de twee muizen significant upregulated
+zijn.
 
 ## Venndiagram Vehicle:
-Verdelen in C57BL6-muis en NSG-muis voor alleen de vehicle groep (er wordt een genen-count per kolom aangemaakt).
+
+Verdelen in C57BL6-muis en NSG-muis voor alleen de vehicle groep (er
+wordt een genen-count per kolom aangemaakt).
+
 ```{r}
 desired_columns_C57BL6_vehicle <- c("C57BL/6_Vehicle_r1", "C57BL/6_Vehicle_r2", "C57BL/6_Vehicle_r3", "C57BL/6_Vehicle_r4", "C57BL/6_Vehicle_r5", "C57BL/6_Vehicle_r6")
 
@@ -765,6 +878,7 @@ head(data_rearranged_C57BL6_vehicle)
 ```
 
 De NSG-muis:
+
 ```{r}
 desired_columns_NSG_vehicle <- c( "NSG_Vehicle_r1", "NSG_Vehicle_r2", "NSG_Vehicle_r3", "NSG_Vehicle_r4", "NSG_Vehicle_r5")
 
@@ -776,15 +890,14 @@ data_rearranged_NSG_vehicle <- counts[, desired_columns_NSG_vehicle]
 head(data_rearranged_NSG_vehicle)
 ```
 
-
 Condities per muis toevoegen:
+
 ```{r}
 sampleinfo_NSG_vehicle <- data.frame(
   row.names = colnames(data_rearranged_NSG_vehicle),
   condition = c("Vehicle", "Vehicle", "Vehicle", "Vehicle", "Vehicle")
   )
 ```
-
 
 ```{r}
 sampleinfo_C57BL6_vehicle <- data.frame(
@@ -793,8 +906,8 @@ sampleinfo_C57BL6_vehicle <- data.frame(
   )
 ```
 
-
 Analyse van maken:
+
 ```{r}
 # design is 1, omdat alles Entinostat is
 dds_NSG_vehicle <- DESeqDataSetFromMatrix(countData = data_rearranged_NSG_vehicle, colData = sampleinfo_NSG_vehicle, design = ~ 1)
@@ -809,6 +922,7 @@ res_C57BL6_vehicle <- results(dds_C57BL6_vehicle)
 ```
 
 Belangrijke genen eruit halen:
+
 ```{r}
 # !is.na, is nodig omdat R anders zeurt over na waardes
 upregulated_C57BL6_vehicle <- rownames(res_C57BL6_vehicle[!is.na(res_C57BL6_vehicle$log2FoldChange) & res_C57BL6_vehicle$log2FoldChange > 0 & !is.na(res_C57BL6_vehicle$padj) & res_C57BL6_vehicle$padj <= 0.05, ])
@@ -816,8 +930,8 @@ upregulated_NSG_vehicle <- rownames(res_NSG_vehicle[!is.na(res_NSG_vehicle$log2F
 
 ```
 
-
 Venn diagram maken:
+
 ```{r}
 library(VennDiagram)
 
@@ -831,14 +945,23 @@ venn.plot_vehicle <- draw.pairwise.venn(
 ```
 
 Laten zien diagram:
+
 ```{r vehicle, fig.cap="venndiagram van NSG-Vehicle tegen C57BL6-Vehicle"}
 grid.newpage()
 grid.draw(venn.plot_vehicle)
 ```
-In de venndiagrammen zie je de upregulated genen weergegeven van de Vehicle groepen. De genen die in de overlap staan, zijn significant upregulated in beide muizen, terwijl de genen in de aparte delen van de Venn-cirkel alleen in één van de twee muizen significant upregulated zijn.
+
+In de venndiagrammen zie je de upregulated genen weergegeven van de
+Vehicle groepen. De genen die in de overlap staan, zijn significant
+upregulated in beide muizen, terwijl de genen in de aparte delen van de
+Venn-cirkel alleen in één van de twee muizen significant upregulated
+zijn.
 
 ## Venndiagram Baseline:
-Verdelen in C57BL6-muis en NSG-muis voor alleen de baseline groep (er wordt een genen-count per kolom aangemaakt).
+
+Verdelen in C57BL6-muis en NSG-muis voor alleen de baseline groep (er
+wordt een genen-count per kolom aangemaakt).
+
 ```{r}
 desired_columns_C57BL6_baseline <- c("C57BL/6_Baseline_r1", "C57BL/6_Baseline_r2",  "C57BL/6_Baseline_r3", "C57BL/6_Baseline_r4")
 
@@ -850,8 +973,8 @@ data_rearranged_C57BL6_baseline <- counts[, desired_columns_C57BL6_baseline]
 head(data_rearranged_C57BL6_baseline)
 ```
 
-
 De NSG-muis:
+
 ```{r}
 desired_columns_NSG_baseline <- c("NSG_Baseline_r1", "NSG_Baseline_r2", "NSG_Baseline_r3", "NSG_Baseline_r4", "NSG_Baseline_r5")
 
@@ -865,13 +988,13 @@ head(data_rearranged_NSG_baseline)
 ```
 
 Condities per muis toevoegen:
+
 ```{r}
 sampleinfo_NSG_baseline <- data.frame(
   row.names = colnames(data_rearranged_NSG_baseline),
   condition = c("Baseline", "Baseline", "Baseline", "Baseline", "Baseline")
   )
 ```
-
 
 ```{r}
 sampleinfo_C57BL6_baseline <- data.frame(
@@ -880,8 +1003,8 @@ sampleinfo_C57BL6_baseline <- data.frame(
   )
 ```
 
-
 Analyse van maken:
+
 ```{r}
 # design is 1, omdat alles Baseline is
 dds_NSG_baseline <- DESeqDataSetFromMatrix(countData = data_rearranged_NSG_baseline, colData = sampleinfo_NSG_baseline, design = ~ 1)
@@ -896,6 +1019,7 @@ res_C57BL6_baseline <- results(dds_C57BL6_baseline)
 ```
 
 Belangrijke genen eruit halen:
+
 ```{r}
 # !is.na, is nodig omdat R anders zeurt over na waardes
 upregulated_C57BL6_baseline <- rownames(res_C57BL6_baseline[!is.na(res_C57BL6_baseline$log2FoldChange) & res_C57BL6_baseline$log2FoldChange > 0 & !is.na(res_C57BL6_baseline$padj) & res_C57BL6_baseline$padj <= 0.05, ])
@@ -903,8 +1027,8 @@ upregulated_NSG_baseline <- rownames(res_NSG_baseline[!is.na(res_NSG_baseline$lo
 
 ```
 
-
 Venn diagram maken:
+
 ```{r}
 library(VennDiagram)
 
@@ -918,17 +1042,28 @@ venn.plot_baseline <- draw.pairwise.venn(
 ```
 
 Laten zien diagram:
+
 ```{r baseline, fig.cap="venndiagram van NSG-Baseline tegen C57BL6-Baseline"}
 grid.newpage()
 grid.draw(venn.plot_baseline)
 ```
-In de venndiagrammen zie je de upregulated genen weergegeven van de Baseline groepen. De genen die in de overlap staan, zijn significant upregulated in beide muizen, terwijl de genen in de aparte delen van de Venn-cirkel alleen in één van de twee muizen significant upregulated zijn.
+
+In de venndiagrammen zie je de upregulated genen weergegeven van de
+Baseline groepen. De genen die in de overlap staan, zijn significant
+upregulated in beide muizen, terwijl de genen in de aparte delen van de
+Venn-cirkel alleen in één van de twee muizen significant upregulated
+zijn.
 
 ## Vergelijken venndiagrammen:
-Er is de meeste overlap bij vehicle(16739) en baseline(16542)(Entinostat heeft een overlap van 15457). Waarin de vehicle(16739) de meeste overlap heeft.
+
+Er is de meeste overlap bij vehicle(16739) en baseline(16542)(Entinostat
+heeft een overlap van 15457). Waarin de vehicle(16739) de meeste overlap
+heeft.
 
 ## Volcano plot
+
 Van de baseline en entinostat:
+
 ```{r}
 library(EnhancedVolcano)
 ```
@@ -940,14 +1075,175 @@ EnhancedVolcano(resLFC_subset,
                 y = 'pvalue',
                 labSize = 2)
 ```
-X-as:\
-Log2 fold change laat zien hoe groot het verschil van gen-expressie is tussen de baseline en entinostat.\
-Alles aan de rechterkant: de gen-expressie is hoger bij baseline dan bij entinostat.\
-Alles aan de linkerkant: de gen-expressie is hoger bij de entinostat dan bij baseline.\
-Y-as:\
--Log10(p-waarde) laat zien hoe hoog de significantie is in het verschil tussen de gen-expressie (hoe hoger hoe meer significantie).
 
-Het lijkt me dus interessant om te kijken naar de linkerkant. Want ik wil kijken welke genen entinostat mogelijk tot een hogere expressie brengt. (Baseline is totdat de tumor een bepaalde grootte heeft. Entinostat is als na die grootte entinostat is gegeven).
-De meest interessante (hoog expressie verschil en hoge significantie) is gene-Gm46987, maar daar kan ik niet veel over vinden. Welke ook interessant is, is gene-Dcstamp. Dit gen reguleert Dendritische cellen(soort witte bloedcellen). En zorgt er dus voor dat het immuunsysteem weet welke cellen deze moet aanvallen (en ook zichzelf niet aanvalt). Dat de expressie van dit gen hoger is nadat de tumor groter is en behandeld wordt met entinostat is dus een goed teken. Het kan dus betekenen dat entinostat ervoor zorgt dat de gen-expressie van dit gen hoger wordt. Maar het kan ook betekenen dat de tumor eerst nog te klein was(bij de baseline) om de gen-expressie van dit gen te verhogen. Je zou hiervoor eigenlijk naar het verschil van de gen-expressie moeten kijken van de vehicle(niet behandeld na bepaalde grootte tumor) en de entinostat. Dan kan je beter onderzoeken of de expressie van dit gen hoger wordt door de entinostat of meer door de groeiende tumor. Want als dit zo is, dan kan entinostat een goede impact hebben als behandeling op de tumor.
+X-as:\
+Log2 fold change laat zien hoe groot het verschil van gen-expressie is
+tussen de baseline en entinostat.\
+Alles aan de rechterkant: de gen-expressie is hoger bij baseline dan bij
+entinostat.\
+Alles aan de linkerkant: de gen-expressie is hoger bij de entinostat dan
+bij baseline.\
+Y-as:\
+-Log10(p-waarde) laat zien hoe hoog de significantie is in het verschil
+tussen de gen-expressie (hoe hoger hoe meer significantie).
+
+Het lijkt me dus interessant om te kijken naar de linkerkant. Want ik
+wil kijken welke genen entinostat mogelijk tot een hogere expressie
+brengt. (Baseline is totdat de tumor een bepaalde grootte heeft.
+Entinostat is als na die grootte entinostat is gegeven). De meest
+interessante (hoog expressie verschil en hoge significantie) is
+gene-Gm46987, maar daar kan ik niet veel over vinden. Welke ook
+interessant is, is gene-Dcstamp. Dit gen reguleert Dendritische
+cellen(soort witte bloedcellen). En zorgt er dus voor dat het
+immuunsysteem weet welke cellen deze moet aanvallen (en ook zichzelf
+niet aanvalt). Dat de expressie van dit gen hoger is nadat de tumor
+groter is en behandeld wordt met entinostat is dus een goed teken. Het
+kan dus betekenen dat entinostat ervoor zorgt dat de gen-expressie van
+dit gen hoger wordt. Maar het kan ook betekenen dat de tumor eerst nog
+te klein was(bij de baseline) om de gen-expressie van dit gen te
+verhogen. Je zou hiervoor eigenlijk naar het verschil van de
+gen-expressie moeten kijken van de vehicle(niet behandeld na bepaalde
+grootte tumor) en de entinostat. Dan kan je beter onderzoeken of de
+expressie van dit gen hoger wordt door de entinostat of meer door de
+groeiende tumor. Want als dit zo is, dan kan entinostat een goede impact
+hebben als behandeling op de tumor.
 
 [Bron gene-Dcstamp](https://www.uniprot.org/uniprotkb/Q9H295/entry)
+
+## Herkansing
+
+Eerst gaan we de subgroepen opnieuw doen. De handigere manier is
+namelijk met `results`.\
+Eerst kijken we wat de namen zijn van de verschillende groepen:
+
+```{r}
+levels(dds$source_name)
+```
+
+Nu kunnen we de vergelijkingen maken:
+
+```{r res_entinostat_C57BL6}
+res_entinostat_C57BL6 <- results(dds, 
+                           contrast = c("source_name", "C57BL/6_bladder tumor_Entinostat", "C57BL/6_bladder tumor_Baseline"),
+                                        alpha = 0.05)
+```
+
+Met alpha is de p-waarde op 0.05 gezet. Hierboven is de entinostat en de
+baseline van de C57BL/6 muizen vergeleken.\
+De samenvatting hiervan:
+
+```{r}
+summary(res_entinostat_C57BL6)
+```
+
+In de summary resultaten kun je aflezen dat er 31860 reads zijn
+meegenomen in de results. Ook staat erin dat de p-value inderdaad verzet
+is naar 0.05. \
+Verder hebben 6300 genen (wat 20% is) een hogere
+gen-expressie in de entinostat dan de baseline. En 3776 genen (wat 12%
+is) een lagere gen-expressie in de entinostat dan de baseline. \
+Verder is
+er 0.52% van de genen outliers en worden er 8508 (wat 27% is) van de
+genen genegeerd door een te laag gemiddeld aantal reads.\
+
+Nu gaan we hetzelfde doen voor de andere groepen:
+
+```{r res_vehicle_C57BL6}
+res_vehicle_C57BL6 <- results(dds, 
+                           contrast = c("source_name", "C57BL/6_bladder tumor_Vehicle", "C57BL/6_bladder tumor_Baseline"),
+                                        alpha = 0.05)
+```
+
+Hierboven is de vehicle en de baseline van de C57BL/6 muizen vergeleken
+van de C57BL/6 muizen. \
+De samenvatting hiervan:
+
+```{r}
+summary(res_vehicle_C57BL6)
+```
+
+In de summary resultaten kun je aflezen dat er 31860 reads zijn
+meegenomen in de results. Ook staat erin dat de p-value inderdaad verzet
+is naar 0.05. \
+Verder hebben 31 genen (wat 0.097% is) een hogere
+gen-expressie in de vehicle dan de baseline, wat veel lager is dan bij
+de vehicle. En 20 genen (wat 0.063% is) een lagere gen-expressie in de
+vehicle dan de baseline, wat ook veel lager is dan de vehicle. \
+Verder is
+er 0.52% van de genen outliers en worden er 10937 (wat 34% is) van de
+genen genegeerd door een te laag gemiddeld aantal reads. Deze waarde is
+veel hoger dan de entinostat. \
+
+Dus in de C57BL/6 muizen hebben meer genen een hogere gen-expressie met
+entinostat dan de vehicle. En ook zijn er wat meer low counts die niet
+meegeteld worden bij de vehicle. \
+
+En nu voor de NSG muizen:
+
+```{r res_entinostat_NSG}
+res_entinostat_NSG <- results(dds, 
+                           contrast = c("source_name", "NSG_bladder tumor_Entinostat", "NSG_bladder tumor_Baseline"),
+                                        alpha = 0.05)
+```
+
+Hierboven is de entinostat en de baseline van de NSG muizen vergeleken. \
+De samenvatting hiervan:
+
+```{r}
+summary(res_entinostat_NSG)
+```
+
+In de summary resultaten kun je aflezen dat er 31860 reads zijn
+meegenomen in de results. Ook staat erin dat de p-value inderdaad verzet
+is naar 0.05. \
+Verder hebben 317 genen (wat 0.99% is) een hogere
+gen-expressie in de entinostat dan de baseline. En 105 genen (wat 0.33%
+is) een lagere gen-expressie in de entinostat dan de baseline. \
+Verder is
+er 0.52% van de genen outliers en worden er 12146 (wat 38% is) van de
+genen genegeerd door een te laag gemiddeld aantal reads. Dit zijn
+allemaal lage percentages (behalve de outliers, die zijn dan weer hoger
+dan eerder). \
+
+Nu de andere groep:
+```{r res_vehicle_NSG}
+res_vehicle_NSG <- results(dds, 
+                           contrast = c("source_name", "NSG_bladder tumor_Vehicle", "NSG_bladder tumor_Baseline"),
+                                        alpha = 0.05)
+```
+
+Hierboven is de vehicle en de baseline van de NSG muizen vergeleken. \
+De
+samenvatting hiervan:
+
+```{r}
+summary(res_vehicle_NSG)
+```
+
+In de summary resultaten kun je aflezen dat er 31860 reads zijn
+meegenomen in de results. Ook staat erin dat de p-value inderdaad verzet
+is naar 0.05. \
+Verder hebben 734 genen (wat 2.3% is) een hogere
+gen-expressie in de vehicle dan de baseline, wat juist weer hoger is dan
+bij de vehicle.Dat was bij de andere muis juist andersom (daar was de
+entinostat hoger dan de vehicle). En 338 genen (wat 1.1% is) een lagere
+gen-expressie in de vehicle dan de baseline, wat ook weer hoger is dan
+de vehicle. \
+Verder is er 0.52% van de genen outliers en worden er 13960
+(wat 44% is) van de genen genegeerd door een te laag gemiddeld aantal
+reads. Deze waarde is dan weer hoger dan de entinostat. \
+
+Dus in de NSG muizen hebben meer genen een hogere gen-expressie met
+vehicle dan de entinostat vergeleken met de baseline. En ook zijn er wat
+meer low counts die niet meegeteld worden in de vehicle. \
+
+Dus de vergelijking tussen de twee muizen is: Bij beide muizen is de low
+counts hoger bij de vehicle dan de entinostat. Maar bij de NSG muizen is
+de gen-expressie hoger bij de vehicle dan bij de entinostat vergeleken
+met de baseline. Terwijl dit bij de C57BL/6 muizen precies andersom is. \
+
+Er zit dus een duidelijk verschil in de twee soorten muizen. \
+Het lijkt nu alsof de entinostat beter werkt bij de C57BL/6 muizen (de muizen met
+een beter immuunsysteem dan de NSG muizen). En de entinostat niet echt
+aanslaat bij de NGS muizen (de muizen met een minder goed immuunsysteem
+dan de C57BL/6 muizen).
