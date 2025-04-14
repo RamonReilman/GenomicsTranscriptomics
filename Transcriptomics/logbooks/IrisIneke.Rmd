@@ -1247,3 +1247,204 @@ Het lijkt nu alsof de entinostat beter werkt bij de C57BL/6 muizen (de muizen me
 een beter immuunsysteem dan de NSG muizen). En de entinostat niet echt
 aanslaat bij de NGS muizen (de muizen met een minder goed immuunsysteem
 dan de C57BL/6 muizen).
+
+### plotjes opnieuw (venn diagram)
+Eerst moeten we de up en down gereguleerde genen selecteren. Dit doen we met de results uit deseq:
+Dit doen we voor:
+- Entinostat C57
+- Vehicle C57
+- Entinostat NSG
+- Vehicle NSG
+```{r}
+# Voor Entinostat C57
+res_df_entC57 <- as.data.frame(res_entinostat_C57BL6)
+up_ent_C57 <- rownames(res_df_entC57[which(res_df_entC57$log2FoldChange > 1 & res_df_entC57$padj < 0.05), ])
+down_ent_C57 <- rownames(res_df_entC57[which(res_df_entC57$log2FoldChange < -1 & res_df_entC57$padj < 0.05), ])
+```
+
+
+```{r}
+# Voor Vehicle C57
+res_df_vehC57 <- as.data.frame(res_vehicle_C57BL6)
+up_veh_C57 <- rownames(res_df_vehC57[which(res_df_vehC57$log2FoldChange > 1 & res_df_vehC57$padj < 0.05), ])
+down_veh_C57 <- rownames(res_df_vehC57[which(res_df_vehC57$log2FoldChange < -1 & res_df_vehC57$padj < 0.05), ])
+```
+
+
+```{r}
+# Voor Entinostat NSG
+res_df_entNSG <- as.data.frame(res_entinostat_NSG)
+up_ent_NSG <- rownames(res_df_entNSG[which(res_df_entNSG$log2FoldChange > 1 & res_df_entNSG$padj < 0.05), ])
+down_ent_NSG <- rownames(res_df_entNSG[which(res_df_entNSG$log2FoldChange < -1 & res_df_entNSG$padj < 0.05), ])
+```
+log2FoldChange > 1: bij entinostat vs baseline moet de vehicle bij up regulated mininmaal 2x meer expressie hebben dan de baseline.
+
+```{r}
+# Voor Vehicle NSG
+res_df_vehNSG <- as.data.frame(res_vehicle_NSG)
+up_veh_NSG <- rownames(res_df_vehNSG[which(res_df_vehNSG$log2FoldChange > 1 & res_df_vehNSG$padj < 0.05), ])
+down_veh_NSG <- rownames(res_df_vehNSG[which(res_df_vehNSG$log2FoldChange < -1 & res_df_vehNSG$padj < 0.05), ])
+```
+
+
+Nu we de up en down regulated genen hebben geselecteerd, kunnen we verder met de venn diagrams maken.
+Eerst gaan we venn diagrams maken van het verschil tussen de twee muizen in entinostat en vehicle:
+- C57 vs NSG (Entinostat)	up
+- C57 vs NSG (Entinostat)	down
+- C57 vs NSG (Vehicle)	up
+- C57 vs NSG (Vehicle)	down
+```{r}
+# Up genen voor C57 en NSG
+venn.plot_up_C57vsNSG_entinostat <- draw.pairwise.venn(
+  area1 = length(up_ent_C57),
+  area2 = length(up_ent_NSG),
+  cross.area = length(intersect(up_ent_C57, up_ent_NSG)),
+  category = c("C57BL/6 Entinostat", "NSG Entinostat"),
+  fill = c("blue", "red")
+)
+```
+
+```{r plot_up_C57vsNSG_entinostat}
+grid.newpage()
+grid.draw(venn.plot_up_C57vsNSG_entinostat)
+```
+Je ziet in plot dat er bij de entinostat de C57BL/6 (5143) aanzienlijk meer genen geactiveerd worden dan bij de NSG(156) muis. Hierbij komen 44 genen overeen. 
+
+
+```{r}
+# vehicle vergelijking
+venn.plot_up_C57vsNSG_vehicle <- draw.pairwise.venn(
+  area1 = length(up_veh_C57),
+  area2 = length(up_veh_NSG),
+  cross.area = length(intersect(up_veh_C57, up_veh_NSG)),
+  category = c("C57BL/6 Vehicle", "NSG Vehicle"),
+  fill = c("green", "yellow") # andere kleurtjes :)
+)
+```
+
+```{r plot_up_C57vsNSG_vehicle}
+grid.newpage()
+grid.draw(venn.plot_up_C57vsNSG_vehicle)
+```
+Je ziet in plot dat er ook bij de vehicle in de NSG (297) aanzienlijk meer genen geactiveerd worden dan bij de C57BL/6 (27) muis. Hierbij komen geen genen overeen. Dit is precies andersom dan bij de entinostat; daar waren de NSG up regelated genen juist minder dan in de C57BL/6.
+
+
+```{r}
+# down genen voor C57 en NSG
+venn.plot_down_C57vsNSG_entinostat <- draw.pairwise.venn(
+  area1 = length(down_ent_C57),
+  area2 = length(down_ent_NSG),
+  cross.area = length(intersect(down_ent_C57, down_ent_NSG)),
+  category = c("C57BL/6 Entinostat", "NSG Entinostat"),
+  fill = c("blue", "red")
+)
+```
+
+```{r plot_down_C57vsNSG_entinostat}
+grid.newpage()
+grid.draw(venn.plot_down_C57vsNSG_entinostat)
+```
+
+Je ziet in plot dat er bij de entinostat de C57BL/6 (2267) aanzienlijk meer genen gedeactiveerd worden dan bij de NSG(71) muis. Hierbij komen 14 genen overeen.
+
+```{r}
+venn.plot_down_C57vsNSG_vehicle <- draw.pairwise.venn(
+  area1 = length(down_veh_C57),
+  area2 = length(down_veh_NSG),
+  cross.area = length(intersect(down_veh_C57, down_veh_NSG)),
+  category = c("C57BL/6 Vehicle", "NSG Vehicle"), 
+  fill = c("green", "yellow")
+)
+```
+
+```{r plot_down_C57vsNSG_vehicle}
+grid.newpage()
+grid.draw(venn.plot_down_C57vsNSG_vehicle)
+```
+
+Je ziet in plot dat er bij de vehicle de NSG (151) aanzienlijk meer genen gedeactiveerd worden dan bij de C57BL/6 (18) muis. Hierbij komen geen genen overeen. dit is net zoals bij de up regulated genen weer andersom als de enitnostat.
+
+
+Nu gaan we venn diagrams maken met het verschil tussen entinostat en vehicle in beide soorten (de treatments):
+- Entinostat vs Vehicle binnen C57, up
+- Entinostat vs Vehicle binnen C57, down
+- Entinostat vs Vehicle binnen NSG, up	
+- Entinostat vs Vehicle binnen NSG, down
+
+
+```{r}
+# Entinostat vs Vehicle binnen C57, up
+plot_up_C57_treatment <- draw.pairwise.venn(
+  area1 = length(up_ent_C57),
+  area2 = length(up_veh_C57),
+  cross.area = length(intersect(up_ent_C57, up_veh_C57)),
+  category = c("Entinostat", "Vehicle"),
+  fill = c("darkgreen", "orange") # weer andere kleurtjes
+)
+```
+
+```{r plot_up_C57_treatment}
+grid.newpage()
+grid.draw(plot_up_C57_treatment) # moet hier zonder venn.
+```
+Je ziet in de plot dat in de C57BL/6 er aanzienlijk meer genen up regulated zijn bij entinostat (5165) dan bij vehicle (5). Verder komen er 22 genen overeen.
+
+```{r}
+# Entinostat vs Vehicle binnen C57, down
+plot_down_C57_treatment <- draw.pairwise.venn(
+  area1 = length(down_ent_C57),
+  area2 = length(down_veh_C57),
+  cross.area = length(intersect(down_ent_C57, down_veh_C57)),
+  category = c("Entinostat", "Vehicle"),
+  fill = c("darkgreen", "orange")
+)
+```
+
+```{r plot_down_C57_treatment}
+grid.newpage()
+grid.draw(plot_down_C57_treatment) # moet hier zonder venn.
+```
+Je ziet in de plot dat in de C57BL/6 er aanzienlijk meer genen down regulated zijn bij entinostat (2277) dan bij vehicle (14). Verder komen er 4 genen overeen.
+
+
+```{r}
+# Entinostat vs Vehicle binnen NSG, up
+plot_up_NSG_treatment <- draw.pairwise.venn(
+  area1 = length(up_ent_NSG),
+  area2 = length(up_veh_NSG),
+  cross.area = length(intersect(up_ent_NSG, up_veh_NSG)),
+  category = c("Entinostat", "Vehicle"),
+  fill = c("purple", "yellow") # weer andere kleurtjes
+)
+```
+
+```{r plot_up_NSG_treatment}
+grid.newpage()
+grid.draw(plot_up_NSG_treatment) # moet hier zonder venn.
+```
+Je ziet in de plot dat in de NSG er meer genen up regulated zijn bij vehicle (198) dan bij entinostat (101). Verder komen er 99 genen overeen.
+
+
+```{r}
+# Entinostat vs Vehicle binnen NSG, down
+plot_down_NSG_treatment <- draw.pairwise.venn(
+  area1 = length(down_ent_NSG),
+  area2 = length(down_veh_NSG),
+  cross.area = length(intersect(down_ent_NSG, down_veh_NSG)),
+  category = c("Entinostat", "Vehicle"),
+  fill = c("purple", "yellow")
+)
+```
+
+```{r plot_down_NSG_treatment}
+grid.newpage()
+grid.draw(plot_down_NSG_treatment) # moet hier zonder venn.
+```
+Je ziet in de plot dat in de NSG er meer genen up regulated zijn bij vehicle (123) dan bij entinostat (57). Verder komen er 28 genen overeen.
+
+### Conclusie:
+Entinostat zorgt dus voor meer gen-veranderingen in C57 dan in NSG muizen. Dit geldt voor up en down regulated genen.
+Dus zal entinostat een redelijk werkend immuunsysteem moeten hebben (wat NSG muizen niet hebben en C57 muizen wel).
+
+
+
